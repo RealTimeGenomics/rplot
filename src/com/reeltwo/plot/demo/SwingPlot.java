@@ -283,9 +283,9 @@ public class SwingPlot {
 
     ArrayList text = new ArrayList();
     for (int y = 0; y < 6; y++) {
-      for (int x = 0; x < 8; x++) {
-        final int index = y * 8 + x;
-        final int y2 = 6 - y;
+      for (int x = 0; x < 9; x++) {
+        final int index = y * 9 + x;
+        final int y2 = 5 - y;
         BoxPlot2D plot = new BoxPlot2D();
         plot.setData(new Box2D[] {new Box2D(x + 0.05f, y2 + 0.05f, x + 0.95f, y2 + 0.95f)});
         plot.setFill(FillablePlot2D.PATTERN_FILL);
