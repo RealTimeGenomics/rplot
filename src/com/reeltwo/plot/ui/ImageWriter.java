@@ -184,7 +184,7 @@ public class ImageWriter {
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, width, height);
 
-    mGraphicsRenderer.drawGraph(graph, g, 0, 0, width, height);
+    mGraphicsRenderer.drawGraph(graph, g, width, height);
     Mapping[] mapping = mGraphicsRenderer.getMappings();
     for (Iterator it = ImageIO.getImageWritersBySuffix("png"); it.hasNext(); ) {
       javax.imageio.ImageWriter iw = (javax.imageio.ImageWriter) it.next();

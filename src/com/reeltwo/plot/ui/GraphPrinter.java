@@ -82,9 +82,9 @@ public class GraphPrinter implements Printable {
 
     pf.setOrientation(PageFormat.LANDSCAPE);
     GraphicsRenderer gr = new GraphicsRenderer(mColors);
-    gr.drawGraph(mGraph, g,
-      (int) pf.getImageableX(), (int) pf.getImageableY(),
-      (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
+    Graphics g2 = g.create((int) pf.getImageableX(), (int) pf.getImageableY(),
+                           (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
+    gr.drawGraph(mGraph, g2, (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
     return Printable.PAGE_EXISTS;
   }
   

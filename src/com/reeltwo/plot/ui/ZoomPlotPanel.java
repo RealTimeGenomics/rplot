@@ -141,7 +141,7 @@ public class ZoomPlotPanel extends JComponent {
         g.setColor(Color.BLACK);
         g.drawRect(pnpX, pnpY, mPNPWidth, mPNPHeight);
         Graphics g2 = g.create(pnpX, pnpY, mPNPWidth, mPNPHeight);
-        mGraphicsRenderer.drawGraph(mGraph, g2, pnpX, pnpY, mPNPWidth, mPNPHeight);
+        mGraphicsRenderer.drawGraph(mGraph, g2, mPNPWidth, mPNPHeight);
       }
     }
   }

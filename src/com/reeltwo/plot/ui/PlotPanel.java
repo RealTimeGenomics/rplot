@@ -176,12 +176,12 @@ public class PlotPanel extends JPanel {
         g2.setColor(getBackground());
         g2.fillRect(0, 0, screenWidth, screenHeight);
 
-        mGraphicsRenderer.drawGraph(mGraph, g2, 0, 0, screenWidth, screenHeight);
+        mGraphicsRenderer.drawGraph(mGraph, g2, screenWidth, screenHeight);
         mMapping = mGraphicsRenderer.getMappings();
       }
       g.drawImage(bi, 0, 0, null);
     } else {      
-      mGraphicsRenderer.drawGraph(mGraph, g, 0, 0, screenWidth, screenHeight);
+      mGraphicsRenderer.drawGraph(mGraph, g, screenWidth, screenHeight);
       mMapping = mGraphicsRenderer.getMappings();
     }
   }
