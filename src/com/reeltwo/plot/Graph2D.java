@@ -825,25 +825,6 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Raises first argument to the power of the second argument.
-   *
-   * @param x value to raise
-   * @param y amount to raise to
-   * @return x<sup>y</sup>
-   */
-  private float dblRaise(float x, int y) {
-    float val = 1.0f;
-    for (int i = 0; i < (int) Math.abs(y); i++) {
-      val *= x;
-    }
-    if (y < 0) {
-      return 1.0f / val;
-    }
-    return val;
-  }
-
-
-  /**
    * Calculates the distance between tics given the range of data
    * values.
    *
@@ -874,7 +855,7 @@ public class Graph2D implements Cloneable {
       tics = 1.0f;
     }
 
-    tic = tics * dblRaise(10.0f, (l10 >= 0.0f) ? (int) l10 : ((int) l10 - 1));
+    tic = tics * PlotUtils.pow(10.0f, (l10 >= 0.0f) ? (int) l10 : ((int) l10 - 1));
     return tic;
   }
 
