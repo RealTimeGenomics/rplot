@@ -23,8 +23,6 @@ import javax.imageio.stream.MemoryCacheImageOutputStream;
  */
 public class ImageWriter {
 
-  private Color[] mColors = AWTDefaults.COLORS;
-
   private final GraphicsRenderer mGraphicsRenderer;
 
   /** TODO Description of the Field. */
@@ -40,19 +38,6 @@ public class ImageWriter {
    */
   public ImageWriter(GraphicsRenderer gr) {
     mGraphicsRenderer = gr;
-  }
-
-
-  /**
-   * Sets the colors to use in each of the plots.
-   *
-   * @param colors an array of Color
-   */
-  public void setColors(Color[] colors) {
-    if (colors == null || colors.length < 2) {
-      throw new IllegalArgumentException("Must specify at least 2 colors");
-    }
-    mColors = colors;
   }
 
 
