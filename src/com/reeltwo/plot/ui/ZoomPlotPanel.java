@@ -4,20 +4,13 @@ import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
 import com.reeltwo.plot.renderer.Mapping;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 /**

@@ -1,14 +1,12 @@
 package com.reeltwo.plot.ui;
 
 import com.reeltwo.plot.Graph2D;
-import javax.swing.JFileChooser;
+import com.reeltwo.plot.renderer.GraphicsRenderer;
 import java.awt.Color;
 import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import java.awt.Font;
-import com.reeltwo.plot.renderer.GraphicsRenderer;
 import javax.swing.filechooser.FileFilter;
-
 
 /**
  *
