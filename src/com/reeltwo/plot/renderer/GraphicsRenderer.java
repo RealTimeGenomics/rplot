@@ -215,8 +215,6 @@ public class GraphicsRenderer extends AbstractRenderer {
    *
    * @param graph the Graph2D to draw
    * @param g a Graphics to draw on
-   * @param offX X offset into drawing region
-   * @param offY Y offset into drawing region
    * @param screenWidth width of drawing region
    * @param screenHeight height of drawing region
    * @return an array of world to screen mappings
