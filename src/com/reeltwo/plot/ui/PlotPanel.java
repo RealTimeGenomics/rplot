@@ -25,12 +25,12 @@ public class PlotPanel extends JPanel {
   private Graph2D mGraph = null;
   private Mapping[] mMapping = null;
 
-  private final GraphicsRenderer mGraphicsRenderer;
+  private GraphicsRenderer mGraphicsRenderer;
 
   private boolean mBufferGraphs = false;
   private BufferedImage mBI = null;
 
-  private final Color [] mColors;
+  private Color [] mColors;
 
   /** Default constructor. */
   public PlotPanel() {
@@ -55,8 +55,7 @@ public class PlotPanel extends JPanel {
         throw new NullPointerException("null color given.");
       }
     }
-    mColors = lineColors;
-    mGraphicsRenderer = new GraphicsRenderer(mColors);
+    setColors(lineColors);
     setBufferGraphs(bufferGraphs);
   }
 
@@ -97,6 +96,11 @@ public class PlotPanel extends JPanel {
 
   public Color [] getColors() {
     return mColors;
+  }
+
+  public void setColors(Color [] colors) {
+    mColors = colors;
+    mGraphicsRenderer = new GraphicsRenderer(mColors);
   }
 
   public void setGraphBGColor(Color topColor, Color bottomColor) {
