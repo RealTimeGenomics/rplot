@@ -13,6 +13,7 @@ import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.ScatterPoint2D;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
+import com.reeltwo.plot.patterns.ExcelPatternGroup;
 import com.reeltwo.plot.ui.ZoomPlotDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -37,6 +38,8 @@ public class SwingPlot {
   public SwingPlot() {
     mDialog = new ZoomPlotDialog();
     mDialog.validate();
+
+    mDialog.setPatterns(new ExcelPatternGroup().getPatterns());
 
     mDialog.addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent e) {
@@ -163,7 +166,8 @@ public class SwingPlot {
         new Point2D(1.0f, 0.0f)};
     lplot.setData(fpts);
     lplot.setTitle("filled lines");
-    lplot.setFill(FillablePlot2D.PATTERN_FILL);
+    lplot.setFill(FillablePlot2D.COLOR_FILL);
+    lplot.setBorder(true);
 
     graph.addPlot(lplot);
 
@@ -177,13 +181,15 @@ public class SwingPlot {
     BoxPlot2D bplot = new BoxPlot2D();
     bplot.setData(boxes2);
     bplot.setTitle("filled box");
+    bplot.setFill(FillablePlot2D.PATTERN_FILL);
+    bplot.setBorder(true);
 
     graph.addPlot(bplot);
 
     bplot = new BoxPlot2D();
     bplot.setData(boxes1);
     bplot.setTitle("box");
-    bplot.setFill(FillablePlot2D.COLOR_FILL);
+    bplot.setFill(FillablePlot2D.NO_FILL);
 
     graph.addPlot(bplot);
 
@@ -199,6 +205,7 @@ public class SwingPlot {
       sps[i] = new ScatterPoint2D(i / 10.0f, (i + 1) / 13.3f, i * 5 + 1);
     }
     tplot.setData(tps);
+    tplot.setTitle("text");
     cplot.setData(cps);
     cplot.setTitle("circles");
 
@@ -263,7 +270,7 @@ public class SwingPlot {
     graph.setXTicLabels(0, new String[]{"The", "quick", "brown", "fox", "jumped"});
 
     graph.setKeyVerticalPosition(Graph2D.BELOW);
-    graph.setColoredKey(false);
+    //graph.setColoredKey(false);
 
     return graph;
   }
