@@ -71,15 +71,14 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toImage(int type, String fileName, Graph2D graph, int width, int height, Font font)
+  public Mapping[] toImage(int type, File file, Graph2D graph, int width, int height, Font font)
      throws IOException {
 
-    if (fileName == null) {
-      throw new NullPointerException("null file name given.");
+    if (file == null) {
+      throw new NullPointerException("null file given.");
     }
 
-    File out = new File(fileName);
-    FileOutputStream fos = new FileOutputStream(out);
+    FileOutputStream fos = new FileOutputStream(file);
     try {
       return toImage(type, fos, graph, width, height, font);
     } finally {
@@ -215,15 +214,14 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toPNG(String fileName, Graph2D graph, int width, int height, Font font)
+  public Mapping[] toPNG(File file, Graph2D graph, int width, int height, Font font)
      throws IOException {
 
-    if (fileName == null) {
-      throw new NullPointerException("null file name given.");
+    if (file == null) {
+      throw new NullPointerException("null file given.");
     }
 
-    File out = new File(fileName);
-    FileOutputStream fos = new FileOutputStream(out);
+    FileOutputStream fos = new FileOutputStream(file);
     try {
       return toPNG(fos, graph, width, height, font);
     } finally {

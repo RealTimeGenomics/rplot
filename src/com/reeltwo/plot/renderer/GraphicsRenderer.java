@@ -31,7 +31,8 @@ import java.awt.Stroke;
  * @version $Revision$
  */
 public class GraphicsRenderer extends AbstractRenderer {
-  private Color mGraphColor = null;
+  private Color mGraphTopColor = null;
+  private Color mGraphBottomColor = null;
   private int mGraphShadowWidth = 0;
 
   private boolean mTextAntialiasing = false;
@@ -190,8 +191,9 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  public void setGraphColor(Color color) {
-    mGraphColor = color;
+  public void setGraphBGColor(Color topColor, Color bottomColor) {
+    mGraphTopColor = topColor;
+    mGraphBottomColor = bottomColor;
   }
 
 
@@ -414,17 +416,21 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
   private void drawGraphArea(Graphics g, int sxlo, int sxhi, int sylo, int syhi) {
-    if (mGraphColor != null) {
-      try {
-        Graphics2D g2d = (Graphics2D) g;
-        Paint paint = g2d.getPaint();
-        GradientPaint gpaint = new GradientPaint(sxlo, sylo, Color.WHITE, sxlo, syhi, mGraphColor);
-        g2d.setPaint(gpaint);
+    if (mGraphTopColor != null) {
+      if (mGraphBottomColor == null || mGraphBottomColor.equals(mGraphTopColor)) {
+        g.setColor(mGraphTopColor);
         g.fillRect(sxlo, syhi, sxhi - sxlo, sylo - syhi);
-        g2d.setPaint(paint);
-      } catch (ClassCastException cce) {
-        g.setColor(mGraphColor);
-        g.fillRect(sxlo, syhi, sxhi - sxlo, sylo - syhi);
+      } else {
+        try {
+          Graphics2D g2d = (Graphics2D) g;
+          Paint paint = g2d.getPaint();
+          GradientPaint gpaint = new GradientPaint(sxlo, sylo, mGraphBottomColor, sxlo, syhi, mGraphTopColor);
+          g2d.setPaint(gpaint);
+          g.fillRect(sxlo, syhi, sxhi - sxlo, sylo - syhi);
+          g2d.setPaint(paint);
+        } catch (ClassCastException cce) {
+          System.err.println("Graphics rendering problem: " + cce.getMessage());
+        }
       }
     }
 

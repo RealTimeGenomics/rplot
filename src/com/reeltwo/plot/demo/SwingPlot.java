@@ -1,5 +1,4 @@
-package com.reeltwo.plot.ui;
-
+package com.reeltwo.plot.demo;
 
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
@@ -13,12 +12,9 @@ import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.ScatterPoint2D;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
-import java.awt.Color;
-import java.awt.Dimension;
+import com.reeltwo.plot.ui.ZoomPlotDialog;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
 
 /**
  * Starts a new Swing window for displaying Graph2Ds in. The window has
@@ -30,13 +26,21 @@ import javax.swing.JPanel;
 
 public class SwingPlot {
   /** the dialog for this window */
-  private PlotDialog mDialog;
+  private ZoomPlotDialog mDialog;
 
 
   /** Creates a new swing plot. */
   public SwingPlot() {
-    mDialog = new PlotDialog();
+    mDialog = new ZoomPlotDialog();
     mDialog.validate();
+
+    mDialog.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent e) {
+          System.exit(1);
+        }
+      });
+
+    mDialog.setVisible(true);
   }
 
 
@@ -58,7 +62,7 @@ public class SwingPlot {
    */
   public SwingPlot(Graph2D graph) {
     this();
-    plot(graph);
+    setGraph(graph);
   }
 
 
@@ -72,18 +76,9 @@ public class SwingPlot {
   public SwingPlot(String title, Graph2D graph) {
     this();
     setTitle(title);
-    plot(graph);
+    setGraph(graph);
   }
 
-
-  public void setColors(Color[] colors) {
-    mDialog.setColors(colors);
-  }
-
-
-  public void setGraphBGColor(Color color) {
-    mDialog.setGraphBGColor(color);
-  }
 
 
   /**
@@ -91,9 +86,8 @@ public class SwingPlot {
    *
    * @param graph A graph to render.
    */
-  public void plot(Graph2D graph) {
-    mDialog.setVisible(true);
-    mDialog.plot(graph);
+  public void setGraph(Graph2D graph) {
+    mDialog.setGraph(graph);
   }
 
 
@@ -116,7 +110,7 @@ public class SwingPlot {
   public static void main(String[] args) throws Exception {
     Graph2D graph = genTest();
     SwingPlot sp = new SwingPlot("A Plot");
-    sp.plot(graph);
+    sp.setGraph(graph);
   }
 
 
@@ -259,54 +253,4 @@ public class SwingPlot {
   }
 
 
-  /**
-   * Dialog that the plot is rendered in.
-   *
-   * @author <a href="mailto:len@reeltwo.com">len</a>
-   * @version $Revision$
-   */
-  private class PlotDialog extends JDialog {
-    /** the zoom panel for the glass pane */
-    private ZoomPlotPanel mZoomPanel;
-    private PlotPanel mPlotPanel;
-
-    /** Creates the plot dialog. */
-    PlotDialog() {
-      mPlotPanel = new PlotPanel(10, 6, true);
-      mPlotPanel.setGraphBGColor(new Color(0.8f, 0.9f, 1.0f));
-      mPlotPanel.setBufferGraphs(true);
-      mZoomPanel = new ZoomPlotPanel(mPlotPanel);
-      addWindowListener(
-        new WindowAdapter() {
-          public void windowClosing(WindowEvent e) {
-            PlotDialog.this.dispose();
-          }
-        });
-      JPanel contentPane = (JPanel) this.getContentPane();
-      contentPane.add(mPlotPanel);
-      this.setGlassPane(mZoomPanel);
-      this.getGlassPane().setVisible(true);
-      this.setSize(new Dimension(640, 480));
-    }
-
-    
-    public void setColors(Color[] colors) {
-      mPlotPanel.setColors(colors);
-    }
-
-
-    public void setGraphBGColor(Color color) {
-      mPlotPanel.setGraphBGColor(color);
-    }
-
-
-    /**
-     * Plots the given graph.
-     *
-     * @param graph a Graph2D to plot.
-     */
-    void plot(Graph2D graph) {
-      mZoomPanel.plot(graph);
-    }
-  }
 }

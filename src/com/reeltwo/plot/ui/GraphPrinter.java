@@ -49,13 +49,15 @@ public class GraphPrinter implements Printable {
 
   public void printGraph(Graph2D graph) {
     mGraph = graph;
-    if (mPrintJob.printDialog()) {
-      try {
-        mPrintJob.print();
-      } catch (PrinterException pe) {
-        pe.printStackTrace();
+    if (mGraph != null) {
+      if (mPrintJob.printDialog()) {
+        try {
+          mPrintJob.print();
+        } catch (PrinterException pe) {
+          pe.printStackTrace();
+        }
       }
-    }    
+    }
   }
 
   // implementation of java.awt.print.Printable interface

@@ -1,19 +1,15 @@
-package com.reeltwo.plot.ui;
+package com.reeltwo.plot.demo;
 
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.renderer.TextRenderer;
 
 /**
- * TextPlot.java
- *
+ * A demo rendering a graph to the terminal.
  *
  * @author Richard Littin (richard@reeltwo.com) 
  * @version $Revision$
  */
 public class TextPlot {
-  public TextPlot() {
-    
-  }
   
   public static void main(String [] args) {
     Graph2D graph = SwingPlot.genTest();
