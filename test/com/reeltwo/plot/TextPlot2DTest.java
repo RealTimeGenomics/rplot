@@ -8,6 +8,9 @@ import junit.framework.TestSuite;
  * Created: Mon May 21 16:35:49 2001
  *
  * $Log$
+ * Revision 1.3  2004/05/25 20:12:58  richard
+ * modified test to check that isUse is correct
+ *
  * Revision 1.2  2004/05/25 05:44:18  richard
  * fixed test
  *
@@ -66,7 +69,7 @@ public class TextPlot2DTest extends AbstractPlot2DTest {
 
   public void test1() {
     TextPlot2D plot = (TextPlot2D) getPlot();
-    assertTrue(plot.getColor() == -1);
+    assertTrue(plot.isUseFGColor());
   }
 
 
