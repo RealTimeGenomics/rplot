@@ -32,14 +32,14 @@ public class ZoomListener extends MouseInputAdapter {
     mContainer = container;
   }
 
-  /** {inheritDoc} */
+  /** {@inheritDoc} */
   public void mouseMoved(MouseEvent e) {
     //System.err.println("Mouse moved");
     redispatchMouseEvent(e);
   }
 
 
-  /** {inheritDoc} */
+  /** {@inheritDoc} */
   public void mouseDragged(MouseEvent e) {
     //System.err.println("Mouse Dragged");
     if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
@@ -50,26 +50,26 @@ public class ZoomListener extends MouseInputAdapter {
   }
 
 
-  /** {inheritDoc} */
+  /** {@inheritDoc} */
   public void mouseClicked(MouseEvent e) {
     //System.err.println("Mouse Clicked");
     redispatchMouseEvent(e);
   }
 
 
-  /** {inheritDoc} */
+  /** {@inheritDoc} */
   public void mouseEntered(MouseEvent e) {
     redispatchMouseEvent(e);
   }
 
 
-  /** {inheritDoc} */
+  /** {@inheritDoc} */
   public void mouseExited(MouseEvent e) {
     redispatchMouseEvent(e);
   }
 
 
-  /** {inheritDoc} */
+  /** {@inheritDoc} */
   public void mousePressed(MouseEvent e) {
     //System.err.println("Mouse Pressed");
     if ((e.getModifiers() & InputEvent.BUTTON1_MASK)
@@ -82,7 +82,7 @@ public class ZoomListener extends MouseInputAdapter {
   }
 
 
-  /** {inheritDoc} */
+  /** {@inheritDoc} */
   public void mouseReleased(MouseEvent e) {
     //System.err.println("Mouse Released");
     if ((e.getModifiers() & InputEvent.BUTTON1_MASK)
