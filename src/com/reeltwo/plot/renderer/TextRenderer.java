@@ -2,7 +2,6 @@ package com.reeltwo.plot.renderer;
 
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.Plot2D;
-import com.reeltwo.plot.Point2D;
 
 /**
  * Code to render a Graph2D object to a String.
