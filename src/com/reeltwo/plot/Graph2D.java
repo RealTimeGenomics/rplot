@@ -845,7 +845,7 @@ public class Graph2D implements Cloneable {
       return 1.0f;
     }
 
-    l10 = (float) (Math.log(xr) / Math.log(10));
+    l10 = (float) (Math.log(xr) / PlotUtils.L10);
     xnorm = (float) Math.pow(10.0f, l10 - (float) ((l10 >= 0.0f) ? (int) l10 : ((int) l10 - 1)));
     if (xnorm <= 2) {
       tics = 0.2f;
