@@ -126,7 +126,12 @@ public class SwingPlot {
    * @exception Exception TODO Description.
    */
   public static void main(String[] args) throws Exception {
-    Graph2D graph = genTest();
+    final Graph2D graph;
+    if (args.length != 0) {
+      graph = genTextureTest();
+    } else {
+      graph = genTest();
+    }
     SwingPlot sp = new SwingPlot("A Plot");
     sp.setGraph(graph);
   }
