@@ -270,8 +270,11 @@ public class SwingPlot {
 
     //graph.setVerticalLine(0.43f);
     GraphLine vline = new GraphLine(0.43f, GraphLine.VERTICAL);
-    vline.setType(GraphLine.DOTS);
     graph.addPlot(vline);
+
+    GraphLine hline = new GraphLine(0.43f, GraphLine.HORIZONTAL);
+    vline.setType(GraphLine.DOTS);
+    graph.addPlot(hline);
 
     graph.setXTic(0, 0.15f);
     graph.setXTicLabels(0, new String[]{"The", "quick", "brown", "fox", "jumped"});
