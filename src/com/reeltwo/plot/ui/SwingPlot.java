@@ -189,7 +189,7 @@ public class SwingPlot {
     for (int i = 0; i < 10; i++) {
       tps[i] = new TextPoint2D(i / 10.0f, (i + 1) / 13.3f, "T" + i);
       cps[i] = new Circle2D(i / 10.0f, (i + 1) / 13.3f, i + 1);
-      sps[i] = new ScatterPoint2D(i / 10.0f, (i + 1) / 13.3f, i * 5);
+      sps[i] = new ScatterPoint2D(i / 10.0f, (i + 1) / 13.3f, i * 5 + 1);
     }
     tplot.setData(tps);
     cplot.setData(cps);
