@@ -48,19 +48,40 @@ public class GraphicsRenderer extends AbstractRenderer {
   private Color mForegroundColor = Color.BLACK;
   private Color mGridColor = Color.LIGHT_GRAY;
 
+  /**
+   * Creates a new <code>GraphicsRenderer</code>.
+   */
   public GraphicsRenderer() {
     this((Color []) new DefaultColorGroup().getPatterns());
   }
 
+  /**
+   * Creates a new <code>GraphicsRenderer</code> setting the
+   * <code>colors</code> to use.
+   *
+   * @param colors an array of <code>Color</code>s
+   */
   public GraphicsRenderer(Color [] colors) {
     this(colors, null);
   }
 
+  /**
+   * Creates a new <code>GraphicsRenderer</code>  setting the
+   * <code>colors</code> and <code>patterns</code> to use.
+   *
+   * @param colors an array of <code>Color</code>s
+   * @param patterns an array of patterns
+   */
   public GraphicsRenderer(Color [] colors, Paint [] patterns) {
     setColors(colors);
     setPatterns(patterns);
   }
 
+  /**
+   * Sets the <code>colors</code> to use.
+   *
+   * @param colors an array of <code>Color</code>s
+   */
   public void setColors(Color [] colors) {
     if (colors == null) {
       throw new NullPointerException("null colors given");
@@ -76,6 +97,11 @@ public class GraphicsRenderer extends AbstractRenderer {
     mColors = colors;
   }
 
+  /**
+   * Sets the <code>patterns</code> to use.
+   *
+   * @param patterns an array of patterns
+   */
   public void setPatterns(Paint [] patterns) {
     if (patterns == null) {
       mPatterns = mColors;
@@ -89,32 +115,42 @@ public class GraphicsRenderer extends AbstractRenderer {
     }
   }
 
+  /**
+   * Returns the plot colors.
+   *
+   * @return an array of <code>Color</code>s
+   */
   public Color [] getColors() {
     return mColors;
   }
 
+  /**
+   * Returns the plot patterns.
+   *
+   * @return an array of patterns
+   */
   public Paint [] getPatterns() {
     return mPatterns;
   }
 
   // from AbstractRenderer
-  public int getTextWidth(Object canvas, String text) {
+  protected int getTextWidth(Object canvas, String text) {
     FontMetrics fm = ((Graphics) canvas).getFontMetrics();
     int width = text == null ? 0 : fm.stringWidth(text);
     return width;
   }
 
-  public int getTextHeight(Object canvas, String text) {
+  protected int getTextHeight(Object canvas, String text) {
     FontMetrics fm = ((Graphics) canvas).getFontMetrics();
     return fm.getHeight();
   }
 
-  public int getTextDescent(Object canvas, String text) {
+  protected int getTextDescent(Object canvas, String text) {
     FontMetrics fm = ((Graphics) canvas).getFontMetrics();
     return fm.getMaxDescent();
   }
 
-  public void setColor(Object canvas, int colorIndex) {
+  protected void setColor(Object canvas, int colorIndex) {
     switch (colorIndex) {
     case BACKGROUND_COLOR_INDEX: ((Graphics) canvas).setColor(mBackgroundColor);
       break;
@@ -125,11 +161,11 @@ public class GraphicsRenderer extends AbstractRenderer {
     };
   }
 
-  public void setPattern(Object canvas, int patternIndex) {
+  protected void setPattern(Object canvas, int patternIndex) {
     ((Graphics2D) canvas).setPaint(mPatterns[patternIndex % mPatterns.length]);
   }
 
-  public void setLineWidth(Object canvas, int width) {
+  protected void setLineWidth(Object canvas, int width) {
     super.setLineWidth(canvas, width);
 
     if (width > 1) {
@@ -139,15 +175,15 @@ public class GraphicsRenderer extends AbstractRenderer {
     }
   }
 
-  public void setClip(Object canvas, int x, int y, int w, int h) {
+  protected void setClip(Object canvas, int x, int y, int w, int h) {
     ((Graphics) canvas).setClip(x, y, w, h);
   }
 
-  public void drawString(Object canvas, int x, int y, String text) {
+  protected void drawString(Object canvas, int x, int y, String text) {
     ((Graphics) canvas).drawString(text, x, y);
   }
 
-  public void drawPoint(Object canvas, int x, int y) {
+  protected void drawPoint(Object canvas, int x, int y) {
     Graphics g = (Graphics) canvas;
     switch (getPointIndex() % 6) {
     case 0:
@@ -181,23 +217,23 @@ public class GraphicsRenderer extends AbstractRenderer {
     }
   }
 
-  public void drawLine(Object canvas, int x1, int y1, int x2, int y2) {
+  protected void drawLine(Object canvas, int x1, int y1, int x2, int y2) {
     ((Graphics) canvas).drawLine(x1, y1, x2, y2);
   }
 
-  public void drawRectangle(Object canvas, int x, int y, int w, int h) {
+  protected void drawRectangle(Object canvas, int x, int y, int w, int h) {
     ((Graphics) canvas).drawRect(x, y, w, h);
   }
 
-  public void fillRectangle(Object canvas, int x, int y, int w, int h) {
+  protected void fillRectangle(Object canvas, int x, int y, int w, int h) {
     ((Graphics) canvas).fillRect(x, y, w, h);
   }
 
-  public void drawCircle(Object canvas, int x, int y, int diameter) {
+  protected void drawCircle(Object canvas, int x, int y, int diameter) {
     ((Graphics) canvas).drawOval((int) (x - diameter / 2.0f), (int) (y - diameter / 2.0f), diameter, diameter);
   }
 
-  public void fillCircle(Object canvas, int x, int y, int diameter) {
+  protected void fillCircle(Object canvas, int x, int y, int diameter) {
     ((Graphics) canvas).fillOval((int) (x - diameter / 2.0f), (int) (y - diameter / 2.0f), diameter, diameter);
   }
 
@@ -212,43 +248,82 @@ public class GraphicsRenderer extends AbstractRenderer {
     return polygon;
   }
 
-  public void drawPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void drawPolygon(Object canvas, int [] xs, int [] ys) {
     ((Graphics) canvas).drawPolygon(createPolygon(xs, ys));
   }
 
-  public void fillPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void fillPolygon(Object canvas, int [] xs, int [] ys) {
     ((Graphics) canvas).fillPolygon(createPolygon(xs, ys));
   }
 
   // render specific
+  /**
+   * Turns text antialiasing on if <code>flag</code> is true.
+   *
+   * @param flag antialias switch
+   */
   public void setTextAntialiasing(boolean flag) {
     mTextAntialiasing = flag;
   }
 
+  /**
+   * Turns antialiasing on if <code>flag</code> is true.
+   *
+   * @param flag antialias switch
+   */
   public void setAntialiasing(boolean flag) {
     mAllAntialiasing = flag;
   }
 
 
+  /**
+   * Sets the graphs background colors.  The color is blended from
+   * <code>topColor</code> to <code>bottomColor</code> from top to
+   * bottom in the graph.
+   *
+   * @param topColor a <code>Color</code>
+   * @param bottomColor a <code>Color</code>
+   */
   public void setGraphBGColor(Color topColor, Color bottomColor) {
     mGraphTopColor = topColor;
     mGraphBottomColor = bottomColor;
   }
 
+  /**
+   * Sets the background color for the whole graph.
+   *
+   * @param color a <code>Color</code>
+   */
   public void setBackground(Color color) {
     mBackgroundColor = color;
   }
 
+  /**
+   * Sets the forground color for the whole graph.  This is the color
+   * used for border lines and text.
+   *
+   * @param color a <code>Color</code>
+   */
   public void setForeground(Color color) {
     mForegroundColor = color;
   }
 
+  /**
+   * Sets the color for drawing grid lines.
+   *
+   * @param color a <code>Color</code>
+   */
   public void setGridColor(Color color) {
     mGridColor = color;
   }
 
-  public void setGraphShadowWidth(int n) {
-    mGraphShadowWidth = n;
+  /**
+   * Sets the width of the shadow around the graph border.
+   *
+   * @param width shadow width
+   */
+  public void setGraphShadowWidth(int width) {
+    mGraphShadowWidth = width;
   }
 
 
@@ -267,7 +342,6 @@ public class GraphicsRenderer extends AbstractRenderer {
    * @param g a Graphics to draw on
    * @param screenWidth width of drawing region
    * @param screenHeight height of drawing region
-   * @return an array of world to screen mappings
    */
   public void drawGraph(Graph2D graph, Graphics g, int screenWidth, int screenHeight) {
     Mapping[] mapping = null;
@@ -406,7 +480,7 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  public int calculateKeyWidth(Object canvas, Graph2D graph) {
+  protected int calculateKeyWidth(Object canvas, Graph2D graph) {
     int keyWidth = 0;
     String keyTitle = graph.getKeyTitle();
     if (keyTitle != null) {
@@ -431,7 +505,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     return keyWidth;
   }
 
-  public int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
+  protected int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
     int keyHeight = 0;
     if (graph.getKeyTitle() != null) {
       keyHeight++;
