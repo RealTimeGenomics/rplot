@@ -680,17 +680,19 @@ public class GraphicsRenderer extends AbstractRenderer {
 
   private int calcKeyX(Graph2D graph, Graphics g, int sxlo, int sxhi, int keyWidth) {
     int keyX;
-    int position = graph.getKeyHorizontalPosition();
-    if (position == Graph2D.OUTSIDE) {
-      keyX = sxhi + 2;
-    } else if (position == Graph2D.LEFT) {
-      keyX = sxlo + 2;
-    } else if (position == Graph2D.CENTER) {
-      keyX = (sxhi + sxlo - keyWidth) / 2;
-    } else if (position == Graph2D.BELOW) {
+    if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
       keyX = 0;
-    } else { // assume RIGHT by default
-      keyX = sxhi - keyWidth - 2;
+    } else {
+      int position = graph.getKeyHorizontalPosition();
+      if (position == Graph2D.OUTSIDE) {
+        keyX = sxhi + 2;
+      } else if (position == Graph2D.LEFT) {
+        keyX = sxlo + 2;
+      } else if (position == Graph2D.CENTER) {
+        keyX = (sxhi + sxlo - keyWidth) / 2;
+      } else { // assume RIGHT by default
+        keyX = sxhi - keyWidth - 2;
+      }
     }
     return keyX;
   }
