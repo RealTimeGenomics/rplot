@@ -463,26 +463,15 @@ public abstract class AbstractRenderer {
 
   protected void drawData(Object canvas, Plot2D[] plots, Mapping[] mapping) {
     int colorIndex = 0;
-    int patternIndex = 0;
 
     for (int j = 0; j < plots.length; j++) {
       Plot2D plot = plots[j];
       int color = plot.getColor();
-      if (plot instanceof FillablePlot2D 
-          && ((FillablePlot2D) plot).getFill() == FillablePlot2D.PATTERN_FILL) {
-        if (color < 0) {
-          plot.setColor(patternIndex);
-          patternIndex++;
-        } else if (color >= patternIndex) {
-          patternIndex = color + 1;
-        }
-      } else {
-        if (color < 0) {
-          plot.setColor(colorIndex);
-          colorIndex++;
-        } else if (color >= colorIndex) {
-          colorIndex = color + 1;
-        }
+      if (color < 0) {
+        plot.setColor(colorIndex);
+        colorIndex++;
+      } else if (color >= colorIndex) {
+        colorIndex = color + 1;
       }
       //System.err.println(plot.getColor() + " " + colorIndex + " " + patternIndex);
     }
