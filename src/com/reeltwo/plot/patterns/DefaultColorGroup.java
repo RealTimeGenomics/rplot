@@ -13,9 +13,13 @@ public class DefaultColorGroup implements PatternGroup {
 
   private Color[] mColors = null;
 
+  /**
+   * Creates a new <code>DefaultColorGroup</code>.
+   */
   public DefaultColorGroup() {    
   }
 
+  /** {@inheritDoc} */
   public Paint [] getPatterns() {
     if (mColors == null) {
       mColors = new Color[] {
@@ -34,10 +38,12 @@ public class DefaultColorGroup implements PatternGroup {
     return colors;
   }
 
+  /** {@inheritDoc} */
   public String getName() {
     return "Default Colors";
   }
 
+  /** {@inheritDoc} */
   public String getDescription() {
     return "Default colors that are visible on a white background.";
   }

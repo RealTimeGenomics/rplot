@@ -14,10 +14,21 @@ public class GrayScaleColorGroup implements PatternGroup {
   private final int mNumShades;
   private Color[] mColors = null;
 
+  /**
+   * Creates a new <code>GrayScaleColorGroup</code>setting the number
+   * of different <code>shades</code> of gray to 10.
+   *
+   */
   public GrayScaleColorGroup() {
     this(10);
   }
 
+  /**
+   * Creates a new <code>GrayScaleColorGroup</code> setting the number
+   * of different <code>shades</code> of gray to produce.
+   *
+   * @param shades number of shades
+   */
   public GrayScaleColorGroup(int shades) {
     if (shades <= 0) {
       throw new IllegalArgumentException("must have at least one shade.");
@@ -26,6 +37,7 @@ public class GrayScaleColorGroup implements PatternGroup {
   }
 
 
+  /** {@inheritDoc} */
   public Paint [] getPatterns() {
     if (mColors == null) {
       mColors = new Color[mNumShades];
@@ -40,10 +52,12 @@ public class GrayScaleColorGroup implements PatternGroup {
     return colors;
   }
 
+  /** {@inheritDoc} */
   public String getName() {
     return "Grayscale " + mNumShades;
   }
 
+  /** {@inheritDoc} */
   public String getDescription() {
     return "Gray scaled shades.";
   }

@@ -21,6 +21,9 @@ public class BW8x8PatternGroup implements PatternGroup {
 
   private ArrayList mPatterns = null;
 
+  /**
+   * Creates a new <code>BW8x8PatternGroup</code>.
+   */
   public BW8x8PatternGroup() {
   }
 
@@ -31,6 +34,7 @@ public class BW8x8PatternGroup implements PatternGroup {
     return new TexturePaint(bi, r);
   }
 
+  /** {@inheritDoc} */
   public Paint [] getPatterns() {
     if (mPatterns == null) {
       ArrayList patterns = new ArrayList();
@@ -52,10 +56,12 @@ public class BW8x8PatternGroup implements PatternGroup {
     return (Paint []) mPatterns.toArray(new Paint[mPatterns.size()]);
   }
 
+  /** {@inheritDoc} */
   public String getName() {
     return "Black and White 8x8";
   }
 
+  /** {@inheritDoc} */
   public String getDescription() {
     return "Black and white patterns";
   }
