@@ -13,7 +13,7 @@ import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.ScatterPoint2D;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
-import com.reeltwo.plot.patterns.ExcelPatternGroup;
+import com.reeltwo.plot.patterns.BW8x8PatternGroup;
 import com.reeltwo.plot.ui.ZoomPlotDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -40,7 +40,7 @@ public class SwingPlot {
     mDialog = new ZoomPlotDialog();
     mDialog.validate();
 
-    mDialog.setPatterns(new ExcelPatternGroup().getPatterns());
+    mDialog.setPatterns(new BW8x8PatternGroup().getPatterns());
 
     mDialog.addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent e) {
