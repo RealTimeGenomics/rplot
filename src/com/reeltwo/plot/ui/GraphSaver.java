@@ -3,6 +3,7 @@ package com.reeltwo.plot.ui;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
 import java.awt.Color;
+import java.awt.Paint;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -16,6 +17,7 @@ import javax.swing.filechooser.FileFilter;
  */
 public class GraphSaver {
   private Color [] mColors = AWTDefaults.COLORS;
+  private Paint [] mPatterns = null;
 
   private int mFontSize = -1; // use default font size
   private int mWidth = 800;
@@ -45,6 +47,10 @@ public class GraphSaver {
     mColors = colors;
   }
 
+  public void setPatterns(Paint [] patterns) {
+    mPatterns = patterns;
+  }
+
   public void saveGraph(Graph2D graph) {
     if (graph != null) {
       boolean ok = false;
@@ -69,7 +75,7 @@ public class GraphSaver {
 
   private void writeImage(File file, Graph2D graph) {
     try {
-      GraphicsRenderer gr = new GraphicsRenderer(mColors);
+      GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
       ImageWriter iw = new ImageWriter(gr);
       iw.toPNG(file, graph, mWidth, mHeight, null);
     } catch (Exception ioe) {
