@@ -67,5 +67,22 @@ public class PlotUtils {
     return Math.pow(10, Math.ceil(log10(a)));
   }
 
+  /**
+   * Raises first argument to the power of the second argument.
+   *
+   * @param x value to raise
+   * @param y amount to raise to
+   * @return x<sup>y</sup>
+   */
+  public static float pow(float x, int y) {
+    float val = 1.0f;
+    for (int i = 0; i < (int) Math.abs(y); i++) {
+      val *= x;
+    }
+    if (y < 0) {
+      return 1.0f / val;
+    }
+    return val;
+  }
 
 }
