@@ -7,6 +7,7 @@ import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
+import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.PlotUtils;
@@ -710,10 +711,10 @@ public class GraphicsRenderer extends AbstractRenderer {
             int keyX5 = xx + 5;          
             if (plot instanceof PointPlot2D) {
               PointPlot2D lplot = (PointPlot2D) plot;
-              boolean doLines = lplot.getLines();
-              boolean doPoints = lplot.getPoints();
-              boolean doFill = lplot.getFill();
-              if (doFill) {
+              boolean doLines = lplot.isLines();
+              boolean doPoints = lplot.isPoints();
+              int doFill = lplot.getFill();
+              if (doFill != FillablePlot2D.NO_FILL) {
                 Polygon polygon = new Polygon();
                 polygon.addPoint(keyX5, yy + tHeight / 2 - 1);
                 polygon.addPoint(keyX5 + keyLineWidth / 2, yy - tHeight / 2);
@@ -743,17 +744,17 @@ public class GraphicsRenderer extends AbstractRenderer {
               g.drawRect(keyX5 + keyLineWidth / 2, yy, 0, 0);
             } else if (plot instanceof CurvePlot2D) {
               CurvePlot2D cplot = (CurvePlot2D) plot;
-              boolean doFill = cplot.getFill();
-              if (doFill) {
+              int doFill = cplot.getFill();
+              if (doFill != FillablePlot2D.NO_FILL) {
                 g.fillArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
               } else {
                 g.drawArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
               }
             } else if (plot instanceof BoxPlot2D) {
               BoxPlot2D bplot = (BoxPlot2D) plot;
-              boolean doFill = bplot.getFill();
+              int doFill = bplot.getFill();
               boolean doBorder = bplot.getBorder();
-              if (doFill) {
+              if (doFill != FillablePlot2D.NO_FILL) {
                 g.fillRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
                 if (doBorder) {
                   Color color = g.getColor();
@@ -768,8 +769,8 @@ public class GraphicsRenderer extends AbstractRenderer {
               g.drawRect(keyX5 + keyLineWidth / 2, yy, 1, 1);
             } else if (plot instanceof CirclePlot2D) {
               CirclePlot2D cplot = (CirclePlot2D) plot;
-              boolean doFill = cplot.getFill();
-              if (doFill) {
+              int doFill = cplot.getFill();
+              if (doFill != FillablePlot2D.NO_FILL) {
                 fillCircle(g, keyX5 + 1 + keyLineWidth / 2, yy, tHeight - 2);
               } else {
                 drawCircle(g, keyX5 + 1 + keyLineWidth / 2, yy, tHeight - 2);

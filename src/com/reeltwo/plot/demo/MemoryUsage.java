@@ -1,5 +1,6 @@
 package com.reeltwo.plot.demo;
 
+import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -291,10 +292,10 @@ class MemoryUsage extends JDialog {
             mplot.setColor(3);
 
             PointPlot2D tplot = new PointPlot2D();
-            tplot.setFill(true);
+            tplot.setFill(FillablePlot2D.COLOR_FILL);
 
             PointPlot2D uplot = new PointPlot2D();
-            uplot.setFill(true);
+            uplot.setFill(FillablePlot2D.COLOR_FILL);
 
             while (mKeepRunning) {
               final Graph2D graph = new Graph2D();

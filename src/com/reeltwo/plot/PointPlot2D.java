@@ -7,13 +7,11 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public class PointPlot2D extends Plot2D {
+public class PointPlot2D extends FillablePlot2D {
   /** whether to draw points */
   private boolean mPoints = true;
   /** whether to draw lines */
   private boolean mLines = false;
-  /** whether to do a polygon fill */
-  private boolean mFill = false;
 
 
   /** Default constructor. */
@@ -50,7 +48,7 @@ public class PointPlot2D extends Plot2D {
    *
    * @return whether to show points.
    */
-  public boolean getPoints() {
+  public boolean isPoints() {
     return mPoints;
   }
 
@@ -71,30 +69,8 @@ public class PointPlot2D extends Plot2D {
    *
    * @return whether to join points.
    */
-  public boolean getLines() {
+  public boolean isLines() {
     return mLines;
-  }
-
-
-  /**
-   * Sets whether or not to treat points as a polygon and fill the
-   * polygon. Default is not to fill polygon.
-   *
-   * @param flag whether to fill polygon.
-   */
-  public void setFill(boolean flag) {
-    mFill = flag;
-  }
-
-
-  /**
-   * Returns whether or not to treat points as a polygon and fill the
-   * polygon.
-   *
-   * @return whether to fill polygon.
-   */
-  public boolean getFill() {
-    return mFill;
   }
 
 

@@ -8,8 +8,11 @@ import junit.framework.TestSuite;
  * Created: Mon May 21 16:35:49 2001
  *
  * $Log$
- * Revision 1.1  2004/05/09 22:37:30  richard
- * Initial revision
+ * Revision 1.2  2004/05/24 20:52:22  richard
+ * added concept of patterns to fillable plots
+ *
+ * Revision 1.1.1.1  2004/05/09 22:37:30  richard
+ * initial import
  *
  * Revision 1.5  2003/04/24 04:06:00  len
  * Run through the pretty printer.
@@ -34,7 +37,7 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 
-public class PointPlot2DTest extends AbstractPlot2DTest {
+public class PointPlot2DTest extends FillablePlot2DTest {
 
   /**
    * Constructor (needed for JUnit)
@@ -63,23 +66,18 @@ public class PointPlot2DTest extends AbstractPlot2DTest {
 
   public void test1() {
     PointPlot2D plot = (PointPlot2D) getPlot();
-    assertTrue(!plot.getFill());
-    plot.setFill(false);
-    assertTrue(!plot.getFill());
-    plot.setFill(true);
-    assertTrue(plot.getFill());
 
-    assertTrue(plot.getPoints());
+    assertTrue(plot.isPoints());
     plot.setPoints(false);
-    assertTrue(!plot.getPoints());
+    assertTrue(!plot.isPoints());
     plot.setPoints(true);
-    assertTrue(plot.getPoints());
+    assertTrue(plot.isPoints());
 
-    assertTrue(!plot.getLines());
+    assertTrue(!plot.isLines());
     plot.setLines(false);
-    assertTrue(!plot.getLines());
+    assertTrue(!plot.isLines());
     plot.setLines(true);
-    assertTrue(plot.getLines());
+    assertTrue(plot.isLines());
   }
 
 

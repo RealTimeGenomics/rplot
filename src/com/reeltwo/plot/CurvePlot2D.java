@@ -7,7 +7,7 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public class CurvePlot2D extends Plot2D {
+public class CurvePlot2D extends FillablePlot2D {
   /** Bspline curve type */
   public static final int BSPLINE = 0;
   public static final int BEZIER = 1;
@@ -15,9 +15,6 @@ public class CurvePlot2D extends Plot2D {
 
   /** the curve type */
   private int mType = BSPLINE;
-  /** whether to do a polygon fill */
-  private boolean mFill = false;
-
 
   /** Default constructor. */
   public CurvePlot2D() {
@@ -34,28 +31,6 @@ public class CurvePlot2D extends Plot2D {
    */
   public CurvePlot2D(int x, int y) {
     super(x, y);
-  }
-
-
-  /**
-   * Sets whether or not to treat points as a polygon and fill the
-   * polygon. Default is not to fill polygon.
-   *
-   * @param flag whether to fill polygon.
-   */
-  public void setFill(boolean flag) {
-    mFill = flag;
-  }
-
-
-  /**
-   * Returns whether or not to treat points as a polygon and fill the
-   * polygon.
-   *
-   * @return whether to fill polygon.
-   */
-  public boolean getFill() {
-    return mFill;
   }
 
 

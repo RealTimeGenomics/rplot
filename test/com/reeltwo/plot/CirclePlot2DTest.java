@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 
-public class CirclePlot2DTest extends AbstractPlot2DTest {
+public class CirclePlot2DTest extends FillablePlot2DTest {
 
   /**
    * Constructor (needed for JUnit)
@@ -34,17 +34,6 @@ public class CirclePlot2DTest extends AbstractPlot2DTest {
 
   public Datum2D[] getData() {
     return new Circle2D[]{new Circle2D(1, 2, 3), new Circle2D(5, 6, 7)};
-  }
-
-
-  public void test1() {
-    CirclePlot2D plot = (CirclePlot2D) getPlot();
-
-    assertTrue(plot.getFill());
-    plot.setFill(false);
-    assertTrue(!plot.getFill());
-    plot.setFill(true);
-    assertTrue(plot.getFill());    
   }
 
 

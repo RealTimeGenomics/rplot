@@ -7,9 +7,7 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public class CirclePlot2D extends Plot2D {
-  /** whether to fill circles */
-  private boolean mFill = true;
+public class CirclePlot2D extends FillablePlot2D {
 
   public CirclePlot2D() {
     super();
@@ -30,25 +28,5 @@ public class CirclePlot2D extends Plot2D {
       throw new UnsupportedOperationException("Cannot set " + data.getClass().getName() + " in Circle2D.");
     }
     super.setData(data);
-  }
-
-
-  /**
-   * Sets whether or not to fill circles. Default is to fill circles.
-   *
-   * @param flag whether to fill circles.
-   */
-  public void setFill(final boolean flag) {
-    mFill = flag;
-  }
-
-
-  /**
-   * Returns whether or not to fill circles.
-   *
-   * @return whether to fill circles.
-   */
-  public boolean getFill() {
-    return mFill;
   }
 }

@@ -5,6 +5,7 @@ import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.Circle2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
+import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -162,7 +163,7 @@ public class SwingPlot {
         new Point2D(1.0f, 0.0f)};
     lplot.setData(fpts);
     lplot.setTitle("filled lines");
-    lplot.setFill(true);
+    lplot.setFill(FillablePlot2D.PATTERN_FILL);
 
     graph.addPlot(lplot);
 
@@ -182,7 +183,7 @@ public class SwingPlot {
     bplot = new BoxPlot2D();
     bplot.setData(boxes1);
     bplot.setTitle("box");
-    bplot.setFill(false);
+    bplot.setFill(FillablePlot2D.COLOR_FILL);
 
     graph.addPlot(bplot);
 

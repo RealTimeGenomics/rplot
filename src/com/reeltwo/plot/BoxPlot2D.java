@@ -7,12 +7,7 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public class BoxPlot2D extends Plot2D {
-  /** whether to fill boxes */
-  private boolean mFill = true;
-
-  /** whether to draw a black border */
-  private boolean mBorder = false;
+public class BoxPlot2D extends FillablePlot2D {
 
   /** Default constructor. */
   public BoxPlot2D() {
@@ -29,48 +24,6 @@ public class BoxPlot2D extends Plot2D {
    */
   public BoxPlot2D(int x, int y) {
     super(x, y);
-  }
-
-
-  /**
-   * Sets whether or not to fill boxes. Default is to fill boxes.
-   *
-   * @param flag whether to fill boxes.
-   */
-  public void setFill(boolean flag) {
-    mFill = flag;
-  }
-
-
-  /**
-   * Returns whether or not to fill boxes.
-   *
-   * @return whether to fill boxes.
-   */
-  public boolean getFill() {
-    return mFill;
-  }
-
-
-  /**
-   * Sets whether to draw a black border around the box.  Default is
-   * not to draw the border.  Will only draw the border if fill boxes
-   * is enabled.
-   *
-   * @param flag whether to draw a border
-   */
-  public void setBorder(boolean flag) {
-    mBorder = flag;
-  }
-
-
-  /**
-   * Returns whether to draw a border.
-   *
-   * @return whether to draw a border
-   */
-  public boolean getBorder() {
-    return mBorder;
   }
 
 

@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 
-public class CurvePlot2DTest extends AbstractPlot2DTest {
+public class CurvePlot2DTest extends FillablePlot2DTest {
 
   /**
    * Constructor (needed for JUnit)
@@ -38,14 +38,8 @@ public class CurvePlot2DTest extends AbstractPlot2DTest {
   }
 
 
-  public void test1() {
+  public void testCurves() {
     CurvePlot2D plot = (CurvePlot2D) getPlot();
-    assertTrue(!plot.getFill());
-    plot.setFill(false);
-    assertTrue(!plot.getFill());
-    plot.setFill(true);
-    assertTrue(plot.getFill());
-
     assertEquals(CurvePlot2D.BSPLINE, plot.getType());
     plot.setType(CurvePlot2D.BEZIER);
     assertEquals(CurvePlot2D.BEZIER, plot.getType());

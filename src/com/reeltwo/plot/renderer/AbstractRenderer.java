@@ -10,6 +10,7 @@ import com.reeltwo.plot.Circle2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
+import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.Point2D;
@@ -491,12 +492,12 @@ public abstract class AbstractRenderer {
 
 
   protected void drawPointPlot(Object canvas, PointPlot2D lplot, Mapping convertX, Mapping convertY) {
-    boolean doLines = lplot.getLines();
-    boolean doPoints = lplot.getPoints();
-    boolean doFill = lplot.getFill();
+    boolean doLines = lplot.isLines();
+    boolean doPoints = lplot.isPoints();
+    int doFill = lplot.getFill();
     Datum2D[] points = lplot.getData();
     if (points != null && points.length != 0) {
-      if (doFill) {
+      if (doFill != FillablePlot2D.NO_FILL) {
         Poly polygon = new Poly();
         for (int i = 0; i < points.length; i++) {
           Point2D point = (Point2D) points[i];
@@ -712,7 +713,7 @@ public abstract class AbstractRenderer {
     Datum2D[] points = bplot.getData();
 
     if (points != null && points.length != 0) {
-      boolean doFill = bplot.getFill();      
+      int doFill = bplot.getFill();      
       boolean doBorder = bplot.getBorder();
       for (int i = 0; i < points.length; i++) {
         Box2D box = (Box2D) points[i];
@@ -722,7 +723,7 @@ public abstract class AbstractRenderer {
         int width = (int) convertX.worldToScreen(box.getRight()) - x;
         int height = (int) convertY.worldToScreen(box.getBottom()) - y;
 
-        if (doFill) {
+        if (doFill != FillablePlot2D.NO_FILL) {
           fillRectangle(canvas, x, y, width, height);
           if (doBorder) {
             int color = getColor(canvas);
@@ -739,7 +740,7 @@ public abstract class AbstractRenderer {
 
 
   protected void drawCirclePlot(Object canvas, CirclePlot2D cplot, Mapping convertX, Mapping convertY) {
-    boolean doFill = cplot.getFill();
+    int doFill = cplot.getFill();
     Datum2D[] points = cplot.getData();
 
     if (points != null && points.length != 0) {
@@ -752,7 +753,7 @@ public abstract class AbstractRenderer {
 
         int idiameter = (int) diameter + 1;
 
-        if (doFill) {
+        if (doFill != FillablePlot2D.NO_FILL) {
           fillCircle(canvas, x, y, idiameter);
         } else {
           drawCircle(canvas, x, y, idiameter);
@@ -763,7 +764,7 @@ public abstract class AbstractRenderer {
 
 
   protected void drawCurvePlot(Object canvas, CurvePlot2D cplot, Mapping convertX, Mapping convertY) {
-    boolean doFill = cplot.getFill();
+    int doFill = cplot.getFill();
     int type = cplot.getType();
     Point2D[] points = (Point2D []) cplot.getData();
 
@@ -774,7 +775,7 @@ public abstract class AbstractRenderer {
       ys[i] = (int) convertY.worldToScreen(points[i].getY());
     }
 
-    if (doFill) {
+    if (doFill != FillablePlot2D.NO_FILL) {
       fillCurve(canvas, xs, ys, type);
     } else {
       drawCurve(canvas, xs, ys, type);
