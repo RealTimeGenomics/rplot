@@ -83,6 +83,8 @@ public class PlotPanel extends JPanel {
           if (mGraphSaver == null) {
             mGraphSaver = new GraphSaver();
           }
+          mGraphSaver.setColors(getColors());
+          mGraphSaver.setPatterns(getPatterns());
           mGraphSaver.saveGraph(getGraph());
         }
       };
