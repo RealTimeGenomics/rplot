@@ -178,12 +178,7 @@ public class Arrow2D implements Datum2D {
     return sb.toString();
   }
 
-  /**
-   * Overrides Object.equals
-   *
-   * @param object object to compare to
-   * @return result of comparison
-   */
+  /** {@inheritDoc} */
   public boolean equals(Object object) {
     if (!(object instanceof Arrow2D)) {
       return false;
@@ -193,7 +188,7 @@ public class Arrow2D implements Datum2D {
             && mX2 == pobj.getX2() && mY2 == pobj.getY2());
   }
 
-  // inherited
+  /** {@inheritDoc} */
   public int hashCode() {
     return (int) (mX1 + mX2 + mY1 + mY2);
   }
