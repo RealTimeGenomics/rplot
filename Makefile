@@ -3,7 +3,6 @@ CODEHOME:=$(HOME)/java/rplot
 SRCHOME:=$(CODEHOME)/src
 TESTHOME:=$(CODEHOME)/test
 TMPMANIFEST:=/tmp/manifest
-TMPAPDIR:=/tmp/rpdist
 
 JARS:=RPlot.jar
 
