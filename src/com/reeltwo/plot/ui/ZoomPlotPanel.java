@@ -52,8 +52,8 @@ public class ZoomPlotPanel extends JComponent {
   }
 
   
-  public Action[] getZoomActions() {
-    Action zoomOutAction = new AbstractAction("Zoom Out", null) {
+  public Action getZoomOutAction() {
+    return new AbstractAction("Zoom Out", null) {
         public void actionPerformed(ActionEvent e) {
           //System.err.println("Zoom Out");
           Graph2D graph = mPlotPanel.getGraph();
@@ -67,14 +67,16 @@ public class ZoomPlotPanel extends JComponent {
           }
         }
       };
-    Action pnpAction = new AbstractAction("Pic In Pic On", null) {
+  }
+
+  public Action getPNPAction() {
+    return new AbstractAction("Pic In Pic On", null) {
         public void actionPerformed(ActionEvent e) {
           mPicNPic = !mPicNPic;
           putValue("Name", "Pic In Pic " + (mPicNPic ? "Off" : "On"));
           ZoomPlotPanel.this.repaint();
         }
       };
-    return new Action[] {zoomOutAction, pnpAction};
   }
 
 

@@ -13,8 +13,11 @@ import com.reeltwo.plot.ScatterPoint2D;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
 import com.reeltwo.plot.ui.ZoomPlotDialog;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
 
 /**
  * Starts a new Swing window for displaying Graph2Ds in. The window has
@@ -37,6 +40,15 @@ public class SwingPlot {
     mDialog.addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent e) {
           System.exit(1);
+        }
+      });
+
+    JPopupMenu popup = mDialog.getPopupMenu();
+
+    popup.addSeparator();
+    popup.add(new AbstractAction("Exit") {
+        public void actionPerformed(ActionEvent e) {
+          System.exit(0);
         }
       });
 

@@ -62,8 +62,8 @@ public class PlotPanel extends JPanel {
   private GraphPrinter mGraphPrinter = null;
   private GraphSaver mGraphSaver = null;
 
-  public Action [] getPlotActions() {
-    Action printAction = new AbstractAction("Print") {
+  public Action getPrintAction() {
+    return new AbstractAction("Print") {
         public void actionPerformed(ActionEvent e) {
           if (mGraphPrinter == null) {
             mGraphPrinter = new GraphPrinter();
@@ -71,7 +71,10 @@ public class PlotPanel extends JPanel {
           mGraphPrinter.printGraph(getGraph());
         }
       };
-    Action saveAction = new AbstractAction("Save Image") {
+  }
+
+  public Action getSaveImageAction() {
+    return new AbstractAction("Save Image") {
         public void actionPerformed(ActionEvent e) {
           if (mGraphSaver == null) {
             mGraphSaver = new GraphSaver();
@@ -79,20 +82,22 @@ public class PlotPanel extends JPanel {
           mGraphSaver.saveGraph(getGraph());
         }
       };
-    //Action snapShotAction = new AbstractAction("Snap Shot", null) {
-    //public void actionPerformed(ActionEvent e) {
-          /*try {
-            SwingPlot sp = new SwingPlot("Snap Shot");
-            sp.plot((Graph2D) mGraph.clone());
-          } catch (CloneNotSupportedException cnse) {
-            Logger.error("CMPP2", "Failed to clone graph: " + cnse.getMessage());
-            }*/
-    //  }
-    //};
-
-    return new Action[] {printAction, saveAction}; //, snapShotAction};
   }
 
+  public Action getSnapShotAction() {
+    return new AbstractAction("Snap Shot", null) {
+        public void actionPerformed(ActionEvent e) {
+          try {
+            PlotDialog pd = new PlotDialog();
+            pd.setTitle("Snap Shot");
+            pd.setGraph((Graph2D) mGraph.clone());
+            pd.setVisible(true);
+          } catch (CloneNotSupportedException cnse) {
+            System.err.println("Failed to clone graph: " + cnse.getMessage());
+          }
+        }
+      };
+  }
 
   public Color [] getColors() {
     return mColors;

@@ -17,7 +17,7 @@ import javax.swing.JPopupMenu;
  * @version $Revision$
  */
 public class PlotDialog extends JDialog {
-  private final PlotPanel mPlotPanel;
+  protected final PlotPanel mPlotPanel;
 
   private final JPopupMenu mPopup;
   
@@ -34,23 +34,20 @@ public class PlotDialog extends JDialog {
     // set up a popup menu with zoom and plot controls
     mPopup = new JPopupMenu();
     mPopup.setLightWeightPopupEnabled(false);
-    mPopup.addSeparator();
-    Action [] actions = mPlotPanel.getPlotActions();
-    for (int i = 0; i < actions.length; i++) {
-      mPopup.add(actions[i]);
-    }
-    mPopup.addSeparator();
-    mPopup.add(new AbstractAction("Exit") {
-        public void actionPerformed(ActionEvent e) {
-          System.exit(0);
-        }
-      });
+    mPopup.add(mPlotPanel.getPrintAction());
+    mPopup.add(mPlotPanel.getSaveImageAction());
+    mPopup.add(mPlotPanel.getSnapShotAction());
+
     // listener to show popup
     mPlotPanel.addMouseListener(new PopupListener());
 
     setSize(640, 480);
   }
 
+
+  public JPopupMenu getPopupMenu() {
+    return mPopup;
+  }
     
   /**
    * Plots the given graph.
