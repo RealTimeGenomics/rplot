@@ -11,7 +11,7 @@ import java.awt.Paint;
  */
 public class DefaultColorGroup implements PatternGroup {
 
-  public static final Color[] COLORS = new Color[] {
+  private static final Color[] COLORS = new Color[] {
     Color.RED,
     new Color(0.0F, 0.8F, 0.0F),  // green
     Color.BLUE,

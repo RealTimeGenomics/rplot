@@ -11,7 +11,7 @@ import java.awt.Paint;
  */
 public class GrayScaleColorGroup implements PatternGroup {
 
-  public final Color[] mColors;
+  private final Color[] mColors;
 
   public GrayScaleColorGroup() {
     this(10);
