@@ -17,7 +17,6 @@ public class AWTDefaults {
 
   /** default colors used to plot lines */
   public static final Color[] COLORS = new Color[] {
-    Color.BLACK,
     Color.RED,
     new Color(0.0F, 0.8F, 0.0F),  // green
     Color.BLUE,
