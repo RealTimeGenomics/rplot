@@ -44,6 +44,9 @@ public class TextPlot2D extends Plot2D {
   /** inverse video on text */
   private boolean mInvert = false;
 
+  /** use graph fg color rather than plot colors */
+  private boolean mUseFGColor = true;
+
 
   public TextPlot2D() {
     super();
@@ -146,6 +149,25 @@ public class TextPlot2D extends Plot2D {
     return mInvert;
   }
 
+  /**
+   * Sets whether to draw text using the graphs forground color or one
+   * of the automatically selected plot colors. 
+   *
+   * @param flag use foreground color
+   */
+  public void setUseFGColor(boolean flag) {
+    mUseFGColor = true;
+  }
+
+
+  /**
+   * Returns whether using foreground color.
+   *
+   * @return using foreground color
+   */
+  public boolean isUseFGColor() {
+    return mUseFGColor;
+  }
 
   /**
    * Sets the data used in this plot.
