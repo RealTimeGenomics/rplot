@@ -309,7 +309,7 @@ public class PlotPanel extends JPanel {
       mMapping = mGraphicsRenderer.getMappings();
     }
     //System.err.println("Set mapping:" + mMapping);
-    if (mMapping != null) {
+    if (mMapping != null && mToolTipProvider != null) {
       mToolTipProvider.setMaps(mMapping[0], mMapping[1]);
     }
   }
