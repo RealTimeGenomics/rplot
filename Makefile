@@ -10,7 +10,7 @@ JARS:=RPlot.jar
 RPSRC=$(shell find $(SRCHOME)/ -name "*.java")
 RPTEST=$(shell find $(TESTHOME)/ -name "*.java")
 RPCLASSES=$(shell echo $(RPSRC)" "$(RPTEST) | sed "s/\.java/\.class/g")
-RPCLASSES2=$(shell echo $(RPSRC) | sed -e "s|$(SRCHOME)/||g" -e "s/\.java/\*\.class/g") com/reeltwo/plot/ui/ZoomListener.class
+RPCLASSES2=$(shell echo $(RPSRC) | sed -e "s|$(SRCHOME)/||g" -e "s/\.java/\*\.class/g")
 RPCLASSES3=$(shell echo $(RPTEST) | sed -e "s|$(TESTHOME)/||g" -e "s/\.java/\*\.class/g")
 
 
