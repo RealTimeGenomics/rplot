@@ -16,7 +16,7 @@ import javax.swing.event.MouseInputAdapter;
 
 /**
  * A panel that has a special affinity with a plot panel to allow the
- * user to select and zoom in on arbitary regions of the plot.
+ * user to select and zoom in on arbitrary regions of the plot.
  *
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
  * @version $Revision$
