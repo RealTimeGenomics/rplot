@@ -261,6 +261,9 @@ public class SwingPlot {
     graph.setXTic(0, 0.15f);
     graph.setXTicLabels(0, new String[]{"The", "quick", "brown", "fox", "jumped"});
 
+    graph.setKeyVerticalPosition(Graph2D.BELOW);
+    graph.setColoredKey(false);
+
     return graph;
   }
 
