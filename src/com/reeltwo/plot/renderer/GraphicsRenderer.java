@@ -345,7 +345,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       drawData(g, graph.getPlots(), mapping);
       drawVerticalLine(graph, g, mapping[0], sylo, syhi);
 
-      if (ticInfos[3] != null) {
+      if (ticInfos != null && ticInfos[3] != null) {
         sxhi += ticInfos[3].mMaxWidth + 2;
       }
       drawKey(graph, g, screenWidth, screenHeight, sxlo, sylo, sxhi, syhi);
