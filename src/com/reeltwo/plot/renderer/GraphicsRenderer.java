@@ -424,7 +424,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           }
         }
         mapping = createMappings(graph, sxlo, sylo, sxhi, syhi);
-        drawGraphArea(g, sxlo, sxhi, sylo, syhi);
+        drawGraphArea(g, sxlo, sylo, sxhi, syhi);
         setupAntialiasing(g);
         drawYTics(graph, g, 0, yTicInfo, mapping[1], sxlo, sxhi, sylo, syhi);
         drawYTics(graph, g, 1, y2TicInfo, mapping[3], sxlo, sxhi, sylo, syhi);
@@ -443,7 +443,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         setColor(g, FOREGROUND_COLOR_INDEX);
         g.drawRect(sxlo, syhi, sxhi - sxlo, sylo - syhi);
       } else {
-        drawGraphArea(g, sxlo, sxhi, sylo, syhi);
+        drawGraphArea(g, sxlo, sylo, sxhi, syhi);
         mapping = createMappings(graph, sxlo, sylo, sxhi, syhi);
       }
       setColor(g, FOREGROUND_COLOR_INDEX);
@@ -534,7 +534,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     return keyHeight * getTextHeight(canvas, "A");
   }
 
-  private void drawGraphArea(Graphics g, int sxlo, int sxhi, int sylo, int syhi) {
+  private void drawGraphArea(Graphics g, int sxlo, int sylo, int sxhi, int syhi) {
     if (mGraphTopColor != null) {
       if (mGraphBottomColor == null || mGraphBottomColor.equals(mGraphTopColor)) {
         g.setColor(mGraphTopColor);
