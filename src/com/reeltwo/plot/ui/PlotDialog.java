@@ -19,7 +19,7 @@ public class PlotDialog extends JDialog {
   protected final PlotPanel mPlotPanel;
 
   private final JPopupMenu mPopup;
-  
+
   /** Creates the plot dialog. */
   public PlotDialog() {
     mPlotPanel = new PlotPanel(true); // buffer image
@@ -62,6 +62,15 @@ public class PlotDialog extends JDialog {
    */
   public void setGraph(Graph2D graph) {
     mPlotPanel.setGraph(graph);
+  }
+
+
+  public PlotPanel getPlotPanel() {
+    return mPlotPanel;
+  }
+  
+  public void setToolTipProvider(ToolTipProvider provider) {
+    mPlotPanel.setToolTipProvider(provider);
   }
 
   /**

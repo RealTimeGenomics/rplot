@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Paint;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -30,7 +31,9 @@ public class PlotPanel extends JPanel {
 
   private boolean mBufferGraphs = false;
   private BufferedImage mBI = null;
-  
+
+  private ToolTipProvider mToolTipProvider = null;
+    
   /** Default constructor. */
   public PlotPanel() {
     this(false);
@@ -56,6 +59,19 @@ public class PlotPanel extends JPanel {
       }
     }
     setColors(lineColors);
+  }
+
+  // inherited
+  public String getToolTipText(MouseEvent event) {
+    if (mToolTipProvider != null) {
+      return mToolTipProvider.getToolTipText(event.getX(), event.getY());
+    }
+    return null;
+  }
+
+  public void setToolTipProvider(ToolTipProvider provider) {
+    mToolTipProvider = provider;
+    setToolTipText(mToolTipProvider == null ? null : "");
   }
 
   private GraphPrinter mGraphPrinter = null;
