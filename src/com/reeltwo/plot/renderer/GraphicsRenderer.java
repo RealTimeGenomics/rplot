@@ -847,6 +847,8 @@ public class GraphicsRenderer extends AbstractRenderer {
               String text = "abc";
               FontMetrics fm = g.getFontMetrics();
               int sw = getTextWidth(g, text);
+              final int color = tplot.isUseFGColor() ? FOREGROUND_COLOR_INDEX : tplot.getColor();
+              setColor(g, color);
               if (tplot.isInvert()) {
                 g.fillRect(keyX5, yy - tHeight / 2 + fm.getMaxDescent() - 2, sw, tHeight);
                 setColor(g, BACKGROUND_COLOR_INDEX);
