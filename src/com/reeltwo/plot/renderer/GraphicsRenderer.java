@@ -217,7 +217,6 @@ public class GraphicsRenderer extends AbstractRenderer {
    * @param offY Y offset into drawing region
    * @param screenWidth width of drawing region
    * @param screenHeight height of drawing region
-   * @param colors TODO Description.
    * @return an array of world to screen mappings
    */
   public void drawGraph(Graph2D graph, Graphics g, 

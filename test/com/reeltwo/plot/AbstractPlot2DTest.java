@@ -2,32 +2,6 @@ package com.reeltwo.plot;
 
 import junit.framework.TestCase;
 
-/*
- * Created: Mon May 21 16:35:49 2001
- *
- * $Log$
- * Revision 1.1  2004/05/09 22:37:30  richard
- * Initial revision
- *
- * Revision 1.4  2003/04/24 04:06:00  len
- * Run through the pretty printer.
- *
- * Revision 1.3  2002/04/15 22:54:34  sean
- * Removed extra imports
- *
- * Revision 1.2  2001/11/18 02:36:29  richard
- * changed float to double in graph plotting code.
- *
- * Revision 1.1  2001/10/10 19:30:46  richard
- * Renamed Plot & Datum abstract tests.
- *
- * Revision 1.2  2001/10/09 04:23:16  richard
- * Major rework of Graph2D and associated bits.
- *
- * Revision 1.1  2001/10/08 22:04:26  richard
- * Initial coding of tests, bug fixes to others.
- *
- */
 /**
  * Abstract JUnit tests for the Plot2D classes.
  *
@@ -83,7 +57,7 @@ public abstract class AbstractPlot2DTest extends TestCase {
       plot.setData(null);
       fail("plot accepted null data.");
     } catch (NullPointerException npe) {
-      // should get here
+      ; // should get here
     }
     plot.setData(data);
     assertTrue(plot.getData() == data);
