@@ -5,6 +5,7 @@ import com.reeltwo.plot.renderer.GraphicsRenderer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Paint;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
@@ -21,6 +22,7 @@ import java.awt.print.PrinterJob;
 public class GraphPrinter implements Printable {
 
   private Color [] mColors = AWTDefaults.COLORS;
+  private Paint [] mPatterns = null;
   private Graph2D mGraph = null;
 
   private int mFontSize = 0; // use default font size
@@ -45,6 +47,10 @@ public class GraphPrinter implements Printable {
       throw new NullPointerException("no colors given");
     }
     mColors = colors;
+  }
+
+  public void setPatterns(Paint [] patterns) {
+    mPatterns = patterns;
   }
 
   public void printGraph(Graph2D graph) {
@@ -81,7 +87,7 @@ public class GraphPrinter implements Printable {
     }
 
     pf.setOrientation(PageFormat.LANDSCAPE);
-    GraphicsRenderer gr = new GraphicsRenderer(mColors);
+    GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
     Graphics g2 = g.create((int) pf.getImageableX(), (int) pf.getImageableY(),
                            (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
     gr.drawGraph(mGraph, g2, (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
