@@ -63,7 +63,7 @@ public class GraphSaver {
     File f = file;
     if (file != null && filter != null && !filter.accept(f)) {
       if (filter instanceof PNGFileFilter) {
-        f = new File(file, ".png");
+        f = new File(file.getPath() + ".png");
       }
     }
     return f;
