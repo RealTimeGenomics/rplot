@@ -22,7 +22,7 @@ public class ExcelPatternGroup implements PatternGroup {
 
   public ExcelPatternGroup() {
     try {
-      ClassLoader loader = Pattern.class.getClassLoader();
+      ClassLoader loader = getClass().getClassLoader();
       for (int i = 1; i <= 48; i++) {
         final BufferedImage bi = ImageIO.read(loader.getResource(PATTERN_PATH + i + PATTERN_EXTENSION));
         final Rectangle r = new Rectangle(0, 0, bi.getWidth(), bi.getHeight());
