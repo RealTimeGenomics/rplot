@@ -63,7 +63,7 @@ public class ImageWriter {
    * screen data points for each axis pair is returned.
    *
    * @param type type of image to produce.
-   * @param fileName File name to save graph to.
+   * @param file File to save graph to.
    * @param graph graph to save.
    * @param width width of image.
    * @param height height of image.
@@ -118,95 +118,12 @@ public class ImageWriter {
 
 
   /**
-   * Writes the given graph out to a GIF formatted file. The width and
-   * height parameters determine the dimension of the image (in
-   * pixels). The mappings from world to screen data points for each
-   * axis pair is returned.
-   *
-   * @param fileName File name to save graph to.
-   * @param graph graph to save.
-   * @param width width of image.
-   * @param height height of image.
-   * @param font font to use in graph.
-   * @return an array of world to screen mappings.
-   * @exception IOException if a file writing error occurs.
-   */
-  /*public Mapping[] toGIF(String fileName, Graph2D graph, int width, int height, Font font)
-     throws IOException {
-
-    if (fileName == null) {
-      throw new NullPointerException("null file name given.");
-    }
-
-    File out = new File(fileName);
-    FileOutputStream fos = new FileOutputStream(out);
-    try {
-      return toGIF(fos, graph, width, height, font);
-    } finally {
-      fos.close();
-    }
-    }*/
-
-
-  /**
-   * Writes the given graph out to a GIF formatted output stream. The
-   * width and height parameters determine the dimension of the image
-   * (in pixels). The mappings from world to screen data points for
-   * each axis pair is returned.
-   *
-   * @param os stream to write to.
-   * @param graph graph to save.
-   * @param width width of image.
-   * @param height height of image.
-   * @param font font to use in graph.
-   * @return an array of world to screen mappings.
-   * @exception IOException if a file writing error occurs.
-   */
-  /*  public Mapping[] toGIF(OutputStream os, Graph2D graph, int width, int height, Font font)
-     throws IOException {
-
-    if (os == null) {
-      throw new NullPointerException("null output stream given.");
-    }
-    if (graph == null) {
-      throw new NullPointerException("null graph given.");
-    }
-    if (width < 0 || height < 0) {
-      throw new IllegalArgumentException("dimensions must be greater than 0");
-    }
-
-    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED); //TYPE_INT_RGB);
-
-    Graphics2D g = bi.createGraphics();
-
-    if (font != null) {
-      g.setFont(font);
-    }
-    g.setColor(Color.WHITE);
-    g.fillRect(0, 0, width, height);
-
-    Mapping[] mapping = mGraphicsRenderer.drawGraph(graph, mColors, g, 0, 0, width, height);
-
-    //RenderingHints rhs = g.getRenderingHints();
-    //ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
-    //ColorConvertOp theOp = new ColorConvertOp(cs, rhs);
-    //BufferedImage dstImg =  new BufferedImage(width, height, BufferedImage.TYPE_BYTE_INDEXED);
-    //theOp.filter(bi, dstImg);
-
-    GifEncoder encoder = new GifEncoder(bi, os); //dstImg,os);
-    encoder.encode();
-
-    return mapping;
-    }*/
-
-
-  /**
    * Writes the given graph out to a PNG formatted file. The width and
    * height parameters determine the dimension of the image (in
    * pixels). The mappings from world to screen data points for each
    * axis pair is returned.
    *
-   * @param fileName File name to save graph to.
+   * @param file File to save graph to.
    * @param graph graph to save.
    * @param width width of image.
    * @param height height of image.
