@@ -17,7 +17,9 @@ public class AllTests extends TestSuite {
   public static Test suite() {
     TestSuite suite = new TestSuite();
 
-    suite.addTest(PatternTest.suite());
+    suite.addTest(DefaultColorGroupTest.suite());
+    suite.addTest(ExcelPatternGroupTest.suite());
+    suite.addTest(GrayScaleColorGroupTest.suite());
 
     return suite;
   }
