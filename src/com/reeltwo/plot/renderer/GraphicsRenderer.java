@@ -14,7 +14,6 @@ import com.reeltwo.plot.PlotUtils;
 import com.reeltwo.plot.PointPlot2D;
 import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.TextPlot2D;
-import com.reeltwo.plot.TextPoint2D;
 import com.reeltwo.plot.patterns.DefaultColorGroup;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -679,47 +678,52 @@ public class GraphicsRenderer extends AbstractRenderer {
     }
   }
 
+  private int calcKeyX(Graph2D graph, Graphics g, int sxlo, int sxhi, int keyWidth) {
+    int keyX;
+    int position = graph.getKeyHorizontalPosition();
+    if (position == Graph2D.OUTSIDE) {
+      keyX = sxhi + 2;
+    } else if (position == Graph2D.LEFT) {
+      keyX = sxlo + 2;
+    } else if (position == Graph2D.CENTER) {
+      keyX = (sxhi + sxlo - keyWidth) / 2;
+    } else if (position == Graph2D.BELOW) {
+      keyX = 0;
+    } else { // assume RIGHT by default
+      keyX = sxhi - keyWidth - 2;
+    }
+    return keyX;
+  }
 
-  private void drawKey(Graph2D graph, Graphics g, int screenWidth, int screenHeight, 
-                       int sxlo, int sylo, int sxhi, int syhi) {
+  private int calcKeyY(Graph2D graph, Graphics g, int screenWidth, int sylo, int syhi, int keyHeight) {
+    int keyY;
+    int position = graph.getKeyVerticalPosition();
+    if (position == Graph2D.BOTTOM) {
+      keyY = sylo - keyHeight - 2;
+    } else if (position == Graph2D.CENTER) {
+      keyY = (syhi + sylo - keyHeight) / 2;
+    } else if (position == Graph2D.BELOW) {
+      keyY = sylo;
+    } else { // assume TOP by default
+      keyY = syhi + 2;
+    }
+    return keyY;
+  }
+
+  private void drawKey(Graph2D graph, Graphics g, int screenWidth, int screenHeight, int sxlo, int sylo, int sxhi, int syhi) {
     if (graph.getBorder() && graph.getShowKey()) {
       setClip(g, 0, 0, screenWidth, screenHeight);
       String keyTitle = graph.getKeyTitle();
       int tHeight = getTextHeight(g, "A");
-
-      int keyX;
       final int keyWidth = calculateKeyWidth(g, graph);
-      int position = graph.getKeyHorizontalPosition();
-      if (position == Graph2D.OUTSIDE) {
-        keyX = sxhi + 2;
-      } else if (position == Graph2D.LEFT) {
-        keyX = sxlo + 2;
-      } else if (position == Graph2D.CENTER) {
-        keyX = (sxhi + sxlo - keyWidth) / 2;
-      } else { // assume RIGHT by default
-        keyX = sxhi - keyWidth - 2;
-      }
-
-      int keyY;
-      int keyHeight = calculateKeyHeight(g, graph, screenWidth);
-      position = graph.getKeyVerticalPosition();
-      if (position == Graph2D.BOTTOM) {
-        keyY = sylo - keyHeight - 2;
-      } else if (position == Graph2D.CENTER) {
-        keyY = (syhi + sylo - keyHeight) / 2;
-      } else if (position == Graph2D.BELOW) {
-        keyY = sylo;
-        keyX = 0;
-      } else { // assume TOP by default
-        keyY = syhi + 2;
-      }
-
+      int keyX = calcKeyX(graph, g, sxlo, sxhi, keyWidth);
+      final int keyHeight = calculateKeyHeight(g, graph, screenWidth);
+      int keyY = calcKeyY(graph, g, screenWidth, sylo, syhi, keyHeight);
       if (keyTitle != null && keyTitle.length() != 0) {
         setColor(g, FOREGROUND_COLOR_INDEX);
         int yy = keyY + tHeight;
         g.drawString(keyTitle, keyX + 5, yy);
       }
-
       final int cols = keyWidth == 0 ? 0 : Math.max(1, screenWidth / keyWidth);
       final int rows = keyHeight / tHeight;
       Plot2D[] plots = graph.getPlots();
@@ -752,19 +756,16 @@ public class GraphicsRenderer extends AbstractRenderer {
             g.drawString(dtitle, xx + keyLineWidth + 10, yy);
             setColor(g, plot.getColor());
             yy -= tHeight / 2 - 2;
-
             int doFill = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).getFill() : FillablePlot2D.NO_FILL;
             if (doFill == FillablePlot2D.PATTERN_FILL) {
               setPattern(g, plot.getColor());
             }
             boolean doBorder = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).getBorder() : false;
-            
             Stroke s = null;
             if (plot.getLineWidth() > 1) {
               s = ((Graphics2D) g).getStroke();
               ((Graphics2D) g).setStroke(new BasicStroke(plot.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             }
-
             int keyX5 = xx + 5;          
             if (plot instanceof PointPlot2D) {
               PointPlot2D lplot = (PointPlot2D) plot;
@@ -852,9 +853,7 @@ public class GraphicsRenderer extends AbstractRenderer {
                 g.drawString(text, keyX5, yy + tHeight / 2 - 2);
               }
             }
-            if (s != null) {
-              ((Graphics2D) g).setStroke(s);
-            }
+            if (s != null) { ((Graphics2D) g).setStroke(s); }
           }
         }
       }
