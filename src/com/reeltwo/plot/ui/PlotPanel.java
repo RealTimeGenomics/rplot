@@ -39,15 +39,33 @@ public class PlotPanel extends JPanel {
     this(false);
   }
 
+  /**
+   * Creates a new <code>PlotPanel</code> allowing graphs to be
+   * buffered.  Buffering helps speed things up but uses more memory.
+   *
+   * @param bufferGraphs whether to buffer graphs
+   */
   public PlotPanel(boolean bufferGraphs) {
     setBufferGraphs(bufferGraphs);
     mGraphicsRenderer = new GraphicsRenderer();
   }
 
+  /**
+   * Creates a new <code>PlotPanel</code> setting the colors to use.
+   *
+   * @param lineColors an array of <code>Color</code>s
+   */
   public PlotPanel(Color [] lineColors) {
     this(lineColors, false);
   }
 
+  /**
+   * Creates a new <code>PlotPanel</code> setting the colors to use
+   * and allowing graphs to be buffered.
+   *
+   * @param lineColors an array of <code>Color</code>s
+   * @param bufferGraphs whether to buffer graphs
+   */
   public PlotPanel(Color [] lineColors, boolean bufferGraphs) {
     this(bufferGraphs);
     if (lineColors == null || lineColors.length == 0) {
@@ -61,7 +79,7 @@ public class PlotPanel extends JPanel {
     setColors(lineColors);
   }
 
-  // inherited
+  /** {@inheritDoc} */
   public String getToolTipText(MouseEvent event) {
     if (mToolTipProvider != null) {
       return mToolTipProvider.getToolTipText(event.getX(), event.getY());
@@ -69,6 +87,12 @@ public class PlotPanel extends JPanel {
     return null;
   }
 
+  /**
+   * Sets the ToolTipProvider to allow position dependent tool tip
+   * text. 
+   *
+   * @param provider a <code>ToolTipProvider</code>
+   */
   public void setToolTipProvider(ToolTipProvider provider) {
     mToolTipProvider = provider;
     setToolTipText(mToolTipProvider == null ? null : "");
@@ -77,6 +101,11 @@ public class PlotPanel extends JPanel {
   private GraphPrinter mGraphPrinter = null;
   private GraphSaver mGraphSaver = null;
 
+  /**
+   * Returns an action allowing the graph to be printed.
+   *
+   * @return an <code>Action</code>
+   */
   public Action getPrintAction() {
     return new AbstractAction("Print") {
         public void actionPerformed(ActionEvent e) {
@@ -90,6 +119,11 @@ public class PlotPanel extends JPanel {
       };
   }
 
+  /**
+   * Returns an action allowing the graph to be saved.
+   *
+   * @return an <code>Action</code>
+   */
   public Action getSaveImageAction() {
     return new AbstractAction("Save Image") {
         public void actionPerformed(ActionEvent e) {
@@ -103,6 +137,12 @@ public class PlotPanel extends JPanel {
       };
   }
 
+  /**
+   * Returns an action allowing a shapshot of the graph to be rendered
+   * in a separate dialog.
+   *
+   * @return an <code>Action</code>
+   */
   public Action getSnapShotAction() {
     return new AbstractAction("Snap Shot", null) {
         public void actionPerformed(ActionEvent e) {
@@ -118,27 +158,60 @@ public class PlotPanel extends JPanel {
       };
   }
 
+  /**
+   * Sets the colors to render plots with.
+   *
+   * @param colors an array of colors
+   */
   public void setColors(Color [] colors) {
     mGraphicsRenderer.setColors(colors);
   }
 
+  /**
+   * Returns the plot colors.
+   *
+   * @return an array of <code>Color</code>s
+   */
   public Color [] getColors() {
     return mGraphicsRenderer.getColors();
   }
 
+  /**
+   * Sets the patterns to use when rendering plots.
+   *
+   * @param patterns an array of patterns
+   */
   public void setPatterns(Paint [] patterns) {
     mGraphicsRenderer.setPatterns(patterns);
   }
 
+  /**
+   * Returns the plot patterns.
+   *
+   * @return an array of patterns
+   */
   public Paint [] getPatterns() {
     return mGraphicsRenderer.getPatterns();
   }
 
 
+  /**
+   * Sets the graphs background colors.  The color is blended from
+   * <code>topColor</code> to <code>bottomColor</code> from top to
+   * bottom in the graph.
+   *
+   * @param topColor a <code>Color</code>
+   * @param bottomColor a <code>Color</code>
+   */
   public void setGraphBGColor(Color topColor, Color bottomColor) {
     mGraphicsRenderer.setGraphBGColor(topColor, bottomColor);
   }
 
+  /**
+   * Sets the width of the shadow around the graph border.
+   *
+   * @param width shadow width
+   */
   public void setGraphShadowWidth(int width) {
     mGraphicsRenderer.setGraphShadowWidth(width);
   }
@@ -156,24 +229,39 @@ public class PlotPanel extends JPanel {
 
 
   /**
-   * return the plot data that the panel is holding
+   * Returns the plot data that the panel is holding
    *
-   * @return The graph value.
+   * @return a graph
    */
   public Graph2D getGraph() {
     return mGraph;
   }
 
 
+  /**
+   * Returns the mapping of graph elements to screen co-ords.
+   *
+   * @return an array <code>Mapping</code>s
+   */
   public Mapping[] getMapping() {
     return mMapping;
   }
 
 
+  /**
+   * Turns antialiasing on or off based on <code>flag</code>.
+   *
+   * @param flag antialiasing switch
+   */
   public void setAntialiasing(boolean flag) {
     mGraphicsRenderer.setAntialiasing(flag);
   }
 
+  /**
+   * Turns text antialiasing on or off based on <code>flag</code>.
+   *
+   * @param flag antialiasing switch
+   */
   public void setTextAntialiasing(boolean flag) {
     mGraphicsRenderer.setTextAntialiasing(flag);
   }
