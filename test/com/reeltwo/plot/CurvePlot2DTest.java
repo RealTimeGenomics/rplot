@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 
-public class CurvePlot2DTest extends FillablePlot2DTest {
+public class CurvePlot2DTest extends AbstractFillablePlot2DTest {
 
   /**
    * Constructor (needed for JUnit)

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 
-public class CirclePlot2DTest extends FillablePlot2DTest {
+public class CirclePlot2DTest extends AbstractFillablePlot2DTest {
 
   /**
    * Constructor (needed for JUnit)

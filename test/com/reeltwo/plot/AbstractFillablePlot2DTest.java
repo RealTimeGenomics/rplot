@@ -1,23 +1,19 @@
 package com.reeltwo.plot;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * JUnit tests for the FillablePlot2D abstract class.
  *
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
  * @version $Revision$
  */
-
-public abstract class FillablePlot2DTest extends AbstractPlot2DTest {
+public abstract class AbstractFillablePlot2DTest extends AbstractPlot2DTest {
 
   /**
    * Constructor (needed for JUnit)
    *
    * @param name A string which names the object.
    */
-  public FillablePlot2DTest(String name) {
+  public AbstractFillablePlot2DTest(String name) {
     super(name);
   }
 

@@ -8,6 +8,9 @@ import junit.framework.TestSuite;
  * Created: Mon May 21 16:35:49 2001
  *
  * $Log$
+ * Revision 1.3  2004/05/24 22:29:23  richard
+ * moved FillablePlot2DTest to AbstractFillablePlot2DTest
+ *
  * Revision 1.2  2004/05/24 20:52:22  richard
  * added concept of patterns to fillable plots
  *
@@ -37,7 +40,7 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 
-public class PointPlot2DTest extends FillablePlot2DTest {
+public class PointPlot2DTest extends AbstractFillablePlot2DTest {
 
   /**
    * Constructor (needed for JUnit)

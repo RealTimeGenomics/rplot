@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
  * @version $Revision$
  */
-public class BoxPlot2DTest extends FillablePlot2DTest {
+public class BoxPlot2DTest extends AbstractFillablePlot2DTest {
 
   /**
    * Constructor (needed for JUnit)
