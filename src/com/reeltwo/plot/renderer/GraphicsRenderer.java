@@ -300,7 +300,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           }
         }
         if (graph.usesX(0) && graph.getXLabel(0).length() > 0) {
-          sylo -= tHeight + 4;
+          sylo -= tHeight + 2;
           // draw x label later when border width is known
         }
         if (graph.usesY(0) && graph.getYLabel(0).length() > 0) {
@@ -359,7 +359,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         setColor(g, FOREGROUND_COLOR_INDEX);
         String xLabel;
         if (graph.usesX(0) && (xLabel = graph.getXLabel(0)).length() > 0) {
-          final int extra = tHeight * (1 + ((graph.usesX(0) && graph.isShowXTics(0)) ? 1 : 0));
+          final int extra = tHeight + ((graph.usesX(0) && graph.isShowXTics(0)) ? xTicInfo.mMaxHeight : 0);
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, sylo + extra);
         }
         if (graph.usesX(1) && (xLabel = graph.getXLabel(1)).length() > 0) {
@@ -384,7 +384,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
       if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
       if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
-      drawKey(graph, g, screenWidth, screenHeight, sxlo, sylo + 2, sxhi, syhi);
+      drawKey(graph, g, screenWidth, screenHeight, sxlo, sylo, sxhi, syhi);
     }
     setMappings(mapping);
   }
