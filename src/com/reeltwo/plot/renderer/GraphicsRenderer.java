@@ -228,8 +228,8 @@ public class GraphicsRenderer extends AbstractRenderer {
       g.setColor(Color.BLACK);
       setClip(g, 0, 0, screenWidth, screenHeight);
       int sxlo = 0;
-      int sxhi = screenWidth;
-      int sylo = screenHeight;
+      int sxhi = screenWidth - 1;
+      int sylo = screenHeight - 1;
       int syhi = 0;
 
       String title = graph.getTitle();
@@ -240,11 +240,16 @@ public class GraphicsRenderer extends AbstractRenderer {
 
       TicInfo [] ticInfos = null;
 
+      TicInfo y2TicInfo = null;
+      TicInfo xTicInfo = null;
       int keyX = 0;
       if (graph.getBorder()) {
         int keyWidth = 0;
         if (graph.getShowKey()) {
-          if (graph.getKeyHorizontalPosition() == Graph2D.OUTSIDE) {
+          if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
+            final int keyHeight = calculateKeyHeight(g, graph, screenWidth);
+            sylo -= keyHeight + 2;
+          } else if (graph.getKeyHorizontalPosition() == Graph2D.OUTSIDE) {
             keyWidth = calculateKeyWidth(g, graph);
             sxhi -= keyWidth + 2;
           }
@@ -281,12 +286,12 @@ public class GraphicsRenderer extends AbstractRenderer {
           sxlo += yTicInfo.mMaxWidth + 2;
         }
 
-        TicInfo y2TicInfo = ticInfos[3];
+        y2TicInfo = ticInfos[3];
         if (y2TicInfo != null) {
           sxhi -= y2TicInfo.mMaxWidth + 2;
         }
         
-        TicInfo xTicInfo = ticInfos[0];
+        xTicInfo = ticInfos[0];
         if (xTicInfo != null) {
           sylo -= xTicInfo.mMaxHeight;
           if (!(graph.usesY(0) && graph.getShowYTics(0))) {
@@ -321,7 +326,8 @@ public class GraphicsRenderer extends AbstractRenderer {
         g.setColor(Color.BLACK);
         String xLabel;
         if (graph.usesX(0) && (xLabel = graph.getXLabel(0)).length() > 0) {
-          g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, screenHeight - 4);
+          final int extra = tHeight * (1 + ((graph.usesX(0) && graph.getShowXTics(0)) ? 1 : 0));
+          g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, sylo + extra);
         }
         if (graph.usesX(1) && (xLabel = graph.getXLabel(1)).length() > 0) {
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, tHeight * (1 + (title.length() > 0 ? 1 : 0)));
@@ -347,10 +353,10 @@ public class GraphicsRenderer extends AbstractRenderer {
       drawData(g, graph.getPlots(), mapping);
       drawVerticalLine(graph, g, mapping[0], sylo, syhi);
 
-      if (ticInfos != null && ticInfos[3] != null) {
-        sxhi += ticInfos[3].mMaxWidth + 2;
-      }
-      drawKey(graph, g, screenWidth, screenHeight, sxlo, sylo, sxhi, syhi);
+      if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
+      if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
+      if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
+      drawKey(graph, g, screenWidth, screenHeight, sxlo, sylo + 2, sxhi, syhi);
     }
     setMappings(mapping);
   }
@@ -722,7 +728,7 @@ public class GraphicsRenderer extends AbstractRenderer {
               ((Graphics2D) g).setStroke(new BasicStroke(plot.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             }
 
-            int keyX5 = keyX + 5;          
+            int keyX5 = xx + 5;          
             if (plot instanceof PointPlot2D) {
               PointPlot2D lplot = (PointPlot2D) plot;
               boolean doLines = lplot.getLines();
