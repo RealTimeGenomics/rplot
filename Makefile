@@ -15,7 +15,7 @@ RPCLASSES3=$(shell echo $(RPTEST) | sed -e "s|$(TESTHOME)/||g" -e "s/\.java/\*\.
 
 
 LIB_CLASSPATH:=$(shell find $(CODEHOME)/lib -name "*.jar" | tr '\n' ':')
-# JIKES_OPTS is inherited from the user environment
+JIKES_OPTS:=+E +P -source 1.4 -deprecation
 JIKES_CMD:=jikes $(JIKES_OPTS) -cp $(SRCHOME):$(TESTHOME):$(LIB_CLASSPATH)
 
 all: $(JARS)
