@@ -13,8 +13,10 @@ import junit.framework.TestSuite;
  */
 
 public class MappingTest extends TestCase {
+
   /** world co-ordinatess */
   private float mWl, mWr;
+
   /** screen co-ordinatess */
   private float mSl, mSr;
 

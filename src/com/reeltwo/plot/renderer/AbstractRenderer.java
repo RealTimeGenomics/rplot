@@ -402,9 +402,9 @@ public abstract class AbstractRenderer {
     Mapping [] mappings = new Mapping[4]; // x1, y1, x2, y2
 
     mappings[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi, graph.isLogScaleX(0));
-    mappings[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi, graph.isLogScaleY(0));
+    mappings[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), syhi, sylo, graph.isLogScaleY(0));
     mappings[2] = new Mapping(graph.getXLo(1), graph.getXHi(1), sxlo, sxhi, graph.isLogScaleX(1));
-    mappings[3] = new Mapping(graph.getYLo(1), graph.getYHi(1), sylo, syhi, graph.isLogScaleY(1));
+    mappings[3] = new Mapping(graph.getYLo(1), graph.getYHi(1), syhi, sylo, graph.isLogScaleY(1));
     
     return mappings;
   }

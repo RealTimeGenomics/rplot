@@ -50,6 +50,7 @@ public class Mapping {
    * values are equal.
    */
   public Mapping(float worldMin, float worldMax, float screenMin, float screenMax, boolean log) {
+    //System.err.println(" worldMin:" + worldMin + " worldMax:" + worldMax + " screenMin:" + screenMin + " screenMax:" + screenMax);
     if (worldMin == worldMax) {
       throw new IllegalArgumentException("World minimum and maximum are same: " + worldMin);
     }
@@ -126,6 +127,7 @@ public class Mapping {
    */
   public float screenToWorld(float p) {
     float s = mWmin + (p - mSmin) * (mWmax - mWmin) / (mSmax - mSmin);
+    //System.err.println("screenToWorld p:" + p + " mWmin:" + mWmin + " mWmax:" + mWmax + " mSmin:" + mSmin + " mSmax:" + mSmax + " s:" + s);
     return mLog ? (float) Math.pow(10, s) : s;
   }
 }

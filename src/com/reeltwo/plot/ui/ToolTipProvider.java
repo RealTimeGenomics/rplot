@@ -1,5 +1,7 @@
 package com.reeltwo.plot.ui;
 
+import com.reeltwo.plot.renderer.Mapping;
+
 /**
  * Implement this interface to provide location dependent tool tips in a PlotPanel.
  *
@@ -15,4 +17,13 @@ public interface ToolTipProvider {
    * @return tool tip text
    */
   String getToolTipText(int x, int y);
+  
+  /**
+   * Provides the map between screen and world co-ordinates.
+   * Some implementations will need this to find what tool tip to provide
+   * others may ignore this (do nothing).
+   * @param xmap map for the x co-ordinate.
+   * @param ymap map for the y co-ordinate.
+   */
+  void setMaps(Mapping xmap, Mapping ymap);
 }
