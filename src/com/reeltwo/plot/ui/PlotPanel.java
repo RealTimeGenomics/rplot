@@ -31,9 +31,6 @@ public class PlotPanel extends JPanel {
   private boolean mBufferGraphs = false;
   private BufferedImage mBI = null;
   
-  //private Color [] mColors;
-  //private Paint [] mPatterns;
-
   /** Default constructor. */
   public PlotPanel() {
     this(false);

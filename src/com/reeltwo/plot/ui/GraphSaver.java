@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 /**
- *
+ * Handy utility class for saving graphs as images.
  *
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
  * @version $Revision$
@@ -39,6 +39,14 @@ public class GraphSaver {
   public int getFontSize() {
     return mFontSize;
   }
+
+  public void setSize(int width, int height) {
+    if (width < 0 || height < 0) {
+      throw new IllegalArgumentException("width and height must be >= 0: " + width + " : " + height);
+    }
+    mWidth = width;
+    mHeight = height;
+  }
   
   public void setColors(Color [] colors) {
     if (colors == null) {
@@ -51,6 +59,16 @@ public class GraphSaver {
     mPatterns = patterns;
   }
 
+  private File adjustFileName(File file, FileFilter filter) {
+    File f = file;
+    if (file != null && filter != null && !filter.accept(f)) {
+      if (filter instanceof PNGFileFilter) {
+        f = new File(file, ".png");
+      }
+    }
+    return f;
+  }
+
   public void saveGraph(Graph2D graph) {
     if (graph != null) {
       boolean ok = false;
@@ -58,7 +76,7 @@ public class GraphSaver {
         final int returnVal = mChooser.showSaveDialog(null);
         ok = true;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-          final File file = mChooser.getSelectedFile();
+          final File file = adjustFileName(mChooser.getSelectedFile(), mChooser.getFileFilter());
           if (file.exists()) {
             final int ret = JOptionPane.showConfirmDialog(null, "Do you want to overwrite " + file.getName() + "?", "File Exists", JOptionPane.YES_NO_OPTION);
             if (ret == JOptionPane.NO_OPTION) {
@@ -90,15 +108,7 @@ public class GraphSaver {
     }
     
     public boolean accept(File f) {
-      if (f.isDirectory()) {
-        return true;
-      }
-      
-      final String name = f.getName().toLowerCase();
-      if (name.endsWith(".png")) {
-        return true;
-      }
-      return false;
+      return (f.isDirectory() || f.getName().toLowerCase().endsWith(".png"));
     }
 
   }

@@ -6,7 +6,9 @@ import java.awt.Paint;
 import javax.swing.JPopupMenu;
 
 /**
- *
+ * A plot dialog that allows the user to select and zoom in on arbitary
+ * regions of the plot.  Provides a popup menu to allow the plot to be
+ * printed and saved as well as controlling zoom actions.
  *
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
  * @version $Revision$

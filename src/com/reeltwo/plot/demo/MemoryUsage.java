@@ -30,13 +30,12 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 /**
- * A dialog containing a memory usage over time graph.
+ * A dialog displaying memory use over time.
  *
  * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
-
-class MemoryUsage extends JDialog {
+public class MemoryUsage extends JDialog {
   private volatile boolean mKeepRunning = false;
 
   private static final int DEFAULT_SAMPLES = 100;

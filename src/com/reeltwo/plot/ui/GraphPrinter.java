@@ -13,8 +13,7 @@ import java.awt.print.PrinterJob;
 
 
 /**
- * GraphPrinter.java
- *
+ * Handy utility class for sending graphs to the printer.
  *
  * @author Richard Littin (richard@reeltwo.com) 
  * @version $Revision$
