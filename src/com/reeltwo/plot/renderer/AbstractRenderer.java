@@ -35,6 +35,9 @@ public abstract class AbstractRenderer {
   /** a number formatter */
   final NumberFormat mNF = NumberFormat.getInstance();
 
+  protected static final int FOREGROUND_COLOR_INDEX = -1;  
+  protected static final int BACKGROUND_COLOR_INDEX = -2;
+
   private int mColorIndex = 0;
 
   private int mPointIndex = 0;
@@ -83,7 +86,11 @@ public abstract class AbstractRenderer {
     return mColorIndex;
   }
 
-  abstract int setPlotColor(Object canvas, Plot2D plot, int colorIndex);
+  public void setPattern(Object canvas, int patternIndex) {
+    setColor(canvas, patternIndex);
+  }
+
+  //abstract int setPlotColor(Object canvas, Plot2D plot, int colorIndex);
 
   protected void setPointIndex(int pointIndex) {
     mPointIndex = pointIndex;
@@ -455,12 +462,35 @@ public abstract class AbstractRenderer {
 
 
   protected void drawData(Object canvas, Plot2D[] plots, Mapping[] mapping) {
-    int colorIndex = 1;
+    int colorIndex = 0;
+    int patternIndex = 0;
+
+    for (int j = 0; j < plots.length; j++) {
+      Plot2D plot = plots[j];
+      int color = plot.getColor();
+      if (plot instanceof FillablePlot2D 
+          && ((FillablePlot2D) plot).getFill() == FillablePlot2D.PATTERN_FILL) {
+        if (color < 0) {
+          plot.setColor(patternIndex);
+          patternIndex++;
+        } else if (color >= patternIndex) {
+          patternIndex = color + 1;
+        }
+      } else {
+        if (color < 0) {
+          plot.setColor(colorIndex);
+          colorIndex++;
+        } else if (color >= colorIndex) {
+          colorIndex = color + 1;
+        }
+      }
+      //System.err.println(plot.getColor() + " " + colorIndex + " " + patternIndex);
+    }
+
     for (int j = 0; j < plots.length; j++) {
       Plot2D plot = plots[j];
       Mapping convertX = mapping[2 * plot.getXAxis()];
       Mapping convertY = mapping[2 * plot.getYAxis() + 1];
-      colorIndex = setPlotColor(canvas, plot, colorIndex);
 
       int lineWidth = plot.getLineWidth();
       if (lineWidth < 1) {
@@ -492,11 +522,19 @@ public abstract class AbstractRenderer {
 
 
   protected void drawPointPlot(Object canvas, PointPlot2D lplot, Mapping convertX, Mapping convertY) {
-    boolean doLines = lplot.isLines();
-    boolean doPoints = lplot.isPoints();
-    int doFill = lplot.getFill();
     Datum2D[] points = lplot.getData();
     if (points != null && points.length != 0) {
+      boolean doPoints = lplot.isPoints();
+      boolean doLines = lplot.isLines();
+      int doFill = lplot.getFill();
+      boolean doBorder = lplot.getBorder();
+
+      if (doFill == FillablePlot2D.PATTERN_FILL) {
+        setPattern(canvas, lplot.getColor());
+      } else {
+        setColor(canvas, lplot.getColor());
+      }
+
       if (doFill != FillablePlot2D.NO_FILL) {
         Poly polygon = new Poly();
         for (int i = 0; i < points.length; i++) {
@@ -505,7 +543,17 @@ public abstract class AbstractRenderer {
           int sptY = (int) convertY.worldToScreen(point.getY());
           polygon.addPoint(sptX, sptY);
         }
+
         fillPolygon(canvas, polygon.getXs(), polygon.getYs());
+        if (doBorder) {
+          setColor(canvas, FOREGROUND_COLOR_INDEX);
+          drawPolygon(canvas, polygon.getXs(), polygon.getYs());
+          if (doFill == FillablePlot2D.PATTERN_FILL) {
+            setPattern(canvas, lplot.getColor());
+          } else {
+            setColor(canvas, lplot.getColor());
+          }
+        }
       } else {
         Point2D point = (Point2D) points[0];
         int lastX = (int) convertX.worldToScreen(point.getX());
@@ -579,6 +627,8 @@ public abstract class AbstractRenderer {
       final float width = aplot.getHeadWidth();
       final float height = aplot.getHeadHeight();
 
+      setColor(canvas, aplot.getColor());
+
       for (int i = 0; i < points.length; i++) {
         Arrow2D arrow = (Arrow2D) points[i];
         final int sptX1 = (int) convertX.worldToScreen(arrow.getX1());
@@ -609,6 +659,7 @@ public abstract class AbstractRenderer {
   protected void drawBWPlot(Object canvas, BWPlot2D bwplot, Mapping convertX, Mapping convertY) {
     Datum2D[] points = bwplot.getData();
     if (points != null && points.length != 0) {
+      setColor(canvas, bwplot.getColor());
       if (bwplot.getType() == BWPlot2D.STANDARD) {
         int width = bwplot.getWidth();
         for (int i = 0; i < points.length; i++) {
@@ -669,6 +720,7 @@ public abstract class AbstractRenderer {
     case TextPlot2D.BOTTOM: valign = -descent; break;
     }
 
+    setColor(canvas, FOREGROUND_COLOR_INDEX);
     if (points != null && points.length != 0) {
       for (int i = 0; i < points.length; i++) {
         TextPoint2D point = (TextPoint2D) points[i];
@@ -677,7 +729,14 @@ public abstract class AbstractRenderer {
         int sptY = (int) convertY.worldToScreen(point.getY());
         int sw = getTextWidth(canvas, text);
 
-        drawString(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign), text);
+        if (tplot.isInvert()) {
+          setColor(canvas, tplot.getColor());
+          fillRectangle(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign - tHeight + descent), sw, tHeight);
+          setColor(canvas, BACKGROUND_COLOR_INDEX);
+          drawString(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign), text);
+        } else {
+          drawString(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign), text);
+        }
       }
     }
   }
@@ -686,6 +745,7 @@ public abstract class AbstractRenderer {
   protected void drawScatterPlot(Object canvas, ScatterPlot2D splot, Mapping convertX, Mapping convertY) {
     Datum2D[] points = splot.getData();
     if (points != null && points.length != 0) {
+      setColor(canvas, splot.getColor());
       float scatterFactor = Math.abs(splot.getScatterFactor()) + 1;
       Random random = new Random();
       for (int i = 0; i < points.length; i++) {
@@ -715,6 +775,11 @@ public abstract class AbstractRenderer {
     if (points != null && points.length != 0) {
       int doFill = bplot.getFill();      
       boolean doBorder = bplot.getBorder();
+      if (doFill == FillablePlot2D.PATTERN_FILL) {
+        setPattern(canvas, bplot.getColor());
+      } else {
+        setColor(canvas, bplot.getColor());
+      }
       for (int i = 0; i < points.length; i++) {
         Box2D box = (Box2D) points[i];
 
@@ -726,10 +791,13 @@ public abstract class AbstractRenderer {
         if (doFill != FillablePlot2D.NO_FILL) {
           fillRectangle(canvas, x, y, width, height);
           if (doBorder) {
-            int color = getColor(canvas);
-            setColor(canvas, 0);
+            setColor(canvas, FOREGROUND_COLOR_INDEX);
             drawRectangle(canvas, x, y, width, height);
-            setColor(canvas, color);
+            if (doFill == FillablePlot2D.PATTERN_FILL) {
+              setPattern(canvas, bplot.getColor());
+            } else {
+              setColor(canvas, bplot.getColor());
+            }
           }
         } else {
           drawRectangle(canvas, x, y, width, height);
@@ -740,10 +808,18 @@ public abstract class AbstractRenderer {
 
 
   protected void drawCirclePlot(Object canvas, CirclePlot2D cplot, Mapping convertX, Mapping convertY) {
-    int doFill = cplot.getFill();
     Datum2D[] points = cplot.getData();
 
     if (points != null && points.length != 0) {
+      int doFill = cplot.getFill();      
+      boolean doBorder = cplot.getBorder();
+
+      if (doFill == FillablePlot2D.PATTERN_FILL) {
+        setPattern(canvas, cplot.getColor());
+      } else {
+        setColor(canvas, cplot.getColor());
+      }
+
       for (int i = 0; i < points.length; i++) {
         Circle2D circle = (Circle2D) points[i];
         float diameter = circle.getDiameter();
@@ -755,6 +831,15 @@ public abstract class AbstractRenderer {
 
         if (doFill != FillablePlot2D.NO_FILL) {
           fillCircle(canvas, x, y, idiameter);
+          if (doBorder) {
+            setColor(canvas, FOREGROUND_COLOR_INDEX);
+            drawCircle(canvas, x, y, idiameter);
+            if (doFill == FillablePlot2D.PATTERN_FILL) {
+              setPattern(canvas, cplot.getColor());
+            } else {
+              setColor(canvas, cplot.getColor());
+            }
+          }
         } else {
           drawCircle(canvas, x, y, idiameter);
         }
@@ -764,21 +849,40 @@ public abstract class AbstractRenderer {
 
 
   protected void drawCurvePlot(Object canvas, CurvePlot2D cplot, Mapping convertX, Mapping convertY) {
-    int doFill = cplot.getFill();
-    int type = cplot.getType();
     Point2D[] points = (Point2D []) cplot.getData();
 
-    int [] xs = new int[points.length];
-    int [] ys = new int[points.length];
-    for (int i = 0; i < points.length; i++) {
-      xs[i] = (int) convertX.worldToScreen(points[i].getX());
-      ys[i] = (int) convertY.worldToScreen(points[i].getY());
-    }
+    if (points != null && points.length != 0) {
+      int type = cplot.getType();
+      int doFill = cplot.getFill();      
+      boolean doBorder = cplot.getBorder();
 
-    if (doFill != FillablePlot2D.NO_FILL) {
-      fillCurve(canvas, xs, ys, type);
-    } else {
-      drawCurve(canvas, xs, ys, type);
+      if (doFill == FillablePlot2D.PATTERN_FILL) {
+        setPattern(canvas, cplot.getColor());
+      } else {
+        setColor(canvas, cplot.getColor());
+      }
+
+      int [] xs = new int[points.length];
+      int [] ys = new int[points.length];
+      for (int i = 0; i < points.length; i++) {
+        xs[i] = (int) convertX.worldToScreen(points[i].getX());
+        ys[i] = (int) convertY.worldToScreen(points[i].getY());
+      }
+      
+      if (doFill != FillablePlot2D.NO_FILL) {
+        fillCurve(canvas, xs, ys, type);
+        if (doBorder) {
+          setColor(canvas, FOREGROUND_COLOR_INDEX);
+          drawCurve(canvas, xs, ys, type);
+          if (doFill == FillablePlot2D.PATTERN_FILL) {
+            setPattern(canvas, cplot.getColor());
+          } else {
+            setColor(canvas, cplot.getColor());
+          }
+        }
+      } else {
+        drawCurve(canvas, xs, ys, type);
+      }
     }
   }
 

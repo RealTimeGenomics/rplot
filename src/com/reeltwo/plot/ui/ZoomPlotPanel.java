@@ -6,6 +6,7 @@ import com.reeltwo.plot.renderer.Mapping;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Paint;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -48,7 +49,23 @@ public class ZoomPlotPanel extends JComponent {
     addMouseListener(listener);
     addMouseMotionListener(listener);
     mPlotPanel = panel;
-    mGraphicsRenderer = new GraphicsRenderer(mPlotPanel.getColors());
+    mGraphicsRenderer = new GraphicsRenderer();
+  }
+
+  public void setColors(Color [] colors) {
+    mGraphicsRenderer.setColors(colors);
+  }
+
+  public Color [] getColors() {
+    return mGraphicsRenderer.getColors();
+  }
+
+  public void setPatterns(Paint [] patterns) {
+    mGraphicsRenderer.setPatterns(patterns);
+  }
+
+  public Paint [] getPatterns() {
+    return mGraphicsRenderer.getPatterns();
   }
 
   

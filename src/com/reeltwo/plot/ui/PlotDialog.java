@@ -2,6 +2,7 @@ package com.reeltwo.plot.ui;
 
 import com.reeltwo.plot.Graph2D;
 import java.awt.Color;
+import java.awt.Paint;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JDialog;
@@ -41,6 +42,13 @@ public class PlotDialog extends JDialog {
     setSize(640, 480);
   }
 
+  public void setColors(Color [] colors) {
+    mPlotPanel.setColors(colors);
+  }
+
+  public void setPatterns(Paint [] patterns) {
+    mPlotPanel.setPatterns(patterns);
+  }
 
   public JPopupMenu getPopupMenu() {
     return mPopup;

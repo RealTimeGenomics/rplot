@@ -1,6 +1,8 @@
 package com.reeltwo.plot.ui;
 
 import com.reeltwo.plot.Graph2D;
+import java.awt.Color;
+import java.awt.Paint;
 import javax.swing.JPopupMenu;
 
 /**
@@ -29,6 +31,15 @@ public class ZoomPlotDialog extends PlotDialog {
     popup.add(mZoomPanel.getPNPAction());
   }
 
+  public void setColors(Color [] colors) {
+    super.setColors(colors);
+    mPlotPanel.setColors(colors);
+  }
+
+  public void setPatterns(Paint [] patterns) {
+    super.setPatterns(patterns);
+    mZoomPanel.setPatterns(patterns);
+  }
     
   /**
    * Plots the given graph.

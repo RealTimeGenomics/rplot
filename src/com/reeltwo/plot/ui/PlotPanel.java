@@ -6,6 +6,7 @@ import com.reeltwo.plot.renderer.Mapping;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.AbstractAction;
@@ -25,20 +26,22 @@ public class PlotPanel extends JPanel {
   private Graph2D mGraph = null;
   private Mapping[] mMapping = null;
 
-  private GraphicsRenderer mGraphicsRenderer;
+  private final GraphicsRenderer mGraphicsRenderer;
 
   private boolean mBufferGraphs = false;
   private BufferedImage mBI = null;
-
-  private Color [] mColors;
+  
+  //private Color [] mColors;
+  //private Paint [] mPatterns;
 
   /** Default constructor. */
   public PlotPanel() {
-    this(AWTDefaults.COLORS);
+    this(false);
   }
 
   public PlotPanel(boolean bufferGraphs) {
-    this(AWTDefaults.COLORS, bufferGraphs);
+    setBufferGraphs(bufferGraphs);
+    mGraphicsRenderer = new GraphicsRenderer();
   }
 
   public PlotPanel(Color [] lineColors) {
@@ -46,7 +49,7 @@ public class PlotPanel extends JPanel {
   }
 
   public PlotPanel(Color [] lineColors, boolean bufferGraphs) {
-    super();
+    this(bufferGraphs);
     if (lineColors == null || lineColors.length == 0) {
       throw new IllegalArgumentException("Must be at least one color.");
     }
@@ -56,7 +59,6 @@ public class PlotPanel extends JPanel {
       }
     }
     setColors(lineColors);
-    setBufferGraphs(bufferGraphs);
   }
 
   private GraphPrinter mGraphPrinter = null;
@@ -99,14 +101,22 @@ public class PlotPanel extends JPanel {
       };
   }
 
-  public Color [] getColors() {
-    return mColors;
+  public void setColors(Color [] colors) {
+    mGraphicsRenderer.setColors(colors);
   }
 
-  public void setColors(Color [] colors) {
-    mColors = colors;
-    mGraphicsRenderer = new GraphicsRenderer(mColors);
+  public Color [] getColors() {
+    return mGraphicsRenderer.getColors();
   }
+
+  public void setPatterns(Paint [] patterns) {
+    mGraphicsRenderer.setPatterns(patterns);
+  }
+
+  public Paint [] getPatterns() {
+    return mGraphicsRenderer.getPatterns();
+  }
+
 
   public void setGraphBGColor(Color topColor, Color bottomColor) {
     mGraphicsRenderer.setGraphBGColor(topColor, bottomColor);

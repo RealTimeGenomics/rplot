@@ -36,7 +36,7 @@ public class TextRenderer extends AbstractRenderer {
   public int getTextDescent(Object canvas, String text) {
     return 0;
   }
-
+  /*
   public int setPlotColor(Object canvas, Plot2D plot, int colorIndex) {
     int plotColorIndex = plot.getColor();
     if (plotColorIndex < 0) {
@@ -55,6 +55,19 @@ public class TextRenderer extends AbstractRenderer {
     }
     ((Canvas) canvas).setColor(plotColorIndex);
     return colorIndex; 
+  }
+  */
+
+  public void setColor(Object canvas, int colorIndex) {
+    switch (colorIndex) {
+    case BACKGROUND_COLOR_INDEX: ((Canvas) canvas).setColor(0);
+      break;
+    case FOREGROUND_COLOR_INDEX: ((Canvas) canvas).setColorDefault();
+      break;
+    default:
+      ((Canvas) canvas).setColor(colorIndex % COLORS.length);
+    };
+
   }
 
   public void setClip(Object canvas, int x, int y, int w, int h) {
@@ -295,11 +308,11 @@ public class TextRenderer extends AbstractRenderer {
       setPointIndex(j);
       if ((key = plots[j].getTitle()) != null && key.length() != 0) {
         if (comma) {
-          canvas.setColorDefault();
+          setColor(canvas, FOREGROUND_COLOR_INDEX);
           canvas.putChar(offset, canvas.getHeight() - 1, ',');
           offset += 2;
         }
-        canvas.setColor(plots[j].getColor());
+        setColor(canvas, plots[j].getColor());
         drawPoint(canvas, offset, canvas.getHeight() - 1);
         offset += 2;
         for (int i = 0; i < key.length(); i++) {
@@ -562,7 +575,6 @@ public class TextRenderer extends AbstractRenderer {
     private void setColor(int color) {
       mColor = (byte) color;
     }
-
 
     private void setClipRectangle(int left, int top, int right, int bottom) {
       mClipLeft = Math.max(left, 0);
