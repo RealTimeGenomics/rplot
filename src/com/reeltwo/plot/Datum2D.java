@@ -7,18 +7,13 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public abstract class Datum2D {
-
-  /** Default constructor. */
-  public Datum2D() { }
-
-
+public interface Datum2D {
   /**
    * Returns the lower bound of the datum in the x dimension.
    *
    * @return a number
    */
-  abstract float getXLo();
+  float getXLo();
 
 
   /**
@@ -26,7 +21,7 @@ public abstract class Datum2D {
    *
    * @return a number
    */
-  abstract float getXHi();
+  float getXHi();
 
 
   /**
@@ -34,7 +29,7 @@ public abstract class Datum2D {
    *
    * @return a number
    */
-  abstract float getYLo();
+  float getYLo();
 
 
   /**
@@ -42,5 +37,5 @@ public abstract class Datum2D {
    *
    * @return a number
    */
-  abstract float getYHi();
+  float getYHi();
 }

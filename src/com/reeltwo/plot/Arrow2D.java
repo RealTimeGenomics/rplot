@@ -7,7 +7,7 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public class Arrow2D extends Datum2D {
+public class Arrow2D implements Datum2D {
   /** co-ordinates */
   private float mX1, mY1;
   private float mX2, mY2;

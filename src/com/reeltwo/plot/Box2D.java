@@ -7,7 +7,7 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public class Box2D extends Datum2D {
+public class Box2D implements Datum2D {
   /** co-ordinates of box */
   private float mLeft, mRight;
   private float mTop, mBottom;
@@ -109,7 +109,7 @@ public class Box2D extends Datum2D {
    *
    * @return a number
    */
-  float getXLo() {
+  public float getXLo() {
     return getLeft();
   }
 
@@ -119,7 +119,7 @@ public class Box2D extends Datum2D {
    *
    * @return a number
    */
-  float getXHi() {
+  public float getXHi() {
     return getRight();
   }
 
@@ -129,7 +129,7 @@ public class Box2D extends Datum2D {
    *
    * @return a number
    */
-  float getYLo() {
+  public float getYLo() {
     return getBottom();
   }
 
@@ -139,7 +139,7 @@ public class Box2D extends Datum2D {
    *
    * @return a number
    */
-  float getYHi() {
+  public float getYHi() {
     return getTop();
   }
 

@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @version $Revision$
  */
 
-public class BWPoint2D extends Datum2D {
+public class BWPoint2D implements Datum2D {
   /** co-ordinate */
   private float mX;
   private float [] mYs = new float[5];

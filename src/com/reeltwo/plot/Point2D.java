@@ -6,8 +6,7 @@ package com.reeltwo.plot;
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
  * @version $Revision$
  */
-
-public class Point2D extends Datum2D {
+public class Point2D implements Datum2D {
   /** co-ordinate */
   private float mX, mY;
 
