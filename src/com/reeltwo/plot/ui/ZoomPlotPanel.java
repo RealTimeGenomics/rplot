@@ -45,6 +45,12 @@ public class ZoomPlotPanel extends JComponent {
   private float[] mYHi = new float[2];
 
 
+  /**
+   * Creates a new <code>ZoomPlotPanel</code> using the given plot
+   * panel to render graphs.
+   *
+   * @param panel a <code>PlotPanel</code>
+   */
   public ZoomPlotPanel(PlotPanel panel) {
     MouseInputAdapter listener = new ZoomListener(this, panel);
     addMouseListener(listener);
@@ -53,23 +59,48 @@ public class ZoomPlotPanel extends JComponent {
     mGraphicsRenderer = new GraphicsRenderer();
   }
 
+  /**
+   * Sets the colors to render plots with.
+   *
+   * @param colors an array of colors
+   */
   public void setColors(Color [] colors) {
     mGraphicsRenderer.setColors(colors);
   }
 
+  /**
+   * Returns the plot colors.
+   *
+   * @return an array of <code>Color</code>s
+   */
   public Color [] getColors() {
     return mGraphicsRenderer.getColors();
   }
 
+  /**
+   * Sets the patterns to use when rendering plots.
+   *
+   * @param patterns an array of patterns
+   */
   public void setPatterns(Paint [] patterns) {
     mGraphicsRenderer.setPatterns(patterns);
   }
 
+  /**
+   * Returns the plot patterns.
+   *
+   * @return an array of patterns
+   */
   public Paint [] getPatterns() {
     return mGraphicsRenderer.getPatterns();
   }
 
   
+  /**
+   * Returns an action that resets the zoom.
+   *
+   * @return an <code>Action</code>
+   */
   public Action getZoomOutAction() {
     return new AbstractAction("Zoom Out", null) {
         public void actionPerformed(ActionEvent e) {
@@ -87,6 +118,12 @@ public class ZoomPlotPanel extends JComponent {
       };
   }
 
+  /**
+   * Returns an action allowing picture in picture mode to be turned
+   * on and off.
+   *
+   * @return an <code>Action</code>
+   */
   public Action getPNPAction() {
     return new AbstractAction("Pic In Pic On", null) {
         public void actionPerformed(ActionEvent e) {
@@ -126,7 +163,7 @@ public class ZoomPlotPanel extends JComponent {
     }
   }
 
-
+  /** {@inheritDoc} */
   public void paint(Graphics g) {
     if (mPtOne != null && mPtTwo != null && !mPtOne.equals(mPtTwo)) {
       g.setColor(Color.BLACK);
@@ -217,6 +254,11 @@ public class ZoomPlotPanel extends JComponent {
   }
 
 
+  /**
+   * Sets the graph to plot.
+   *
+   * @param graph a <code>Graph2D</code>
+   */
   public void setGraph(Graph2D graph) {
     try {
       mGraph = (Graph2D) graph.clone();
@@ -238,6 +280,11 @@ public class ZoomPlotPanel extends JComponent {
     mPlotPanel.setGraph(graph);
   }
 
+  /**
+   * Returns the currently plotted graph.
+   *
+   * @return a <code>Graph2D</code>
+   */
   public Graph2D getGraph() {
     return mGraph;
   }
