@@ -9,14 +9,17 @@ package com.reeltwo.plot;
 
 public class PlotUtils {
 
+  /**
+   * Private to prevent istantiation.
+   */
   private PlotUtils() { }
 
-  // ln(10)
+  /** Natural log of 10, used in log10 function. */
   public static final double L10 = Math.log(10.0);
 
 
   /**
-   *  Returns the log base 10 of <code>a</code> double value.
+   * Returns the log base 10 of <code>a</code> double value.
    *
    * @param a a number greater than 0.0
    * @return the value log<sub>10</sub>(<code>a</code>)

@@ -350,16 +350,16 @@ public abstract class AbstractRenderer {
   protected Mapping [] createMappings(Graph2D graph, int sxlo, int sylo, int sxhi, int syhi) {
     Mapping [] mappings = new Mapping[4]; // x1, y1, x2, y2
 
-    mappings[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi, graph.getLogScaleX(0));
-    mappings[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi, graph.getLogScaleY(0));
-    mappings[2] = new Mapping(graph.getXLo(1), graph.getXHi(1), sxlo, sxhi, graph.getLogScaleX(1));
-    mappings[3] = new Mapping(graph.getYLo(1), graph.getYHi(1), sylo, syhi, graph.getLogScaleY(1));
+    mappings[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi, graph.isLogScaleX(0));
+    mappings[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi, graph.isLogScaleY(0));
+    mappings[2] = new Mapping(graph.getXLo(1), graph.getXHi(1), sxlo, sxhi, graph.isLogScaleX(1));
+    mappings[3] = new Mapping(graph.getYLo(1), graph.getYHi(1), sylo, syhi, graph.isLogScaleY(1));
     
     return mappings;
   }
 
   private TicInfo calcXTicInfo(Object canvas, Graph2D graph, int whichTic) {
-    if (graph.usesX(whichTic) && graph.getShowXTics(whichTic)) {
+    if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getXTic(whichTic);
       ticInfo.mMinorTic = graph.getXMinorTic(whichTic);
@@ -398,7 +398,7 @@ public abstract class AbstractRenderer {
   }
 
   private TicInfo calcYTicInfo(Object canvas, Graph2D graph, int whichTic) {
-    if (graph.usesY(whichTic) && graph.getShowYTics(whichTic)) {
+    if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
       setNumDecimalDigits(ticInfo.mTic);
@@ -516,7 +516,7 @@ public abstract class AbstractRenderer {
       boolean doPoints = lplot.isPoints();
       boolean doLines = lplot.isLines();
       int doFill = lplot.getFill();
-      boolean doBorder = lplot.getBorder();
+      boolean doBorder = lplot.isBorder();
 
       if (doFill == FillablePlot2D.PATTERN_FILL) {
         setPattern(canvas, lplot.getColor());
@@ -763,7 +763,7 @@ public abstract class AbstractRenderer {
 
     if (points != null && points.length != 0) {
       int doFill = bplot.getFill();      
-      boolean doBorder = bplot.getBorder();
+      boolean doBorder = bplot.isBorder();
       if (doFill == FillablePlot2D.PATTERN_FILL) {
         setPattern(canvas, bplot.getColor());
       } else {
@@ -801,7 +801,7 @@ public abstract class AbstractRenderer {
 
     if (points != null && points.length != 0) {
       int doFill = cplot.getFill();      
-      boolean doBorder = cplot.getBorder();
+      boolean doBorder = cplot.isBorder();
 
       if (doFill == FillablePlot2D.PATTERN_FILL) {
         setPattern(canvas, cplot.getColor());
@@ -843,7 +843,7 @@ public abstract class AbstractRenderer {
     if (points != null && points.length != 0) {
       int type = cplot.getType();
       int doFill = cplot.getFill();      
-      boolean doBorder = cplot.getBorder();
+      boolean doBorder = cplot.isBorder();
 
       if (doFill == FillablePlot2D.PATTERN_FILL) {
         setPattern(canvas, cplot.getColor());

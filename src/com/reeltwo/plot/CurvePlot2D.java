@@ -8,26 +8,30 @@ package com.reeltwo.plot;
  */
 
 public class CurvePlot2D extends FillablePlot2D {
-  /** Bspline curve type */
+  /** Use a bspline curve through points. */
   public static final int BSPLINE = 0;
+  /** Use a bezier curve through points. */
   public static final int BEZIER = 1;
+  /** Use a cubic bezier curve through points. */
   public static final int CUBIC_BEZIER = 2;
 
   /** the curve type */
   private int mType = BSPLINE;
 
-  /** Default constructor. */
+  /**
+   * Default constructor setting the default axes used to the bottom
+   * x axis and the left y axis.
+   */
   public CurvePlot2D() {
     super();
   }
 
 
   /**
-   * Constructor setting whether to uses the y2 axis when plotting.
-   * Default is to use the y1 axis.
+   * Constructor setting which axes to use in the plot.
    *
-   * @param x X axis to use, 0 or 1
-   * @param y Y axis to use, 0 or 1
+   * @param x x axis to use.
+   * @param y y axis to use.
    */
   public CurvePlot2D(int x, int y) {
     super(x, y);
@@ -36,6 +40,8 @@ public class CurvePlot2D extends FillablePlot2D {
 
   /**
    * Sets the type of curve to draw.
+   * Valid types are <code>BSPLINE</code> (the default),
+   * <code>BEZIER</code> and <code>CUBIC_BEZIER</code>.
    *
    * @param type a curve type
    */

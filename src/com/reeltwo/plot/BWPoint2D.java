@@ -74,7 +74,7 @@ public class BWPoint2D implements Datum2D {
 
 
   /**
-   * Returns y co-ordinate.
+   * Returns i<sup>th</sup> y co-ordinate.
    *
    * @return y co-ordinate.
    */
@@ -161,8 +161,8 @@ public class BWPoint2D implements Datum2D {
     return true;
   }
 
-
+  // inherited
   public int hashCode() {
-    return super.hashCode();
+    return (int) (mX + mYs[0] + mYs[1] + mYs[2] + mYs[3] + mYs[4]);
   }
 }

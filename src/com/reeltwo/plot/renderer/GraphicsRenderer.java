@@ -287,9 +287,9 @@ public class GraphicsRenderer extends AbstractRenderer {
       TicInfo y2TicInfo = null;
       TicInfo xTicInfo = null;
       int keyX = 0;
-      if (graph.getBorder()) {
+      if (graph.isBorder()) {
         int keyWidth = 0;
-        if (graph.getShowKey()) {
+        if (graph.isShowKey()) {
           if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
             final int keyHeight = calculateKeyHeight(g, graph, screenWidth);
             sylo -= keyHeight + 2;
@@ -315,8 +315,8 @@ public class GraphicsRenderer extends AbstractRenderer {
           syhi += tHeight;
         }
         // extra height for digits on axes
-        if ((graph.usesY(0) && graph.getShowYTics(0))
-            || (graph.usesY(1) && graph.getShowYTics(1))) {
+        if ((graph.usesY(0) && graph.isShowYTics(0))
+            || (graph.usesY(1) && graph.isShowYTics(1))) {
           syhi += tHeight / 2;
         }
         TicInfo [] ticInfos = createTicInfos(g, graph);
@@ -331,20 +331,20 @@ public class GraphicsRenderer extends AbstractRenderer {
         xTicInfo = ticInfos[0];
         if (xTicInfo != null) {
           sylo -= xTicInfo.mMaxHeight;
-          if (!(graph.usesY(0) && graph.getShowYTics(0))) {
+          if (!(graph.usesY(0) && graph.isShowYTics(0))) {
             sxlo += xTicInfo.mMaxWidth / 2 + 2;
           }
-          if (!(graph.usesY(1) && graph.getShowYTics(1)) && keyWidth == 0) {
+          if (!(graph.usesY(1) && graph.isShowYTics(1)) && keyWidth == 0) {
             sxhi -= xTicInfo.mMaxWidth / 2 + 2;
           }
         }
         TicInfo x2TicInfo = ticInfos[2];
         if (x2TicInfo != null) {
           syhi += xTicInfo.mMaxHeight;
-          if (!graph.getShowYTics(0) && !(graph.usesX(0) && graph.getShowXTics(0))) {
+          if (!graph.isShowYTics(0) && !(graph.usesX(0) && graph.isShowXTics(0))) {
             sxlo += x2TicInfo.mMaxWidth / 2 + 2;
           }
-          if (!graph.getShowYTics(1) && !(graph.usesX(0) && graph.getShowXTics(0))) {
+          if (!graph.isShowYTics(1) && !(graph.usesX(0) && graph.isShowXTics(0))) {
             sxhi -= x2TicInfo.mMaxWidth / 2 + 2;
           }
         }
@@ -358,7 +358,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         setColor(g, FOREGROUND_COLOR_INDEX);
         String xLabel;
         if (graph.usesX(0) && (xLabel = graph.getXLabel(0)).length() > 0) {
-          final int extra = tHeight * (1 + ((graph.usesX(0) && graph.getShowXTics(0)) ? 1 : 0));
+          final int extra = tHeight * (1 + ((graph.usesX(0) && graph.isShowXTics(0)) ? 1 : 0));
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, sylo + extra);
         }
         if (graph.usesX(1) && (xLabel = graph.getXLabel(1)).length() > 0) {
@@ -489,15 +489,14 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  private void drawYTics(Graph2D graph, Graphics g, int whichTic, TicInfo yTicInfo, Mapping mapping, 
-                         int sxlo, int sxhi, int sylo, int syhi) {
-    if (graph.usesY(whichTic) && graph.getShowYTics(whichTic)) {
+  private void drawYTics(Graph2D graph, Graphics g, int whichTic, TicInfo yTicInfo, Mapping mapping, int sxlo, int sxhi, int sylo, int syhi) {
+    if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
       int tHeight = fm.getHeight();
       setNumDecimalDigits(yTicInfo.mTic);
       
-      if (graph.getLogScaleY(whichTic)) {
+      if (graph.isLogScaleY(whichTic)) {
         // log scale...
         float start = (float) PlotUtils.floor10(graph.getYLo(whichTic));
         float end = (float) PlotUtils.ceil10(graph.getYHi(whichTic));
@@ -518,7 +517,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           float num = start * i;
           int y = (int) mapping.worldToScreen(num);
           if (y >= syhi && y <= sylo) {
-            if (graph.getYGrid(whichTic)) {
+            if (graph.isYGrid(whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(sxlo + 4, y, sxhi - 4, y);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -542,7 +541,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             if ((whichTic == 0) || !graph.usesY(0)) {
               g.drawLine(sxlo, y, sxlo + 4, y);
             }
-            if (graph.getYGrid(whichTic)) {
+            if (graph.isYGrid(whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(sxlo + 4, y, sxhi - 4, y);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -576,15 +575,14 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  private void drawXTics(Graph2D graph, Graphics g, int whichTic, TicInfo xTicInfo, Mapping mapping, 
-                         int sxlo, int sxhi, int sylo, int syhi) {
-    if (graph.usesX(whichTic) && graph.getShowXTics(whichTic)) {
+  private void drawXTics(Graph2D graph, Graphics g, int whichTic, TicInfo xTicInfo, Mapping mapping, int sxlo, int sxhi, int sylo, int syhi) {
+    if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
       int tHeight = fm.getHeight();
       setNumDecimalDigits(xTicInfo.mTic);
 
-      if (graph.getLogScaleX(whichTic)) {
+      if (graph.isLogScaleX(whichTic)) {
         // log scale...
         float start = (float) PlotUtils.floor10(graph.getXLo(whichTic));
         float end = (float) PlotUtils.ceil10(graph.getXHi(whichTic));
@@ -605,7 +603,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           float num = start * i;
           int x = (int) mapping.worldToScreen(num);
           if (x >= sxlo && x <= sxhi) {
-            if (graph.getXGrid(whichTic)) {
+            if (graph.isXGrid(whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(x, sylo - 4, x, syhi + 4);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -628,7 +626,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             if ((whichTic == 1) || !graph.usesX(1)) {
               g.drawLine(x, syhi, x, syhi + 4);
             }
-            if (graph.getXGrid(whichTic)) {
+            if (graph.isXGrid(whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(x, sylo - 4, x, syhi + 4);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -669,7 +667,7 @@ public class GraphicsRenderer extends AbstractRenderer {
 
   private void drawVerticalLine(Graph2D graph, Graphics g, Mapping mapping, int sylo, int syhi) {
     // draw vertical dashed line
-    if (graph.getVerticalLine()) {
+    if (graph.isVerticalLine()) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       int sptX = (int) mapping.worldToScreen(graph.getVerticalLinePos());
       for (int i = syhi; i < sylo; i += 10) {
@@ -713,7 +711,7 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
   private void drawKey(Graph2D graph, Graphics g, int screenWidth, int screenHeight, int sxlo, int sylo, int sxhi, int syhi) {
-    if (graph.getBorder() && graph.getShowKey()) {
+    if (graph.isBorder() && graph.isShowKey()) {
       setClip(g, 0, 0, screenWidth, screenHeight);
       String keyTitle = graph.getKeyTitle();
       int tHeight = getTextHeight(g, "A");
@@ -750,13 +748,13 @@ public class GraphicsRenderer extends AbstractRenderer {
             if ((plot instanceof TextPlot2D && ((TextPlot2D) plot).isUseFGColor())
                 || (plot instanceof FillablePlot2D && ((FillablePlot2D) plot).getFill() == FillablePlot2D.PATTERN_FILL)) {
               setColor(g, FOREGROUND_COLOR_INDEX);
-            } else if (graph.getColoredKey()) {
+            } else if (graph.isColoredKey()) {
               setColor(g, plot.getColor());
             } else {
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
             g.drawString(dtitle, xx + keyLineWidth + 10, yy);
-            if (!graph.getColoredKey()) {
+            if (!graph.isColoredKey()) {
               setColor(g, plot.getColor());
             }
             yy -= tHeight / 2 - 2;
@@ -764,7 +762,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             if (doFill == FillablePlot2D.PATTERN_FILL) {
               setPattern(g, plot.getColor());
             }
-            boolean doBorder = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).getBorder() : false;
+            boolean doBorder = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).isBorder() : false;
             Stroke s = null;
             if (plot.getLineWidth() > 1) {
               s = ((Graphics2D) g).getStroke();

@@ -195,10 +195,10 @@ public class TextRenderer extends AbstractRenderer {
       syhi++;
     }
 
-    if (graph.usesX(0) && graph.getShowXTics(0)) {
+    if (graph.usesX(0) && graph.isShowXTics(0)) {
       sylo--;
     }
-    if (graph.usesX(1) && graph.getShowXTics(1)) {
+    if (graph.usesX(1) && graph.isShowXTics(1)) {
       syhi++;
     }
 
@@ -209,7 +209,7 @@ public class TextRenderer extends AbstractRenderer {
       canvas.putChar(xstart + i, 0, title.charAt(i));
     }
 
-    if (graph.getBorder()) {
+    if (graph.isBorder()) {
       // Draw labels
       drawLabels(graph, canvas, sxlo, sylo, sxhi, syhi);
 
@@ -257,7 +257,7 @@ public class TextRenderer extends AbstractRenderer {
 
   public int calculateKeyWidth(Object canvas, Graph2D graph) {
     int keyWidth = 0;
-    if (graph.getShowKey()) {
+    if (graph.isShowKey()) {
       String keyTitle = graph.getKeyTitle();
       if (keyTitle != null) {
         keyWidth += getTextWidth(canvas, keyTitle);
@@ -285,7 +285,7 @@ public class TextRenderer extends AbstractRenderer {
   }
 
   public int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
-    return graph.getShowKey() ? getTextHeight(canvas, "A") : 0;
+    return graph.isShowKey() ? getTextHeight(canvas, "A") : 0;
   }
 
   private void drawKey(Graph2D graph, Canvas canvas) {
@@ -338,7 +338,7 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private void drawYTics(Graph2D graph, Canvas canvas, int whichTic, TicInfo ticInfo, Mapping mapping, int sxlo, int sxhi, int sylo, int syhi) {
-    if (graph.usesY(whichTic) && graph.getShowYTics(whichTic)) {
+    if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       setNumDecimalDigits(ticInfo.mTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         float num = ticInfo.mTic * k;
@@ -372,7 +372,7 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private void drawXTics(Graph2D graph, Canvas canvas, int whichTic, Mapping mapping, float xlo, float xhi, int sxlo, int sxhi, int sylo, int syhi) {
-    if (graph.usesX(whichTic) && graph.getShowXTics(whichTic)) {
+    if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       float xtic = graph.getXTic(whichTic);
       setNumDecimalDigits(xtic);
       
@@ -413,7 +413,7 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private TicInfo calcYTicSize(Graph2D graph, int whichTic, float ylo, float yhi) {
-    if (graph.usesY(whichTic) && graph.getShowYTics(whichTic)) {
+    if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
       setNumDecimalDigits(ticInfo.mTic);
@@ -454,7 +454,7 @@ public class TextRenderer extends AbstractRenderer {
     int centerWidth = (sxhi + 1) / 2;
     String xlabel = graph.getXLabel(0);
     if (graph.usesX(0) && xlabel.length() > 0) {
-      int labelHeight = sylo + 1 + ((graph.usesX(0) && graph.getShowXTics(0)) ? 1 : 0);
+      int labelHeight = sylo + 1 + ((graph.usesX(0) && graph.isShowXTics(0)) ? 1 : 0);
       int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, labelHeight, xlabel.charAt(i));

@@ -37,13 +37,13 @@ public class Graph2DTest extends TestCase {
     // check default/assummed values
     assertTrue(graph.getTitle().equals(""));
     assertTrue(graph.getKeyTitle().equals(""));
-    assertTrue(graph.getBorder());
+    assertTrue(graph.isBorder());
 
     for (int i = 0; i < 2; i++) {
       assertTrue(graph.getXLabel(i).equals(""));
       assertTrue(graph.getYLabel(i).equals(""));
-      assertTrue(!graph.getXGrid(i));
-      assertTrue(!graph.getYGrid(i));
+      assertTrue(!graph.isXGrid(i));
+      assertTrue(!graph.isYGrid(i));
 
       assertEquals(-1.0f, graph.getXLo(i), PRECISION);
       assertEquals(1.0f, graph.getXHi(i), PRECISION);
@@ -53,8 +53,8 @@ public class Graph2DTest extends TestCase {
       assertEquals(0.2f, graph.getXTic(i), PRECISION);
       assertEquals(0.2f, graph.getYTic(i), PRECISION);
 
-      assertTrue(graph.getShowXTics(i));
-      assertTrue(graph.getShowYTics(i));
+      assertTrue(graph.isShowXTics(i));
+      assertTrue(graph.isShowYTics(i));
 
       assertNull(graph.getXTicLabels(i));
 
@@ -62,7 +62,7 @@ public class Graph2DTest extends TestCase {
       assertTrue(!graph.usesY(i));
     }
 
-    assertTrue(!graph.getVerticalLine());
+    assertTrue(!graph.isVerticalLine());
 
     // check sets/gets
     graph.setTitle(null);
@@ -87,14 +87,14 @@ public class Graph2DTest extends TestCase {
       assertTrue(graph.getYLabel(i).equals("ylabel"));
 
       graph.setXGrid(i, true);
-      assertTrue(graph.getXGrid(i));
+      assertTrue(graph.isXGrid(i));
       graph.setXGrid(i, false);
-      assertTrue(!graph.getXGrid(i));
+      assertTrue(!graph.isXGrid(i));
 
       graph.setXGrid(i, true);
-      assertTrue(graph.getXGrid(i));
+      assertTrue(graph.isXGrid(i));
       graph.setXGrid(i, false);
-      assertTrue(!graph.getXGrid(i));
+      assertTrue(!graph.isXGrid(i));
 
       graph.setXLo(i, 0.0f);
       assertEquals(0.0f, graph.getXLo(i), PRECISION);
@@ -135,20 +135,20 @@ public class Graph2DTest extends TestCase {
       assertEquals(0.2f, graph.getYTic(i), PRECISION);
 
       graph.setShowXTics(i, false);
-      assertTrue(!graph.getShowXTics(i));
+      assertTrue(!graph.isShowXTics(i));
       graph.setShowXTics(i, true);
-      assertTrue(graph.getShowXTics(i));
+      assertTrue(graph.isShowXTics(i));
 
       graph.setShowYTics(i, false);
-      assertTrue(!graph.getShowYTics(i));
+      assertTrue(!graph.isShowYTics(i));
       graph.setShowYTics(i, true);
-      assertTrue(graph.getShowYTics(i));
+      assertTrue(graph.isShowYTics(i));
     }
 
     graph.setBorder(false);
-    assertTrue(!graph.getBorder());
+    assertTrue(!graph.isBorder());
     graph.setBorder(true);
-    assertTrue(graph.getBorder());
+    assertTrue(graph.isBorder());
 
     String[] labels = new String[]{"one", "two"};
     for (int i = 0; i < 2; i++) {
@@ -162,10 +162,10 @@ public class Graph2DTest extends TestCase {
     }
 
     graph.setVerticalLine(0.1234f);
-    assertTrue(graph.getVerticalLine());
+    assertTrue(graph.isVerticalLine());
     assertEquals(0.1234f, graph.getVerticalLinePos(), PRECISION);
     graph.unsetVerticalLine();
-    assertTrue(!graph.getVerticalLine());
+    assertTrue(!graph.isVerticalLine());
   }
 
   public void test2() {

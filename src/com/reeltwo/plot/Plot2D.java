@@ -12,7 +12,7 @@ public abstract class Plot2D {
   /** the title of this plot */
   private String mTitle = "";
   /** the color of this plot */
-  private int mColor = -1; // black is 0, other colors are up to display device
+  private int mColor = -1;
   /** width of lines in rendering units */
   private int mLineWidth = 1;
 
@@ -20,26 +20,34 @@ public abstract class Plot2D {
   private float mXLo, mXHi;
   private float mYLo, mYHi;
 
-  /** whether to use y2 axis - default is to use y1 axis */
-  //private boolean mUsesY2 = false;
-
   private int mXAxis = 0;
   private int mYAxis = 0;
+
+  /** Use the bottom X axis on the graph. */
+  public static final int BOTTOM_X_AXIS = 0;
+  /** Use the top X axis on the graph. */  
+  public static final int TOP_X_AXIS = 1;
+  /** Use the left Y axis on the graph. */
+  public static final int LEFT_Y_AXIS = 0;
+  /** Use the right Y axis on the graph. */
+  public static final int RIGHT_Y_AXIS = 1;
 
   /** data points in plot */
   private Datum2D[] mData = null;
 
 
-  /** Default constructor. */
+  /**
+   * Default constructor setting the default axes used to the bottom
+   * x axis and the left y axis.
+   */
   public Plot2D() { }
 
 
   /**
-   * Constructor setting whether to uses the y2 axis when plotting.
-   * Default is to use the y1 axis.
+   * Constructor setting which axes to use in the plot.
    *
-   * @param x TODO Description.
-   * @param y TODO Description.
+   * @param x x axis to use.
+   * @param y y axis to use.
    */
   public Plot2D(int x, int y) {
     setXAxis(x);
@@ -55,6 +63,11 @@ public abstract class Plot2D {
   }
 
 
+  /**
+   * Returns the X axis to use for this plot.
+   *
+   * @return X axis value
+   */
   public int getXAxis() {
     return mXAxis;
   }
@@ -68,6 +81,11 @@ public abstract class Plot2D {
   }
 
 
+  /**
+   * Returns the Y axis to use for this plot.
+   *
+   * @return Y axis value
+   */
   public int getYAxis() {
     return mYAxis;
   }
@@ -96,7 +114,7 @@ public abstract class Plot2D {
 
 
   /**
-   * Sets the plot's color
+   * Sets the plot's color.
    *
    * @param color a Color
    */
@@ -106,7 +124,7 @@ public abstract class Plot2D {
 
 
   /**
-   * Returns the plot's color
+   * Returns the plot's color.
    *
    * @return a Color
    */
@@ -140,7 +158,8 @@ public abstract class Plot2D {
 
 
   /**
-   * Sets the data used in this plot.
+   * Sets the data used in this plot.  Override this to check 
+   * data is valid.
    *
    * @param data an array of Datum2D's
    */
@@ -159,11 +178,6 @@ public abstract class Plot2D {
     return mData;
   }
 
-
-  /** Returns whether this plot uses the y2 axis.  */
-  //public boolean usesY2() {
-  //return mUsesY2;
-  //}
 
   /**
    * Calculates the upper and lower bounds for x and y ranges of the

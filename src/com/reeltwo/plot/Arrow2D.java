@@ -1,12 +1,13 @@
 package com.reeltwo.plot;
 
 /**
- * Point data used in data plotting structures.
+ * Point data describing a single arrow.  Arrow is described by its
+ * end point locations and the direction goes from (x1, y1) to (x2,
+ * y2). 
  *
  * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
-
 public class Arrow2D implements Datum2D {
   /** co-ordinates */
   private float mX1, mY1;
@@ -192,8 +193,8 @@ public class Arrow2D implements Datum2D {
             && mX2 == pobj.getX2() && mY2 == pobj.getY2());
   }
 
-
+  // inherited
   public int hashCode() {
-    return super.hashCode();
+    return (int) (mX1 + mX2 + mY1 + mY2);
   }
 }

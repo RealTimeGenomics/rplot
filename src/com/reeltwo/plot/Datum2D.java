@@ -1,12 +1,11 @@
 package com.reeltwo.plot;
 
 /**
- * Structure to hold attributes for a single data point on a 2D plot.
+ * Methods that all point objects must implement.
  *
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
  * @version $Revision$
  */
-
 public interface Datum2D {
   /**
    * Returns the lower bound of the datum in the x dimension.

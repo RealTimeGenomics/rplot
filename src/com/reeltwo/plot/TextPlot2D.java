@@ -48,17 +48,20 @@ public class TextPlot2D extends Plot2D {
   private boolean mUseFGColor = true;
 
 
+  /**
+   * Default constructor setting the default axes used to the bottom
+   * x axis and the left y axis.
+   */
   public TextPlot2D() {
     super();
   }
 
 
   /**
-   * Constructor setting whether to uses the y2 axis when plotting.
-   * Default is to use the y1 axis.
+   * Constructor setting which axes to use in the plot.
    *
-   * @param x TODO Description.
-   * @param y TODO Description.
+   * @param x x axis to use.
+   * @param y y axis to use.
    */
   public TextPlot2D(int x, int y) {
     super(x, y);

@@ -11,11 +11,21 @@ public class ScatterPlot2D extends Plot2D {
   /** the scatter factor for this plot */
   private float mScatterFactor = 0.0f;
 
+  /**
+   * Default constructor setting the default axes used to the bottom
+   * x axis and the left y axis.
+   */
   public ScatterPlot2D() {
     super();
   }
   
   
+  /**
+   * Constructor setting which axes to use in the plot.
+   *
+   * @param x x axis to use.
+   * @param y y axis to use.
+   */
   public ScatterPlot2D(int x, int y) {
     super(x, y);
   }

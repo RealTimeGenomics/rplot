@@ -14,18 +14,20 @@ public class PointPlot2D extends FillablePlot2D {
   private boolean mLines = false;
 
 
-  /** Default constructor. */
+  /**
+   * Default constructor setting the default axes used to the bottom
+   * x axis and the left y axis.
+   */
   public PointPlot2D() {
     super();
   }
 
 
   /**
-   * Constructor setting whether to uses the y2 axis when plotting.
-   * Default is to use the y1 axis.
+   * Constructor setting which axes to use in the plot.
    *
-   * @param x TODO Description.
-   * @param y TODO Description.
+   * @param x x axis to use.
+   * @param y y axis to use.
    */
   public PointPlot2D(int x, int y) {
     super(x, y);

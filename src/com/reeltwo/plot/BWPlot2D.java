@@ -8,26 +8,31 @@ package com.reeltwo.plot;
  */
 
 public class BWPlot2D extends Plot2D {
+  /** Render a standard looking box and whisker plot. */
   public static final int STANDARD = 0;
+  /** Render a minimal box and whisker plot. */
   public static final int MINIMAL = 1;
+  /** Render a box and whisker plot where consecutive nodes are joined. */
   public static final int JOINED = 2;
   
   private int mType = STANDARD;
 
   private int mWidth = 20;
 
-  /** Default constructor. */
+  /**
+   * Default constructor setting the default axes used to the bottom
+   * x axis and the left y axis.
+   */
   public BWPlot2D() {
     super();
   }
 
 
   /**
-   * Constructor setting whether to uses the y2 axis when plotting.
-   * Default is to use the y1 axis.
+   * Constructor setting which axes to use in the plot.
    *
-   * @param x x axis to use
-   * @param y y axis to use
+   * @param x x axis to use.
+   * @param y y axis to use.
    */
   public BWPlot2D(int x, int y) {
     super(x, y);
@@ -36,6 +41,8 @@ public class BWPlot2D extends Plot2D {
 
   /**
    * Sets the style of plot to produce.
+   * Valid styles are <code>STANDARD</code> (the default),
+   * <code>MINIMAL</code> and <code>JOINED</code>.
    *
    * @param type box and whisker type
    */

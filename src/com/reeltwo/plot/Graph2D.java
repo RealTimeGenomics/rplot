@@ -11,16 +11,23 @@ import java.util.Iterator;
  */
 
 public class Graph2D implements Cloneable {
+  /** Center */
   public static final int CENTER = 0;
+  /** Left */
   public static final int LEFT = 1;
+  /** Right */
   public static final int RIGHT = 2;
+  /** Outside */
   public static final int OUTSIDE = 3;
+  /** Top */
   public static final int TOP = 4;
+  /** Bottom */
   public static final int BOTTOM = 5;
+  /** Below */
   public static final int BELOW = 6;
 
-  static final int NUM_X_AXES = 2;
-  static final int NUM_Y_AXES = 2;
+  protected static final int NUM_X_AXES = 2;
+  protected static final int NUM_Y_AXES = 2;
 
   /** graph title */
   private String mTitle = "";
@@ -110,21 +117,42 @@ public class Graph2D implements Cloneable {
   }
 
 
+  /**
+   * Sets whether to show the key.  Default is to show key.
+   *
+   * @param flag show key
+   */
   public void setShowKey(boolean flag) {
     mShowKey = flag;
   }
 
 
-  public boolean getShowKey() {
+  /**
+   * Returns whether to show the key.
+   *
+   * @return show key
+   */
+  public boolean isShowKey() {
     return mShowKey;
   }
 
+  /**
+   * Set whether to use plots color in key text or to use the
+   * forground color.  Default is to use colors. 
+   *
+   * @param flag use plot colors in text
+   */
   public void setColoredKey(final boolean flag) {
     mColoredKey = flag;
   }
   
   
-  public boolean getColoredKey() {
+  /**
+   * Returns whether using plot colors in key text.
+   *
+   * @return using plot colors in text
+   */
+  public boolean isColoredKey() {
     return mColoredKey;
   }
 
@@ -201,10 +229,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the graph's x axis label.
+   * Sets the graph's <code>i</code><sup>th</sup> x axis <code>label</code>.
    *
+   * @param i x axis index
    * @param label some text
-   * @param i The new xLabel value.
    */
   public void setXLabel(int i, String label) {
     if (label == null) {
@@ -215,16 +243,21 @@ public class Graph2D implements Cloneable {
   }
 
 
+  /**
+   * Shortcut to set bottom x axis label.
+   *
+   * @param label some text
+   */
   public void setXLabel(String label) {
     setXLabel(0, label);
   }
 
 
   /**
-   * Returns the graph's x axis label.
+   * Returns the graph's <code>i</code><sup>th</sup> x axis label.
    *
-   * @param i TODO Description.
-   * @return some text
+   * @param i x axis index
+   * @return label
    */
   public String getXLabel(int i) {
     return getXAxis(i).mTitle;
@@ -240,10 +273,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the graph's y axis label.
+   * Sets the graph's <code>i</code><sup>th</sup> y axis <code>label</code>.
    *
+   * @param i y axis index
    * @param label some text
-   * @param i The new yLabel value.
    */
   public void setYLabel(int i, String label) {
     if (label == null) {
@@ -254,16 +287,21 @@ public class Graph2D implements Cloneable {
   }
 
 
+  /**
+   * Shortcut to set left y axis label.
+   *
+   * @param label some text
+   */
   public void setYLabel(String label) {
     setYLabel(0, label);
   }
 
 
   /**
-   * Returns the graph's y axis label.
+   * Returns the graph's <code>i</code><sup>th</sup> y axis label.
    *
-   * @param i TODO Description.
-   * @return some text
+   * @param i y axis index
+   * @return label
    */
   public String getYLabel(int i) {
     return getYAxis(i).mTitle;
@@ -286,10 +324,11 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets whether or not to display a grid on the graph.
+   * Sets whether or not to display a grid for the
+   * <code>i</code><sup>th</sup> x axis.
    *
+   * @param i x axis index
    * @param flag whether to show grid
-   * @param i The new xGrid value.
    */
   public void setXGrid(int i, boolean flag) {
     getXAxis(i).mShowGrid = flag;
@@ -297,21 +336,23 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns whether or not to display a grid on the graph.
+   * Returns whether or not to display a grid for the
+   * <code>i</code><sup>th</sup> x axis.
    *
-   * @param i TODO Description.
+   * @param i x axis index
    * @return whether to show grid
    */
-  public boolean getXGrid(int i) {
+  public boolean isXGrid(int i) {
     return getXAxis(i).mShowGrid;
   }
 
 
   /**
-   * Sets whether or not to display a grid on the graph.
+   * Sets whether or not to display a grid for the
+   * <code>i</code><sup>th</sup> y axis.
    *
+   * @param i y axis index
    * @param flag whether to show grid
-   * @param i The new yGrid value.
    */
   public void setYGrid(int i, boolean flag) {
     getYAxis(i).mShowGrid = flag;
@@ -319,12 +360,13 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns whether or not to display a grid on the graph.
+   * Returns whether or not to display a grid for the
+   * <code>i</code><sup>th</sup> y axis.
    *
-   * @param i TODO Description.
+   * @param i y axis index
    * @return whether to show grid
    */
-  public boolean getYGrid(int i) {
+  public boolean isYGrid(int i) {
     return getYAxis(i).mShowGrid;
   }
 
@@ -346,15 +388,16 @@ public class Graph2D implements Cloneable {
    *
    * @return whether to show border
    */
-  public boolean getBorder() {
+  public boolean isBorder() {
     return mDisplayBorder;
   }
 
 
   /**
-   * Sets the automatic calculation of X axis ranges.
+   * Sets the automatic calculation of <code>i</code><sup>th</sup> X
+   * axis range. 
    *
-   * @param i The new autoScaleX value.
+   * @param i x axis index
    */
   public void setAutoScaleX(int i) {
     getXAxis(i).mLoAuto = true;
@@ -364,13 +407,13 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the x axis to range from <code>lo</code> to hi. If <code>hi</code>
-   * < <code>lo</code> the meaning of <code>lo</code> and <code>hi</code>
-   * is swapped.
+   * Sets the <code>i</code><sup>th</sup> x axis to range from
+   * <code>lo</code> to hi. If <code>hi</code> &lt; <code>lo</code>
+   * the meaning of <code>lo</code> and <code>hi</code> is swapped. 
    *
-   * @param lo lower end of range.
-   * @param hi upper end of range.
-   * @param i The new xRange value.
+   * @param i x axis index
+   * @param lo lower end of range
+   * @param hi upper end of range
    */
   public void setXRange(int i, float lo, float hi) {
     if (lo <= hi) {
@@ -386,16 +429,22 @@ public class Graph2D implements Cloneable {
   }
 
 
+  /**
+   * Shortcut to set bottom x axis range.
+   *
+   * @param lo lower end of range
+   * @param hi upper end of range
+   */
   public void setXRange(float lo, float hi) {
     setXRange(0, lo, hi);
   }
 
 
   /**
-   * Sets the low end of the x axis range.
+   * Sets the low end of the <code>i</code><sup>th</sup> x axis range.
    *
-   * @param x low end of range.
-   * @param i The new xLo value.
+   * @param i x axis index
+   * @param x low end of range
    */
   public void setXLo(int i, float x) {
     if (x <= getXHi(i)) {
@@ -407,10 +456,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns the low end of the x axis range.
+   * Returns the low end of the <code>i</code><sup>th</sup> x axis range.
    *
-   * @param i TODO Description.
-   * @return low end of range.
+   * @param i x axis index
+   * @return low end of range
    */
   public float getXLo(int i) {
     return getXAxis(i).mLo;
@@ -418,10 +467,11 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the high end of the x axis range.
+   * Sets the high end of the <code>i</code><sup>th</sup> x axis
+   * range. 
    *
-   * @param x high end of range.
-   * @param i The new xHi value.
+   * @param i x axis index
+   * @param x high end of range
    */
   public void setXHi(int i, float x) {
     if (x >= getXLo(i)) {
@@ -433,10 +483,11 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns the high end of the x axis range.
+   * Returns the high end of the <code>i</code><sup>th</sup> x axis
+   * range. 
    *
-   * @param i TODO Description.
-   * @return high end of range.
+   * @param i x axis index
+   * @return high end of range
    */
   public float getXHi(int i) {
     return getXAxis(i).mHi;
@@ -444,9 +495,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the automatic calculation of Y axis ranges.
+   * Sets the automatic calculation of <code>i</code><sup>th</sup> Y
+   * axis range. 
    *
-   * @param i The new autoScaleY value.
+   * @param i yaxis index
    */
   public void setAutoScaleY(int i) {
     getYAxis(i).mLoAuto = true;
@@ -456,13 +508,13 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the x axis to range from <code>lo</code> to hi. If <code>hi</code>
-   * < <code>lo</code> the meaning of <code>lo</code> and <code>hi</code>
-   * is swapped.
+   * Sets the <code>i</code><sup>th</sup> y axis to range from
+   * <code>lo</code> to hi. If <code>hi</code> < <code>lo</code> the
+   * meaning of <code>lo</code> and <code>hi</code> is swapped. 
    *
-   * @param lo lower end of range.
-   * @param hi upper end of range.
-   * @param i The new yRange value.
+   * @param i y axis index
+   * @param lo lower end of range
+   * @param hi upper end of range
    */
   public void setYRange(int i, float lo, float hi) {
     if (lo <= hi) {
@@ -478,16 +530,22 @@ public class Graph2D implements Cloneable {
   }
 
 
+  /**
+   * Shortcut to set left y axis range.
+   *
+   * @param lo lower end of range
+   * @param hi upper end of range
+   */
   public void setYRange(float lo, float hi) {
     setYRange(0, lo, hi);
   }
 
 
   /**
-   * Sets the low end of the x axis range.
+   * Sets the low end of the <code>i</code><sup>th</sup> y axis range.
    *
-   * @param x low end of range.
-   * @param i The new yLo value.
+   * @param i y axis index
+   * @param x low end of range
    */
   public void setYLo(int i, float x) {
     if (x <= getYHi(i)) {
@@ -499,10 +557,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns the low end of the x axis range.
+   * Returns the low end of the <code>i</code><sup>th</sup> y axis range.
    *
-   * @param i TODO Description.
-   * @return low end of range.
+   * @param i y axis index
+   * @return low end of range
    */
   public float getYLo(int i) {
     return getYAxis(i).mLo;
@@ -510,10 +568,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the high end of the x axis range.
+   * Sets the high end of the <code>i</code><sup>th</sup> y axis range.
    *
-   * @param x high end of range.
-   * @param i The new yHi value.
+   * @param i y axis index
+   * @param x high end of range
    */
   public void setYHi(int i, float x) {
     if (x >= getYLo(i)) {
@@ -525,10 +583,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns the high end of the x axis range.
+   * Returns the high end of the <code>i</code><sup>th</sup> y axis range.
    *
-   * @param i TODO Description.
-   * @return high end of range.
+   * @param i y axis index
+   * @return high end of range
    */
   public float getYHi(int i) {
     return getYAxis(i).mHi;
@@ -536,9 +594,9 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the automatic calculation of X axis tics.
+   * Sets the automatic calculation of <code>i</code><sup>th</sup> X axis tics.
    *
-   * @param i which x axis
+   * @param i x axis index
    */
   public void setAutoScaleXTic(int i) {
     getXAxis(i).mTicAuto = true;
@@ -547,11 +605,11 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the tick spacing for the x axis. This value represents the
-   * distance from the origin in the positive direction of the first
-   * tick.
+   * Sets the tick spacing for the <code>i</code><sup>th</sup> x
+   * axis. This value represents the distance from the origin in the
+   * positive direction of the first tick. 
    *
-   * @param i which x axis
+   * @param i x axis index
    * @param tic tick spacing
    */
   public void setXTic(int i, float tic) {
@@ -561,11 +619,11 @@ public class Graph2D implements Cloneable {
 
   
   /**
-   * Returns the tick spacing for the x axis. This value represents the
-   * distance from the origin in the positive direction of the first
-   * tick.
+   * Returns the tick spacing for the <code>i</code><sup>th</sup> x
+   * axis. This value represents the distance from the origin in the
+   * positive direction of the first tick. 
    *
-   * @param i which x axis
+   * @param i x axis index
    * @return tick spacing
    */
   public float getXTic(int i) {
@@ -574,12 +632,13 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the tick spacing for small tics on the x axis. This value
-   * represents the distance from the origin in the positive direction
-   * of the first tick.  A value of 0 or less will result in no minor
-   * ticks being displayed (the default).
+   * Sets the tick spacing for small tics on the
+   * <code>i</code><sup>th</sup> x axis. This value represents the
+   * distance from the origin in the positive direction of the first
+   * tick.  A value of 0 or less will result in no minor ticks being
+   * displayed (the default). 
    *
-   * @param i which x axis
+   * @param i x axis index
    * @param tic tick spacing
    */
   public void setXMinorTic(int i, float tic) {
@@ -588,11 +647,12 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns the tick spacing for small tics on the x axis. This value
-   * represents the distance from the origin in the positive direction
-   * of the first tick. 
+   * Returns the tick spacing for small tics on the
+   * <code>i</code><sup>th</sup> x axis. This value represents the
+   * distance from the origin in the positive direction of the first
+   * tick.
    *
-   * @param i which x axis
+   * @param i x axis index
    * @return tick spacing
    */
   public float getXMinorTic(int i) {
@@ -601,9 +661,9 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the automatic calculation of Y axis tics.
+   * Sets the automatic calculation of <code>i</code><sup>th</sup> Y axis tics.
    *
-   * @param i which y axis
+   * @param i y axis index
    */
   public void setAutoScaleYTic(int i) {
     getYAxis(i).mTicAuto = true;
@@ -612,12 +672,12 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the tick spacing for the y axis. This value represents the
-   * distance from the origin in the positive direction of the first
-   * tick.
+   * Sets the tick spacing for the <code>i</code><sup>th</sup> y
+   * axis. This value represents the distance from the origin in the
+   * positive direction of the first tick. 
    *
+   * @param i y axis index
    * @param tic tick spacing
-   * @param i The new yTic value.
    */
   public void setYTic(int i, float tic) {
     getYAxis(i).mTic = tic;
@@ -626,11 +686,11 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns the tick spacing for the y axis. This value represents the
-   * distance from the origin in the positive direction of the first
-   * tick.
+   * Returns the tick spacing for the <code>i</code><sup>th</sup> y
+   * axis. This value represents the distance from the origin in the
+   * positive direction of the first tick. 
    *
-   * @param i TODO Description.
+   * @param i y axis index
    * @return tick spacing
    */
   public float getYTic(int i) {
@@ -639,12 +699,13 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets the tick spacing for small tics on the y axis. This value
-   * represents the distance from the origin in the positive direction
-   * of the first tick.  A value of 0 or less will result in no minor
-   * ticks being displayed (the default).
+   * Sets the tick spacing for small tics on the
+   * <code>i</code><sup>th</sup> y axis. This value represents the
+   * distance from the origin in the positive direction of the first
+   * tick.  A value of 0 or less will result in no minor ticks being
+   * displayed (the default). 
    *
-   * @param i which y axis
+   * @param i y axis index
    * @param tic tick spacing
    */
   public void setYMinorTic(int i, float tic) {
@@ -653,11 +714,12 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns the tick spacing for small tics on the y axis. This value
-   * represents the distance from the origin in the positive direction
-   * of the first tick. 
+   * Returns the tick spacing for small tics on the
+   * <code>i</code><sup>th</sup> y axis. This value represents the
+   * distance from the origin in the positive direction of the first
+   * tick. 
    *
-   * @param i which y axis
+   * @param i y axis index
    * @return tick spacing
    */
   public float getYMinorTic(int i) {
@@ -666,10 +728,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Sets whether to show x tics on graph.
+   * Sets whether to show <code>i</code><sup>th</sup> x tics on graph.
    *
-   * @param flag whether to show x tics.
-   * @param i The new showXTics value.
+   * @param i x axis index
+   * @param flag whether to show tics
    */
   public void setShowXTics(int i, boolean flag) {
     getXAxis(i).mShowTics = flag;
@@ -677,21 +739,21 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns whether to show x tics on graph.
+   * Returns whether to show <code>i</code><sup>th</sup> x tics on graph.
    *
-   * @param i TODO Description.
-   * @return whether to show x tics.
+   * @param i x axis index
+   * @return whether to show tics
    */
-  public boolean getShowXTics(int i) {
+  public boolean isShowXTics(int i) {
     return getXAxis(i).mShowTics;
   }
 
 
   /**
-   * Sets whether to show y tics on graph.
+   * Sets whether to show <code>i</code><sup>th</sup> y tics on graph.
    *
-   * @param flag whether to show y tics.
-   * @param i The new showYTics value.
+   * @param i y axis index
+   * @param flag whether to show tics
    */
   public void setShowYTics(int i, boolean flag) {
     getYAxis(i).mShowTics = flag;
@@ -699,16 +761,25 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns whether to show y tics on graph.
+   * Returns whether to show <code>i</code><sup>th</sup> y tics on graph.
    *
-   * @param i TODO Description.
-   * @return whether to show y tics.
+   * @param i y axis index
+   * @return whether to show tics
    */
-  public boolean getShowYTics(int i) {
+  public boolean isShowYTics(int i) {
     return getYAxis(i).mShowTics;
   }
 
 
+  /**
+   * Set the labels to using instead of numbers on the
+   * <code>i</code><sup>th</sup> x axis.  Each number at a major tic
+   * is replaced by the text in the <code>labels</code> array.  The
+   * labels are used on a cyclic basis.
+   *
+   * @param i x axis index
+   * @param labels an array of strings
+   */
   public void setXTicLabels(int i, String[] labels) {
     if (labels != null) {
       for (int l = 0; l < labels.length; l++) {
@@ -721,11 +792,26 @@ public class Graph2D implements Cloneable {
   }
 
 
+  /**
+   * Returns the labels for the <code>i</code><sup>th</sup> x axis. 
+   *
+   * @param i x axis index
+   * @return an array of strings
+   */
   public String[] getXTicLabels(int i) {
     return getXAxis(i).mTicLabels;
   }
 
 
+  /**
+   * Set the labels to using instead of numbers on the
+   * <code>i</code><sup>th</sup> y axis.  Each number at a major tic
+   * is replaced by the text in the <code>labels</code> array.  The
+   * labels are used on a cyclic basis.
+   *
+   * @param i y axis index
+   * @param labels an array of strings
+   */
   public void setYTicLabels(int i, String[] labels) {
     if (labels != null) {
       for (int l = 0; l < labels.length; l++) {
@@ -738,29 +824,65 @@ public class Graph2D implements Cloneable {
   }
 
 
+  /**
+   * Returns the labels for the <code>i</code><sup>th</sup> y axis. 
+   *
+   * @param i y axis index
+   * @return an array of strings
+   */
   public String[] getYTicLabels(int i) {
     return getYAxis(i).mTicLabels;
   }
 
 
+  /**
+   * Sets whether to use a log scale on the
+   * <code>i</code><sup>th</sup> x axis. Default is not to used log
+   * scale. 
+   *
+   * @param i x axis index
+   * @param flag whether to use log scale
+   */
   public void setLogScaleX(int i, boolean flag) {
     getXAxis(i).mLogScale = flag;
     setRanges();
   }
 
 
-  public boolean getLogScaleX(int i) {
+  /**
+   * Returns whether to use log scale on the
+   * <code>i</code><sup>th</sup> x axis. 
+   *
+   * @param i x axis index
+   * @return whether using log scale
+   */
+  public boolean isLogScaleX(int i) {
     return getXAxis(i).mLogScale;
   }
 
 
+  /**
+   * Sets whether to use a log scale on the
+   * <code>i</code><sup>th</sup> y axis. Default is not to used log
+   * scale. 
+   *
+   * @param i y axis index
+   * @param flag whether to use log scale
+   */
   public void setLogScaleY(int i, boolean flag) {
     getYAxis(i).mLogScale = flag;
     setRanges();
   }
 
 
-  public boolean getLogScaleY(int i) {
+  /**
+   * Returns whether to use log scale on the
+   * <code>i</code><sup>th</sup> y axis. 
+   *
+   * @param i y axis index
+   * @return whether using log scale
+   */
+  public boolean isLogScaleY(int i) {
     return getYAxis(i).mLogScale;
   }
 
@@ -789,10 +911,11 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns whether any plot in this graph uses the specified x axis.
+   * Returns whether any plot in this graph uses the
+   * <code>i</code><sup>th</sup> x axis. 
    *
-   * @param i TODO Description.
-   * @return whether any plot uses the specified x axis
+   * @param i x axis index
+   * @return whether any plot uses the axis
    */
   public boolean usesX(int i) {
     Iterator it = mPlots.iterator();
@@ -807,10 +930,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns whether any plot in this graph uses the specified y axis.
+   * Returns whether any plot in this graph uses the <code>i</code><sup>th</sup> y axis.
    *
-   * @param i TODO Description.
-   * @return whether any plot uses the specified y axis
+   * @param i y axis index
+   * @return whether any plot uses the y axis
    */
   public boolean usesY(int i) {
     Iterator it = mPlots.iterator();
@@ -993,7 +1116,9 @@ public class Graph2D implements Cloneable {
   }
 
 
-  /** Turns draw a vertical (dashed) line off. */
+  /**
+   * Turns draw a vertical (dashed) line off.
+   */
   public void unsetVerticalLine() {
     mVertLine = false;
   }
@@ -1004,7 +1129,7 @@ public class Graph2D implements Cloneable {
    *
    * @return whether to draw
    */
-  public boolean getVerticalLine() {
+  public boolean isVerticalLine() {
     return mVertLine;
   }
 

@@ -40,7 +40,7 @@ public class TextPoint2D extends Point2D {
 
 
   /**
-   * returns the text to display.
+   * Returns the text to display.
    *
    * @return some text.
    */

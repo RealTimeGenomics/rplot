@@ -133,7 +133,7 @@ public class Point2D implements Datum2D {
     return false;
   }
 
-
+  // inherited
   public int hashCode() {
     return super.hashCode();
   }
