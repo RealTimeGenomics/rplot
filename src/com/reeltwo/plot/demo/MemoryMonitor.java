@@ -46,7 +46,7 @@ public class MemoryMonitor extends Thread {
 
 
   /** The <code>MemoryMonitor</code> singleton. */
-  private static MemoryMonitor INSTANCE = null;
+  private static MemoryMonitor sInstance = null;
 
 
   /**
@@ -55,10 +55,10 @@ public class MemoryMonitor extends Thread {
    * @return The instance value.
    */
   public static MemoryMonitor getInstance() {
-    if (INSTANCE == null) {
-      INSTANCE = new MemoryMonitor();
-      INSTANCE.start();
-      INSTANCE.addMemoryListener(
+    if (sInstance == null) {
+      sInstance = new MemoryMonitor();
+      sInstance.start();
+      sInstance.addMemoryListener(
         new MemoryListener() {
           public void lowMemory(long kbMax, long kbUsed, final float fractionUsed) {
             System.err.println("Within 10% of memory limit: "
@@ -70,7 +70,7 @@ public class MemoryMonitor extends Thread {
           public void memoryUpdate(long kbMax, long kbUsed, final float fraction) { }
         });
     }
-    return INSTANCE;
+    return sInstance;
   }
 
 
