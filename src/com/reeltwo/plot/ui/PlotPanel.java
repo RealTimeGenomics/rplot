@@ -103,6 +103,9 @@ public class PlotPanel extends JPanel {
     mGraphicsRenderer.setGraphBGColor(topColor, bottomColor);
   }
 
+  public void setGraphShadowWidth(int width) {
+    mGraphicsRenderer.setGraphShadowWidth(width);
+  }
 
   /**
    * Draws a graph with the given plot data.

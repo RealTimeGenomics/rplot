@@ -29,6 +29,7 @@ public class ZoomPlotDialog extends JDialog {
     mPlotPanel.setBackground(Color.WHITE);
     mPlotPanel.setGraphBGColor(new Color(0.8f, 0.9f, 1.0f), Color.WHITE);
     mPlotPanel.setBufferGraphs(true);
+    mPlotPanel.setGraphShadowWidth(4);
     mZoomPanel = new ZoomPlotPanel(mPlotPanel);
     
     setContentPane(mPlotPanel);
