@@ -720,7 +720,9 @@ public abstract class AbstractRenderer {
     case TextPlot2D.BOTTOM: valign = -descent; break;
     }
 
-    setColor(canvas, FOREGROUND_COLOR_INDEX);
+    final int color = tplot.isUseFGColor() ? FOREGROUND_COLOR_INDEX : tplot.getColor();
+    setColor(canvas, color);
+
     if (points != null && points.length != 0) {
       for (int i = 0; i < points.length; i++) {
         TextPoint2D point = (TextPoint2D) points[i];
@@ -730,13 +732,11 @@ public abstract class AbstractRenderer {
         int sw = getTextWidth(canvas, text);
 
         if (tplot.isInvert()) {
-          setColor(canvas, tplot.getColor());
+          setColor(canvas, color);
           fillRectangle(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign - tHeight + descent), sw, tHeight);
           setColor(canvas, BACKGROUND_COLOR_INDEX);
-          drawString(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign), text);
-        } else {
-          drawString(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign), text);
         }
+        drawString(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign), text);
       }
     }
   }
