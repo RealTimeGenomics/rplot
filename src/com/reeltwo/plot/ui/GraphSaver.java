@@ -25,21 +25,40 @@ public class GraphSaver {
 
   private final JFileChooser mChooser;
 
-  GraphSaver() {
+  /**
+   * Creates a new <code>GraphSaver</code>.
+   */
+  public GraphSaver() {
     mChooser = new JFileChooser();
     PNGFileFilter pff = new PNGFileFilter();
     mChooser.addChoosableFileFilter(pff);
     mChooser.setFileFilter(pff);
   }
 
+  /**
+   * Sets the font size to use.
+   *
+   * @param size font size
+   */
   public void setFontSize(int size) {
     mFontSize = size;
   }
   
+  /**
+   * Returns the font size.
+   *
+   * @return font size
+   */
   public int getFontSize() {
     return mFontSize;
   }
 
+  /**
+   * Sets the size, in pixels, of the image.
+   *
+   * @param width image width in pixels
+   * @param height image height in pixels
+   */
   public void setSize(int width, int height) {
     if (width < 0 || height < 0) {
       throw new IllegalArgumentException("width and height must be >= 0: " + width + " : " + height);
@@ -48,6 +67,11 @@ public class GraphSaver {
     mHeight = height;
   }
   
+  /**
+   * Sets the colors to render plots with.
+   *
+   * @param colors an array of colors
+   */
   public void setColors(Color [] colors) {
     if (colors == null) {
       throw new NullPointerException("no colors given");
@@ -55,6 +79,11 @@ public class GraphSaver {
     mColors = colors;
   }
 
+  /**
+   * Sets the patterns to use when rendering plots.
+   *
+   * @param patterns an array of patterns
+   */
   public void setPatterns(Paint [] patterns) {
     mPatterns = patterns;
   }
@@ -69,6 +98,12 @@ public class GraphSaver {
     return f;
   }
 
+  /**
+   * Saves the given <code>graph</code> to a file as determine via
+   * interactive dialogs. 
+   *
+   * @param graph a <code>Graph2D</code>
+   */
   public void saveGraph(Graph2D graph) {
     if (graph != null) {
       boolean ok = false;
