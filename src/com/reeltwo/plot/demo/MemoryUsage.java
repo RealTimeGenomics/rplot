@@ -118,30 +118,25 @@ public class MemoryUsage extends JDialog {
    *
    * @param args The command line arguments.
    */
-  public static void main(String[] args) {
-    try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      MemoryUsage mud = new MemoryUsage() {
-          public void close() {
-            super.close();
-            System.exit(0);
-          }
-        };
-      mud.setVisible(true);
-
-      //args[0] => class name
-      //args[1]..args[n-1] => command line parameters
-      if (args.length >= 1) {
-        Class c = ClassLoader.getSystemClassLoader().loadClass(args[0]);
-        Method m = c.getMethod("main", new Class[]{String[].class});
-        String[] a = new String[args.length - 1];
-        System.arraycopy(args, 1, a, 0, a.length);
-        System.out.println("Invoking: " + c.getName() + ".main()");
-        m.invoke(c, new Object[]{a});
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.exit(1);
+  public static void main(String[] args) throws Exception {
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    MemoryUsage mud = new MemoryUsage() {
+        public void close() {
+          super.close();
+          System.exit(0);
+        }
+      };
+    mud.setVisible(true);
+    
+    //args[0] => class name
+    //args[1]..args[n-1] => command line parameters
+    if (args.length >= 1) {
+      Class c = ClassLoader.getSystemClassLoader().loadClass(args[0]);
+      Method m = c.getMethod("main", new Class[]{String[].class});
+      String[] a = new String[args.length - 1];
+      System.arraycopy(args, 1, a, 0, a.length);
+      System.out.println("Invoking: " + c.getName() + ".main()");
+      m.invoke(c, new Object[]{a});
     }
   }
 
@@ -266,8 +261,6 @@ public class MemoryUsage extends JDialog {
       Thread t = new Thread() {
           public void run() {
             final float max = mMonitor.getMaxMemory() / 1024.0f;
-
-            Runtime r = Runtime.getRuntime();
 
             Point2D[] totalPoints = new Point2D[mNumberOfSamples + 2];
             Point2D[] usedPoints = new Point2D[mNumberOfSamples + 2];
