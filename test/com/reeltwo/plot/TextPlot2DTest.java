@@ -8,8 +8,11 @@ import junit.framework.TestSuite;
  * Created: Mon May 21 16:35:49 2001
  *
  * $Log$
- * Revision 1.1  2004/05/09 22:37:30  richard
- * Initial revision
+ * Revision 1.2  2004/05/25 05:44:18  richard
+ * fixed test
+ *
+ * Revision 1.1.1.1  2004/05/09 22:37:30  richard
+ * initial import
  *
  * Revision 1.5  2003/04/24 04:06:00  len
  * Run through the pretty printer.
@@ -63,7 +66,7 @@ public class TextPlot2DTest extends AbstractPlot2DTest {
 
   public void test1() {
     TextPlot2D plot = (TextPlot2D) getPlot();
-    assertTrue(plot.getColor() == 0);
+    assertTrue(plot.getColor() == -1);
   }
 
 
