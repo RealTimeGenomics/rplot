@@ -9,6 +9,8 @@ import java.awt.Graphics;
 import java.awt.Paint;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -287,6 +289,11 @@ public class ZoomPlotPanel extends JComponent {
    */
   public Graph2D getGraph() {
     return mGraph;
+  }
+   
+  /** {@inheritDoc} */
+  public String getToolTipText(MouseEvent arg0) {
+    return mPlotPanel.getToolTipText(arg0);
   }
 }
 

@@ -7,10 +7,7 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 
-public class TextPoint2D extends Point2D {
-  /** text to be displayed */
-  private String mText = "";
-
+public class TextPoint2D extends ObjectPoint2D {
 
   /**
    * Sets text and co-ordinates to display it at.
@@ -20,8 +17,7 @@ public class TextPoint2D extends Point2D {
    * @param text text to display.
    */
   public TextPoint2D(float x, float y, String text) {
-    super(x, y);
-    setText(text);
+    super(x, y, text);
   }
 
 
@@ -31,11 +27,7 @@ public class TextPoint2D extends Point2D {
    * @param text some text.
    */
   public void setText(String text) {
-    if (text == null) {
-      mText = "";
-    } else {
-      mText = text;
-    }
+    setObject(text);
   }
 
 
@@ -45,23 +37,7 @@ public class TextPoint2D extends Point2D {
    * @return some text.
    */
   public String getText() {
-    return mText;
-  }
-
-
-  /**
-   * Returns a string representation of this object.
-   *
-   * @return a co-ordinate string
-   */
-  public String toString() {
-    StringBuffer sb = new StringBuffer();
-    sb.append('(').append(getX()).append(',').append(getY());
-    if (getText() != null) {
-      sb.append(',').append(getText());
-    }
-    sb.append(')');
-    return sb.toString();
+    return (String) getObject();
   }
 
 }
