@@ -206,6 +206,8 @@ public class SwingPlot {
     }
     tplot.setData(tps);
     tplot.setTitle("text");
+    tplot.setInvert(true);
+    //tplot.setUseFGColor(false);
     cplot.setData(cps);
     cplot.setTitle("circles");
 
