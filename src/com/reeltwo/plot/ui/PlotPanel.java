@@ -70,6 +70,8 @@ public class PlotPanel extends JPanel {
           if (mGraphPrinter == null) {
             mGraphPrinter = new GraphPrinter();
           }
+          mGraphPrinter.setColors(getColors());
+          mGraphPrinter.setPatterns(getPatterns());
           mGraphPrinter.printGraph(getGraph());
         }
       };
