@@ -22,7 +22,7 @@ import java.util.Random;
 
 
 /**
- * Provides functions common acrall renderers.
+ * Provides functions common across all renderers.
  *
  * @author Richard Littin (richard@reeltwo.com) 
  * @version $Revision$
