@@ -18,6 +18,7 @@ import com.reeltwo.plot.ui.ZoomPlotDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 
@@ -277,5 +278,31 @@ public class SwingPlot {
     return graph;
   }
 
+  public static Graph2D genTextureTest() {
+    Graph2D graph = new Graph2D();
 
+    ArrayList text = new ArrayList();
+    for (int y = 0; y < 6; y++) {
+      for (int x = 0; x < 8; x++) {
+        final int index = y * 8 + x;
+        final int y2 = 6 - y;
+        BoxPlot2D plot = new BoxPlot2D();
+        plot.setData(new Box2D[] {new Box2D(x + 0.05f, y2 + 0.05f, x + 0.95f, y2 + 0.95f)});
+        plot.setFill(FillablePlot2D.PATTERN_FILL);
+        plot.setColor(index);
+        plot.setBorder(true);
+        
+        graph.addPlot(plot);
+
+        text.add(new TextPoint2D(x + 0.5f, y2 + 0.5f, "" + index));
+      }
+    }
+    TextPlot2D plot = new TextPlot2D();
+    plot.setData((TextPoint2D []) text.toArray(new TextPoint2D[text.size()]));
+    plot.setInvert(true);
+
+    graph.addPlot(plot);
+
+    return graph;
+  }
 }
