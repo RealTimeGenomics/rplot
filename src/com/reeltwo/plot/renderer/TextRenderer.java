@@ -583,9 +583,9 @@ public class TextRenderer extends AbstractRenderer {
     //private void putChar(Point2D pt,char c) {
     //putChar((int)pt.getX(),(int)pt.getY(),c);
     //}
-    private void putChar(Point2D ptStart, Point2D ptEnd, char c) {
-      putChar((int) ptStart.getX(), (int) ptStart.getY(), (int) ptEnd.getX(), (int) ptEnd.getY(), c);
-    }
+    //private void putChar(Point2D ptStart, Point2D ptEnd, char c) {
+    //putChar((int) ptStart.getX(), (int) ptStart.getY(), (int) ptEnd.getX(), (int) ptEnd.getY(), c);
+    //}
 
 
     private void putChar(int startX, int startY, int endX, int endY, char c) {
@@ -644,12 +644,12 @@ public class TextRenderer extends AbstractRenderer {
     }
 
 
-    private char getChar(int x, int y) {
-      if (x >= 0 && x <= mWidth && y >= 0 && y <= mHeight) {
-        return mCanvas[y * (mWidth + 1) + x];
-      }
-      return '\0';
-    }
+    //private char getChar(int x, int y) {
+    //if (x >= 0 && x <= mWidth && y >= 0 && y <= mHeight) {
+    //return mCanvas[y * (mWidth + 1) + x];
+    //}
+    //return '\0';
+    //}
     //private char getChar(Point2D pt) {
     //return getChar((int)pt.getX(),(int)pt.getY());
     //}
