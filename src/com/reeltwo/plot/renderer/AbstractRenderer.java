@@ -60,6 +60,13 @@ public abstract class AbstractRenderer {
     String[] mLabels;
   }
 
+  /**
+   * Returns an array of screen to world mappings, one for each of the
+   * 4 axes.  Mappings can be null if there is no mapping for an
+   * axis.  The axis order x0, y0, x1, y1.
+   *
+   * @return an array of axis <code>Mapping</code>s
+   */
   public Mapping [] getMappings() {
     // an array of Mapping [ x0, y0, x1, y1 ]
     return mMappings;
@@ -69,8 +76,34 @@ public abstract class AbstractRenderer {
     mMappings = mappings;
   }
 
+  /**
+   * Returns the width in <code>canvas</code> units of the given
+   * <code>text</code>. 
+   *
+   * @param canvas drawing canvas
+   * @param text a <code>String</code>
+   * @return width in canvas units
+   */
   abstract int getTextWidth(Object canvas, String text);
+
+  /**
+   * Returns the height in <code>canvas</code> units of the given
+   * <code>text</code>. 
+   *
+   * @param canvas drawing canvas
+   * @param text a <code>String</code>
+   * @return height in canvas units
+   */
   abstract int getTextHeight(Object canvas, String text);
+
+  /**
+   * Returns the descent in <code>canvas</code> units of the given
+   * <code>text</code>. 
+   *
+   * @param canvas drawing canvas
+   * @param text a <code>String</code>
+   * @return descent in canvas units
+   */
   abstract int getTextDescent(Object canvas, String text);
 
   // somthing to return ticinfo objects for each axis...
@@ -78,20 +111,37 @@ public abstract class AbstractRenderer {
   // something to return bounds for axis labels, key titles...
 
 
-  public void setColor(Object canvas, int colorIndex) {
+  /**
+   * Sets the current drawing color.
+   *
+   * @param canvas drawing canvas
+   * @param colorIndex color index
+   */
+  protected void setColor(Object canvas, int colorIndex) {
     // ??
     mColorIndex = colorIndex;
   }
 
-  public int getColor(Object canvas) {
+  /**
+   * Returns the current drawing color index.
+   *
+   * @param canvas drawing canvas
+   * @return color index
+   */
+  protected int getColor(Object canvas) {
     return mColorIndex;
   }
 
-  public void setPattern(Object canvas, int patternIndex) {
+  /**
+   * Sets the current drawing pattern.
+   *
+   * @param canvas drawing canvas
+   * @param patternIndex pattern index
+   */
+  protected void setPattern(Object canvas, int patternIndex) {
     setColor(canvas, patternIndex);
   }
 
-  //abstract int setPlotColor(Object canvas, Plot2D plot, int colorIndex);
 
   protected void setPointIndex(int pointIndex) {
     mPointIndex = pointIndex;

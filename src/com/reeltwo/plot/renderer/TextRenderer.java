@@ -24,41 +24,19 @@ public class TextRenderer extends AbstractRenderer {
       "1;41", "1;42", "1;44", "1;43", "1;45", "1;46"};
 
 
-  // inherited from AbstractRenderer
-  public int getTextWidth(Object canvas, String text) {
+  protected int getTextWidth(Object canvas, String text) {
     return text.length();
   }
 
-  public int getTextHeight(Object canvas, String text) {
+  protected int getTextHeight(Object canvas, String text) {
     return 1;
   }
 
-  public int getTextDescent(Object canvas, String text) {
+  protected int getTextDescent(Object canvas, String text) {
     return 0;
   }
-  /*
-  public int setPlotColor(Object canvas, Plot2D plot, int colorIndex) {
-    int plotColorIndex = plot.getColor();
-    if (plotColorIndex < 0) {
-      plotColorIndex = colorIndex;
-      colorIndex = (colorIndex + 1) % COLORS.length;
-      if (colorIndex == 0) {
-        colorIndex = 1;
-      }
-      plot.setColor(plotColorIndex);
-    } else if (plotColorIndex >= COLORS.length) {
-      plotColorIndex = (plotColorIndex + 1) % COLORS.length;
-      if (plotColorIndex == 0) {
-        plotColorIndex = 1;
-      }
-      plot.setColor(plotColorIndex);
-    }
-    ((Canvas) canvas).setColor(plotColorIndex);
-    return colorIndex; 
-  }
-  */
 
-  public void setColor(Object canvas, int colorIndex) {
+  protected void setColor(Object canvas, int colorIndex) {
     switch (colorIndex) {
     case BACKGROUND_COLOR_INDEX: ((Canvas) canvas).setColor(0);
       break;
@@ -70,11 +48,11 @@ public class TextRenderer extends AbstractRenderer {
 
   }
 
-  public void setClip(Object canvas, int x, int y, int w, int h) {
+  protected void setClip(Object canvas, int x, int y, int w, int h) {
     ((Canvas) canvas).setClipRectangle(x, y, w, h);
   }
 
-  public void drawString(Object canvas, int x, int y, String text) {
+  protected void drawString(Object canvas, int x, int y, String text) {
     for (int k = 0; k < text.length(); k++) {
       ((Canvas) canvas).putChar(x + k, y, text.charAt(k));
     }
@@ -84,29 +62,29 @@ public class TextRenderer extends AbstractRenderer {
     return LINE_CHARS[getPointIndex() % LINE_CHARS.length];
   }
 
-  public void drawPoint(Object canvas, int x, int y) {
+  protected void drawPoint(Object canvas, int x, int y) {
     ((Canvas) canvas).putChar(x, y, getLineChar());
   }
 
-  public void drawLine(Object canvas, int x1, int y1, int x2, int y2) {
+  protected void drawLine(Object canvas, int x1, int y1, int x2, int y2) {
     ((Canvas) canvas).putChar(x1, y1, x2, y2, getLineChar());
   }
 
-  public void drawRectangle(Object canvas, int x, int y, int w, int h) {
+  protected void drawRectangle(Object canvas, int x, int y, int w, int h) {
     drawLine(canvas, x, y, x + w, y);
     drawLine(canvas, x, y, x, y + h);
     drawLine(canvas, x, y + h, x + w, y + h);
     drawLine(canvas, x + w, y, x + w, y + h);
   }
 
-  public void fillRectangle(Object canvas, int x, int y, int w, int h) {
+  protected void fillRectangle(Object canvas, int x, int y, int w, int h) {
     for (int i = 0; i <= h; i++) {
       drawLine(canvas, x, y + i, x + w, y + i);
     }
   }
 
 
-  public void drawCircle(Object canvas, int x, int y, int diameter) {
+  protected void drawCircle(Object canvas, int x, int y, int diameter) {
     int radius = diameter / 2;
 
     drawPoint(canvas, x, y + radius);
@@ -138,11 +116,11 @@ public class TextRenderer extends AbstractRenderer {
         
   }
 
-  public void fillCircle(Object canvas, int x, int y, int diameter) {
+  protected void fillCircle(Object canvas, int x, int y, int diameter) {
     drawCircle(canvas, x, y, diameter);
   }
 
-  public void drawPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void drawPolygon(Object canvas, int [] xs, int [] ys) {
     if (xs.length != 0) {
       for (int i = 1; i < xs.length; i++) {
         drawLine(canvas, xs[i - 1], ys[i - 1], xs[i], ys[i]);
@@ -151,7 +129,7 @@ public class TextRenderer extends AbstractRenderer {
     }
   }
 
-  public void fillPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void fillPolygon(Object canvas, int [] xs, int [] ys) {
     // todo
     for (int y = 0; y < ((Canvas) canvas).getHeight(); y++) {
       for (int x = 0; x < ((Canvas) canvas).getWidth(); x++) {
@@ -163,7 +141,18 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  ///////
+  /**
+   * Renders the givne graph to a string that mimics a screen of
+   * <code>screenWidth</code> characters by <code>screenHeight</code>
+   * characters.  <code>inColor</code> produces ansi color codes if
+   * set. 
+   *
+   * @param graph a <code>Graph2D</code>
+   * @param screenWidth screen width
+   * @param screenHeight screen height
+   * @param inColor render in color
+   * @return rendered plot as a string
+   */
   public String drawGraph(Graph2D graph, int screenWidth, int screenHeight, boolean inColor) {
     if (graph == null) {
       return null;
@@ -255,7 +244,7 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  public int calculateKeyWidth(Object canvas, Graph2D graph) {
+  protected int calculateKeyWidth(Object canvas, Graph2D graph) {
     int keyWidth = 0;
     if (graph.isShowKey()) {
       String keyTitle = graph.getKeyTitle();
@@ -284,7 +273,7 @@ public class TextRenderer extends AbstractRenderer {
     return keyWidth;
   }
 
-  public int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
+  protected int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
     return graph.isShowKey() ? getTextHeight(canvas, "A") : 0;
   }
 
