@@ -1,6 +1,5 @@
 package com.reeltwo.plot.renderer;
 
-import com.reeltwo.plot.Arrow2D;
 import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPoint2D;
@@ -231,14 +230,11 @@ public class GraphicsRenderer extends AbstractRenderer {
       int sxhi = screenWidth - 1;
       int sylo = screenHeight - 1;
       int syhi = 0;
-
       String title = graph.getTitle();
       int tHeight = getTextHeight(g, "A");
       if (title.length() > 0) {
         syhi += tHeight;
       }
-
-      TicInfo [] ticInfos = null;
 
       TicInfo y2TicInfo = null;
       TicInfo xTicInfo = null;
@@ -254,7 +250,6 @@ public class GraphicsRenderer extends AbstractRenderer {
             sxhi -= keyWidth + 2;
           }
         }
-
         if (graph.usesX(0) && graph.getXLabel(0).length() > 0) {
           sylo -= tHeight + 4;
           // draw x label later when border width is known
@@ -266,31 +261,25 @@ public class GraphicsRenderer extends AbstractRenderer {
           String yLabel = graph.getYLabel(1);
           g.drawString(yLabel, sxhi - getTextWidth(g, yLabel), tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
-
         if ((graph.usesX(1) && graph.getXLabel(1).length() > 0)
             || (graph.usesY(0) && graph.getYLabel(0).length() > 0)
             || (graph.usesY(1) && graph.getYLabel(1).length() > 0)) {
           syhi += tHeight;
         }
-
         // extra height for digits on axes
         if ((graph.usesY(0) && graph.getShowYTics(0))
             || (graph.usesY(1) && graph.getShowYTics(1))) {
           syhi += tHeight / 2;
         }
-
-        ticInfos = createTicInfos(g, graph);
-
+        TicInfo [] ticInfos = createTicInfos(g, graph);
         TicInfo yTicInfo = ticInfos[1];
         if (yTicInfo != null) {
           sxlo += yTicInfo.mMaxWidth + 2;
         }
-
         y2TicInfo = ticInfos[3];
         if (y2TicInfo != null) {
           sxhi -= y2TicInfo.mMaxWidth + 2;
         }
-        
         xTicInfo = ticInfos[0];
         if (xTicInfo != null) {
           sylo -= xTicInfo.mMaxHeight;
@@ -301,7 +290,6 @@ public class GraphicsRenderer extends AbstractRenderer {
             sxhi -= xTicInfo.mMaxWidth / 2 + 2;
           }
         }
-
         TicInfo x2TicInfo = ticInfos[2];
         if (x2TicInfo != null) {
           syhi += xTicInfo.mMaxHeight;
@@ -312,17 +300,13 @@ public class GraphicsRenderer extends AbstractRenderer {
             sxhi -= x2TicInfo.mMaxWidth / 2 + 2;
           }
         }
-
         mapping = createMappings(graph, sxlo, sylo, sxhi, syhi);
-
         drawGraphArea(g, sxlo, sxhi, sylo, syhi);
         setupAntialiasing(g);
-
         drawYTics(graph, g, 0, yTicInfo, mapping[1], sxlo, sxhi, sylo, syhi);
         drawYTics(graph, g, 1, y2TicInfo, mapping[3], sxlo, sxhi, sylo, syhi);
         drawXTics(graph, g, 0, xTicInfo, mapping[0], sxlo, sxhi, sylo, syhi);
         drawXTics(graph, g, 1, x2TicInfo, mapping[2], sxlo, sxhi, sylo, syhi);
-
         g.setColor(Color.BLACK);
         String xLabel;
         if (graph.usesX(0) && (xLabel = graph.getXLabel(0)).length() > 0) {
@@ -332,16 +316,13 @@ public class GraphicsRenderer extends AbstractRenderer {
         if (graph.usesX(1) && (xLabel = graph.getXLabel(1)).length() > 0) {
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
-
         // draw border
         g.setColor(Color.BLACK);
         g.drawRect(sxlo, syhi, sxhi - sxlo, sylo - syhi);
       } else {
         drawGraphArea(g, sxlo, sxhi, sylo, syhi);
-
         mapping = createMappings(graph, sxlo, sylo, sxhi, syhi);
       }
-
       g.setColor(Color.BLACK);
       // draw title
       if (title.length() > 0) {
@@ -349,10 +330,8 @@ public class GraphicsRenderer extends AbstractRenderer {
       }
       // set clip so nothing appears outside border
       setClip(g, sxlo, syhi, sxhi - sxlo + 1, sylo - syhi + 1);
-
       drawData(g, graph.getPlots(), mapping);
       drawVerticalLine(graph, g, mapping[0], sylo, syhi);
-
       if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
       if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
       if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
