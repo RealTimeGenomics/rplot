@@ -156,7 +156,7 @@ public class TextPlot2D extends Plot2D {
    * @param flag use foreground color
    */
   public void setUseFGColor(boolean flag) {
-    mUseFGColor = true;
+    mUseFGColor = flag;
   }
 
 
