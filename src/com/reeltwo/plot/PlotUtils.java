@@ -12,7 +12,7 @@ public class PlotUtils {
   private PlotUtils() { }
 
   // ln(10)
-  private static final double L10 = Math.log(10.0);
+  public static final double L10 = Math.log(10.0);
 
 
   /**
