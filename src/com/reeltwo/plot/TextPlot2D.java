@@ -47,7 +47,6 @@ public class TextPlot2D extends Plot2D {
 
   public TextPlot2D() {
     super();
-    setColor(0);
   }
 
 
