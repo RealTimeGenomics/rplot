@@ -35,6 +35,7 @@ public class AllTests extends TestSuite {
     suite.addTest(ScatterPlot2DTest.suite());
     suite.addTest(ScatterPoint2DTest.suite());
 
+    suite.addTest(com.reeltwo.plot.patterns.AllTests.suite());
     suite.addTest(com.reeltwo.plot.renderer.AllTests.suite());
 
     return suite;
