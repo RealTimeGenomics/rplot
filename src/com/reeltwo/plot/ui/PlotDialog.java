@@ -9,7 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JPopupMenu;
 
 /**
- * Swing dialog for displaying a single graph.  Has a popup menu to
+ * Swing dialog for displaying a single graph.  Has a pop up menu to
  * allow saving and printing of the graph.
  *
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>

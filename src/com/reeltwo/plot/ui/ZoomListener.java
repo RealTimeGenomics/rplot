@@ -10,7 +10,7 @@ import javax.swing.event.MouseInputAdapter;
 
 
 /**
- * MouseListener used by the zoomable plot panel to allow zoom actions
+ * MouseListener used by the zoom plot panel to allow zoom actions
  * to be identified. 
  *
  * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
