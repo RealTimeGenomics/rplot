@@ -11,7 +11,8 @@ import java.awt.Paint;
  */
 public class GrayScaleColorGroup implements PatternGroup {
 
-  private final Color[] mColors;
+  private final int mNumShades;
+  private Color[] mColors = null;
 
   public GrayScaleColorGroup() {
     this(10);
@@ -21,25 +22,30 @@ public class GrayScaleColorGroup implements PatternGroup {
     if (shades <= 0) {
       throw new IllegalArgumentException("must have at least one shade.");
     }
-    mColors = new Color[shades];
-    final int step = 255 / shades;
-    for (int i = 0; i < shades; i++) {
-      final int shade = i * step;
-      mColors[i] = new Color(shade, shade, shade);
-    }
+    mNumShades = shades;
   }
 
-  public int getPatternCount() {
-    return mColors.length;
-  }
 
   public Paint [] getPatterns() {
+    if (mColors == null) {
+      mColors = new Color[mNumShades];
+      final int step = 255 / mNumShades;
+      for (int i = 0; i < mNumShades; i++) {
+        final int shade = i * step;
+        mColors[i] = new Color(shade, shade, shade);
+      }
+    }
     Color [] colors = new Color[mColors.length];
     System.arraycopy(mColors, 0, colors, 0, mColors.length);
     return colors;
   }
 
-  public Paint getPattern(int index) {
-    return mColors[index];
+  public String getName() {
+    return "Grayscale " + mNumShades;
   }
+
+  public String getDescription() {
+    return "Gray scaled shades.";
+  }
+
 }

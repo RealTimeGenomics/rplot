@@ -9,9 +9,9 @@ import java.awt.Paint;
  * @version $Revision$
  */
 public interface PatternGroup {
-  int getPatternCount();
-
   Paint [] getPatterns();
 
-  Paint getPattern(int index);
+  String getName();
+  
+  String getDescription();
 }

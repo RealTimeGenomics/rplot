@@ -1,5 +1,6 @@
 package com.reeltwo.plot.patterns;
 
+import java.awt.Paint;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,6 +33,20 @@ public class DefaultColorGroupTest extends AbstractPatternGroupTest {
 
   public PatternGroup getPatternGroup() {
     return new DefaultColorGroup();
+  }
+
+  public void testDefaults() {
+    PatternGroup pg = getPatternGroup();
+    assertNotNull(pg);
+    Paint [] patterns = pg.getPatterns();
+    assertNotNull(patterns);
+    assertEquals(8, patterns.length);
+
+    for (int i = 0; i < patterns.length; i++) {
+      assertNotNull(i + " is null", patterns[i]);
+    }
+
+    assertEquals("Default Colors", pg.getName());    
   }
 
   public static Test suite() {

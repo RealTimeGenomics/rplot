@@ -35,30 +35,12 @@ public abstract class AbstractPatternGroupTest extends TestCase {
     assertNotNull(pg);
     Paint [] patterns = pg.getPatterns();
     assertNotNull(patterns);
-    final int count = pg.getPatternCount();
-    assertTrue("PatternGroup must return at least one pattern.", count > 0);
-    assertEquals(count, patterns.length);
-    for (int i = 0; i < count; i++) {
-      Paint pattern = pg.getPattern(i);
-      assertNotNull(i + " is null", pattern);
-      assertEquals(i + " not equal", pattern, patterns[i]);
-    }
-  }
-
-  public void testOutOfBounds() {
-    PatternGroup pg = getPatternGroup();
-    try {
-      pg.getPattern(-1);
-      fail("accepted index of -1");
-    } catch (Exception e) {
-      ; // should get here
+    assertTrue("PatternGroup must return at least one pattern.", patterns.length > 0);
+    for (int i = 0; i < patterns.length; i++) {
+      assertNotNull(i + " is null", patterns[i]);
     }
 
-    try {
-      pg.getPattern(pg.getPatternCount() + 1);
-      fail("accepted index > than number of patterns");
-    } catch (Exception e) {
-      ; // should get here
-    }
+    assertNotNull(pg.getName());
+    assertNotNull(pg.getDescription());
   }
 }

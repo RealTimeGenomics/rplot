@@ -11,31 +11,34 @@ import java.awt.Paint;
  */
 public class DefaultColorGroup implements PatternGroup {
 
-  private static final Color[] COLORS = new Color[] {
-    Color.RED,
-    new Color(0.0F, 0.8F, 0.0F),  // green
-    Color.BLUE,
-    Color.MAGENTA,
-    Color.CYAN,
-    new Color(0.62F, 0.32F, 0.18F),  // brown
-    Color.ORANGE,
-    Color.GRAY,
-  };
+  private Color[] mColors = null;
 
   public DefaultColorGroup() {    
   }
 
-  public int getPatternCount() {
-    return COLORS.length;
-  }
-
   public Paint [] getPatterns() {
-    Color [] colors = new Color[COLORS.length];
-    System.arraycopy(COLORS, 0, colors, 0, COLORS.length);
+    if (mColors == null) {
+      mColors = new Color[] {
+        Color.RED,
+        new Color(0.0F, 0.8F, 0.0F),  // green
+        Color.BLUE,
+        Color.MAGENTA,
+        Color.CYAN,
+        new Color(0.62F, 0.32F, 0.18F),  // brown
+        Color.ORANGE,
+        Color.GRAY,
+      };
+    }
+    Color [] colors = new Color[mColors.length];
+    System.arraycopy(mColors, 0, colors, 0, mColors.length);
     return colors;
   }
 
-  public Paint getPattern(int index) {
-    return COLORS[index];
+  public String getName() {
+    return "Default Colors";
+  }
+
+  public String getDescription() {
+    return "Default colors that are visible on a white background.";
   }
 }

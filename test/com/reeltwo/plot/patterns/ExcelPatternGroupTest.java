@@ -1,5 +1,6 @@
 package com.reeltwo.plot.patterns;
 
+import java.awt.Paint;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -33,6 +34,22 @@ public class ExcelPatternGroupTest extends AbstractPatternGroupTest {
   public PatternGroup getPatternGroup() {
     return new ExcelPatternGroup();
   }
+
+
+  public void testDefaults() {
+    PatternGroup pg = getPatternGroup();
+    assertNotNull(pg);
+    Paint [] patterns = pg.getPatterns();
+    assertNotNull(patterns);
+    assertEquals(48, patterns.length);
+
+    for (int i = 0; i < patterns.length; i++) {
+      assertNotNull(i + " is null", patterns[i]);
+    }
+
+    assertEquals("Excel-like", pg.getName());    
+  }
+
 
   public static Test suite() {
     return new TestSuite(ExcelPatternGroupTest.class);
