@@ -747,16 +747,18 @@ public class GraphicsRenderer extends AbstractRenderer {
           if (dtitle != null) {
             final int xx = keyX + c * keyWidth;
             int yy = keyY + (r + 1) * tHeight;
-            if (graph.getColoredKey()
-                && !(plot instanceof TextPlot2D)
-                && !(plot instanceof FillablePlot2D 
-                     && ((FillablePlot2D) plot).getFill() == FillablePlot2D.PATTERN_FILL)) {
+            if ((plot instanceof TextPlot2D && ((TextPlot2D) plot).isUseFGColor())
+                || (plot instanceof FillablePlot2D && ((FillablePlot2D) plot).getFill() == FillablePlot2D.PATTERN_FILL)) {
+              setColor(g, FOREGROUND_COLOR_INDEX);
+            } else if (graph.getColoredKey()) {
               setColor(g, plot.getColor());
             } else {
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
             g.drawString(dtitle, xx + keyLineWidth + 10, yy);
-            setColor(g, plot.getColor());
+            if (!graph.getColoredKey()) {
+              setColor(g, plot.getColor());
+            }
             yy -= tHeight / 2 - 2;
             int doFill = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).getFill() : FillablePlot2D.NO_FILL;
             if (doFill == FillablePlot2D.PATTERN_FILL) {
@@ -849,11 +851,8 @@ public class GraphicsRenderer extends AbstractRenderer {
               if (tplot.isInvert()) {
                 g.fillRect(keyX5, yy - tHeight / 2 + fm.getMaxDescent() - 2, sw, tHeight);
                 setColor(g, BACKGROUND_COLOR_INDEX);
-                g.drawString(text, keyX5, yy + tHeight / 2 - 2);
-              } else {
-                setColor(g, FOREGROUND_COLOR_INDEX);
-                g.drawString(text, keyX5, yy + tHeight / 2 - 2);
               }
+              g.drawString(text, keyX5, yy + tHeight / 2 - 2);
             }
             if (s != null) { ((Graphics2D) g).setStroke(s); }
           }
