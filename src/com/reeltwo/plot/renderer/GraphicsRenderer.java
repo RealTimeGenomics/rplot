@@ -1,5 +1,7 @@
 package com.reeltwo.plot.renderer;
 
+import com.reeltwo.plot.Arrow2D;
+import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPoint2D;
 import com.reeltwo.plot.BoxPlot2D;
@@ -395,7 +397,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     return keyWidth;
   }
 
-  public int calculateKeyHeight(Object canvas, Graph2D graph) {
+  public int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
     int keyHeight = 0;
     if (graph.getKeyTitle() != null) {
       keyHeight++;
@@ -409,6 +411,18 @@ public class GraphicsRenderer extends AbstractRenderer {
         keyHeight++;
       }
     }
+
+    if (keyHeight > 1 && graph.getKeyVerticalPosition() == Graph2D.BELOW) {
+      // need to take screen width into account...
+      final int keyWidth = calculateKeyWidth(canvas, graph);
+      final int cols = keyWidth == 0 ? 0 : Math.max(1, screenWidth / keyWidth);
+      final int rows = cols == 0 ? 0 : 1 + (keyHeight - 1) / cols;
+
+      //System.err.println("keyheight " + keyHeight + " : " + cols + " : " + rows);
+
+      keyHeight = rows;
+    }
+
     return keyHeight * getTextHeight(canvas, "A");
   }
 
@@ -640,7 +654,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       int tHeight = getTextHeight(g, "A");
 
       int keyX;
-      int keyWidth = calculateKeyWidth(g, graph);
+      final int keyWidth = calculateKeyWidth(g, graph);
       int position = graph.getKeyHorizontalPosition();
       if (position == Graph2D.OUTSIDE) {
         keyX = sxhi + 2;
@@ -653,127 +667,147 @@ public class GraphicsRenderer extends AbstractRenderer {
       }
 
       int keyY;
-      int keyHeight = calculateKeyHeight(g, graph);
+      int keyHeight = calculateKeyHeight(g, graph, screenWidth);
       position = graph.getKeyVerticalPosition();
       if (position == Graph2D.BOTTOM) {
         keyY = sylo - keyHeight - 2;
       } else if (position == Graph2D.CENTER) {
         keyY = (syhi + sylo - keyHeight) / 2;
-        //} else if (position == Graph2D.BELOW) { need to think about this one...
-        //keyY = sylo + 
+      } else if (position == Graph2D.BELOW) {
+        keyY = sylo;
+        keyX = 0;
       } else { // assume TOP by default
         keyY = syhi + 2;
       }
 
-      int keyIndex = 1;
       if (keyTitle != null && keyTitle.length() != 0) {
         g.setColor(Color.BLACK);
         int yy = keyY + tHeight;
         g.drawString(keyTitle, keyX + 5, yy);
-        keyIndex++;
       }
 
+      final int cols = keyWidth == 0 ? 0 : Math.max(1, screenWidth / keyWidth);
+      final int rows = keyHeight / tHeight;
       Plot2D[] plots = graph.getPlots();
       int keyLineWidth = getKeyLineWidth(g);
-      for (int j = 0; j < plots.length; j++) {
-        setPointIndex(j);
-        Plot2D plot = plots[j];
-        String dtitle = plot.getTitle();
-        if (dtitle != null && dtitle.length() != 0
-            && plot.getData() != null && plot.getData().length != 0) {
-          g.setColor(mColors[plot.getColor()]);
-          //int sw = getTextWidth(g, dtitle);
-
-          int yy = keyY + keyIndex * tHeight;
-          g.drawString(dtitle, keyX + keyLineWidth + 10, yy);
-
-          yy -= tHeight / 2 - 2;
-
-          int lineWidth = plot.getLineWidth();
-          Stroke s = null;
-          if (lineWidth > 1) {
-            s = ((Graphics2D) g).getStroke();
-            ((Graphics2D) g).setStroke(new BasicStroke(lineWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+      int j = 0;
+      for (int c = 0; c < cols; c++) {
+        int r = (c == 0) ? ((keyTitle != null && keyTitle.length() != 0) ? 1 : 0) : 0;
+        for (; r < rows && j < plots.length; r++) {
+          setPointIndex(j);
+          String dtitle = null;
+          Plot2D plot = null;
+          while (j < plots.length && dtitle == null) {
+            plot = plots[j++];
+            dtitle = plot.getTitle();
+            if (dtitle == null || dtitle.length() == 0 || plot.getData() == null || plot.getData().length == 0) {
+              dtitle = null;
+            }
           }
+          if (dtitle != null) {
+            final int xx = keyX + c * keyWidth;
+            int yy = keyY + (r + 1) * tHeight;
+            if (graph.getColoredKey()) {
+              g.setColor(mColors[plot.getColor()]);
+            } else {
+              g.setColor(Color.BLACK);
+            }
+            g.drawString(dtitle, xx + keyLineWidth + 10, yy);
+            g.setColor(mColors[plot.getColor()]);
+            yy -= tHeight / 2 - 2;
 
-          int keyX5 = keyX + 5;          
-          if (plot instanceof PointPlot2D) {
-            PointPlot2D lplot = (PointPlot2D) plot;
-            boolean doLines = lplot.getLines();
-            boolean doPoints = lplot.getPoints();
-            boolean doFill = lplot.getFill();
-            if (doFill) {
-              Polygon polygon = new Polygon();
-              polygon.addPoint(keyX5, yy + tHeight / 2 - 1);
-              polygon.addPoint(keyX5 + keyLineWidth / 2, yy - tHeight / 2);
-              polygon.addPoint(keyX5 + keyLineWidth, yy + tHeight / 2 - 1);
-              g.fillPolygon(polygon);
-            } else {
-              if (doPoints) {
-                drawPoint(g, keyX5 + keyLineWidth / 2, yy);
-              }
-              if (doLines) {
-                g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
-              }
-              //g.drawRect(keyX5 + keyLineWidth / 2, yy, 0, 0);
-              g.drawLine(keyX5 + keyLineWidth / 2, yy, keyX5 + keyLineWidth / 2, yy);
+            Stroke s = null;
+            if (plot.getLineWidth() > 1) {
+              s = ((Graphics2D) g).getStroke();
+              ((Graphics2D) g).setStroke(new BasicStroke(plot.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             }
-          } else if (plot instanceof BWPlot2D) {
-            BWPlot2D lplot = (BWPlot2D) plot;
-            g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
-            g.drawRect(keyX5 + keyLineWidth / 2, yy, 0, 0);
-          } else if (plot instanceof CurvePlot2D) {
-            CurvePlot2D cplot = (CurvePlot2D) plot;
-            boolean doFill = cplot.getFill();
-            if (doFill) {
-              g.fillArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
-            } else {
-              g.drawArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
-            }
-          } else if (plot instanceof BoxPlot2D) {
-            BoxPlot2D bplot = (BoxPlot2D) plot;
-            boolean doFill = bplot.getFill();
-            boolean doBorder = bplot.getBorder();
-            if (doFill) {
-              g.fillRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
-              if (doBorder) {
-                Color c = g.getColor();
-                g.setColor(Color.BLACK);
+
+            int keyX5 = keyX + 5;          
+            if (plot instanceof PointPlot2D) {
+              PointPlot2D lplot = (PointPlot2D) plot;
+              boolean doLines = lplot.getLines();
+              boolean doPoints = lplot.getPoints();
+              boolean doFill = lplot.getFill();
+              if (doFill) {
+                Polygon polygon = new Polygon();
+                polygon.addPoint(keyX5, yy + tHeight / 2 - 1);
+                polygon.addPoint(keyX5 + keyLineWidth / 2, yy - tHeight / 2);
+                polygon.addPoint(keyX5 + keyLineWidth, yy + tHeight / 2 - 1);
+                g.fillPolygon(polygon);
+              } else {
+                if (doPoints) {
+                  drawPoint(g, keyX5 + keyLineWidth / 2, yy);
+                }
+                if (doLines) {
+                  g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
+                }
+                //g.drawRect(keyX5 + keyLineWidth / 2, yy, 0, 0);
+                g.drawLine(keyX5 + keyLineWidth / 2, yy, keyX5 + keyLineWidth / 2, yy);
+              }
+            } else if (plot instanceof ArrowPlot2D) {
+              ArrowPlot2D aplot = (ArrowPlot2D) plot;
+              g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
+              Poly p = arrowHead(keyX5, yy, keyX5 + keyLineWidth, yy, aplot.getHeadWidth(), aplot.getHeadHeight(), aplot.getHeadType());
+              int [] xs = p.getXs();
+              int [] ys = p.getYs();
+              fillPolygon(g, xs, ys);
+              drawPolygon(g, xs, ys);
+            } else if (plot instanceof BWPlot2D) {
+              BWPlot2D lplot = (BWPlot2D) plot;
+              g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
+              g.drawRect(keyX5 + keyLineWidth / 2, yy, 0, 0);
+            } else if (plot instanceof CurvePlot2D) {
+              CurvePlot2D cplot = (CurvePlot2D) plot;
+              boolean doFill = cplot.getFill();
+              if (doFill) {
+                g.fillArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
+              } else {
+                g.drawArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
+              }
+            } else if (plot instanceof BoxPlot2D) {
+              BoxPlot2D bplot = (BoxPlot2D) plot;
+              boolean doFill = bplot.getFill();
+              boolean doBorder = bplot.getBorder();
+              if (doFill) {
+                g.fillRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
+                if (doBorder) {
+                  Color color = g.getColor();
+                  g.setColor(Color.BLACK);
+                  g.drawRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
+                  g.setColor(color);
+                }
+              } else {
                 g.drawRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
-                g.setColor(c);
               }
-            } else {
-              g.drawRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
+            } else if (plot instanceof ScatterPlot2D) {
+              g.drawRect(keyX5 + keyLineWidth / 2, yy, 1, 1);
+            } else if (plot instanceof CirclePlot2D) {
+              CirclePlot2D cplot = (CirclePlot2D) plot;
+              boolean doFill = cplot.getFill();
+              if (doFill) {
+                fillCircle(g, keyX5 + 1 + keyLineWidth / 2, yy, tHeight - 2);
+              } else {
+                drawCircle(g, keyX5 + 1 + keyLineWidth / 2, yy, tHeight - 2);
+              }
+            } else if (plot instanceof TextPlot2D) {
+              TextPlot2D tplot = (TextPlot2D) plot;
+              String text = "abc";
+              FontMetrics fm = g.getFontMetrics();
+              int sw = getTextWidth(g, text);
+              if (tplot.isInvert()) {
+                g.fillRect(keyX5, yy - tHeight / 2 + fm.getMaxDescent() - 2, sw, tHeight);
+                Color color = g.getColor();
+                g.setColor(Color.WHITE);
+                g.drawString(text, keyX5, yy + tHeight / 2 - 2);
+                g.setColor(color);
+              } else {
+                g.drawString(text, keyX5, yy + tHeight / 2 - 2);
+              }
             }
-          } else if (plot instanceof ScatterPlot2D) {
-            g.drawRect(keyX5 + keyLineWidth / 2, yy, 1, 1);
-          } else if (plot instanceof CirclePlot2D) {
-            CirclePlot2D cplot = (CirclePlot2D) plot;
-            boolean doFill = cplot.getFill();
-            if (doFill) {
-              fillCircle(g, keyX5 + 1 + keyLineWidth / 2, yy, tHeight - 2);
-            } else {
-              drawCircle(g, keyX5 + 1 + keyLineWidth / 2, yy, tHeight - 2);
-            }
-          } else if (plot instanceof TextPlot2D) {
-            TextPlot2D tplot = (TextPlot2D) plot;
-            String text = "abc";
-            FontMetrics fm = g.getFontMetrics();
-            int sw = getTextWidth(g, text);
-            if (tplot.isInvert()) {
-              g.fillRect(keyX5, yy - tHeight / 2 + fm.getMaxDescent() - 2, sw, tHeight);
-              Color c = g.getColor();
-              g.setColor(Color.WHITE);
-              g.drawString(text, keyX5, yy + tHeight / 2 - 2);
-              g.setColor(c);
-            } else {
-              g.drawString(text, keyX5, yy + tHeight / 2 - 2);
+            if (s != null) {
+              ((Graphics2D) g).setStroke(s);
             }
           }
-          if (s != null) {
-            ((Graphics2D) g).setStroke(s);
-          }
-          keyIndex++;
         }
       }
     }

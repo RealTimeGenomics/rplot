@@ -1,5 +1,7 @@
 package com.reeltwo.plot.renderer;
 
+import com.reeltwo.plot.Arrow2D;
+import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPoint2D;
 import com.reeltwo.plot.Box2D;
@@ -189,7 +191,7 @@ public abstract class AbstractRenderer {
     assert ys != null;
     assert xs.length == ys.length;
 
-    Polygon polygon = filled ? new Polygon() : null;
+    Poly polygon = filled ? new Poly() : null;
 
     if (type == CurvePlot2D.BSPLINE) {
       int m = 50;
@@ -333,7 +335,7 @@ public abstract class AbstractRenderer {
   }
 
   protected abstract int calculateKeyWidth(Object canvas, Graph2D graph);
-  protected abstract int calculateKeyHeight(Object canvas, Graph2D graph);
+  protected abstract int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth);
 
   // functions that actully plot the different types of plots
 
@@ -468,6 +470,8 @@ public abstract class AbstractRenderer {
       setPointIndex(j);
       if (plot instanceof PointPlot2D) {
         drawPointPlot(canvas, (PointPlot2D) plot, convertX, convertY);
+      } else if (plot instanceof ArrowPlot2D) {
+        drawArrowPlot(canvas, (ArrowPlot2D) plot, convertX, convertY);
       } else if (plot instanceof BWPlot2D) {
         drawBWPlot(canvas, (BWPlot2D) plot, convertX, convertY);
       } else if (plot instanceof CurvePlot2D) {
@@ -493,7 +497,7 @@ public abstract class AbstractRenderer {
     Datum2D[] points = lplot.getData();
     if (points != null && points.length != 0) {
       if (doFill) {
-        Polygon polygon = new Polygon();
+        Poly polygon = new Poly();
         for (int i = 0; i < points.length; i++) {
           Point2D point = (Point2D) points[i];
           int sptX = (int) convertX.worldToScreen(point.getX());
@@ -525,6 +529,77 @@ public abstract class AbstractRenderer {
             lastX = sptX;
             lastY = sptY;
           }
+        }
+      }
+    }
+  }
+
+  protected Poly arrowHead(final int x1, final int y1, final int x2, final int y2, final float w, final float h, final int type) {
+    Poly poly = new Poly();
+
+    if (x1 == x2 && y1 == y2) { // just do a diamond
+      final int t = (int) ((w + h) / 4.0f);
+      poly.addPoint(x2 + t, y2);
+      poly.addPoint(x2, y2 + t);
+      poly.addPoint(x2 - t, y2);
+      poly.addPoint(x2, y2 - t);
+      poly.addPoint(x2 + t, y2);
+    } else {
+      final int xdiff = x2 - x1;
+      final int ydiff = y2 - y1;
+      final float length = (float) Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+      final float xh = x2 - h * xdiff / length;
+      final float yh = y2 - h * ydiff / length;
+
+      final float normX1 = ydiff / length;
+      final float normY1 = -xdiff / length;
+
+      final float w2 = w / 2.0f;
+
+      poly.addPoint(x2, y2);
+      poly.addPoint((int) (w2 * normX1 + xh), (int) (w2 * normY1 + yh));
+
+      if (type != ArrowPlot2D.TRIANGLE_HEAD) {
+        final float h2 = type * h / 2;
+        poly.addPoint((int) (x2 - h2 * xdiff / length), (int) (y2 - h2 * ydiff / length));
+      }
+
+      poly.addPoint((int) (-w2 * normX1 + xh), (int) (-w2 * normY1 + yh));
+      poly.addPoint(x2, y2);
+    }
+    return poly;
+  }
+
+  protected void drawArrowPlot(Object canvas, ArrowPlot2D aplot, Mapping convertX, Mapping convertY) {
+    Datum2D[] points = aplot.getData();
+    if (points != null && points.length != 0) {
+      final int type = aplot.getHeadType();
+      final int mode = aplot.getMode();
+      final float width = aplot.getHeadWidth();
+      final float height = aplot.getHeadHeight();
+
+      for (int i = 0; i < points.length; i++) {
+        Arrow2D arrow = (Arrow2D) points[i];
+        final int sptX1 = (int) convertX.worldToScreen(arrow.getX1());
+        final int sptY1 = (int) convertY.worldToScreen(arrow.getY1());
+        final int sptX2 = (int) convertX.worldToScreen(arrow.getX2());
+        final int sptY2 = (int) convertY.worldToScreen(arrow.getY2());
+
+        drawLine(canvas, sptX1, sptY1, sptX2, sptY2);
+
+        if ((mode & ArrowPlot2D.FORWARD_MODE) == ArrowPlot2D.FORWARD_MODE) {
+          Poly polygon = arrowHead(sptX1, sptY1, sptX2, sptY2, width, height, type);
+          int [] xs = polygon.getXs();
+          int [] ys = polygon.getYs();
+          fillPolygon(canvas, xs, ys);
+          drawPolygon(canvas, xs, ys);
+        }
+        if ((mode & ArrowPlot2D.REVERSE_MODE) == ArrowPlot2D.REVERSE_MODE) {
+          Poly polygon = arrowHead(sptX2, sptY2, sptX1, sptY1, width, height, type);
+          int [] xs = polygon.getXs();
+          int [] ys = polygon.getYs();
+          fillPolygon(canvas, xs, ys);
+          drawPolygon(canvas, xs, ys);
         }
       }
     }
@@ -708,7 +783,7 @@ public abstract class AbstractRenderer {
 
 
   // our own special polygon class
-  private static class Polygon {
+  protected static class Poly {
     
     ArrayList mPoints = new ArrayList();
 

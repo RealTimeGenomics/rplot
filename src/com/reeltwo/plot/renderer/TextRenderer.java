@@ -271,7 +271,7 @@ public class TextRenderer extends AbstractRenderer {
     return keyWidth;
   }
 
-  public int calculateKeyHeight(Object canvas, Graph2D graph) {
+  public int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
     return graph.getShowKey() ? getTextHeight(canvas, "A") : 0;
   }
 
