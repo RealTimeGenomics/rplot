@@ -37,7 +37,11 @@ public class TextPoint2D extends ObjectPoint2D {
    * @return some text.
    */
   public String getText() {
-    return (String) getObject();
+    final Object obj = getObject();
+    if (obj == null) {
+      return "";
+    }
+    return (String) obj;
   }
 
 }
