@@ -12,7 +12,7 @@ import java.awt.Paint;
 public class GrayScaleColorGroup implements PatternGroup {
 
   private final int mNumShades;
-  private Color[] sColors = null;
+  private Color[] mColors = null;
 
   /**
    * Creates a new <code>GrayScaleColorGroup</code>setting the number
@@ -39,16 +39,16 @@ public class GrayScaleColorGroup implements PatternGroup {
 
   /** {@inheritDoc} */
   public Paint [] getPatterns() {
-    if (sColors == null) {
-      sColors = new Color[mNumShades];
+    if (mColors == null) {
+      mColors = new Color[mNumShades];
       final int step = 255 / mNumShades;
       for (int i = 0; i < mNumShades; i++) {
         final int shade = i * step;
-        sColors[i] = new Color(shade, shade, shade);
+        mColors[i] = new Color(shade, shade, shade);
       }
     }
-    Color [] colors = new Color[sColors.length];
-    System.arraycopy(sColors, 0, colors, 0, colors.length);
+    Color [] colors = new Color[mColors.length];
+    System.arraycopy(mColors, 0, colors, 0, colors.length);
     return colors;
   }
 
