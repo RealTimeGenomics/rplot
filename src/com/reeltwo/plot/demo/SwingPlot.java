@@ -290,6 +290,12 @@ public class SwingPlot {
     return graph;
   }
 
+  /**
+   * Returns a graph showing the black and white textures that are
+   * available. 
+   *
+   * @return a <code>Graph2D</code>
+   */
   public static Graph2D genTextureTest() {
     Graph2D graph = new Graph2D();
 

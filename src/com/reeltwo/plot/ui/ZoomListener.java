@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
-
 /**
  * MouseListener used by the zoom plot panel to allow zoom actions
  * to be identified. 
@@ -17,24 +16,30 @@ import javax.swing.event.MouseInputAdapter;
  * @version $Revision$
  */
 public class ZoomListener extends MouseInputAdapter {
-
-
   private ZoomPlotPanel mGlassPane;
   private Container mContainer;
 
-
+  /**
+   * Creates a new <code>ZoomListener</code> that uses the
+   * <code>glassPane</code> and <code>container</code> to enable
+   * zooming functionality via mouse actions.
+   *
+   * @param glassPane a <code>ZoomPlotPanel</code>
+   * @param container a <code>Container</code>
+   */
   public ZoomListener(ZoomPlotPanel glassPane, Container container) {
     mGlassPane = glassPane;
     mContainer = container;
   }
 
-
+  /** {inheritDoc} */
   public void mouseMoved(MouseEvent e) {
     //System.err.println("Mouse moved");
     redispatchMouseEvent(e);
   }
 
 
+  /** {inheritDoc} */
   public void mouseDragged(MouseEvent e) {
     //System.err.println("Mouse Dragged");
     if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
@@ -45,22 +50,26 @@ public class ZoomListener extends MouseInputAdapter {
   }
 
 
+  /** {inheritDoc} */
   public void mouseClicked(MouseEvent e) {
     //System.err.println("Mouse Clicked");
     redispatchMouseEvent(e);
   }
 
 
+  /** {inheritDoc} */
   public void mouseEntered(MouseEvent e) {
     redispatchMouseEvent(e);
   }
 
 
+  /** {inheritDoc} */
   public void mouseExited(MouseEvent e) {
     redispatchMouseEvent(e);
   }
 
 
+  /** {inheritDoc} */
   public void mousePressed(MouseEvent e) {
     //System.err.println("Mouse Pressed");
     if ((e.getModifiers() & InputEvent.BUTTON1_MASK)
@@ -73,6 +82,7 @@ public class ZoomListener extends MouseInputAdapter {
   }
 
 
+  /** {inheritDoc} */
   public void mouseReleased(MouseEvent e) {
     //System.err.println("Mouse Released");
     if ((e.getModifiers() & InputEvent.BUTTON1_MASK)

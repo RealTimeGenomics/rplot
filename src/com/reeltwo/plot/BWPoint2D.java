@@ -63,8 +63,9 @@ public class BWPoint2D implements Datum2D {
 
 
   /**
-   * Sets the y co-ordinate.
+   * Sets the <code>i</code><sup>th</sup> y co-ordinate.
    *
+   * @param i ith y value
    * @param y y co-ordinate.
    */
   public void setY(int i, float y) {
@@ -74,8 +75,9 @@ public class BWPoint2D implements Datum2D {
 
 
   /**
-   * Returns i<sup>th</sup> y co-ordinate.
+   * Returns <code>i</code><sup>th</sup> y co-ordinate.
    *
+   * @param i ith y value
    * @return y co-ordinate.
    */
   public float getY(int i) {
@@ -161,7 +163,7 @@ public class BWPoint2D implements Datum2D {
     return true;
   }
 
-  // inherited
+  /** {@inheritDoc} */
   public int hashCode() {
     return (int) (mX + mYs[0] + mYs[1] + mYs[2] + mYs[3] + mYs[4]);
   }

@@ -43,14 +43,30 @@ public class PlotDialog extends JDialog {
     setSize(640, 480);
   }
 
+  /**
+   * Sets the colors to use in plots.
+   *
+   * @param colors an array of colors
+   */
   public void setColors(Color [] colors) {
     mPlotPanel.setColors(colors);
   }
 
+  /**
+   * Sets the patterns to use in plots.
+   *
+   * @param patterns an array of patterns
+   */
   public void setPatterns(Paint [] patterns) {
     mPlotPanel.setPatterns(patterns);
   }
 
+  /**
+   * Returns the dialog's popup menu to allow more actions to be added
+   * to it.
+   *
+   * @return a <code>JPopupMenu</code>
+   */
   public JPopupMenu getPopupMenu() {
     return mPopup;
   }
@@ -65,10 +81,21 @@ public class PlotDialog extends JDialog {
   }
 
 
+  /**
+   * Returns the underlying plot panel.
+   *
+   * @return a <code>PlotPanel</code>
+   */
   public PlotPanel getPlotPanel() {
     return mPlotPanel;
   }
   
+  /**
+   * Sets a tool tip provider to allow position dependent tool tip
+   * text.  A value of null turns tool tips off.
+   *
+   * @param provider a <code>ToolTipProvider</code>
+   */
   public void setToolTipProvider(ToolTipProvider provider) {
     mPlotPanel.setToolTipProvider(provider);
   }

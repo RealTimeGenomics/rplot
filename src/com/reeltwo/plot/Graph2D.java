@@ -1102,7 +1102,7 @@ public class Graph2D implements Cloneable {
   }
 
 
-  // inherited
+  /** {@inheritDoc} */
   public Object clone() throws CloneNotSupportedException {
     // only need to clone the members of this object
     // used same data arrays as in this object

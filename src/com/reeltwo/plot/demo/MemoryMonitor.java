@@ -27,9 +27,9 @@ public class MemoryMonitor extends Thread {
     /**
      * Called whenever free memory goes below 10%
      *
-     * @param kbMax TODO Description.
-     * @param kbUsed TODO Description.
-     * @param fractionUsed TODO Description.
+     * @param kbMax max memory in kB
+     * @param kbUsed used memory in kB
+     * @param fractionUsed fraction used
      */
     void lowMemory(long kbMax, long kbUsed, final float fractionUsed);
 
@@ -37,9 +37,9 @@ public class MemoryMonitor extends Thread {
     /**
      * Called about once per second with the amount of available memory
      *
-     * @param kbMax TODO Description.
-     * @param kbUsed TODO Description.
-     * @param fractionUsed TODO Description.
+     * @param kbMax max memory in kB
+     * @param kbUsed used memory in kB
+     * @param fractionUsed fraction used
      */
     void memoryUpdate(long kbMax, long kbUsed, final float fractionUsed);
   }
@@ -100,46 +100,86 @@ public class MemoryMonitor extends Thread {
   }
 
 
+  /**
+   * Returns the maximum amount of memory available.
+   *
+   * @return amount of memory
+   */
   public synchronized long getMaxMemory() {
     return mMaxMemory;
   }
 
 
+  /**
+   * Sets the maximum amount of memory available.
+   *
+   * @param max amount of memory
+   */
   private synchronized void setMaxMemory(long max) {
     mMaxMemory = max;
   }
 
 
+  /**
+   * Returns the total amount of memory in use.
+   *
+   * @return amount of memory
+   */
   public synchronized long getTotalMemory() {
     return mTotalMemory;
   }
 
 
+  /**
+   * Sets the total amount of memory in use.
+   *
+   * @param total amount of memory
+   */
   private synchronized void setTotalMemory(long total) {
     mTotalMemory = total;
   }
 
 
+  /**
+   * Returns the amount of memory used.
+   *
+   * @return amount of memory
+   */
   public synchronized long getUsedMemory() {
     return mUsedMemory;
   }
 
 
+  /**
+   * Returns the amount of memory used.
+   *
+   * @return amount of memory
+   */
   private synchronized void setUsedMemory(long used) {
     mUsedMemory = used;
   }
 
 
+  /**
+   * Returns the facation of memory used.
+   *
+   * @return fraction of memory
+   */
   public synchronized float getFractionUsed() {
     return mFractionUsed;
   }
 
 
+  /**
+   * Sets the fraction of memory used.
+   *
+   * @param used fraction of memory
+   */
   private synchronized void setFractionUsed(final float used) {
     mFractionUsed = used;
   }
 
-
+  /** {@inheritDoc} */
   public String toString() {
     return "Max " + FORMATER.format(getMaxMemory() / 1024) + "MB , Used " + FORMATER.format(getUsedMemory() / 1024) + "MB";
   }
@@ -164,7 +204,7 @@ public class MemoryMonitor extends Thread {
    * updates.
    *
    * @param listener a <code>MemoryListener</code>.
-   * @return TODO Description.
+   * @return whether listener was removed
    */
   public boolean removeMemoryListener(MemoryListener listener) {
     synchronized (mMemoryListeners) {
@@ -198,7 +238,7 @@ public class MemoryMonitor extends Thread {
     }
   }
 
-
+  /** {@inheritDoc} */
   public void run() {
     Runtime r = Runtime.getRuntime();
     long max = (r.maxMemory() / 1024) - (mSub64M ? (64 * 1024) : 0);

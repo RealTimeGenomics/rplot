@@ -28,19 +28,37 @@ public class GraphPrinter implements Printable {
 
   private PrinterJob mPrintJob = null;
 
+  /**
+   * Creates a new <code>GraphPrinter</code>.
+   */
   public GraphPrinter() {
     mPrintJob = PrinterJob.getPrinterJob();
     mPrintJob.setPrintable(this);
   }
 
+  /**
+   * Sets the font size to use.
+   *
+   * @param size font size
+   */
   public void setFontSize(int size) {
     mFontSize = size;
   }
 
+  /**
+   * Returns the font size.
+   *
+   * @return font size
+   */
   public int getFontSize() {
     return mFontSize;
   }
 
+  /**
+   * Sets the colors to render plots with.
+   *
+   * @param colors an array of colors
+   */
   public void setColors(Color [] colors) {
     if (colors == null) {
       throw new NullPointerException("no colors given");
@@ -48,10 +66,20 @@ public class GraphPrinter implements Printable {
     mColors = colors;
   }
 
+  /**
+   * Sets the patterns to use when rendering plots.
+   *
+   * @param patterns an array of patterns
+   */
   public void setPatterns(Paint [] patterns) {
     mPatterns = patterns;
   }
 
+  /**
+   * Prints the given <code>graph</code>.
+   *
+   * @param graph a <code>Graph2D</code>
+   */
   public void printGraph(Graph2D graph) {
     mGraph = graph;
     if (mGraph != null) {

@@ -116,12 +116,7 @@ public class Point2D implements Datum2D {
   }
 
 
-  /**
-   * Overrides Object.equals
-   *
-   * @param object object to compare to
-   * @return result of comparison
-   */
+  /** {@inheritDoc} */
   public boolean equals(Object object) {
     if (!(object instanceof Point2D)) {
       return false;
@@ -133,7 +128,7 @@ public class Point2D implements Datum2D {
     return false;
   }
 
-  // inherited
+  /** {@inheritDoc} */
   public int hashCode() {
     return super.hashCode();
   }

@@ -33,21 +33,19 @@ public class ZoomPlotDialog extends PlotDialog {
     popup.add(mZoomPanel.getPNPAction());
   }
 
+  /** {@inheritDoc} */
   public void setColors(Color [] colors) {
     super.setColors(colors);
     mZoomPanel.setColors(colors);
   }
 
+  /** {@inheritDoc} */
   public void setPatterns(Paint [] patterns) {
     super.setPatterns(patterns);
     mZoomPanel.setPatterns(patterns);
   }
     
-  /**
-   * Plots the given graph.
-   *
-   * @param graph a Graph2D to plot.
-   */
+  /** {@inheritDoc} */
   public void setGraph(Graph2D graph) {
     mZoomPanel.setGraph(graph); // sets graph in underlying plotPanel;
   }
