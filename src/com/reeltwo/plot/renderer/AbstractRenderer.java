@@ -12,6 +12,7 @@ import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -466,14 +467,16 @@ public abstract class AbstractRenderer {
 
     for (int j = 0; j < plots.length; j++) {
       Plot2D plot = plots[j];
-      int color = plot.getColor();
-      if (color < 0) {
-        plot.setColor(colorIndex);
-        colorIndex++;
-      } else if (color >= colorIndex) {
-        colorIndex = color + 1;
+      if (!(plot instanceof GraphLine)) {        
+        int color = plot.getColor();
+        if (color < 0) {
+          plot.setColor(colorIndex);
+          colorIndex++;
+        } else if (color >= colorIndex) {
+          colorIndex = color + 1;
+        }
+        //System.err.println(plot.getColor() + " " + colorIndex + " " + patternIndex);
       }
-      //System.err.println(plot.getColor() + " " + colorIndex + " " + patternIndex);
     }
 
     for (int j = 0; j < plots.length; j++) {
@@ -487,28 +490,42 @@ public abstract class AbstractRenderer {
       }
       setLineWidth(canvas, lineWidth);
 
-      setPointIndex(j);
-      if (plot instanceof PointPlot2D) {
-        drawPointPlot(canvas, (PointPlot2D) plot, convertX, convertY);
-      } else if (plot instanceof ArrowPlot2D) {
-        drawArrowPlot(canvas, (ArrowPlot2D) plot, convertX, convertY);
-      } else if (plot instanceof BWPlot2D) {
-        drawBWPlot(canvas, (BWPlot2D) plot, convertX, convertY);
-      } else if (plot instanceof CurvePlot2D) {
-        drawCurvePlot(canvas, (CurvePlot2D) plot, convertX, convertY);
-      } else if (plot instanceof TextPlot2D) {
-        drawTextPlot(canvas, (TextPlot2D) plot, convertX, convertY);
-      } else if (plot instanceof ScatterPlot2D) {
-        drawScatterPlot(canvas, (ScatterPlot2D) plot, convertX, convertY);
-      } else if (plot instanceof BoxPlot2D) {
-        drawBoxPlot(canvas, (BoxPlot2D) plot, convertX, convertY);
-      } else if (plot instanceof CirclePlot2D) {
-        drawCirclePlot(canvas, (CirclePlot2D) plot, convertX, convertY);
+      if (plot instanceof GraphLine) {
+        drawGraphLine(canvas, (GraphLine) plot, convertX, convertY);
+      } else {
+        setPointIndex(j);
+        if (plot instanceof PointPlot2D) {
+          drawPointPlot(canvas, (PointPlot2D) plot, convertX, convertY);
+        } else if (plot instanceof ArrowPlot2D) {
+          drawArrowPlot(canvas, (ArrowPlot2D) plot, convertX, convertY);
+        } else if (plot instanceof BWPlot2D) {
+          drawBWPlot(canvas, (BWPlot2D) plot, convertX, convertY);
+        } else if (plot instanceof CurvePlot2D) {
+          drawCurvePlot(canvas, (CurvePlot2D) plot, convertX, convertY);
+        } else if (plot instanceof TextPlot2D) {
+          drawTextPlot(canvas, (TextPlot2D) plot, convertX, convertY);
+        } else if (plot instanceof ScatterPlot2D) {
+          drawScatterPlot(canvas, (ScatterPlot2D) plot, convertX, convertY);
+        } else if (plot instanceof BoxPlot2D) {
+          drawBoxPlot(canvas, (BoxPlot2D) plot, convertX, convertY);
+        } else if (plot instanceof CirclePlot2D) {
+          drawCirclePlot(canvas, (CirclePlot2D) plot, convertX, convertY);
+        }
       }
     }
     setLineWidth(canvas, 1);
   }
 
+  protected void drawGraphLine(Object canvas, GraphLine line, Mapping convertX, Mapping convertY) {
+    setColor(canvas, FOREGROUND_COLOR_INDEX);
+    if (line.getOrientation() == GraphLine.VERTICAL) {
+      final int sptX = (int) convertX.worldToScreen(line.getLocation());
+      drawLine(canvas, sptX, (int) convertY.getScreenMin(), sptX, (int) convertY.getScreenMax());
+    } else {
+      final int sptY = (int) convertY.worldToScreen(line.getLocation());
+      drawLine(canvas, (int) convertX.getScreenMin(), sptY, (int) convertX.getScreenMax(), sptY);
+    }
+  }
 
   protected void drawPointPlot(Object canvas, PointPlot2D lplot, Mapping convertX, Mapping convertY) {
     Datum2D[] points = lplot.getData();

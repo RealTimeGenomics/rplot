@@ -47,12 +47,6 @@ public class Graph2D implements Cloneable {
   /** list of plots in graph */
   private ArrayList mPlots = new ArrayList();
 
-  /** whether to show a vertical dashed line */
-  private boolean mVertLine = false;
-  /** where it is positioned */
-  private float mVertLinePos = 0.0f;
-
-
   /** Default constructor. */
   public Graph2D() {
     mXAxis = new Axis[NUM_X_AXES];
@@ -998,16 +992,18 @@ public class Graph2D implements Cloneable {
         Iterator it = mPlots.iterator();
         while (it.hasNext()) {
           Plot2D plot = (Plot2D) it.next();
-          if (plot.getXAxis() == i) {
-            float plotXLo = plot.getXLo();
-            if (plotXLo < xlo) {
-              xlo = plotXLo;
+          if (!(plot instanceof GraphLine)) {
+            if (plot.getXAxis() == i) {
+              float plotXLo = plot.getXLo();
+              if (plotXLo < xlo) {
+                xlo = plotXLo;
+              }
+              float plotXHi = plot.getXHi();
+              if (plotXHi > xhi) {
+                xhi = plotXHi;
+              }
+              rangeSet = true;
             }
-            float plotXHi = plot.getXHi();
-            if (plotXHi > xhi) {
-              xhi = plotXHi;
-            }
-            rangeSet = true;
           }
         }
 
@@ -1029,16 +1025,18 @@ public class Graph2D implements Cloneable {
         Iterator it = mPlots.iterator();
         while (it.hasNext()) {
           Plot2D plot = (Plot2D) it.next();
-          if (plot.getYAxis() == i) {
-            float plotYLo = plot.getYLo();
-            if (plotYLo < ylo) {
-              ylo = plotYLo;
+          if (!(plot instanceof GraphLine)) {
+            if (plot.getYAxis() == i) {
+              float plotYLo = plot.getYLo();
+              if (plotYLo < ylo) {
+                ylo = plotYLo;
+              }
+              float plotYHi = plot.getYHi();
+              if (plotYHi > yhi) {
+                yhi = plotYHi;
+              }
+              rangeSet = true;
             }
-            float plotYHi = plot.getYHi();
-            if (plotYHi > yhi) {
-              yhi = plotYHi;
-            }
-            rangeSet = true;
           }
         }
 
@@ -1101,46 +1099,6 @@ public class Graph2D implements Cloneable {
         axis.mTic = makeTics(axis.mLo, axis.mHi);
       }
     }
-  }
-
-
-  /**
-   * Sets draw a vertical (dashed) line at the given x co-ordinate to
-   * on.
-   *
-   * @param x an X axis co-ordinate.
-   */
-  public void setVerticalLine(float x) {
-    mVertLine = true;
-    mVertLinePos = x;
-  }
-
-
-  /**
-   * Turns draw a vertical (dashed) line off.
-   */
-  public void unsetVerticalLine() {
-    mVertLine = false;
-  }
-
-
-  /**
-   * Returns whether to draw the vertical (dashed) line.
-   *
-   * @return whether to draw
-   */
-  public boolean isVerticalLine() {
-    return mVertLine;
-  }
-
-
-  /**
-   * Returns position along X axis to draw the vertical (dashed) line.
-   *
-   * @return X axis value
-   */
-  public float getVerticalLinePos() {
-    return mVertLinePos;
   }
 
 

@@ -7,6 +7,7 @@ import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
 import com.reeltwo.plot.ScatterPlot2D;
@@ -267,7 +268,10 @@ public class SwingPlot {
 
     graph.addPlot(cplot2);
 
-    graph.setVerticalLine(0.43f);
+    //graph.setVerticalLine(0.43f);
+    GraphLine vline = new GraphLine(0.43f, GraphLine.VERTICAL);
+    vline.setType(GraphLine.DOTS);
+    graph.addPlot(vline);
 
     graph.setXTic(0, 0.15f);
     graph.setXTicLabels(0, new String[]{"The", "quick", "brown", "fox", "jumped"});

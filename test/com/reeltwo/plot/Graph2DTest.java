@@ -62,8 +62,6 @@ public class Graph2DTest extends TestCase {
       assertTrue(!graph.usesY(i));
     }
 
-    assertTrue(!graph.isVerticalLine());
-
     // check sets/gets
     graph.setTitle(null);
     assertTrue(graph.getTitle().equals(""));
@@ -160,12 +158,6 @@ public class Graph2DTest extends TestCase {
       assertTrue(graph.getYTicLabels(i) == labels);
       assertTrue(graph.getYTicLabels(i).equals(labels));
     }
-
-    graph.setVerticalLine(0.1234f);
-    assertTrue(graph.isVerticalLine());
-    assertEquals(0.1234f, graph.getVerticalLinePos(), PRECISION);
-    graph.unsetVerticalLine();
-    assertTrue(!graph.isVerticalLine());
   }
 
   public void test2() {

@@ -9,6 +9,7 @@ import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.PlotUtils;
 import com.reeltwo.plot.PointPlot2D;
@@ -379,7 +380,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       // set clip so nothing appears outside border
       setClip(g, sxlo, syhi, sxhi - sxlo + 1, sylo - syhi + 1);
       drawData(g, graph.getPlots(), mapping);
-      drawVerticalLine(graph, g, mapping[0], sylo, syhi);
+      //drawVerticalLine(graph, g, mapping[0], sylo, syhi);
       if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
       if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
       if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
@@ -664,16 +665,17 @@ public class GraphicsRenderer extends AbstractRenderer {
     }
   }
 
-
-  private void drawVerticalLine(Graph2D graph, Graphics g, Mapping mapping, int sylo, int syhi) {
-    // draw vertical dashed line
-    if (graph.isVerticalLine()) {
-      setColor(g, FOREGROUND_COLOR_INDEX);
-      int sptX = (int) mapping.worldToScreen(graph.getVerticalLinePos());
-      for (int i = syhi; i < sylo; i += 10) {
-        g.drawLine(sptX, i, sptX, (i + 5) < sylo ? i + 5 : sylo);
-      }
+  protected void drawGraphLine(Object canvas, GraphLine line, Mapping convertX, Mapping convertY) {
+    BasicStroke stroke = (BasicStroke) ((Graphics2D) canvas).getStroke();
+    if (line.getType() == GraphLine.DASHES) {
+      ((Graphics2D) canvas).setStroke(new BasicStroke(stroke.getLineWidth(), stroke.getEndCap(), stroke.getLineJoin(), stroke.getMiterLimit(), new float[] {5.0f, 5.0f}, 0.0f));
+    } else if (line.getType() == GraphLine.DOTS) {
+      ((Graphics2D) canvas).setStroke(new BasicStroke(stroke.getLineWidth(), stroke.getEndCap(), stroke.getLineJoin(), stroke.getMiterLimit(), new float[] {1.0f, 5.0f}, 0.0f));
     }
+
+    super.drawGraphLine(canvas, line, convertX, convertY);
+
+    ((Graphics2D) canvas).setStroke(stroke);
   }
 
   private int calcKeyX(Graph2D graph, Graphics g, int sxlo, int sxhi, int keyWidth) {
