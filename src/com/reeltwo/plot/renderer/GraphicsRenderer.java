@@ -820,7 +820,6 @@ public class GraphicsRenderer extends AbstractRenderer {
               }
             } else if (plot instanceof BoxPlot2D) {
               BoxPlot2D bplot = (BoxPlot2D) plot;
-              g.fillRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
               if (doFill != FillablePlot2D.NO_FILL) {
                 g.fillRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
                 if (doBorder) {
