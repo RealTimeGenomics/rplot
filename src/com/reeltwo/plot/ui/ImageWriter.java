@@ -11,9 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Iterator;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.MemoryCacheImageOutputStream;
 
 /**
  * Routines to write Graph2D's to graphics files of various formats.
@@ -22,14 +20,13 @@ import javax.imageio.stream.MemoryCacheImageOutputStream;
  * @version $Revision$
  */
 public class ImageWriter {
-
+  /** the thing that does the graph rendering */
   private final GraphicsRenderer mGraphicsRenderer;
 
-  /** TODO Description of the Field. */
+  /** PNG image type. */
   public static final int PNG_IMAGE = 0;
-  /** TODO Description of the Field. */
-  //public static final int GIF_IMAGE = 1;
 
+  //public static final int GIF_IMAGE = 1;
 
   /**
    * Private to prevent instantiation.
@@ -56,9 +53,7 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toImage(int type, File file, Graph2D graph, int width, int height, Font font)
-     throws IOException {
-
+  public Mapping[] toImage(int type, File file, Graph2D graph, int width, int height, Font font) throws IOException {
     if (file == null) {
       throw new NullPointerException("null file given.");
     }
@@ -87,9 +82,8 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toImage(int type, OutputStream os, Graph2D graph, int width, int height, Font font)
-     throws IOException {
-    if (type < 0 || type > 2) {
+  public Mapping[] toImage(int type, OutputStream os, Graph2D graph, int width, int height, Font font) throws IOException {
+    if (type != PNG_IMAGE) {
       throw new IllegalArgumentException("Illegal image type '" + type + "' given.");
     }
     switch (type) {
@@ -116,9 +110,7 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toPNG(File file, Graph2D graph, int width, int height, Font font)
-     throws IOException {
-
+  public Mapping[] toPNG(File file, Graph2D graph, int width, int height, Font font) throws IOException {
     if (file == null) {
       throw new NullPointerException("null file given.");
     }
@@ -146,9 +138,7 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toPNG(OutputStream os, Graph2D graph, int width, int height, Font font)
-     throws IOException {
-
+  public Mapping[] toPNG(OutputStream os, Graph2D graph, int width, int height, Font font) throws IOException {
     if (os == null) {
       throw new NullPointerException("null output stream given.");
     }
@@ -160,9 +150,7 @@ public class ImageWriter {
     }
 
     BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
     Graphics2D g = bi.createGraphics();
-
     if (font != null) {
       g.setFont(font);
     }
@@ -171,12 +159,8 @@ public class ImageWriter {
 
     mGraphicsRenderer.drawGraph(graph, g, width, height);
     Mapping[] mapping = mGraphicsRenderer.getMappings();
-    for (Iterator it = ImageIO.getImageWritersBySuffix("png"); it.hasNext(); ) {
-      javax.imageio.ImageWriter iw = (javax.imageio.ImageWriter) it.next();
-      iw.setOutput(new MemoryCacheImageOutputStream(os));
-      iw.write(bi);
-      break;
-    }
+    ImageIO.write(bi, "png", os);
+
     return mapping;
   }
 
