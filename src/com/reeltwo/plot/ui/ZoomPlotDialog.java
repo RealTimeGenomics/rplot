@@ -35,7 +35,7 @@ public class ZoomPlotDialog extends PlotDialog {
 
   public void setColors(Color [] colors) {
     super.setColors(colors);
-    mPlotPanel.setColors(colors);
+    mZoomPanel.setColors(colors);
   }
 
   public void setPatterns(Paint [] patterns) {
