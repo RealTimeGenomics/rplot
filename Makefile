@@ -33,7 +33,7 @@ vars:
 
 
 RPlot.jar: $(RPCLASSES)
-	echo "Main-Class: com.reeltwo.plot.ui.SwingPlot" >$(TMPMANIFEST)
+	echo "Main-Class: com.reeltwo.plot.demo.SwingPlot" >$(TMPMANIFEST)
 	jar cfm $@ $(TMPMANIFEST)
 	(cd $(SRCHOME);            jar uf $(CODEHOME)/$@ $(RPCLASSES2))
 	(cd $(TESTHOME);            jar uf $(CODEHOME)/$@ $(RPCLASSES3))
