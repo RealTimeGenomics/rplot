@@ -229,7 +229,6 @@ class MemoryUsage extends JDialog {
       memPanel.add(mUsedMemText);
 
       mGraph = new PlotPanel(new Color[] {
-        Color.BLACK,
         new Color(0.0f, 0.0f, 1.0f, 0.75f),
         new Color(0.0f, 1.0f, 0.75f, 0.5f),
         Color.RED
@@ -289,7 +288,7 @@ class MemoryUsage extends JDialog {
             PointPlot2D mplot = new PointPlot2D();
             mplot.setLines(true);
             mplot.setPoints(false);
-            mplot.setColor(3);
+            mplot.setColor(2);
 
             PointPlot2D tplot = new PointPlot2D();
             tplot.setFill(FillablePlot2D.COLOR_FILL);
