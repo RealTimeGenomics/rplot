@@ -117,6 +117,7 @@ public class MemoryUsage extends JDialog {
    * thrown.
    *
    * @param args The command line arguments.
+   * @exception Exception if an error occurs.
    */
   public static void main(String[] args) throws Exception {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
