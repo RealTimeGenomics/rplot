@@ -11,7 +11,7 @@ import java.awt.Paint;
  */
 public class DefaultColorGroup implements PatternGroup {
 
-  private Color[] mColors = null;
+  private static Color[] sColors = null;
 
   /**
    * Creates a new <code>DefaultColorGroup</code>.
@@ -21,8 +21,8 @@ public class DefaultColorGroup implements PatternGroup {
 
   /** {@inheritDoc} */
   public Paint [] getPatterns() {
-    if (mColors == null) {
-      mColors = new Color[] {
+    if (sColors == null) {
+      sColors = new Color[] {
         Color.RED,
         new Color(0.0F, 0.8F, 0.0F),  // green
         Color.BLUE,
@@ -33,8 +33,8 @@ public class DefaultColorGroup implements PatternGroup {
         Color.GRAY,
       };
     }
-    Color [] colors = new Color[mColors.length];
-    System.arraycopy(mColors, 0, colors, 0, mColors.length);
+    Color [] colors = new Color[sColors.length];
+    System.arraycopy(sColors, 0, colors, 0, colors.length);
     return colors;
   }
 

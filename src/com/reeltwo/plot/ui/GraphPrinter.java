@@ -1,6 +1,7 @@
 package com.reeltwo.plot.ui;
 
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.patterns.DefaultColorGroup;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,7 +21,7 @@ import java.awt.print.PrinterJob;
  */
 public class GraphPrinter implements Printable {
 
-  private Color [] mColors = AWTDefaults.COLORS;
+  private Color [] mColors = (Color []) new DefaultColorGroup().getPatterns();
   private Paint [] mPatterns = null;
   private Graph2D mGraph = null;
 

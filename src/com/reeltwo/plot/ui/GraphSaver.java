@@ -1,6 +1,7 @@
 package com.reeltwo.plot.ui;
 
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.patterns.DefaultColorGroup;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
 import java.awt.Color;
 import java.awt.Paint;
@@ -16,7 +17,7 @@ import javax.swing.filechooser.FileFilter;
  * @version $Revision$
  */
 public class GraphSaver {
-  private Color [] mColors = AWTDefaults.COLORS;
+  private Color [] mColors = (Color []) new DefaultColorGroup().getPatterns();
   private Paint [] mPatterns = null;
 
   private int mFontSize = -1; // use default font size
