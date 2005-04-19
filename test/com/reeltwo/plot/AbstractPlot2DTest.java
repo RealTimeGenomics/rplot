@@ -102,5 +102,34 @@ public abstract class AbstractPlot2DTest extends TestCase {
     }
   }
 
+  public void testBadValues() {
+    Point2D [] points = new Point2D[] {
+      new Point2D(0.0f, 1.0f),
+      new Point2D(2.0f, Float.POSITIVE_INFINITY),
+      new Point2D(1.0f, 0.0f),
+      new Point2D(Float.NEGATIVE_INFINITY, -3.0f),
+      new Point2D(Float.NaN, -1.5f),
+    };
+    Plot2D plot = new Plot2D() {
+      };
+
+    assertTrue(plot.getXLo() == 0.0f);
+    assertTrue(plot.getYLo() == 0.0f);
+    assertTrue(plot.getXHi() == 0.0f);
+    assertTrue(plot.getYHi() == 0.0f);
+
+    try {
+      plot.setData(points);
+      fail("accepted bad data");
+    } catch (IllegalArgumentException iae) {
+      //System.err.println("IAE: " + iae.getMessage());
+      ; // expected
+    }
+
+    assertTrue(plot.getXLo() == 0.0f);
+    assertTrue(plot.getYLo() == 0.0f);
+    assertTrue(plot.getXHi() == 0.0f);
+    assertTrue(plot.getYHi() == 0.0f);
+  }
 }
 
