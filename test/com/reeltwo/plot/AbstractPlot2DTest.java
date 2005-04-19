@@ -136,7 +136,7 @@ public abstract class AbstractPlot2DTest extends TestCase {
     assertFalse(Plot2D.isValid(Float.NEGATIVE_INFINITY));
     assertFalse(Plot2D.isValid(Float.NaN));
 
-    assertTrue(Plot2D.isValid(new float[] {0.0f,0.1f}));
+    assertTrue(Plot2D.isValid(new float[] {0.0f, 0.1f}));
     assertFalse(Plot2D.isValid(new float[] {Float.POSITIVE_INFINITY}));
     assertFalse(Plot2D.isValid(new float[] {Float.NEGATIVE_INFINITY}));
     assertFalse(Plot2D.isValid(new float[] {Float.NaN}));
