@@ -164,8 +164,41 @@ public abstract class Plot2D {
    * @param data an array of Datum2D's
    */
   public void setData(Datum2D[] data) {
+    if (data == null || data.length == 0) {
+      mXLo = mXHi = 0.0f;
+      mYLo = mYHi = 0.0f;
+    } else {
+      Datum2D d = data[0];
+      float xLo = d.getXLo();
+      float xHi = d.getXHi();
+      float yLo = d.getYLo();
+      float yHi = d.getYHi();
+      for (int i = 1; i < data.length; i++) {
+        d = data[i];
+        if (d.getXLo() < xLo) {
+          xLo = d.getXLo();
+        }
+        if (d.getXHi() > xHi) {
+          xHi = d.getXHi();
+        }
+        if (d.getYLo() < yLo) {
+          yLo = d.getYLo();
+        }
+        if (d.getYHi() > yHi) {
+          yHi = d.getYHi();
+        }
+      }
+      checkValid(xLo);
+      checkValid(yLo);
+      checkValid(xHi);
+      checkValid(yHi);
+      
+      mXLo = xLo;
+      mXHi = xHi;
+      mYLo = yLo;
+      mYHi = yHi;
+    }
     mData = data;
-    setRanges();
   }
 
 
@@ -179,38 +212,36 @@ public abstract class Plot2D {
   }
 
 
-  /**
-   * Calculates the upper and lower bounds for x and y ranges of the
-   * data in the plot.
-   */
-  private void setRanges() {
-    if (mData == null || mData.length == 0) {
-      mXLo = mXHi = 0.0f;
-      mYLo = mYHi = 0.0f;
-    } else {
-      Datum2D d = mData[0];
-      mXLo = d.getXLo();
-      mXHi = d.getXHi();
-      mYLo = d.getYLo();
-      mYHi = d.getYHi();
-      for (int i = 1; i < mData.length; i++) {
-        d = mData[i];
-        if (d.getXLo() < mXLo) {
-          mXLo = d.getXLo();
-        }
-        if (d.getXHi() > mXHi) {
-          mXHi = d.getXHi();
-        }
-        if (d.getYLo() < mYLo) {
-          mYLo = d.getYLo();
-        }
-        if (d.getYHi() > mYHi) {
-          mYHi = d.getYHi();
-        }
-      }
+  private void checkValid(float f) {
+    if (!isValid(f)) {
+      throw new IllegalArgumentException("Bad data value: " + f);
     }
   }
 
+  /**
+   * Returns validity of <code>f</code> as co-ordinate in a plot.
+   *
+   * @param f value to check
+   * @return is valid in plot
+   */
+  public static boolean isValid(float f) {
+    return !Float.isNaN(f) && !Float.isInfinite(f);
+  }
+
+  /**
+   * Returns validity of an array of values <code>f</code> as co-ordinates in a plot.
+   *
+   * @param f values to check
+   * @return is valid in plot
+   */
+  public static boolean isValid(float [] f) {
+    for (int i = 0; f != null && i < f.length; i++) {
+      if (!isValid(f[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   /**
    * Returns the lower bound of the x range.
