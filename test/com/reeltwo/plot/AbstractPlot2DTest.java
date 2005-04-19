@@ -130,6 +130,16 @@ public abstract class AbstractPlot2DTest extends TestCase {
     assertTrue(plot.getYLo() == 0.0f);
     assertTrue(plot.getXHi() == 0.0f);
     assertTrue(plot.getYHi() == 0.0f);
+
+    assertTrue(Plot2D.isValid(0.0f));
+    assertFalse(Plot2D.isValid(Float.POSITIVE_INFINITY));
+    assertFalse(Plot2D.isValid(Float.NEGATIVE_INFINITY));
+    assertFalse(Plot2D.isValid(Float.NaN));
+
+    assertTrue(Plot2D.isValid(new float[] {0.0f,0.1f}));
+    assertFalse(Plot2D.isValid(new float[] {Float.POSITIVE_INFINITY}));
+    assertFalse(Plot2D.isValid(new float[] {Float.NEGATIVE_INFINITY}));
+    assertFalse(Plot2D.isValid(new float[] {Float.NaN}));
   }
 }
 
