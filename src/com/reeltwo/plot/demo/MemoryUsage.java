@@ -245,7 +245,6 @@ public class MemoryUsage extends JDialog {
       final float max = mMonitor.getMaxMemory() / 1024.0f;
       final float total = mMonitor.getTotalMemory() / 1024.0f;
       final float used = mMonitor.getUsedMemory() / 1024.0f;
-      final float free = total - used;
       mMaxMemText.setText("Max: " + mMemFormat.format(max));
       mTotalMemText.setText("Total: " + mMemFormat.format(total));
       mUsedMemText.setText("Used: " + mMemFormat.format(used));
