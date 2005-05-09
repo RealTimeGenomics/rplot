@@ -53,6 +53,23 @@ public class MappingTest extends TestCase {
     assertEquals(wpt, map.screenToWorld(spt), 0.0001f);
   }
 
+  
+  public void testContructor() {
+    try {
+      new Mapping(0, 0, 1, 2);
+      fail("accepted bad parameters");
+    } catch (IllegalArgumentException iae) {
+      ; // expected
+    }
+
+    try {
+      new Mapping(1, 2, 1, 1);
+      fail("accepted bad parameters");
+    } catch (IllegalArgumentException iae) {
+      ; // expected
+    }
+  }
+  
 
   public static Test suite() {
     return new TestSuite(MappingTest.class);
