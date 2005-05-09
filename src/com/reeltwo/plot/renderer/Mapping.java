@@ -51,10 +51,10 @@ public class Mapping {
    */
   public Mapping(float worldMin, float worldMax, float screenMin, float screenMax, boolean log) {
     //System.err.println(" worldMin:" + worldMin + " worldMax:" + worldMax + " screenMin:" + screenMin + " screenMax:" + screenMax);
-    if (worldMin == worldMax) {
+    if (Float.compare(worldMin, worldMax) == 0) {
       throw new IllegalArgumentException("World minimum and maximum are same: " + worldMin);
     }
-    if (screenMin == screenMax) {
+    if (Float.compare(screenMin, screenMax) == 0) {
       throw new IllegalArgumentException("Screen minimum and maximum are same: " + screenMin);
     }
     mLog = log;
