@@ -243,18 +243,15 @@ public class MemoryMonitor extends Thread {
     Runtime r = Runtime.getRuntime();
     long max = (r.maxMemory() / 1024) - (mSub64M ? (64 * 1024) : 0);
     setMaxMemory(max);
-    long used = 0;
-    long total = 0;
-    float fraction = 0.7f;
     boolean lowMem = false;
 
     while (true) {
-      total = r.totalMemory() / 1024;
+      final long total = r.totalMemory() / 1024;
       setTotalMemory(total);
-      used = (r.totalMemory() - r.freeMemory()) / 1024;
+      final long used = (r.totalMemory() - r.freeMemory()) / 1024;
       setUsedMemory(used);
 
-      fraction = (float) used / max;
+      final float fraction = (float) used / max;
       setFractionUsed(fraction);
 
       if (fraction >= 0.9f) {
