@@ -1,19 +1,23 @@
 package com.reeltwo.plot.ui;
 
+
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
 import com.reeltwo.plot.renderer.Mapping;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Paint;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 /**
@@ -47,6 +51,91 @@ public class ZoomPlotPanel extends JComponent {
   private float[] mYHi = new float[2];
 
 
+  private class ZoomListener extends MouseInputAdapter {
+    /** {@inheritDoc} */
+    public void mouseMoved(MouseEvent e) {
+      //System.err.println("Mouse moved");
+      redispatchMouseEvent(e);
+    }
+
+    /** {@inheritDoc} */
+    public void mouseDragged(MouseEvent e) {
+      //System.err.println("Mouse Dragged");
+      if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+        ZoomPlotPanel.this.setPointTwo(e.getPoint());
+        ZoomPlotPanel.this.repaint();
+      }
+      redispatchMouseEvent(e);
+    }
+
+
+    /** {@inheritDoc} */
+    public void mouseClicked(MouseEvent e) {
+      //System.err.println("Mouse Clicked");
+      redispatchMouseEvent(e);
+    }
+
+
+    /** {@inheritDoc} */
+    public void mouseEntered(MouseEvent e) {
+      redispatchMouseEvent(e);
+    }
+
+
+    /** {@inheritDoc} */
+    public void mouseExited(MouseEvent e) {
+      redispatchMouseEvent(e);
+    }
+
+
+    /** {@inheritDoc} */
+    public void mousePressed(MouseEvent e) {
+      //System.err.println("Mouse Pressed");
+      if ((e.getModifiers() & InputEvent.BUTTON1_MASK)
+          == InputEvent.BUTTON1_MASK) {
+        ZoomPlotPanel.this.setPointOne(e.getPoint());
+        ZoomPlotPanel.this.setPointTwo(e.getPoint());
+        ZoomPlotPanel.this.repaint();
+      }
+      redispatchMouseEvent(e);
+    }
+
+
+    /** {@inheritDoc} */
+    public void mouseReleased(MouseEvent e) {
+      //System.err.println("Mouse Released");
+      if ((e.getModifiers() & InputEvent.BUTTON1_MASK)
+          == InputEvent.BUTTON1_MASK) {
+        ZoomPlotPanel.this.setPointTwo(e.getPoint());
+        ZoomPlotPanel.this.zoomIn();
+        ZoomPlotPanel.this.repaint();
+      }
+      redispatchMouseEvent(e);
+    }
+
+
+    private void redispatchMouseEvent(MouseEvent e) {
+
+      Point glassPanePoint = e.getPoint();
+      Component component = null;
+      Container container = mPlotPanel;
+      Point containerPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, glassPanePoint, ZoomPlotPanel.this);
+      int eventID = e.getID();
+
+      component = SwingUtilities.getDeepestComponentAt(container, containerPoint.x, containerPoint.y);
+
+      //System.err.println("Component = " + component);
+      if (component == null) {
+        return;
+      }
+      Point componentPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, glassPanePoint, component);
+      component.dispatchEvent(new MouseEvent(component, eventID, e.getWhen(), e.getModifiers(),
+                                             componentPoint.x, componentPoint.y,
+                                             e.getClickCount(), e.isPopupTrigger()));
+
+    }
+  }
+
   /**
    * Creates a new <code>ZoomPlotPanel</code> using the given plot
    * panel to render graphs.
@@ -54,7 +143,7 @@ public class ZoomPlotPanel extends JComponent {
    * @param panel a <code>PlotPanel</code>
    */
   public ZoomPlotPanel(PlotPanel panel) {
-    MouseInputAdapter listener = new ZoomListener(this, panel);
+    MouseInputAdapter listener = new ZoomListener();
     addMouseListener(listener);
     addMouseMotionListener(listener);
     mPlotPanel = panel;
