@@ -9,15 +9,13 @@ import java.text.NumberFormat;
  * @version $Revision$
  */
 public class DefaultFormatter implements LabelFormatter {
-  private static DefaultFormatter sInstance = null;
-
   /** a number formatter */
   private final NumberFormat mNF = NumberFormat.getInstance();
 
   /**
-   * Private to prevent instansiation.
+   * Default constructor.
    */
-  private DefaultFormatter() {
+  public DefaultFormatter() {
   }
 
   /**
@@ -36,18 +34,6 @@ public class DefaultFormatter implements LabelFormatter {
     }
     mNF.setMinimumFractionDigits(digits);
     mNF.setMaximumFractionDigits(digits);
-  }
-
-  /**
-   * Returns the one instance of the <code>DefaultFormatter</code>
-   *
-   * @return a <code>DefaultFormatter</code>
-   */
-  public static DefaultFormatter getInstance() {
-    if (sInstance == null) {
-      sInstance = new DefaultFormatter();
-    }
-    return sInstance;
   }
 
   /**
