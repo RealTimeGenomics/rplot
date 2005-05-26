@@ -282,11 +282,13 @@ public class SwingPlot {
     vline.setType(GraphLine.DOTS);
     graph.addPlot(hline);
 
-    graph.setXTic(0, 20);
+    graph.setXTic(0, 2);
     graph.setXTicLabelFormatter(0, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
 
     graph.setKeyVerticalPosition(Graph2D.BELOW);
     //graph.setColoredKey(false);
+
+    //System.err.println(graph.getXLo(0) + " -- " + graph.getXHi(0));
 
     return graph;
   }
