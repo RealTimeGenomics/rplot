@@ -29,6 +29,8 @@ public class Graph2D implements Cloneable {
   protected static final int NUM_X_AXES = 2;
   protected static final int NUM_Y_AXES = 2;
 
+  private final LabelFormatter mDefaultFormatter = new DefaultFormatter();
+
   /** graph title */
   private String mTitle = "";
   /** key title */
@@ -51,12 +53,12 @@ public class Graph2D implements Cloneable {
   public Graph2D() {
     mXAxis = new Axis[NUM_X_AXES];
     for (int i = 0; i < mXAxis.length; i++) {
-      mXAxis[i] = new Axis();
+      mXAxis[i] = new Axis(mDefaultFormatter);
     }
 
     mYAxis = new Axis[NUM_Y_AXES];
     for (int i = 0; i < mYAxis.length; i++) {
-      mYAxis[i] = new Axis();
+      mYAxis[i] = new Axis(mDefaultFormatter);
     }
 
     setRanges();
@@ -774,7 +776,7 @@ public class Graph2D implements Cloneable {
    * @param lf a label formatter
    */
   public void setXTicLabelFormatter(int i, LabelFormatter lf) {
-    getXAxis(i).mLabelFormatter = lf == null ? DefaultFormatter.getInstance() : lf;
+    getXAxis(i).mLabelFormatter = lf == null ? mDefaultFormatter : lf;
   }
 
   /**
@@ -798,7 +800,7 @@ public class Graph2D implements Cloneable {
    * @param lf a label formatter
    */
   public void setYTicLabelFormatter(int i, LabelFormatter lf) {
-    getYAxis(i).mLabelFormatter = lf == null ? DefaultFormatter.getInstance() : lf;
+    getYAxis(i).mLabelFormatter = lf == null ? mDefaultFormatter : lf;
   }
 
   /**
@@ -1128,7 +1130,11 @@ public class Graph2D implements Cloneable {
     private boolean mLogScale = false;
 
     // axis formatter
-    private LabelFormatter mLabelFormatter = DefaultFormatter.getInstance();
+    private LabelFormatter mLabelFormatter;
+
+    Axis(LabelFormatter lf) {
+      mLabelFormatter = lf;
+    }
 
     public Object clone() throws CloneNotSupportedException {
       return super.clone();
