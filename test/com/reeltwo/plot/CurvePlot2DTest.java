@@ -66,7 +66,7 @@ public class CurvePlot2DTest extends AbstractFillablePlot2DTest {
   }
 
   public static Test suite() {
-    return new TestSuite(PointPlot2DTest.class);
+    return new TestSuite(CurvePlot2DTest.class);
   }
 
 
