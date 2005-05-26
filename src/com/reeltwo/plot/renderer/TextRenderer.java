@@ -1,6 +1,8 @@
 package com.reeltwo.plot.renderer;
 
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.LabelFormatter;
+import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.Plot2D;
 
 /**
@@ -327,16 +329,13 @@ public class TextRenderer extends AbstractRenderer {
 
   private void drawYTics(Graph2D graph, Canvas canvas, int whichTic, TicInfo ticInfo, Mapping mapping, int sxlo, int sxhi, int sylo, int syhi) {
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
-      setNumDecimalDigits(ticInfo.mTic);
+      ticInfo.setNumDecimalDigits(ticInfo.mTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         float num = ticInfo.mTic * k;
         int y = (int) mapping.worldToScreen(num);
 
         if (y >= syhi && y <= sylo) {
-          String snum = mNF.format(num);
-          if (ticInfo.mLabels != null && ticInfo.mLabels.length != 0) {
-            snum = ticInfo.mLabels[k % ticInfo.mLabels.length];
-          }
+          String snum = ticInfo.mLabelFormatter.format(num);
           int yy = (whichTic == 0) ? sxlo - snum.length() : sxhi + 1;
           for (int i = 0; i < snum.length(); i++) {
             char ch = snum.charAt(i);
@@ -362,11 +361,13 @@ public class TextRenderer extends AbstractRenderer {
   private void drawXTics(Graph2D graph, Canvas canvas, int whichTic, Mapping mapping, float xlo, float xhi, int sxlo, int sxhi, int sylo, int syhi) {
     if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       float xtic = graph.getXTic(whichTic);
-      setNumDecimalDigits(xtic);
       
       int start = (int) (xlo / xtic);
       int end = (int) (xhi / xtic);
-      String[] xLabels = graph.getXTicLabels(whichTic);
+      LabelFormatter lf = graph.getXTicLabelFormatter(whichTic);
+      if (lf instanceof DefaultFormatter) {
+        ((DefaultFormatter) lf).setNumDecimalDigits(xtic);
+      }
       for (int k = start; k <= end; k++) {
         float num = xtic * k;
         int x = (int) mapping.worldToScreen(num);
@@ -384,10 +385,7 @@ public class TextRenderer extends AbstractRenderer {
             }
           }
         
-          String snum = mNF.format(num);
-          if (xLabels != null && xLabels.length != 0) {
-            snum = xLabels[k % xLabels.length];
-          }
+          String snum = lf.format(num);
         
           int xx = x - snum.length() / 2;
           for (int i = 0; i < snum.length(); i++) {
@@ -404,17 +402,14 @@ public class TextRenderer extends AbstractRenderer {
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
-      setNumDecimalDigits(ticInfo.mTic);
+      ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (ylo / ticInfo.mTic);
       ticInfo.mEnd = (int) (yhi / ticInfo.mTic);
       ticInfo.mMaxWidth = 0;
-      ticInfo.mLabels = graph.getYTicLabels(whichTic);
+      ticInfo.mLabelFormatter = graph.getYTicLabelFormatter(whichTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         float num = ticInfo.mTic * k;
-        String snum = mNF.format(num);
-        if (ticInfo.mLabels != null && ticInfo.mLabels.length != 0) {
-          snum = ticInfo.mLabels[k % ticInfo.mLabels.length];
-        }
+        String snum = ticInfo.mLabelFormatter.format(num);
         if (snum.length() > ticInfo.mMaxWidth) {
           ticInfo.mMaxWidth = snum.length();
         }

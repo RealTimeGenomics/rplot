@@ -10,6 +10,7 @@ import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
+import com.reeltwo.plot.StringFormatter;
 import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.ScatterPoint2D;
 import com.reeltwo.plot.TextPlot2D;
@@ -160,17 +161,17 @@ public class SwingPlot {
     Point2D[] xys3 = new Point2D[11];
     Point2D[] xys4 = new Point2D[11];
     for (int i = 0; i <= 10; i++) {
-      xys1[i] = new Point2D(i / 10.0f, 1.0f - i * i / 153.0f);
+      xys1[i] = new Point2D(i, 1.0f - i * i / 153.0f);
       xys2[i] = new Point2D(i / 10.0f, 0.13f + i * i / 153.0f);
-      xys3[i] = new Point2D(i / 10.0f, 0.1f + i * i / 90.0f);
-      xys4[i] = new Point2D(i / 10.0f, 0.95f - i * i / 153.0f);
+      xys3[i] = new Point2D(i, 0.1f + i * i / 90.0f);
+      xys4[i] = new Point2D(i, 0.95f - i * i / 153.0f);
     }
 
     PointPlot2D lplot = new PointPlot2D();
     Point2D[] fpts = new Point2D[]{new Point2D(0.0f, 0.2f),
-        new Point2D(0.4f, 0.65f),
-        new Point2D(0.7f, 0.85f),
-        new Point2D(1.0f, 0.0f)};
+        new Point2D(4f, 0.65f),
+        new Point2D(7f, 0.85f),
+        new Point2D(10f, 0.0f)};
     lplot.setData(fpts);
     lplot.setTitle("filled lines");
     lplot.setFill(FillablePlot2D.COLOR_FILL);
@@ -181,8 +182,8 @@ public class SwingPlot {
     Box2D[] boxes1 = new Box2D[10];
     Box2D[] boxes2 = new Box2D[10];
     for (int i = 0; i < 10; i++) {
-      boxes1[i] = new Box2D(i / 10.0f, (10 - i) / 10.0f, i / 10.0f + 0.05f, (10 - i) / 20.0f);
-      boxes2[i] = new Box2D(i / 10.0f - 0.025f, (i + 1) / 10.0f, i / 10.0f + 0.025f, i / 20.0f);
+      boxes1[i] = new Box2D(i, (10 - i) / 10.0f, i + 0.5f, (10 - i) / 20.0f);
+      boxes2[i] = new Box2D(i - 0.25f, (i + 1) / 10.0f, i + 0.25f, i / 20.0f);
     }
 
     BoxPlot2D bplot = new BoxPlot2D();
@@ -207,9 +208,9 @@ public class SwingPlot {
     ScatterPlot2D splot = new ScatterPlot2D();
     ScatterPoint2D[] sps = new ScatterPoint2D[10];
     for (int i = 0; i < 10; i++) {
-      tps[i] = new TextPoint2D(i / 10.0f, (i + 1) / 13.3f, "T" + i);
-      cps[i] = new Circle2D(i / 10.0f, (i + 1) / 13.3f, i + 1);
-      sps[i] = new ScatterPoint2D(i / 10.0f, (i + 1) / 13.3f, i * 5 + 1);
+      tps[i] = new TextPoint2D(i, (i + 1) / 13.3f, "T" + i);
+      cps[i] = new Circle2D(i, (i + 1) / 13.3f, i + 1);
+      sps[i] = new ScatterPoint2D(i, (i + 1) / 13.3f, i * 5 + 1);
     }
     tplot.setData(tps);
     tplot.setTitle("text");
@@ -257,11 +258,11 @@ public class SwingPlot {
     Point2D [] cps2 = new Point2D[] {
       new Point2D(0, 0),
       new Point2D(0, 0),
-      new Point2D(0.25f, 0.3f),
-      new Point2D(0.5f, 0.9f),
-      new Point2D(0.75f, 0.6f),
-      new Point2D(1, 0),
-      new Point2D(1, 0),
+      new Point2D(2.5f, 0.3f),
+      new Point2D(5f, 0.9f),
+      new Point2D(7.5f, 0.6f),
+      new Point2D(10, 0),
+      new Point2D(10, 0),
     };
     CurvePlot2D cplot2 = new CurvePlot2D();
     cplot2.setData(cps2);
@@ -274,15 +275,15 @@ public class SwingPlot {
     graph.addPlot(cplot2);
 
     //graph.setVerticalLine(0.43f);
-    GraphLine vline = new GraphLine(0.43f, GraphLine.VERTICAL);
+    GraphLine vline = new GraphLine(4.3f, GraphLine.VERTICAL);
     graph.addPlot(vline);
 
-    GraphLine hline = new GraphLine(0.43f, GraphLine.HORIZONTAL);
+    GraphLine hline = new GraphLine(4.3f, GraphLine.HORIZONTAL);
     vline.setType(GraphLine.DOTS);
     graph.addPlot(hline);
 
-    graph.setXTic(0, 0.15f);
-    graph.setXTicLabels(0, new String[]{"The", "quick", "brown", "fox", "jumped"});
+    graph.setXTic(0, 20);
+    graph.setXTicLabelFormatter(0, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
 
     graph.setKeyVerticalPosition(Graph2D.BELOW);
     //graph.setColoredKey(false);

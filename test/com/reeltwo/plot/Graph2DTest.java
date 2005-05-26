@@ -56,7 +56,7 @@ public class Graph2DTest extends TestCase {
       assertTrue(graph.isShowXTics(i));
       assertTrue(graph.isShowYTics(i));
 
-      assertNull(graph.getXTicLabels(i));
+      assertNotNull(graph.getXTicLabelFormatter(i));
 
       assertTrue(!graph.usesX(i));
       assertTrue(!graph.usesY(i));
@@ -150,13 +150,11 @@ public class Graph2DTest extends TestCase {
 
     String[] labels = new String[]{"one", "two"};
     for (int i = 0; i < 2; i++) {
-      graph.setXTicLabels(i, labels);
-      assertTrue(graph.getXTicLabels(i) == labels);
-      assertTrue(graph.getXTicLabels(i).equals(labels));
+      graph.setXTicLabelFormatter(i, new StringFormatter(labels));
+      assertTrue(graph.getXTicLabelFormatter(i) instanceof StringFormatter);
 
-      graph.setYTicLabels(i, labels);
-      assertTrue(graph.getYTicLabels(i) == labels);
-      assertTrue(graph.getYTicLabels(i).equals(labels));
+      graph.setYTicLabelFormatter(i, new StringFormatter(labels));
+      assertTrue(graph.getYTicLabelFormatter(i) instanceof StringFormatter);
     }
   }
 

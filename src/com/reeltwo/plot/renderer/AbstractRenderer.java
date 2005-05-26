@@ -13,6 +13,8 @@ import com.reeltwo.plot.Datum2D;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
+import com.reeltwo.plot.LabelFormatter;
+import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -20,7 +22,6 @@ import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.ScatterPoint2D;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -33,8 +34,6 @@ import java.util.Random;
  */
 public abstract class AbstractRenderer {
 
-  /** a number formatter */
-  final NumberFormat mNF = NumberFormat.getInstance();
 
   protected static final int FOREGROUND_COLOR_INDEX = -1;  
   protected static final int BACKGROUND_COLOR_INDEX = -2;
@@ -57,7 +56,13 @@ public abstract class AbstractRenderer {
     int mMinorEnd;
     int mMaxWidth;
     int mMaxHeight;
-    String[] mLabels;
+    LabelFormatter mLabelFormatter;
+
+    void setNumDecimalDigits(float ticSize) {
+      if (mLabelFormatter != null && mLabelFormatter instanceof DefaultFormatter) {
+        ((DefaultFormatter) mLabelFormatter).setNumDecimalDigits(ticSize);
+      }
+    }
   }
 
   /**
@@ -414,7 +419,7 @@ public abstract class AbstractRenderer {
       TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getXTic(whichTic);
       ticInfo.mMinorTic = graph.getXMinorTic(whichTic);
-      setNumDecimalDigits(ticInfo.mTic);
+      ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (graph.getXLo(whichTic) / ticInfo.mTic);
       ticInfo.mEnd = (int) (graph.getXHi(whichTic) / ticInfo.mTic);
       if (ticInfo.mMinorTic > 0.0f) {
@@ -422,15 +427,13 @@ public abstract class AbstractRenderer {
         ticInfo.mMinorEnd = (int) (graph.getXHi(whichTic) / ticInfo.mMinorTic);
       }
 
-      ticInfo.mLabels = graph.getXTicLabels(whichTic);
+      ticInfo.mLabelFormatter = graph.getXTicLabelFormatter(whichTic);
+
       ticInfo.mMaxWidth = 0;
       ticInfo.mMaxHeight = 0;
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         float num = ticInfo.mTic * k;
-        String snum = mNF.format(num);
-        if (ticInfo.mLabels != null && ticInfo.mLabels.length != 0) {
-          snum = ticInfo.mLabels[(k - ticInfo.mStart) % ticInfo.mLabels.length];
-        }
+        String snum = ticInfo.mLabelFormatter.format(num);
         String [] nums = snum.split("\n");
         for (int i = 0; i < nums.length; i++) {
           int width = getTextWidth(canvas, nums[i]);
@@ -452,19 +455,17 @@ public abstract class AbstractRenderer {
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
-      setNumDecimalDigits(ticInfo.mTic);
+      ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (graph.getYLo(whichTic) / ticInfo.mTic);
       ticInfo.mEnd = (int) (graph.getYHi(whichTic) / ticInfo.mTic);
 
-      ticInfo.mLabels = graph.getYTicLabels(whichTic);
+      ticInfo.mLabelFormatter =  graph.getYTicLabelFormatter(whichTic);
+
       ticInfo.mMaxWidth = 0;
       ticInfo.mMaxHeight = 0;
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         float num = ticInfo.mTic * k;
-        String snum = mNF.format(num);
-        if (ticInfo.mLabels != null && ticInfo.mLabels.length != 0) {
-          snum = ticInfo.mLabels[(k - ticInfo.mStart) % ticInfo.mLabels.length];
-        }
+        String snum = ticInfo.mLabelFormatter.format(num);
         int width = getTextWidth(canvas, snum);
         if (width > ticInfo.mMaxWidth) {
           ticInfo.mMaxWidth = width;
@@ -492,25 +493,6 @@ public abstract class AbstractRenderer {
 
     return ticInfos;
   }
-
-  /**
-   * Sets the number of decimal digits to display for a given tic size.
-   *
-   * @param ticSize tic size
-   */
-  protected void setNumDecimalDigits(float ticSize) {
-    int digits = 0;
-    float tens = 1.0f;
-    for (int i = 0; i < 5; i++) {
-      if (ticSize < tens) {
-        digits++;
-      }
-      tens /= 10.0f;
-    }
-    mNF.setMinimumFractionDigits(digits);
-    mNF.setMaximumFractionDigits(digits);
-  }
-
 
   protected void drawData(Object canvas, Plot2D[] plots, Mapping[] mapping) {
     int colorIndex = 0;

@@ -569,7 +569,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
       int tHeight = fm.getHeight();
-      setNumDecimalDigits(yTicInfo.mTic);
+      yTicInfo.setNumDecimalDigits(yTicInfo.mTic);
       
       if (graph.isLogScaleY(whichTic)) {
         // log scale...
@@ -597,13 +597,12 @@ public class GraphicsRenderer extends AbstractRenderer {
               g.drawLine(sxlo + 4, y, sxhi - 4, y);
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
-            String snum = num >= 1 ? mNF.format(num) : "" + num;
+            String snum = num >= 1 ? yTicInfo.mLabelFormatter.format(num) : "" + num;
             //System.err.println("Y: " + num + " -> " + snum);
             g.drawString(snum, (whichTic == 1) ? (sxhi + 4) : (sxlo - getTextWidth(g, snum) - 2), y + tHeight / 2 - 2);
           }
         }
       } else {
-        int labelIndex = 0;
         for (int k = yTicInfo.mStart; k <= yTicInfo.mEnd; k++) {
           float num = yTicInfo.mTic * k;
         
@@ -622,11 +621,7 @@ public class GraphicsRenderer extends AbstractRenderer {
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
           
-            String snum = mNF.format(num);
-            if (yTicInfo.mLabels != null && yTicInfo.mLabels.length != 0) {
-              snum = yTicInfo.mLabels[labelIndex]; //k - yStart];
-              labelIndex = (labelIndex + 1) % yTicInfo.mLabels.length;
-            }
+            String snum = yTicInfo.mLabelFormatter.format(num);
             g.drawString(snum, (whichTic == 1) ? (sxhi + 4) : (sxlo - getTextWidth(g, snum) - 2), y + tHeight / 2 - 2);
           }
         }
@@ -655,7 +650,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
       int tHeight = fm.getHeight();
-      setNumDecimalDigits(xTicInfo.mTic);
+      xTicInfo.setNumDecimalDigits(xTicInfo.mTic);
 
       if (graph.isLogScaleX(whichTic)) {
         // log scale...
@@ -683,13 +678,12 @@ public class GraphicsRenderer extends AbstractRenderer {
               g.drawLine(x, sylo - 4, x, syhi + 4);
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
-            String snum = num >= 1 ? mNF.format(num) : "" + num;
+            String snum = num >= 1 ? xTicInfo.mLabelFormatter.format(num) : "" + num;
             //System.err.println("X: " + num + " -> " + snum);
             g.drawString(snum, x - getTextWidth(g, snum) / 2, (whichTic == 0) ? (sylo + tHeight) : (syhi - tHeight / 2));
           }
         }
       } else {
-        int labelIndex = 0;
         for (int k = xTicInfo.mStart; k <= xTicInfo.mEnd; k++) {
           float num = xTicInfo.mTic * k;
           int x = (int) mapping.worldToScreen(num);
@@ -707,11 +701,7 @@ public class GraphicsRenderer extends AbstractRenderer {
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
 
-            String snum = mNF.format(num);
-            if (xTicInfo.mLabels != null && xTicInfo.mLabels.length != 0) {
-              snum = xTicInfo.mLabels[labelIndex]; //k - xStart];
-              labelIndex = (labelIndex + 1) % xTicInfo.mLabels.length;
-            }
+            String snum = xTicInfo.mLabelFormatter.format(num);
             String [] nums = snum.split("\n");
             for (int i = 0; i < nums.length; i++) {
               String snum2 = nums[i];

@@ -774,17 +774,15 @@ public class Graph2D implements Cloneable {
    * @param i x axis index
    * @param labels an array of strings
    */
+  /*
   public void setXTicLabels(int i, String[] labels) {
-    if (labels != null) {
-      for (int l = 0; l < labels.length; l++) {
-        if (labels[l] == null) {
-          throw new NullPointerException("null X Tics label.");
-        }
-      }
+    if (labels == null) {
+      getXAxis(i).mLabelFormatter = DefaultFormatter.getInstance();
+    } else {
+      getXAxis(i).mLabelFormatter = new StringFormatter(labels);
     }
-    getXAxis(i).mTicLabels = labels;
   }
-
+  */
 
   /**
    * Returns the labels for the <code>i</code><sup>th</sup> x axis. 
@@ -792,8 +790,16 @@ public class Graph2D implements Cloneable {
    * @param i x axis index
    * @return an array of strings
    */
-  public String[] getXTicLabels(int i) {
-    return getXAxis(i).mTicLabels;
+  //public String[] getXTicLabels(int i) {
+  //return null;//getXAxis(i).mTicLabels;
+  //}
+
+  public void setXTicLabelFormatter(int i, LabelFormatter lf) {
+    getXAxis(i).mLabelFormatter = lf == null ? DefaultFormatter.getInstance() : lf;
+  }
+
+  public LabelFormatter getXTicLabelFormatter(int i) {
+    return getXAxis(i).mLabelFormatter;
   }
 
 
@@ -806,17 +812,15 @@ public class Graph2D implements Cloneable {
    * @param i y axis index
    * @param labels an array of strings
    */
+  /*
   public void setYTicLabels(int i, String[] labels) {
-    if (labels != null) {
-      for (int l = 0; l < labels.length; l++) {
-        if (labels[l] == null) {
-          throw new NullPointerException("null Y Tics label.");
-        }
-      }
+    if (labels == null) {
+      getYAxis(i).mLabelFormatter = DefaultFormatter.getInstance();
+    } else {
+      getYAxis(i).mLabelFormatter = new StringFormatter(labels);
     }
-    getYAxis(i).mTicLabels = labels;
   }
-
+  */
 
   /**
    * Returns the labels for the <code>i</code><sup>th</sup> y axis. 
@@ -824,8 +828,16 @@ public class Graph2D implements Cloneable {
    * @param i y axis index
    * @return an array of strings
    */
-  public String[] getYTicLabels(int i) {
-    return getYAxis(i).mTicLabels;
+  //public String[] getYTicLabels(int i) {
+  //return null;//getYAxis(i).mTicLabels;
+  //}
+
+  public void setYTicLabelFormatter(int i, LabelFormatter lf) {
+    getYAxis(i).mLabelFormatter = lf == null ? DefaultFormatter.getInstance() : lf;
+  }
+
+  public LabelFormatter getYTicLabelFormatter(int i) {
+    return getYAxis(i).mLabelFormatter;
   }
 
 
@@ -1138,10 +1150,13 @@ public class Graph2D implements Cloneable {
     private float mTic;
     private float mMinorTic;
     private boolean mTicAuto = true;
-    private String[] mTicLabels = null;
+    //private String[] mTicLabels = null;
     private boolean mShowGrid = false;
     private boolean mShowTics = true;
     private boolean mLogScale = false;
+
+    // axis formatter
+    private LabelFormatter mLabelFormatter = DefaultFormatter.getInstance();
 
     public Object clone() throws CloneNotSupportedException {
       return super.clone();
