@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * Plots a graph in a Swing JPanel described by the data in a Plot data
  * object.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

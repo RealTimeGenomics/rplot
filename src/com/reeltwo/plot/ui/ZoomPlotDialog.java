@@ -10,7 +10,7 @@ import javax.swing.JPopupMenu;
  * regions of the plot.  Provides a pop up menu to allow the plot to be
  * printed and saved as well as controlling zoom actions.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public class ZoomPlotDialog extends PlotDialog {

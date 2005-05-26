@@ -8,6 +8,9 @@ import junit.framework.TestSuite;
  * Created: Mon May 21 16:35:49 2001
  *
  * $Log$
+ * Revision 1.4  2005/05/26 20:31:41  richard
+ * fixes to author tag
+ *
  * Revision 1.3  2004/05/24 22:29:23  richard
  * moved FillablePlot2DTest to AbstractFillablePlot2DTest
  *
@@ -36,7 +39,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the PointPlot2D class.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

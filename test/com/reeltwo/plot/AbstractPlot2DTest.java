@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 /**
  * Abstract JUnit tests for the Plot2D classes.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

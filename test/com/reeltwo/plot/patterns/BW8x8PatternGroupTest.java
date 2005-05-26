@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the BW8x8PatternGroup class.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public class BW8x8PatternGroupTest extends AbstractPatternGroupTest {

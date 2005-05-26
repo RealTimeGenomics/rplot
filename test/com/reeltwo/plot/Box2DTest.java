@@ -6,7 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the Box2D class.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

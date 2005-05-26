@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Point data used for y axis box and whisker plots.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

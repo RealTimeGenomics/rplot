@@ -30,7 +30,7 @@ import java.awt.Stroke;
 /**
  * Code to render a Graph2D object onto a Graphics.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public class GraphicsRenderer extends AbstractRenderer {

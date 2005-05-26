@@ -3,7 +3,7 @@ package com.reeltwo.plot;
 /**
  * Box data used in data plotting structures.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

@@ -13,7 +13,7 @@ import javax.swing.filechooser.FileFilter;
 /**
  * Handy utility class for saving graphs as images.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public class GraphSaver {

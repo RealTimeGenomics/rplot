@@ -3,7 +3,7 @@ package com.reeltwo.plot;
 /**
  * Structure to hold attributes of a single plot on a 2D graph.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

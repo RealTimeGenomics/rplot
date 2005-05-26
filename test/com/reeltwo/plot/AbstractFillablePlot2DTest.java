@@ -3,7 +3,7 @@ package com.reeltwo.plot;
 /**
  * JUnit tests for the FillablePlot2D abstract class.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public abstract class AbstractFillablePlot2DTest extends AbstractPlot2DTest {

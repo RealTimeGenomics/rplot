@@ -5,7 +5,7 @@ import com.reeltwo.plot.renderer.Mapping;
 /**
  * Implement this interface to provide location dependent tool tips in a PlotPanel.
  *
- * @author <a href="mailto:richard@reeltwo.com">Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public interface ToolTipProvider {

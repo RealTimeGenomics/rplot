@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 /**
  * JUnit tests for the abstract PatternGroup class.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

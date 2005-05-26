@@ -6,7 +6,7 @@ import java.util.Iterator;
 /**
  * Structure containing all the attributes of a 2D graph.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

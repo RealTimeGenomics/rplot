@@ -6,7 +6,7 @@ import com.reeltwo.plot.PlotUtils;
  * Provides mappings between world and screen co-ordinate systems in a
  * single dimension.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

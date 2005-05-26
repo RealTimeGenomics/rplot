@@ -12,7 +12,7 @@ import javax.swing.JPopupMenu;
  * Swing dialog for displaying a single graph.  Has a pop up menu to
  * allow saving and printing of the graph.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public class PlotDialog extends JDialog {

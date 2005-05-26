@@ -8,7 +8,7 @@ import com.reeltwo.plot.Plot2D;
 /**
  * Code to render a Graph2D object to a String.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public class TextRenderer extends AbstractRenderer {

@@ -3,7 +3,7 @@ package com.reeltwo.plot;
 /**
  * Object associated with a Point2D.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

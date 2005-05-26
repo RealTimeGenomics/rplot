@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the Graph2D class.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 public class Graph2DTest extends TestCase {

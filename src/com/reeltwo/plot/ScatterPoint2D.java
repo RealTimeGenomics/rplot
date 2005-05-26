@@ -4,7 +4,7 @@ package com.reeltwo.plot;
  * A point which is actually a group of points. Will be drawn as a
  * scattering of points centered on the point co-ordinates.
  *
- * @author <a href=mailto:rlittin@reeltwo.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 

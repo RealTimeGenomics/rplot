@@ -18,9 +18,6 @@ public class MemoryMonitor extends Thread {
   /**
    * <code>MemoryListener</code> specifies the API for objects wanting
    * to get notified of changes to free memory.
-   *
-   * @author <a href="mailto:len@reeltwo.com">len</a>
-   * @version $Revision$
    */
   public interface MemoryListener {
 
