@@ -28,7 +28,7 @@ import javax.swing.JPopupMenu;
  * Starts a new Swing window for displaying Graph2Ds in. The window has
  * zooming and picture in picture functionality enabled.
  *
- * @author <a href=mailto:rlittin@secondreel.com>Richard Littin</a>
+ * @author Richard Littin (richard@reeltwo.com)
  * @version $Revision$
  */
 
