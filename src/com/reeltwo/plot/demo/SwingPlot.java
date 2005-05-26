@@ -154,7 +154,7 @@ public class SwingPlot {
     graph.setKeyTitle("Key title");
     graph.setGrid(true);
     graph.setYRange(0, 0.0f, 1.0f);
-    graph.setXRange(0, 0.0f, 1.0f);
+    graph.setXRange(0, 0.0f, 10.0f);
 
     Point2D[] xys1 = new Point2D[11];
     Point2D[] xys2 = new Point2D[11];
