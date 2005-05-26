@@ -766,76 +766,48 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Set the labels to using instead of numbers on the
-   * <code>i</code><sup>th</sup> x axis.  Each number at a major tic
-   * is replaced by the text in the <code>labels</code> array.  The
-   * labels are used on a cyclic basis.
+   * Set the label formatter to use for formatting of numbers on the
+   * <code>i</code><sup>th</sup> x axis.  If a null formatter is given
+   * then the default formatter is used. 
    *
    * @param i x axis index
-   * @param labels an array of strings
+   * @param lf a label formatter
    */
-  /*
-  public void setXTicLabels(int i, String[] labels) {
-    if (labels == null) {
-      getXAxis(i).mLabelFormatter = DefaultFormatter.getInstance();
-    } else {
-      getXAxis(i).mLabelFormatter = new StringFormatter(labels);
-    }
-  }
-  */
-
-  /**
-   * Returns the labels for the <code>i</code><sup>th</sup> x axis. 
-   *
-   * @param i x axis index
-   * @return an array of strings
-   */
-  //public String[] getXTicLabels(int i) {
-  //return null;//getXAxis(i).mTicLabels;
-  //}
-
   public void setXTicLabelFormatter(int i, LabelFormatter lf) {
     getXAxis(i).mLabelFormatter = lf == null ? DefaultFormatter.getInstance() : lf;
   }
 
+  /**
+   * Returns the label formater used for the
+   * <code>i</code><sup>th</sup> x axis.
+   *
+   * @param i x axis index
+   * @return <code>LabelFormatter</code>
+   */
   public LabelFormatter getXTicLabelFormatter(int i) {
     return getXAxis(i).mLabelFormatter;
   }
 
 
   /**
-   * Set the labels to using instead of numbers on the
-   * <code>i</code><sup>th</sup> y axis.  Each number at a major tic
-   * is replaced by the text in the <code>labels</code> array.  The
-   * labels are used on a cyclic basis.
+   * Set the label formatter to use for formatting of numbers on the
+   * <code>i</code><sup>th</sup> y axis.  If a null formatter is given
+   * then the default formatter is used. 
    *
    * @param i y axis index
-   * @param labels an array of strings
+   * @param lf a label formatter
    */
-  /*
-  public void setYTicLabels(int i, String[] labels) {
-    if (labels == null) {
-      getYAxis(i).mLabelFormatter = DefaultFormatter.getInstance();
-    } else {
-      getYAxis(i).mLabelFormatter = new StringFormatter(labels);
-    }
-  }
-  */
-
-  /**
-   * Returns the labels for the <code>i</code><sup>th</sup> y axis. 
-   *
-   * @param i y axis index
-   * @return an array of strings
-   */
-  //public String[] getYTicLabels(int i) {
-  //return null;//getYAxis(i).mTicLabels;
-  //}
-
   public void setYTicLabelFormatter(int i, LabelFormatter lf) {
     getYAxis(i).mLabelFormatter = lf == null ? DefaultFormatter.getInstance() : lf;
   }
 
+  /**
+   * Returns the label formater used for the
+   * <code>i</code><sup>th</sup> y axis.
+   *
+   * @param i y axis index
+   * @return <code>LabelFormatter</code>
+   */
   public LabelFormatter getYTicLabelFormatter(int i) {
     return getYAxis(i).mLabelFormatter;
   }

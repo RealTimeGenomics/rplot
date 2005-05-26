@@ -3,19 +3,20 @@ package com.reeltwo.plot;
 import java.text.NumberFormat;
 
 /**
- * DefaultFormatter.java
- *
+ * Default formatter for floating point numbers.
  *
  * @author Richard Littin (richard@reeltwo.com) 
  * @version $Revision$
  */
-
 public class DefaultFormatter implements LabelFormatter {
   private static DefaultFormatter sInstance = null;
 
   /** a number formatter */
   private final NumberFormat mNF = NumberFormat.getInstance();
 
+  /**
+   * Private to prevent instansiation.
+   */
   private DefaultFormatter() {
   }
 
@@ -37,6 +38,11 @@ public class DefaultFormatter implements LabelFormatter {
     mNF.setMaximumFractionDigits(digits);
   }
 
+  /**
+   * Returns the one instance of the <code>DefaultFormatter</code>
+   *
+   * @return a <code>DefaultFormatter</code>
+   */
   public static DefaultFormatter getInstance() {
     if (sInstance == null) {
       sInstance = new DefaultFormatter();
@@ -44,6 +50,13 @@ public class DefaultFormatter implements LabelFormatter {
     return sInstance;
   }
 
+  /**
+   * Formats the given float as determined by the internal number
+   * formatter. 
+   *
+   * @param f float to format
+   * @return formatted float
+   */
   public String format(float f) {
     return mNF.format(f);
   }
