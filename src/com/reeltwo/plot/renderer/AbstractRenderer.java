@@ -192,6 +192,9 @@ public abstract class AbstractRenderer {
     return new Point2D((x2 - x1) / m, (y2 - y1) / m);
   }
 
+  private float distance(Point2D p1, Point2D p2) {
+    return distance(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+  }
 
   private float distance(float x1, float y1, float x2, float y2) {
     float x = x2 - x1;
@@ -237,16 +240,16 @@ public abstract class AbstractRenderer {
     return new Point2D(x, y);
   }
 
-  private Point2D cubicBezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, double mu) {
-    float cx = 3 * (x1 - x0);
-    float cy = 3 * (y1 - y0);
-    float bx = 3 * (x2 - x1) - cx;
-    float by = 3 * (y2 - y1) - cy;
-    float ax = x3 - x0 - cx - bx;
-    float ay = y3 - y0 - cy - by;
+  private Point2D cubicBezier(Point2D p0, Point2D p1, Point2D p2, Point2D p3, double mu) {
+    float cx = 3 * (p1.getX() - p0.getX());
+    float cy = 3 * (p1.getY() - p0.getY());
+    float bx = 3 * (p2.getX() - p1.getX()) - cx;
+    float by = 3 * (p2.getY() - p1.getY()) - cy;
+    float ax = p3.getX() - p0.getX() - cx - bx;
+    float ay = p3.getY() - p0.getY() - cy - by;
 
-    return new Point2D((float) ((((ax * mu + bx) * mu) + cx) * mu + x0),
-                       (float) ((((ay * mu + by) * mu) + cy) * mu + y0));
+    return new Point2D((float) ((((ax * mu + bx) * mu) + cx) * mu + p0.getX()),
+                       (float) ((((ay * mu + by) * mu) + cy) * mu + p0.getY()));
   }
 
 
@@ -338,6 +341,8 @@ public abstract class AbstractRenderer {
         int yi = ys[i];
         int yip1 = ys[i + 1];
         int yip2 = ys[i + 2];
+        Point2D pi = new Point2D(xi, yi);
+        Point2D pip1 = new Point2D(xip1, yip1);
           
         // create tangent vector parallel to (pim1, pip1) whose length if min of the X magnitudes of (pi, pim1) and (pi, pip1) divided by 3
         float minMag = distanceX(xi, xip1);
@@ -349,6 +354,7 @@ public abstract class AbstractRenderer {
         Point2D tangent = tangent(xim1, yim1, xip1, yip1);
         float x1 = xi + minMag * tangent.getX();
         float y1 = yi + minMag * tangent.getY();
+        Point2D p1 = new Point2D(x1, y1);
         
         // same thing around pip1
         minMag = distanceX(xip1, xi);
@@ -361,14 +367,15 @@ public abstract class AbstractRenderer {
 
         float x2 = xip1 + minMag * tangent.getX();
         float y2 = yip1 + minMag * tangent.getY();
+        Point2D p2 = new Point2D(x2, y2);
 
         //CubicCurve2D.Double cubic = new CubicCurve2D.Double();
         //cubic.setCurve(xi, yi, x1, y1, x2, y2, xip1, yip1);
-        int m2 = Math.max(10, (int) (distance(x1, y1, x2, y2) / 5.0f));
+        int m2 = Math.max(10, (int) (distance(p1, p2) / 5.0f));
         for (int j = 0; j <= m2; j++) {
           int x0 = x;
           int y0 = y;
-          Point2D p = cubicBezier(xi, yi, x1, y1, x2, y2, xip1, yip1, j / (double) m2);
+          Point2D p = cubicBezier(pi, p1, p2, pip1, j / (double) m2);
           x = (int) p.getX();
           y = (int) p.getY();
           if (filled) {
