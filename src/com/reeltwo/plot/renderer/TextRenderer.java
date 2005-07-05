@@ -1,8 +1,9 @@
 package com.reeltwo.plot.renderer;
 
+import com.reeltwo.plot.Box2D;
+import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.LabelFormatter;
-import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.Plot2D;
 
 /**
@@ -228,11 +229,12 @@ public class TextRenderer extends AbstractRenderer {
       // border
       drawBorder(canvas, sxlo, sylo, sxhi, syhi);
 
+      Box2D s = new Box2D(sxlo, sylo, sxhi, syhi);
       // scales
-      drawYTics(graph, canvas, 0, yTicInfo, mapping[1], sxlo, sxhi, sylo, syhi);
-      drawYTics(graph, canvas, 1, y2TicInfo, mapping[3], sxlo, sxhi, sylo, syhi);
-      drawXTics(graph, canvas, 0, mapping[0], xlo, xhi, sxlo, sxhi, sylo, syhi);
-      drawXTics(graph, canvas, 1, mapping[2], xlo, xhi, sxlo, sxhi, sylo, syhi);
+      drawYTics(graph, canvas, 0, yTicInfo, mapping[1], s);
+      drawYTics(graph, canvas, 1, y2TicInfo, mapping[3], s);
+      drawXTics(graph, canvas, 0, mapping[0], xlo, xhi, s);
+      drawXTics(graph, canvas, 1, mapping[2], xlo, xhi, s);
     } else {
       mapping[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi);
       mapping[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi);
@@ -327,7 +329,11 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private void drawYTics(Graph2D graph, Canvas canvas, int whichTic, TicInfo ticInfo, Mapping mapping, int sxlo, int sxhi, int sylo, int syhi) {
+  private void drawYTics(Graph2D graph, Canvas canvas, int whichTic, TicInfo ticInfo, Mapping mapping, Box2D s) {
+    int sxlo = (int) s.getXLo();
+    int sxhi = (int) s.getXHi();
+    int sylo = (int) s.getYLo();
+    int syhi = (int) s.getYHi();
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
@@ -358,7 +364,11 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private void drawXTics(Graph2D graph, Canvas canvas, int whichTic, Mapping mapping, float xlo, float xhi, int sxlo, int sxhi, int sylo, int syhi) {
+  private void drawXTics(Graph2D graph, Canvas canvas, int whichTic, Mapping mapping, float xlo, float xhi, Box2D s) {
+    int sxlo = (int) s.getXLo();
+    int sxhi = (int) s.getXHi();
+    int sylo = (int) s.getYLo();
+    int syhi = (int) s.getYHi();
     if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       float xtic = graph.getXTic(whichTic);
       

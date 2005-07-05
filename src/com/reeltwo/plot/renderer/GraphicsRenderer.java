@@ -3,6 +3,7 @@ package com.reeltwo.plot.renderer;
 import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPoint2D;
+import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
@@ -423,13 +424,14 @@ public class GraphicsRenderer extends AbstractRenderer {
             sxhi -= x2TicInfo.mMaxWidth / 2 + 2;
           }
         }
+        Box2D s = new Box2D(sxlo, sylo, sxhi, syhi);
         mapping = createMappings(graph, sxlo, sylo, sxhi, syhi);
         drawGraphArea(g, sxlo, sylo, sxhi, syhi);
         setupAntialiasing(g);
-        drawYTics(graph, g, 0, yTicInfo, mapping[1], sxlo, sxhi, sylo, syhi);
-        drawYTics(graph, g, 1, y2TicInfo, mapping[3], sxlo, sxhi, sylo, syhi);
-        drawXTics(graph, g, 0, xTicInfo, mapping[0], sxlo, sxhi, sylo, syhi);
-        drawXTics(graph, g, 1, x2TicInfo, mapping[2], sxlo, sxhi, sylo, syhi);
+        drawYTics(graph, g, 0, yTicInfo, mapping[1], s);
+        drawYTics(graph, g, 1, y2TicInfo, mapping[3], s);
+        drawXTics(graph, g, 0, xTicInfo, mapping[0], s);
+        drawXTics(graph, g, 1, x2TicInfo, mapping[2], s);
         setColor(g, FOREGROUND_COLOR_INDEX);
         String xLabel;
         if (graph.usesX(0) && (xLabel = graph.getXLabel(0)).length() > 0) {
@@ -564,7 +566,11 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  private void drawYTics(Graph2D graph, Graphics g, int whichTic, TicInfo yTicInfo, Mapping mapping, int sxlo, int sxhi, int sylo, int syhi) {
+  private void drawYTics(Graph2D graph, Graphics g, int whichTic, TicInfo yTicInfo, Mapping mapping, Box2D s) {
+    int sxlo = (int) s.getXLo();
+    int sxhi = (int) s.getXHi();
+    int sylo = (int) s.getYLo();
+    int syhi = (int) s.getYHi();
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
@@ -645,7 +651,11 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  private void drawXTics(Graph2D graph, Graphics g, int whichTic, TicInfo xTicInfo, Mapping mapping, int sxlo, int sxhi, int sylo, int syhi) {
+  private void drawXTics(Graph2D graph, Graphics g, int whichTic, TicInfo xTicInfo, Mapping mapping, Box2D s) {
+    int sxlo = (int) s.getXLo();
+    int sxhi = (int) s.getXHi();
+    int sylo = (int) s.getYLo();
+    int syhi = (int) s.getYHi();
     if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
