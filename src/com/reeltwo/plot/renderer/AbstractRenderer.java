@@ -754,6 +754,8 @@ public abstract class AbstractRenderer {
     case TextPlot2D.LEFT: halign = 0; break;
     case TextPlot2D.CENTER: halign = 1; break;
     case TextPlot2D.RIGHT: halign = 2; break;
+    default:
+      throw new IllegalStateException("Invalid halign");
     }
 
     int valign = tplot.getVerticalAlignment();
@@ -763,6 +765,8 @@ public abstract class AbstractRenderer {
     case TextPlot2D.BASELINE: valign = 0; break;
     case TextPlot2D.TOP: valign = tHeight - descent; break;
     case TextPlot2D.BOTTOM: valign = -descent; break;
+    default:
+      throw new IllegalStateException("Invalid valign");
     }
 
     final int color = tplot.isUseFGColor() ? FOREGROUND_COLOR_INDEX : tplot.getColor();

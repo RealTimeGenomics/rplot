@@ -215,6 +215,8 @@ public class GraphicsRenderer extends AbstractRenderer {
       g.drawLine(x - 2, y - 2, x + 2, y + 2);
       g.drawLine(x + 2, y - 2, x - 2, y + 2);
       break;
+    default:
+      throw new RuntimeException("Programmer error");
     }
   }
 
