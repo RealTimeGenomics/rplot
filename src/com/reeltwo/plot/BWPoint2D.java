@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class BWPoint2D implements Datum2D {
   /** co-ordinate */
   private float mX;
-  private float [] mYs = new float[5];
+  private float[] mYs = new float[5];
 
   /**
    * Sets x and y co-ordinates for a box and whisker point.

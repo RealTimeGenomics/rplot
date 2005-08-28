@@ -35,7 +35,7 @@ public class BW8x8PatternGroup implements PatternGroup {
   }
 
   /** {@inheritDoc} */
-  public Paint [] getPatterns() {
+  public Paint[] getPatterns() {
     if (mPatterns == null) {
       ArrayList patterns = new ArrayList();
       try {
@@ -53,7 +53,7 @@ public class BW8x8PatternGroup implements PatternGroup {
         ioe.printStackTrace();
       }
     }
-    return (Paint []) mPatterns.toArray(new Paint[mPatterns.size()]);
+    return (Paint[]) mPatterns.toArray(new Paint[mPatterns.size()]);
   }
 
   /** {@inheritDoc} */

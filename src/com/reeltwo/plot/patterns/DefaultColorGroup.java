@@ -20,7 +20,7 @@ public class DefaultColorGroup implements PatternGroup {
   }
 
   /** {@inheritDoc} */
-  public Paint [] getPatterns() {
+  public Paint[] getPatterns() {
     if (mColors == null) {
       mColors = new Color[] {
         Color.RED,
@@ -33,7 +33,7 @@ public class DefaultColorGroup implements PatternGroup {
         Color.GRAY,
       };
     }
-    Color [] colors = new Color[mColors.length];
+    Color[] colors = new Color[mColors.length];
     System.arraycopy(mColors, 0, colors, 0, colors.length);
     return colors;
   }

@@ -44,7 +44,7 @@ public abstract class AbstractRenderer {
 
   private int mLineWidth = 1;
 
-  private Mapping [] mMappings = null;
+  private Mapping[] mMappings = null;
 
   /** A small class to hold information about tick spacing. */
   protected static class TicInfo {
@@ -72,12 +72,12 @@ public abstract class AbstractRenderer {
    *
    * @return an array of axis <code>Mapping</code>s
    */
-  public Mapping [] getMappings() {
-    // an array of Mapping [ x0, y0, x1, y1 ]
+  public Mapping[] getMappings() {
+    // an array of Mapping[ x0, y0, x1, y1 ]
     return mMappings;
   }
 
-  protected void setMappings(Mapping [] mappings) {
+  protected void setMappings(Mapping[] mappings) {
     mMappings = mappings;
   }
 
@@ -180,8 +180,8 @@ public abstract class AbstractRenderer {
   protected abstract void fillRectangle(Object canvas, int x, int y, int w, int h);
   protected abstract void drawCircle(Object canvas, int x, int y, int diameter);
   protected abstract void fillCircle(Object canvas, int x, int y, int diameter);
-  protected abstract void drawPolygon(Object canvas, int [] xs, int [] ys);
-  protected abstract void fillPolygon(Object canvas, int [] xs, int [] ys);
+  protected abstract void drawPolygon(Object canvas, int[] xs, int[] ys);
+  protected abstract void fillPolygon(Object canvas, int[] xs, int[] ys);
 
   // methods to help when drawing curves
   private Point2D tangent(int x1, int y1, int x2, int y2) {
@@ -207,7 +207,7 @@ public abstract class AbstractRenderer {
     return Math.abs(x2 - x1);
   }
 
-  private Point2D bezier(int [] xs, int [] ys, double mu) {
+  private Point2D bezier(int[] xs, int[] ys, double mu) {
     int k, kn, nn, nkn;
     double blend, muk, munk;
     float x = 0, y = 0;
@@ -253,7 +253,7 @@ public abstract class AbstractRenderer {
   }
 
 
-  private void doCurve(Object canvas, int [] xs, int [] ys, int type, boolean filled) {
+  private void doCurve(Object canvas, int[] xs, int[] ys, int type, boolean filled) {
     assert xs != null;
     assert ys != null;
     assert xs.length == ys.length;
@@ -397,11 +397,11 @@ public abstract class AbstractRenderer {
     }
   }
 
-  protected void drawCurve(Object canvas, int [] xs, int [] ys, int type) {
+  protected void drawCurve(Object canvas, int[] xs, int[] ys, int type) {
     doCurve(canvas, xs, ys, type, false);
   }
 
-  protected void fillCurve(Object canvas, int [] xs, int [] ys, int type) {
+  protected void fillCurve(Object canvas, int[] xs, int[] ys, int type) {
     doCurve(canvas, xs, ys, type, true);
   }
 
@@ -410,8 +410,8 @@ public abstract class AbstractRenderer {
 
   // functions that actully plot the different types of plots
 
-  protected Mapping [] createMappings(Graph2D graph, int sxlo, int sylo, int sxhi, int syhi) {
-    Mapping [] mappings = new Mapping[4]; // x1, y1, x2, y2
+  protected Mapping[] createMappings(Graph2D graph, int sxlo, int sylo, int sxhi, int syhi) {
+    Mapping[] mappings = new Mapping[4]; // x1, y1, x2, y2
 
     mappings[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi, graph.isLogScaleX(0));
     mappings[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi, graph.isLogScaleY(0));
@@ -441,7 +441,7 @@ public abstract class AbstractRenderer {
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         float num = ticInfo.mTic * k;
         String snum = ticInfo.mLabelFormatter.format(num);
-        String [] nums = snum.split("\n");
+        String[] nums = snum.split("\n");
         for (int i = 0; i < nums.length; i++) {
           int width = getTextWidth(canvas, nums[i]);
           if (width > ticInfo.mMaxWidth) {
@@ -490,8 +490,8 @@ public abstract class AbstractRenderer {
 
 
 
-  protected TicInfo [] createTicInfos(Object canvas, Graph2D graph) {
-    TicInfo [] ticInfos = new TicInfo[4]; // x1, y1, x2, y2
+  protected TicInfo[] createTicInfos(Object canvas, Graph2D graph) {
+    TicInfo[] ticInfos = new TicInfo[4]; // x1, y1, x2, y2
 
     ticInfos[0] = calcXTicInfo(canvas, graph, 0);
     ticInfos[1] = calcYTicInfo(canvas, graph, 0);
@@ -685,15 +685,15 @@ public abstract class AbstractRenderer {
 
         if ((mode & ArrowPlot2D.FORWARD_MODE) == ArrowPlot2D.FORWARD_MODE) {
           Poly polygon = arrowHead(sptX1, sptY1, sptX2, sptY2, width, height, type);
-          int [] xs = polygon.getXs();
-          int [] ys = polygon.getYs();
+          int[] xs = polygon.getXs();
+          int[] ys = polygon.getYs();
           fillPolygon(canvas, xs, ys);
           drawPolygon(canvas, xs, ys);
         }
         if ((mode & ArrowPlot2D.REVERSE_MODE) == ArrowPlot2D.REVERSE_MODE) {
           Poly polygon = arrowHead(sptX2, sptY2, sptX1, sptY1, width, height, type);
-          int [] xs = polygon.getXs();
-          int [] ys = polygon.getYs();
+          int[] xs = polygon.getXs();
+          int[] ys = polygon.getYs();
           fillPolygon(canvas, xs, ys);
           drawPolygon(canvas, xs, ys);
         }
@@ -894,7 +894,7 @@ public abstract class AbstractRenderer {
 
 
   protected void drawCurvePlot(Object canvas, CurvePlot2D cplot, Mapping convertX, Mapping convertY) {
-    Point2D[] points = (Point2D []) cplot.getData();
+    Point2D[] points = (Point2D[]) cplot.getData();
 
     if (points != null && points.length != 0) {
       int type = cplot.getType();
@@ -907,8 +907,8 @@ public abstract class AbstractRenderer {
         setColor(canvas, cplot.getColor());
       }
 
-      int [] xs = new int[points.length];
-      int [] ys = new int[points.length];
+      int[] xs = new int[points.length];
+      int[] ys = new int[points.length];
       for (int i = 0; i < points.length; i++) {
         xs[i] = (int) convertX.worldToScreen(points[i].getX());
         ys[i] = (int) convertY.worldToScreen(points[i].getY());
@@ -941,16 +941,16 @@ public abstract class AbstractRenderer {
       mPoints.add(new Point2D(x, y));
     }
 
-    public int [] getXs() {
-      int [] xs = new int[mPoints.size()];
+    public int[] getXs() {
+      int[] xs = new int[mPoints.size()];
       for (int i = 0; i < mPoints.size(); i++) {
         xs[i] = (int) ((Point2D) mPoints.get(i)).getX();
       }
       return xs;
     }
 
-    public int [] getYs() {
-      int [] ys = new int[mPoints.size()];
+    public int[] getYs() {
+      int[] ys = new int[mPoints.size()];
       for (int i = 0; i < mPoints.size(); i++) {
         ys[i] = (int) ((Point2D) mPoints.get(i)).getY();
       }

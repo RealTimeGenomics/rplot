@@ -38,7 +38,7 @@ public class DefaultColorGroupTest extends AbstractPatternGroupTest {
   public void testDefaults() {
     PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint [] patterns = pg.getPatterns();
+    Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertEquals(8, patterns.length);
 

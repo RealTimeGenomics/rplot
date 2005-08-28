@@ -38,7 +38,7 @@ public class GrayScaleColorGroup implements PatternGroup {
 
 
   /** {@inheritDoc} */
-  public Paint [] getPatterns() {
+  public Paint[] getPatterns() {
     if (mColors == null) {
       mColors = new Color[mNumShades];
       final int step = 255 / mNumShades;
@@ -47,7 +47,7 @@ public class GrayScaleColorGroup implements PatternGroup {
         mColors[i] = new Color(shade, shade, shade);
       }
     }
-    Color [] colors = new Color[mColors.length];
+    Color[] colors = new Color[mColors.length];
     System.arraycopy(mColors, 0, colors, 0, colors.length);
     return colors;
   }

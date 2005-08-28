@@ -7,7 +7,7 @@ package com.reeltwo.plot;
  * @version $Revision$
  */
 public class StringFormatter implements LabelFormatter {
-  private final String [] mLabels;
+  private final String[] mLabels;
 
   /**
    * Creates a new <code>StringFormatter</code> setting an array of
@@ -15,7 +15,7 @@ public class StringFormatter implements LabelFormatter {
    *
    * @param labels an array of <code>String</code>
    */
-  public StringFormatter(String [] labels) {
+  public StringFormatter(String[] labels) {
     if (labels == null || labels.length == 0) {
       throw new NullPointerException("empty labels.");
     }

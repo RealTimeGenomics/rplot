@@ -55,7 +55,7 @@ public class PlotPanel extends JPanel {
    *
    * @param lineColors an array of <code>Color</code>s
    */
-  public PlotPanel(Color [] lineColors) {
+  public PlotPanel(Color[] lineColors) {
     this(lineColors, false);
   }
 
@@ -66,7 +66,7 @@ public class PlotPanel extends JPanel {
    * @param lineColors an array of <code>Color</code>s
    * @param bufferGraphs whether to buffer graphs
    */
-  public PlotPanel(Color [] lineColors, boolean bufferGraphs) {
+  public PlotPanel(Color[] lineColors, boolean bufferGraphs) {
     this(bufferGraphs);
     if (lineColors == null || lineColors.length == 0) {
       throw new IllegalArgumentException("Must be at least one color.");
@@ -163,7 +163,7 @@ public class PlotPanel extends JPanel {
    *
    * @param colors an array of colors
    */
-  public void setColors(Color [] colors) {
+  public void setColors(Color[] colors) {
     mGraphicsRenderer.setColors(colors);
   }
 
@@ -172,7 +172,7 @@ public class PlotPanel extends JPanel {
    *
    * @return an array of <code>Color</code>s
    */
-  public Color [] getColors() {
+  public Color[] getColors() {
     return mGraphicsRenderer.getColors();
   }
 
@@ -181,7 +181,7 @@ public class PlotPanel extends JPanel {
    *
    * @param patterns an array of patterns
    */
-  public void setPatterns(Paint [] patterns) {
+  public void setPatterns(Paint[] patterns) {
     mGraphicsRenderer.setPatterns(patterns);
   }
 
@@ -190,7 +190,7 @@ public class PlotPanel extends JPanel {
    *
    * @return an array of patterns
    */
-  public Paint [] getPatterns() {
+  public Paint[] getPatterns() {
     return mGraphicsRenderer.getPatterns();
   }
 

@@ -16,7 +16,7 @@ public class TextPlot {
    *
    * @param args command line arguments
    */
-  public static void main(String [] args) {
+  public static void main(String[] args) {
     Graph2D graph = SwingPlot.genTest();
     String str = new TextRenderer().drawGraph(graph, 90, 40, true);
     System.out.println(str);

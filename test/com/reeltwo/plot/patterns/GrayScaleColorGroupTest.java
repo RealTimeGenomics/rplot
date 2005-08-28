@@ -38,7 +38,7 @@ public class GrayScaleColorGroupTest extends AbstractPatternGroupTest {
   public void testDefaults() {
     PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint [] patterns = pg.getPatterns();
+    Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertEquals(10, patterns.length);
 
@@ -53,7 +53,7 @@ public class GrayScaleColorGroupTest extends AbstractPatternGroupTest {
     for (int i = 1; i < 100; i *= 3) {
       PatternGroup pg = new GrayScaleColorGroup(i);
       assertNotNull(pg);
-      Paint [] patterns = pg.getPatterns();
+      Paint[] patterns = pg.getPatterns();
       assertNotNull(patterns);
       assertEquals(i, patterns.length);
 

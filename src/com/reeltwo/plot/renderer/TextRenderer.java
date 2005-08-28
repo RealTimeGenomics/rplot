@@ -122,7 +122,7 @@ public class TextRenderer extends AbstractRenderer {
     drawCircle(canvas, x, y, diameter);
   }
 
-  protected void drawPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void drawPolygon(Object canvas, int[] xs, int[] ys) {
     if (xs.length != 0) {
       for (int i = 1; i < xs.length; i++) {
         drawLine(canvas, xs[i - 1], ys[i - 1], xs[i], ys[i]);
@@ -131,7 +131,7 @@ public class TextRenderer extends AbstractRenderer {
     }
   }
 
-  protected void fillPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void fillPolygon(Object canvas, int[] xs, int[] ys) {
     // todo
     for (int y = 0; y < ((Canvas) canvas).getHeight(); y++) {
       for (int x = 0; x < ((Canvas) canvas).getWidth(); x++) {
@@ -463,7 +463,7 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private static boolean inside(int [] xs, int [] ys, int x, int y) {
+  private static boolean inside(int[] xs, int[] ys, int x, int y) {
     if (xs == null || xs.length <= 2) {
       return false;
     }

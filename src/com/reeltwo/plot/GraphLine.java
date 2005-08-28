@@ -94,7 +94,7 @@ public class GraphLine extends Plot2D {
   }
 
   /** {@inheritDoc} */
-  public Datum2D [] getData() {
+  public Datum2D[] getData() {
     throw new UnsupportedOperationException("not applicable.");
   }
 

@@ -42,8 +42,8 @@ public class GraphicsRenderer extends AbstractRenderer {
   private boolean mTextAntialiasing = false;
   private boolean mAllAntialiasing = false;
 
-  private Color [] mColors = null;
-  private Paint [] mPatterns = null;
+  private Color[] mColors = null;
+  private Paint[] mPatterns = null;
 
   private Color mBackgroundColor = Color.WHITE;
   private Color mForegroundColor = Color.BLACK;
@@ -53,7 +53,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    * Creates a new <code>GraphicsRenderer</code>.
    */
   public GraphicsRenderer() {
-    this((Color []) new DefaultColorGroup().getPatterns());
+    this((Color[]) new DefaultColorGroup().getPatterns());
   }
 
   /**
@@ -62,7 +62,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    *
    * @param colors an array of <code>Color</code>s
    */
-  public GraphicsRenderer(Color [] colors) {
+  public GraphicsRenderer(Color[] colors) {
     this(colors, null);
   }
 
@@ -73,7 +73,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    * @param colors an array of <code>Color</code>s
    * @param patterns an array of patterns
    */
-  public GraphicsRenderer(Color [] colors, Paint [] patterns) {
+  public GraphicsRenderer(Color[] colors, Paint[] patterns) {
     setColors(colors);
     setPatterns(patterns);
   }
@@ -83,7 +83,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    *
    * @param colors an array of <code>Color</code>s
    */
-  public void setColors(Color [] colors) {
+  public void setColors(Color[] colors) {
     if (colors == null) {
       throw new NullPointerException("null colors given");
     }
@@ -103,7 +103,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    *
    * @param patterns an array of patterns
    */
-  public void setPatterns(Paint [] patterns) {
+  public void setPatterns(Paint[] patterns) {
     if (patterns == null) {
       mPatterns = mColors;
     } else {
@@ -121,7 +121,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    *
    * @return an array of <code>Color</code>s
    */
-  public Color [] getColors() {
+  public Color[] getColors() {
     return mColors;
   }
 
@@ -130,7 +130,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    *
    * @return an array of patterns
    */
-  public Paint [] getPatterns() {
+  public Paint[] getPatterns() {
     return mPatterns;
   }
 
@@ -238,7 +238,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     ((Graphics) canvas).fillOval((int) (x - diameter / 2.0f), (int) (y - diameter / 2.0f), diameter, diameter);
   }
 
-  private Polygon createPolygon(int [] xs, int [] ys) {
+  private Polygon createPolygon(int[] xs, int[] ys) {
     assert xs != null;
     assert ys != null;
     assert xs.length == ys.length;
@@ -249,11 +249,11 @@ public class GraphicsRenderer extends AbstractRenderer {
     return polygon;
   }
 
-  protected void drawPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void drawPolygon(Object canvas, int[] xs, int[] ys) {
     ((Graphics) canvas).drawPolygon(createPolygon(xs, ys));
   }
 
-  protected void fillPolygon(Object canvas, int [] xs, int [] ys) {
+  protected void fillPolygon(Object canvas, int[] xs, int[] ys) {
     ((Graphics) canvas).fillPolygon(createPolygon(xs, ys));
   }
 
@@ -395,7 +395,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             || (graph.usesY(1) && graph.isShowYTics(1))) {
           syhi += tHeight / 2;
         }
-        TicInfo [] ticInfos = createTicInfos(g, graph);
+        TicInfo[] ticInfos = createTicInfos(g, graph);
         TicInfo yTicInfo = ticInfos[1];
         if (yTicInfo != null) {
           sxlo += yTicInfo.mMaxWidth + 2;
@@ -712,7 +712,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             }
 
             String snum = xTicInfo.mLabelFormatter.format(num);
-            String [] nums = snum.split("\n");
+            String[] nums = snum.split("\n");
             for (int i = 0; i < nums.length; i++) {
               String snum2 = nums[i];
               g.drawString(snum2, x - getTextWidth(g, snum2) / 2, (whichTic == 0) ? (sylo + tHeight + i * tHeight) : (syhi - tHeight / 2 - i * tHeight));
@@ -873,8 +873,8 @@ public class GraphicsRenderer extends AbstractRenderer {
               ArrowPlot2D aplot = (ArrowPlot2D) plot;
               g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
               Poly p = arrowHead(keyX5, yy, keyX5 + keyLineWidth, yy, aplot.getHeadWidth(), aplot.getHeadHeight(), aplot.getHeadType());
-              int [] xs = p.getXs();
-              int [] ys = p.getYs();
+              int[] xs = p.getXs();
+              int[] ys = p.getYs();
               fillPolygon(g, xs, ys);
               drawPolygon(g, xs, ys);
             } else if (plot instanceof BWPlot2D) {

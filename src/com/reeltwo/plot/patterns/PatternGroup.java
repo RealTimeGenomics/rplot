@@ -15,7 +15,7 @@ public interface PatternGroup {
    *
    * @return an array of patterns
    */
-  Paint [] getPatterns();
+  Paint[] getPatterns();
 
   /**
    * Name of this pattern group.

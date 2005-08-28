@@ -234,7 +234,7 @@ public abstract class Plot2D {
    * @param f values to check
    * @return is valid in plot
    */
-  public static boolean isValid(float [] f) {
+  public static boolean isValid(float[] f) {
     for (int i = 0; f != null && i < f.length; i++) {
       if (!isValid(f[i])) {
         return false;

@@ -17,8 +17,8 @@ import javax.swing.filechooser.FileFilter;
  * @version $Revision$
  */
 public class GraphSaver {
-  private Color [] mColors = (Color []) new DefaultColorGroup().getPatterns();
-  private Paint [] mPatterns = null;
+  private Color[] mColors = (Color[]) new DefaultColorGroup().getPatterns();
+  private Paint[] mPatterns = null;
 
   private int mFontSize = -1; // use default font size
   private int mWidth = 800;
@@ -73,7 +73,7 @@ public class GraphSaver {
    *
    * @param colors an array of colors
    */
-  public void setColors(Color [] colors) {
+  public void setColors(Color[] colors) {
     if (colors == null) {
       throw new NullPointerException("no colors given");
     }
@@ -85,7 +85,7 @@ public class GraphSaver {
    *
    * @param patterns an array of patterns
    */
-  public void setPatterns(Paint [] patterns) {
+  public void setPatterns(Paint[] patterns) {
     mPatterns = patterns;
   }
 

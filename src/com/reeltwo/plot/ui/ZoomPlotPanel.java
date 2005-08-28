@@ -155,7 +155,7 @@ public class ZoomPlotPanel extends JComponent {
    *
    * @param colors an array of colors
    */
-  public void setColors(Color [] colors) {
+  public void setColors(Color[] colors) {
     mGraphicsRenderer.setColors(colors);
   }
 
@@ -164,7 +164,7 @@ public class ZoomPlotPanel extends JComponent {
    *
    * @return an array of <code>Color</code>s
    */
-  public Color [] getColors() {
+  public Color[] getColors() {
     return mGraphicsRenderer.getColors();
   }
 
@@ -173,7 +173,7 @@ public class ZoomPlotPanel extends JComponent {
    *
    * @param patterns an array of patterns
    */
-  public void setPatterns(Paint [] patterns) {
+  public void setPatterns(Paint[] patterns) {
     mGraphicsRenderer.setPatterns(patterns);
   }
 
@@ -182,7 +182,7 @@ public class ZoomPlotPanel extends JComponent {
    *
    * @return an array of patterns
    */
-  public Paint [] getPatterns() {
+  public Paint[] getPatterns() {
     return mGraphicsRenderer.getPatterns();
   }
 

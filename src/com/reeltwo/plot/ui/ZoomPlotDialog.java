@@ -34,13 +34,13 @@ public class ZoomPlotDialog extends PlotDialog {
   }
 
   /** {@inheritDoc} */
-  public void setColors(Color [] colors) {
+  public void setColors(Color[] colors) {
     super.setColors(colors);
     mZoomPanel.setColors(colors);
   }
 
   /** {@inheritDoc} */
-  public void setPatterns(Paint [] patterns) {
+  public void setPatterns(Paint[] patterns) {
     super.setPatterns(patterns);
     mZoomPanel.setPatterns(patterns);
   }

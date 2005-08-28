@@ -33,7 +33,7 @@ public abstract class AbstractPatternGroupTest extends TestCase {
   public void testBasics() {
     PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint [] patterns = pg.getPatterns();
+    Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertTrue("PatternGroup must return at least one pattern.", patterns.length > 0);
     for (int i = 0; i < patterns.length; i++) {

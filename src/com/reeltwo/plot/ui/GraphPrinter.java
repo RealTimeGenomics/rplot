@@ -21,8 +21,8 @@ import java.awt.print.PrinterJob;
  */
 public class GraphPrinter implements Printable {
 
-  private Color [] mColors = (Color []) new DefaultColorGroup().getPatterns();
-  private Paint [] mPatterns = null;
+  private Color[] mColors = (Color[]) new DefaultColorGroup().getPatterns();
+  private Paint[] mPatterns = null;
   private Graph2D mGraph = null;
 
   private int mFontSize = 0; // use default font size
@@ -60,7 +60,7 @@ public class GraphPrinter implements Printable {
    *
    * @param colors an array of colors
    */
-  public void setColors(Color [] colors) {
+  public void setColors(Color[] colors) {
     if (colors == null) {
       throw new NullPointerException("no colors given");
     }
@@ -72,7 +72,7 @@ public class GraphPrinter implements Printable {
    *
    * @param patterns an array of patterns
    */
-  public void setPatterns(Paint [] patterns) {
+  public void setPatterns(Paint[] patterns) {
     mPatterns = patterns;
   }
 

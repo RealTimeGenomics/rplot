@@ -103,7 +103,7 @@ public abstract class AbstractPlot2DTest extends TestCase {
   }
 
   public void testBadValues() {
-    Point2D [] points = new Point2D[] {
+    Point2D[] points = new Point2D[] {
       new Point2D(0.0f, 1.0f),
       new Point2D(2.0f, Float.POSITIVE_INFINITY),
       new Point2D(1.0f, 0.0f),

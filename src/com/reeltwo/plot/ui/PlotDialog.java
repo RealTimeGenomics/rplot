@@ -48,7 +48,7 @@ public class PlotDialog extends JDialog {
    *
    * @param colors an array of colors
    */
-  public void setColors(Color [] colors) {
+  public void setColors(Color[] colors) {
     mPlotPanel.setColors(colors);
   }
 
@@ -57,7 +57,7 @@ public class PlotDialog extends JDialog {
    *
    * @param patterns an array of patterns
    */
-  public void setPatterns(Paint [] patterns) {
+  public void setPatterns(Paint[] patterns) {
     mPlotPanel.setPatterns(patterns);
   }
 

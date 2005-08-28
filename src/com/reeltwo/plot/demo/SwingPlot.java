@@ -255,7 +255,7 @@ public class SwingPlot {
 
     graph.addPlot(lplot);
 
-    Point2D [] cps2 = new Point2D[] {
+    Point2D[] cps2 = new Point2D[] {
       new Point2D(0, 0),
       new Point2D(0, 0),
       new Point2D(2.5f, 0.3f),
@@ -319,7 +319,7 @@ public class SwingPlot {
       }
     }
     TextPlot2D plot = new TextPlot2D();
-    plot.setData((TextPoint2D []) text.toArray(new TextPoint2D[text.size()]));
+    plot.setData((TextPoint2D[]) text.toArray(new TextPoint2D[text.size()]));
     plot.setInvert(true);
 
     graph.addPlot(plot);

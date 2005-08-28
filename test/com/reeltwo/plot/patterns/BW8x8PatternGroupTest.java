@@ -39,7 +39,7 @@ public class BW8x8PatternGroupTest extends AbstractPatternGroupTest {
   public void testDefaults() {
     PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint [] patterns = pg.getPatterns();
+    Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertEquals(50, patterns.length);
 
