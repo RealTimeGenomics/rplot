@@ -25,7 +25,7 @@ public abstract class Plot2D {
 
   /** Use the bottom X axis on the graph. */
   public static final int BOTTOM_X_AXIS = 0;
-  /** Use the top X axis on the graph. */  
+  /** Use the top X axis on the graph. */
   public static final int TOP_X_AXIS = 1;
   /** Use the left Y axis on the graph. */
   public static final int LEFT_Y_AXIS = 0;
