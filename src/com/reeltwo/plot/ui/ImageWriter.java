@@ -83,16 +83,14 @@ public class ImageWriter {
    * @exception IOException if a file writing error occurs.
    */
   public Mapping[] toImage(int type, OutputStream os, Graph2D graph, int width, int height, Font font) throws IOException {
-    if (type != PNG_IMAGE) {
-      throw new IllegalArgumentException("Illegal image type '" + type + "' given.");
-    }
     switch (type) {
       //case GIF_IMAGE:
       //return toGIF(os, graph, width, height, font);
     case PNG_IMAGE:
       return toPNG(os, graph, width, height, font);
+    default:
+      throw new IllegalArgumentException("Illegal image type '" + type + "' given.");
     }
-    return null;
   }
 
 
