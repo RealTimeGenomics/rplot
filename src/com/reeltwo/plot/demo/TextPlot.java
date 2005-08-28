@@ -10,6 +10,9 @@ import com.reeltwo.plot.renderer.TextRenderer;
  * @version $Revision$
  */
 public class TextPlot {
+
+  // Prevent instantiation.
+  private TextPlot() { }
   
   /**
    * Main loop.
