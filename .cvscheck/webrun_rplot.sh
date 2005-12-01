@@ -4,9 +4,7 @@ LOGNAME=${LOGNAME:-$USER}
 if [ ! "$HOME" ]; then
     export HOME=/home/$LOGNAME
 fi
-if [ ! "$CVSROOT" ]; then
-    export CVSROOT=:pserver:$LOGNAME@giger:/home/cvs-repository2
-fi
+
 export JAVA=/usr/local/java/jdk
 export PATH=$PATH:$JAVA/bin:$HOME/bin:/usr/local/bin
 export SYSNAME=cvscheck_rplot
@@ -22,6 +20,11 @@ else
 fi
 
 export MAIN_MODULE="rplot"
+if [ -f "$CODEHOME/$MAIN_MODULE/CVS/Root" ]; then
+    export CVSROOT=$(cat "$CODEHOME/$MAIN_MODULE/CVS/Root")
+else
+    export CVSROOT=:pserver:$LOGNAME@localhost:/cvsserver
+fi
 export SRC_MODULES="rplot/src"
 export LIB_MODULES="rplot/lib"
 export TEST_MODULES="rplot/test"
