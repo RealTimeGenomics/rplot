@@ -23,7 +23,7 @@ export MAIN_MODULE="rplot"
 if [ -f "$CODEHOME/$MAIN_MODULE/CVS/Root" ]; then
     export CVSROOT=$(cat "$CODEHOME/$MAIN_MODULE/CVS/Root")
 else
-    export CVSROOT=:pserver:$LOGNAME@localhost:/cvsserver
+    export CVSROOT=:pserver:$LOGNAME@giger:/home/cvs-repository2
 fi
 export SRC_MODULES="rplot/src"
 export LIB_MODULES="rplot/lib"
