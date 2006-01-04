@@ -14,7 +14,6 @@ if [ "$LOGNAME" == "syscheck" ]; then
     export SCRIPTS=$WEBROOT/cvscheck
     export CODEHOME=$WEBROOT/${SYSNAME}_java
     export WEB=$WEBROOT/html/${SYSNAME}
-    export EMAIL_NOTIFY=1
 else
     export CODEHOME=$HOME/reeltwo_sandboxes
 fi
