@@ -36,6 +36,7 @@ export JAVADOC_MODULES="rplot/src"
 export JIKES_OPTS="+E +P -source 1.4 -deprecation"
 if [ "$USER" == "syscheck" ]; then
     export EMAIL_NOTIFY=1
+    export IM_NOTIFY=1
 fi
 export LEVEL=2
 
