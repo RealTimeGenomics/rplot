@@ -49,6 +49,32 @@ public class GraphicsRenderer extends AbstractRenderer {
   private Color mForegroundColor = Color.BLACK;
   private Color mGridColor = Color.LIGHT_GRAY;
 
+  private static class Screen {
+    final int mXLo;
+    final int mXHi;
+    final int mYLo;
+    final int mYHi;
+    Screen(int xlo, int ylo, int xhi, int yhi) {
+      mXLo = xlo;
+      mYLo = ylo;
+      mXHi = xhi;
+      mYHi = yhi;
+    }
+    int getXLo() {
+      return mXLo;
+    }
+    int getXHi() {
+      return mXHi;
+    }
+    int getYLo() {
+      return mYLo;
+    }
+    int getYHi() {
+      return mYHi;
+    }
+  }
+
+
   /**
    * Creates a new <code>GraphicsRenderer</code>.
    */
@@ -426,7 +452,9 @@ public class GraphicsRenderer extends AbstractRenderer {
             sxhi -= x2TicInfo.mMaxWidth / 2 + 2;
           }
         }
-        Box2D s = new Box2D(sxlo, sylo, sxhi, syhi);
+
+        final Screen s = new Screen(sxlo, sylo, sxhi, syhi);
+
         mapping = createMappings(graph, sxlo, sylo, sxhi, syhi);
         drawGraphArea(g, sxlo, sylo, sxhi, syhi);
         setupAntialiasing(g);
@@ -568,7 +596,7 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  private void drawYTics(Graph2D graph, Graphics g, int whichTic, TicInfo yTicInfo, Mapping mapping, Box2D s) {
+  private void drawYTics(Graph2D graph, Graphics g, int whichTic, TicInfo yTicInfo, Mapping mapping, Screen s) {
     int sxlo = (int) s.getXLo();
     int sxhi = (int) s.getXHi();
     int sylo = (int) s.getYLo();
@@ -653,7 +681,7 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
 
-  private void drawXTics(Graph2D graph, Graphics g, int whichTic, TicInfo xTicInfo, Mapping mapping, Box2D s) {
+  private void drawXTics(Graph2D graph, Graphics g, int whichTic, TicInfo xTicInfo, Mapping mapping, Screen s) {
     int sxlo = (int) s.getXLo();
     int sxhi = (int) s.getXHi();
     int sylo = (int) s.getYLo();
