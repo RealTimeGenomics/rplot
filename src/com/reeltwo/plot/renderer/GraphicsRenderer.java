@@ -3,7 +3,6 @@ package com.reeltwo.plot.renderer;
 import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPoint2D;
-import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
