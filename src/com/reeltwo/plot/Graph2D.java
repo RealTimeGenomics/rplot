@@ -944,7 +944,7 @@ public class Graph2D implements Cloneable {
 
     xr = Math.abs(tmax - tmin);
 
-    if (xr == 0) {
+    if (xr <= 1.0e-20) {
       return 1.0f;
     }
 
@@ -1030,7 +1030,9 @@ public class Graph2D implements Cloneable {
           ylo = yhi = 0.0f;
         }
 
+        //System.err.println("B: " + yAxis.mLo + " " + yAxis.mHi + " - " + ylo + " " + yhi);
         setRanges(yAxis, ylo, yhi);
+        //System.err.println("A: " + yAxis.mLo + " " + yAxis.mHi);
       }
     }
   }
