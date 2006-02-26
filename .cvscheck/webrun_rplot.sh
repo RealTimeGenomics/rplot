@@ -28,7 +28,7 @@ fi
 export SRC_MODULES="rplot/src"
 export LIB_MODULES="rplot/lib"
 export TEST_MODULES="rplot/test"
-export DOC_MODULES=" "
+export RES_MODULES=" "
 export JAVADOC_MODULES="rplot/src"
 
 # Options controlling how things get run
@@ -40,9 +40,9 @@ fi
 export LEVEL=2
 
 
-(
+#(
     (sh $SCRIPTS/cvscheck.sh cvscheck_main 2>&1)
-) >/dev/null
+#) >/dev/null
 
 
 
