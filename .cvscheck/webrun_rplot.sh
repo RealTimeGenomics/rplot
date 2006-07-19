@@ -18,12 +18,13 @@ else
     export CODEHOME=$HOME/reeltwo_sandboxes
 fi
 
-# Description of modules in CVS
+# Description of modules in subversion
 export MAIN_MODULE="rplot"
-if [ -f "$CODEHOME/$MAIN_MODULE/CVS/Root" ]; then
-    export CVSROOT=$(cat "$CODEHOME/$MAIN_MODULE/CVS/Root")
+export CVSROOT=
+if [ -f "$CODEHOME/$MAIN_MODULE/.svn/entries" ]; then
+    export SVNROOT=$(cat "$CODEHOME/$MAIN_MODULE/.svn/entries" | sed '/^ *url=/!d;s/^ *url="//;s/".*$//')
 else
-    export CVSROOT=:pserver:$LOGNAME@giger:/home/cvs-repository2
+    export SVNROOT="svn://giger/home/svn/$MAIN_MODULE/trunk"
 fi
 export SRC_MODULES="rplot/src"
 export LIB_MODULES="rplot/lib"
