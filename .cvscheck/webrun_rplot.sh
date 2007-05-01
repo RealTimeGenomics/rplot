@@ -22,7 +22,7 @@ fi
 export MAIN_MODULE="rplot"
 export CVSROOT=
 if [ -f "$CODEHOME/$MAIN_MODULE/.svn/entries" ]; then
-    export SVNROOT=$(cat "$CODEHOME/$MAIN_MODULE/.svn/entries" | sed '/^ *url=/!d;s/^ *url="//;s/".*$//')
+    export SVNROOT=$(cd "$CODEHOME/$MAIN_MODULE"; svn info | sed -n "/^URL/s/^URL: //p")
 else
     export SVNROOT="svn://giger/home/svn/$MAIN_MODULE/trunk"
 fi
