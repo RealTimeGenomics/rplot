@@ -10,9 +10,9 @@ import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
-import com.reeltwo.plot.StringFormatter;
 import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.ScatterPoint2D;
+import com.reeltwo.plot.StringFormatter;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
 import com.reeltwo.plot.patterns.BW8x8PatternGroup;
@@ -23,6 +23,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 /**
  * Starts a new Swing window for displaying Graph2Ds in. The window has
@@ -60,6 +61,12 @@ public class SwingPlot {
       });
 
     mDialog.setVisible(true);
+
+    SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+          mDialog.setVisible(true);
+        }
+      });
   }
 
 
