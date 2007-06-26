@@ -5,7 +5,7 @@ if [ ! "$HOME" ]; then
     export HOME=/home/$LOGNAME
 fi
 
-export JAVA_HOME=/usr/local/java/jdk1.4
+export JAVA_HOME=/usr/local/java/jdk1.5
 export SYSNAME=cvscheck_rplot
 
 # Set variables for where to check out to and where to put results
