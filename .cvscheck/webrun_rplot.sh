@@ -39,7 +39,7 @@ if [ "$USER" == "syscheck" ]; then
     export EMAIL_NOTIFY=1
     export IM_NOTIFY=1
 fi
-export LEVEL=2
+export LEVEL=3
 
 
 #(
