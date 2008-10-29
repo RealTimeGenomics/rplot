@@ -51,7 +51,7 @@ public class MemoryMonitor extends Thread {
    *
    * @return The instance value.
    */
-  public static MemoryMonitor getInstance() {
+  public static synchronized MemoryMonitor getInstance() {
     if (sInstance == null) {
       sInstance = new MemoryMonitor();
       sInstance.start();

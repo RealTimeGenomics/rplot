@@ -130,6 +130,6 @@ public class Point2D implements Datum2D {
 
   /** {@inheritDoc} */
   public int hashCode() {
-    return super.hashCode();
+    return (int) (mX * mY);
   }
 }

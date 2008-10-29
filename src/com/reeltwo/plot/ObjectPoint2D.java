@@ -57,6 +57,21 @@ public class ObjectPoint2D extends Point2D {
   }
 
 
+  /** {@inheritDoc} */
+  public boolean equals(Object object) {
+    if (!(object instanceof ObjectPoint2D)) {
+      return false;
+    }
+    ObjectPoint2D pobj = (ObjectPoint2D) object;
+    return super.equals(pobj) && mObject.equals(pobj.getObject());
+  }
+
+  /** {@inheritDoc} */
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+
   /**
    * Returns a string representation of this object.
    *

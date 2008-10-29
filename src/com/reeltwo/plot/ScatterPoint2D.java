@@ -47,6 +47,20 @@ public class ScatterPoint2D extends Point2D {
     return mNumPoints;
   }
 
+  /** {@inheritDoc} */
+  public boolean equals(Object object) {
+    if (!(object instanceof ScatterPoint2D)) {
+      return false;
+    }
+    ScatterPoint2D pobj = (ScatterPoint2D) object;
+    return super.equals(pobj) && (mNumPoints == pobj.getNumberOfPoints());
+  }
+
+  /** {@inheritDoc} */
+  public int hashCode() {
+    return super.hashCode() * mNumPoints;
+  }
+
 
   /**
    * Returns a string representation of this object.

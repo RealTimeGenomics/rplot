@@ -48,6 +48,20 @@ public class Circle2D extends Point2D {
   }
 
 
+  /** {@inheritDoc} */
+  public boolean equals(Object object) {
+    if (!(object instanceof Circle2D)) {
+      return false;
+    }
+    Circle2D pobj = (Circle2D) object;
+    return super.equals(pobj) && mDiameter == pobj.getDiameter();
+  }
+
+  /** {@inheritDoc} */
+  public int hashCode() {
+    return (int) (super.hashCode() * mDiameter);
+  }
+
   /**
    * Returns a string representation of this object.
    *
