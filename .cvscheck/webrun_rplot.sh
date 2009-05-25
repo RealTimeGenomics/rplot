@@ -16,6 +16,7 @@ if [ "$LOGNAME" == "syscheck" ]; then
     export WEB=$WEBROOT/html/${SYSNAME}
 else
     export CODEHOME=$HOME/reeltwo_sandboxes
+    export WEB=$HOME/.public_html/${SYSNAME}
 fi
 
 # Description of modules in subversion
@@ -38,6 +39,8 @@ export PLOT_PACKAGE_DEPENDENCIES_OPTS='com.reeltwo com.reeltwo 4 4'
 if [ "$USER" == "syscheck" ]; then
     export EMAIL_NOTIFY=1
     export IM_NOTIFY=1
+else
+    export DISABLE_JUMBLE=1
 fi
 export LEVEL=3
 
