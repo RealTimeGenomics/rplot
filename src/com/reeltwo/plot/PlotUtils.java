@@ -79,7 +79,7 @@ public class PlotUtils {
    */
   public static float pow(float x, int y) {
     float val = 1.0f;
-    for (int i = 0; i < (int) Math.abs(y); i++) {
+    for (int i = 0; i < Math.abs(y); i++) {
       val *= x;
     }
     if (y < 0) {

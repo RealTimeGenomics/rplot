@@ -596,10 +596,10 @@ public class GraphicsRenderer extends AbstractRenderer {
 
 
   private void drawYTics(Graph2D graph, Graphics g, int whichTic, TicInfo yTicInfo, Mapping mapping, Screen s) {
-    int sxlo = (int) s.getXLo();
-    int sxhi = (int) s.getXHi();
-    int sylo = (int) s.getYLo();
-    int syhi = (int) s.getYHi();
+    int sxlo = s.getXLo();
+    int sxhi = s.getXHi();
+    int sylo = s.getYLo();
+    int syhi = s.getYHi();
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
@@ -612,7 +612,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         float end = (float) PlotUtils.ceil10(graph.getYHi(whichTic));
         //System.err.println("min = " + start + ", max = " + end);
         for (int i = 1; i <= (int) (end / start); i *= 10) {
-          for (int j = 1; j < 10 && i * j <= (int) yTicInfo.mEnd; j++) {
+          for (int j = 1; j < 10 && i * j <= yTicInfo.mEnd; j++) {
             float num = start * i * j;
             int y = (int) mapping.worldToScreen(num);
             if (y >= syhi && y <= sylo) {
@@ -681,10 +681,10 @@ public class GraphicsRenderer extends AbstractRenderer {
 
 
   private void drawXTics(Graph2D graph, Graphics g, int whichTic, TicInfo xTicInfo, Mapping mapping, Screen s) {
-    int sxlo = (int) s.getXLo();
-    int sxhi = (int) s.getXHi();
-    int sylo = (int) s.getYLo();
-    int syhi = (int) s.getYHi();
+    int sxlo = s.getXLo();
+    int sxhi = s.getXHi();
+    int sylo = s.getYLo();
+    int syhi = s.getYHi();
     if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       FontMetrics fm = g.getFontMetrics();
@@ -697,7 +697,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         float end = (float) PlotUtils.ceil10(graph.getXHi(whichTic));
         //System.err.println("min = " + start + ", max = " + end);
         for (int i = 1; i <= (int) (end / start); i *= 10) {
-          for (int j = 1; j < 10 && i * j <= (int) xTicInfo.mEnd; j++) {
+          for (int j = 1; j < 10 && i * j <= xTicInfo.mEnd; j++) {
             float num = start * i * j;
             int x = (int) mapping.worldToScreen(num);
             if (x >= sxlo && x <= sxhi) {

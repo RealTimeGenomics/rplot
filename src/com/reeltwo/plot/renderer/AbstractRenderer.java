@@ -782,10 +782,10 @@ public abstract class AbstractRenderer {
 
         if (tplot.isInvert()) {
           setColor(canvas, color);
-          fillRectangle(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign - tHeight + descent), sw, tHeight);
+          fillRectangle(canvas, (int) (sptX - halign * sw / 2.0f), sptY + valign - tHeight + descent, sw, tHeight);
           setColor(canvas, BACKGROUND_COLOR_INDEX);
         }
-        drawString(canvas, (int) (sptX - halign * sw / 2.0f), (int) (sptY + valign), text);
+        drawString(canvas, (int) (sptX - halign * sw / 2.0f), sptY + valign, text);
       }
     }
   }
