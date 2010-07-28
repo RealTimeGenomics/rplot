@@ -78,7 +78,7 @@
 -->
 
 
-    <!--                                    JLS -->
+    <!--                                   JLS -->
     <module name="RedundantModifier"/>
     <module name="ModifierOrder"/>
     <module name="UpperEll"/>
