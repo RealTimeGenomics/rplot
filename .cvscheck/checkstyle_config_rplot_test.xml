@@ -27,7 +27,7 @@
 
   <module name="TreeWalker">
 
-    <!--                         code conventions -->
+    <!-- code conventions -->
 
     <!-- naming conventions -->
     <module name="ConstantName">
