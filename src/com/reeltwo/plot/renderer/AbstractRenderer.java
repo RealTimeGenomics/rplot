@@ -167,7 +167,10 @@ public abstract class AbstractRenderer {
 
   protected abstract void setClip(Object canvas, int x, int y, int w, int h);
 
-  protected abstract void drawString(Object canvas, int x, int y, String text);
+  protected abstract void drawString(Object canvas, int x, int y, String text, boolean vertical);
+  protected void drawString(Object canvas, int x, int y, String text) {
+    drawString(canvas, x, y, text, false);
+  }
   protected abstract void drawPoint(Object canvas, int x, int y);
   protected abstract void drawLine(Object canvas, int x1, int y1, int x2, int y2);
   protected void drawHorizontalLine(Object canvas, int x1, int x2, int y) {
@@ -785,12 +788,16 @@ public abstract class AbstractRenderer {
           fillRectangle(canvas, (int) (sptX - halign * sw / 2.0f), sptY + valign - tHeight + descent, sw, tHeight);
           setColor(canvas, BACKGROUND_COLOR_INDEX);
         }
-        drawString(canvas, (int) (sptX - halign * sw / 2.0f), sptY + valign, text);
+        if (tplot.isVertical()) {
+          drawString(canvas, sptX - tHeight / 2, sptY - halign * sw, text, true);
+        } else {
+          drawString(canvas, (int) (sptX - halign * sw / 2.0f), sptY + valign, text);
+        }
       }
     }
   }
 
-
+  
   protected void drawScatterPlot(Object canvas, ScatterPlot2D splot, Mapping convertX, Mapping convertY) {
     Datum2D[] points = splot.getData();
     if (points != null && points.length != 0) {

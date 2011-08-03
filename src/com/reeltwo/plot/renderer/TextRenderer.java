@@ -54,7 +54,7 @@ public class TextRenderer extends AbstractRenderer {
     ((Canvas) canvas).setClipRectangle(x, y, w, h);
   }
 
-  protected void drawString(Object canvas, int x, int y, String text) {
+  protected void drawString(Object canvas, int x, int y, String text, boolean isVertical) {
     for (int k = 0; k < text.length(); k++) {
       ((Canvas) canvas).putChar(x + k, y, text.charAt(k));
     }

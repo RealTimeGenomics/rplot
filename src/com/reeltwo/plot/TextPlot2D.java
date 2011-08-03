@@ -48,6 +48,22 @@ public class TextPlot2D extends Plot2D {
   private boolean mUseFGColor = true;
 
 
+  private boolean mVertical = false;
+
+  /**
+   * @return whether the text should be drawing vertically
+   */
+  public boolean isVertical() {
+    return mVertical;
+  }
+
+  /**
+   * @param v whether the text should be drawing vertically
+   */
+  public void setVertical(boolean v) {
+    mVertical = v;
+  }
+
   /**
    * Default constructor setting the default axes used to the bottom
    * x axis and the left y axis.

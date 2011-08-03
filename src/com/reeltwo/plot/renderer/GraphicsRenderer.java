@@ -26,6 +26,7 @@ import java.awt.Paint;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.image.BufferedImage;
 
 /**
  * Code to render a Graph2D object onto a Graphics.
@@ -205,8 +206,12 @@ public class GraphicsRenderer extends AbstractRenderer {
     ((Graphics) canvas).setClip(x, y, w, h);
   }
 
-  protected void drawString(Object canvas, int x, int y, String text) {
-    ((Graphics) canvas).drawString(text, x, y);
+  protected void drawString(Object canvas, int x, int y, String text, boolean isVertical) {
+    if (isVertical) {
+      drawVerticalString((Graphics) canvas, x, y, text);
+    } else {
+      ((Graphics) canvas).drawString(text, x, y);
+    }
   }
 
   protected void drawPoint(Object canvas, int x, int y) {
@@ -1025,6 +1030,43 @@ public class GraphicsRenderer extends AbstractRenderer {
       } else {
         super.drawBWPlot(canvas, bwplot, convertX, convertY);
       }
+    }
+  }
+
+  private static void drawVerticalString(Graphics g, int x, int y, String text) {
+    Color transparent = new Color(255, 255, 255, 0);
+    FontMetrics fontMetrics = g.getFontMetrics();
+    int width = fontMetrics.stringWidth(text);
+    int height = fontMetrics.getHeight();
+    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    Graphics g2 = img.getGraphics();
+    g2.setFont(g.getFont());
+    g2.setColor(transparent);
+    g2.fillRect(0,0, width, height);
+    g2.setColor(g.getColor());
+    g2.drawString(text, 0, fontMetrics.getAscent());
+
+    img = rotate(img, width, height);
+    g.drawImage(img, x, y, transparent, null);
+  }
+
+  private static BufferedImage rotate(BufferedImage img, int width, int height) {
+    BufferedImage img2 = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
+    int[] pixels = new int[width];
+    for (int i = 0; i < height; i++) {
+      img.getRGB(0, i, width, 1, pixels, 0, width);
+      reverse(pixels);
+      img2.setRGB(i, 0, 1, width, pixels, 0, 1);
+    }
+    return img2;
+  }
+
+  private static void reverse(int[] a) {
+    for (int i = 0; i < a.length / 2; i++) {
+      int j = a.length - 1 - i;
+      int temp = a[i];
+      a[i] = a[j];
+      a[j] = temp;
     }
   }
 
