@@ -1042,7 +1042,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     Graphics g2 = img.getGraphics();
     g2.setFont(g.getFont());
     g2.setColor(transparent);
-    g2.fillRect(0,0, width, height);
+    g2.fillRect(0, 0, width, height);
     g2.setColor(g.getColor());
     g2.drawString(text, 0, fontMetrics.getAscent());
 
