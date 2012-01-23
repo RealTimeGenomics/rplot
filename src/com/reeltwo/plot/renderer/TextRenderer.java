@@ -369,6 +369,8 @@ public class TextRenderer extends AbstractRenderer {
     int sxhi = (int) s.getXHi();
     int sylo = (int) s.getYLo();
     int syhi = (int) s.getYHi();
+    // Note: sylo and syhi are swapped in the Box2D object.
+
     if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       float xtic = graph.getXTic(whichTic);
       
@@ -384,14 +386,14 @@ public class TextRenderer extends AbstractRenderer {
         
         if (x >= sxlo && x <= sxhi) {
           if (whichTic == 0) {
-            canvas.putChar(x, sylo, '+');
+            canvas.putChar(x, syhi, '+');
             if (!graph.usesX(1)) {
-              canvas.putChar(x, syhi, '+');
+              canvas.putChar(x, sylo, '+');
             }
           } else {
-            canvas.putChar(x, syhi, '+');
+            canvas.putChar(x, sylo, '+');
             if (!graph.usesX(0)) {
-              canvas.putChar(x, sylo, '+');
+              canvas.putChar(x, syhi, '+');
             }
           }
         
@@ -400,7 +402,7 @@ public class TextRenderer extends AbstractRenderer {
           int xx = x - snum.length() / 2;
           for (int i = 0; i < snum.length(); i++) {
             char ch = snum.charAt(i);
-            canvas.putChar(xx + i, (whichTic == 0) ? sylo + 1 : syhi - 1, ch);
+            canvas.putChar(xx + i, (whichTic == 0) ? syhi + 1 : sylo - 1, ch);
           }
         }
       }
