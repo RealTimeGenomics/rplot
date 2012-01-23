@@ -672,9 +672,9 @@ public class TextRenderer extends AbstractRenderer {
           //int index = lineChars.indexOf(mCanvas[i]);
           int color = mColors[i];
           if (inColor && color > 0) {
-            s.append("\033[;")
+            s.append("\033[")
               .append(COLORS[color % COLORS.length])
-              .append(";m")
+              .append("m")
               .append(mCanvas[i])
               .append("\033[0m");
           } else {
