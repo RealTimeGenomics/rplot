@@ -1,5 +1,5 @@
 # Makefile to build rplot standalone jarfile
-CODEHOME:=$(HOME)/java/rplot
+CODEHOME:=$(HOME)/sandbox/rplot
 SRCHOME:=$(CODEHOME)/src
 TESTHOME:=$(CODEHOME)/test
 TMPMANIFEST:=/tmp/manifest
@@ -7,6 +7,7 @@ TMPMANIFEST:=/tmp/manifest
 JARS:=RPlot.jar
 
 RPSRC=$(shell find $(SRCHOME)/ -name "*.java")
+RPSRC2=$(shell find $(RPSRC) | sed -e "s|$(SRCHOME)/||g")
 RPTEST=$(shell find $(TESTHOME)/ -name "*.java")
 RPTEST2=$(shell find $(RPTEST) | sed -e "s|$(TESTHOME)/||g")
 RPCLASSES=$(shell echo $(RPSRC)" "$(RPTEST) | sed "s/\.java/\.class/g")
@@ -38,7 +39,7 @@ RPlot.jar: $(RPCLASSES)
 	echo "Main-Class: com.reeltwo.plot.demo.SwingPlot" >$(TMPMANIFEST)
 	jar cfm $@ $(TMPMANIFEST)
 	(cd $(SRCHOME);            jar uf $(CODEHOME)/$@ $(RPCLASSES2))
-	(cd $(SRCHOME);            jar uf $(CODEHOME)/$@ com/reeltwo/plot/patterns/*.png com/reeltwo/plot/demo/*.java com/reeltwo/plot/ui/*.java)
+	(cd $(SRCHOME);            jar uf $(CODEHOME)/$@ com/reeltwo/plot/patterns/*.png $(RPSRC2))
 	(cd $(TESTHOME);           jar uf $(CODEHOME)/$@ $(RPCLASSES3) $(RPTEST2))
 	rm -rf $(TMPMANIFEST)
 

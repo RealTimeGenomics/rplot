@@ -294,6 +294,9 @@ public class ZoomPlotPanel extends JComponent {
     }
   }
 
+  private Point ppPoint(Point p) {
+    return SwingUtilities.convertPoint(ZoomPlotPanel.this, p, mPlotPanel);
+  }
 
   protected void zoomIn() {
     //System.err.println("Zooming ...");
@@ -303,18 +306,21 @@ public class ZoomPlotPanel extends JComponent {
     if (mapping != null && mGraph != null) {
       if (mPtOne != null && mPtTwo != null && mPtOne.x != mPtTwo.x && mPtOne.y != mPtTwo.y) {
 
+	Point ptOne = ppPoint(mPtOne);
+	Point ptTwo = ppPoint(mPtTwo);
+
         for (int i = 0; i < 2; i++) {
           Mapping map = mapping[i * 2];
           if (mGraph.usesX(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-            float mapOneX = map.screenToWorld((float) mPtOne.getX());
-            float mapTwoX = map.screenToWorld((float) mPtTwo.getX());
+            float mapOneX = map.screenToWorld((float) ptOne.getX());
+            float mapTwoX = map.screenToWorld((float) ptTwo.getX());
             mGraph.setXRange(i, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
           }
 
           map = mapping[i * 2 + 1];
           if (mGraph.usesY(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-            float mapOneY = map.screenToWorld((float) mPtOne.getY());
-            float mapTwoY = map.screenToWorld((float) mPtTwo.getY());
+            float mapOneY = map.screenToWorld((float) ptOne.getY());
+            float mapTwoY = map.screenToWorld((float) ptTwo.getY());
             mGraph.setYRange(i, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
           }
         }
@@ -324,15 +330,15 @@ public class ZoomPlotPanel extends JComponent {
           for (int i = 0; i < 2; i++) {
             Mapping map = mapping[i * 2];
             if (graph.usesX(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-              float mapOneX = map.screenToWorld((float) mPtOne.getX());
-              float mapTwoX = map.screenToWorld((float) mPtTwo.getX());
+              float mapOneX = map.screenToWorld((float) ptOne.getX());
+              float mapTwoX = map.screenToWorld((float) ptTwo.getX());
               graph.setXRange(i, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
             }
 
             map = mapping[i * 2 + 1];
             if (graph.usesY(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-              float mapOneY = map.screenToWorld((float) mPtOne.getY());
-              float mapTwoY = map.screenToWorld((float) mPtTwo.getY());
+              float mapOneY = map.screenToWorld((float) ptOne.getY());
+              float mapTwoY = map.screenToWorld((float) ptTwo.getY());
               graph.setYRange(i, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
             }
           }
