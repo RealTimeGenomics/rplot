@@ -21,7 +21,7 @@ public class ZoomPlotDialog extends PlotDialog {
   public ZoomPlotDialog() {
     super();
 
-    mZoomPanel = new ZoomPlotPanel(mPlotPanel);
+    mZoomPanel = new ZoomPlotPanel(mPlotPanel, this);
     
     setGlassPane(mZoomPanel);
     getGlassPane().setVisible(true);

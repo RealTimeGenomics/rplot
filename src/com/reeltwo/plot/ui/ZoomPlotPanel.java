@@ -30,6 +30,7 @@ import javax.swing.event.MouseInputAdapter;
 public class ZoomPlotPanel extends JComponent {
 
   private final PlotPanel mPlotPanel;
+  private final Container mContainer;
 
   private Point mPtOne = null;
   private Point mPtTwo = null;
@@ -118,12 +119,13 @@ public class ZoomPlotPanel extends JComponent {
 
       Point glassPanePoint = e.getPoint();
       Component component = null;
-      Container container = mPlotPanel;
+      Container container = mContainer;
       Point containerPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, glassPanePoint, ZoomPlotPanel.this);
       int eventID = e.getID();
 
       component = SwingUtilities.getDeepestComponentAt(container, containerPoint.x, containerPoint.y);
 
+      //System.err.println("Container = " + container);
       //System.err.println("Component = " + component);
       if (component == null) {
         return;
@@ -142,11 +144,12 @@ public class ZoomPlotPanel extends JComponent {
    *
    * @param panel a <code>PlotPanel</code>
    */
-  public ZoomPlotPanel(PlotPanel panel) {
+  public ZoomPlotPanel(PlotPanel panel, Container container) {
     MouseInputAdapter listener = new ZoomListener();
     addMouseListener(listener);
     addMouseMotionListener(listener);
     mPlotPanel = panel;
+    mContainer = container;
     mGraphicsRenderer = new GraphicsRenderer();
   }
 
