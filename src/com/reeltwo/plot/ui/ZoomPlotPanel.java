@@ -63,8 +63,11 @@ public class ZoomPlotPanel extends JComponent {
     public void mouseDragged(MouseEvent e) {
       //System.err.println("Mouse Dragged");
       if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-        ZoomPlotPanel.this.setPointTwo(e.getPoint());
-        ZoomPlotPanel.this.repaint();
+        Point p = e.getPoint();
+        if (mPlotPanel == SwingUtilities.getDeepestComponentAt(mContainer, p.x, p.y)) {
+          ZoomPlotPanel.this.setPointTwo(p);
+          ZoomPlotPanel.this.repaint();
+        }
       }
       redispatchMouseEvent(e);
     }
@@ -92,11 +95,13 @@ public class ZoomPlotPanel extends JComponent {
     /** {@inheritDoc} */
     public void mousePressed(MouseEvent e) {
       //System.err.println("Mouse Pressed");
-      if ((e.getModifiers() & InputEvent.BUTTON1_MASK)
-          == InputEvent.BUTTON1_MASK) {
-        ZoomPlotPanel.this.setPointOne(e.getPoint());
-        ZoomPlotPanel.this.setPointTwo(e.getPoint());
-        ZoomPlotPanel.this.repaint();
+      if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+        Point p = e.getPoint();
+        if (mPlotPanel == SwingUtilities.getDeepestComponentAt(mContainer, p.x, p.y)) {
+          ZoomPlotPanel.this.setPointOne(p);
+          ZoomPlotPanel.this.setPointTwo(p);
+          ZoomPlotPanel.this.repaint();
+        }
       }
       redispatchMouseEvent(e);
     }
@@ -105,9 +110,9 @@ public class ZoomPlotPanel extends JComponent {
     /** {@inheritDoc} */
     public void mouseReleased(MouseEvent e) {
       //System.err.println("Mouse Released");
-      if ((e.getModifiers() & InputEvent.BUTTON1_MASK)
-          == InputEvent.BUTTON1_MASK) {
-        ZoomPlotPanel.this.setPointTwo(e.getPoint());
+      if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+        Point p = e.getPoint();
+        ZoomPlotPanel.this.setPointTwo(p);
         ZoomPlotPanel.this.zoomIn();
         ZoomPlotPanel.this.repaint();
       }
@@ -309,8 +314,8 @@ public class ZoomPlotPanel extends JComponent {
     if (mapping != null && mGraph != null) {
       if (mPtOne != null && mPtTwo != null && mPtOne.x != mPtTwo.x && mPtOne.y != mPtTwo.y) {
 
-	Point ptOne = ppPoint(mPtOne);
-	Point ptTwo = ppPoint(mPtTwo);
+        Point ptOne = ppPoint(mPtOne);
+        Point ptTwo = ppPoint(mPtTwo);
 
         for (int i = 0; i < 2; i++) {
           Mapping map = mapping[i * 2];

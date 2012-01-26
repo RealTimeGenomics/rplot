@@ -493,7 +493,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       //drawVerticalLine(graph, g, mapping[0], sylo, syhi);
       if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
         if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
-	if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
+        if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
       } else if (graph.getKeyHorizontalPosition() == Graph2D.OUTSIDE) {
         if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
       }
