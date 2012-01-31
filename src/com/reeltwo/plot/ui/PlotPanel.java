@@ -148,8 +148,8 @@ public class PlotPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
           try {
             PlotDialog pd = new PlotDialog();
-	    pd.setLocationRelativeTo(PlotPanel.this);
-	    pd.setTitle("Snap Shot");
+            pd.setLocationRelativeTo(PlotPanel.this);
+            pd.setTitle("Snap Shot");
             pd.setGraph((Graph2D) mGraph.clone());
             pd.setVisible(true);
           } catch (CloneNotSupportedException cnse) {
