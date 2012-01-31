@@ -74,7 +74,7 @@ public class MemoryMonitor extends Thread {
   private static final NumberFormat FORMATER = new DecimalFormat("0.0 MB");
 
   /** Store those wanting event notification */
-  protected ArrayList mMemoryListeners = new ArrayList();
+  protected ArrayList<MemoryListener> mMemoryListeners = new ArrayList<MemoryListener>();
 
   private long mMaxMemory;
 
@@ -214,7 +214,7 @@ public class MemoryMonitor extends Thread {
     synchronized (mMemoryListeners) {
       for (int i = 0; i < mMemoryListeners.size(); i++) {
         try {
-          ((MemoryListener) mMemoryListeners.get(i)).lowMemory(kbMax, kbUsed, fraction);
+          mMemoryListeners.get(i).lowMemory(kbMax, kbUsed, fraction);
         } catch (Throwable t) {
           t.printStackTrace();
         }
@@ -227,7 +227,7 @@ public class MemoryMonitor extends Thread {
     synchronized (mMemoryListeners) {
       for (int i = 0; i < mMemoryListeners.size(); i++) {
         try {
-          ((MemoryListener) mMemoryListeners.get(i)).memoryUpdate(kbMax, kbUsed, fraction);
+          mMemoryListeners.get(i).memoryUpdate(kbMax, kbUsed, fraction);
         } catch (Throwable t) {
           t.printStackTrace();
         }

@@ -18,7 +18,7 @@ RPCLASSES3=$(shell echo $(RPTEST) | sed -e "s|$(TESTHOME)/||g" -e "s/\.java/\*\.
 LIB_CLASSPATH:=$(shell find $(CODEHOME)/lib -name "*.jar" | tr '\n' ':')
 JIKES_OPTS:=+E +P -source 1.4 -deprecation
 JIKES_CMD:=jikes $(JIKES_OPTS) -cp $(SRCHOME):$(TESTHOME):$(LIB_CLASSPATH)
-JAVAC_OPTS=-J-Xmx256m -g:lines,source -deprecation -Xlint -Xlint:-unchecked -Xlint:-serial -source 1.5
+JAVAC_OPTS=-J-Xmx256m -g:lines,source -deprecation -Xlint -Xlint:unchecked -Xlint:-serial -source 1.5
 JAVAC_CMD:=javac $(JAVAC_OPTS) -cp $(SRCHOME):$(TESTHOME):$(LIB_CLASSPATH)
 
 all: $(JARS)

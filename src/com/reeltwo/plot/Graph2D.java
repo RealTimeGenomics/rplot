@@ -47,7 +47,7 @@ public class Graph2D implements Cloneable {
   private boolean mDisplayBorder = true;
 
   /** list of plots in graph */
-  private ArrayList mPlots = new ArrayList();
+  private ArrayList<Plot2D> mPlots = new ArrayList<Plot2D>();
 
   /** Default constructor. */
   public Graph2D() {
@@ -886,7 +886,7 @@ public class Graph2D implements Cloneable {
    * @return an array of Plot2D's
    */
   public Plot2D[] getPlots() {
-    return (Plot2D[]) mPlots.toArray(new Plot2D[mPlots.size()]);
+    return mPlots.toArray(new Plot2D[mPlots.size()]);
   }
 
 
@@ -898,9 +898,7 @@ public class Graph2D implements Cloneable {
    * @return whether any plot uses the axis
    */
   public boolean usesX(int i) {
-    Iterator it = mPlots.iterator();
-    while (it.hasNext()) {
-      Plot2D plot = (Plot2D) it.next();
+    for (Plot2D plot : mPlots) {
       if (plot.getXAxis() == i) {
         return true;
       }
@@ -916,9 +914,7 @@ public class Graph2D implements Cloneable {
    * @return whether any plot uses the y axis
    */
   public boolean usesY(int i) {
-    Iterator it = mPlots.iterator();
-    while (it.hasNext()) {
-      Plot2D plot = (Plot2D) it.next();
+    for (Plot2D plot : mPlots) {
       if (plot.getYAxis() == i) {
         return true;
       }
@@ -975,9 +971,7 @@ public class Graph2D implements Cloneable {
         float xlo = Float.MAX_VALUE;
         float xhi = Float.MIN_VALUE;
 
-        Iterator it = mPlots.iterator();
-        while (it.hasNext()) {
-          Plot2D plot = (Plot2D) it.next();
+	for (Plot2D plot : mPlots) {
           if (!(plot instanceof GraphLine)) {
             if (plot.getXAxis() == i) {
               float plotXLo = plot.getXLo();
@@ -1008,9 +1002,7 @@ public class Graph2D implements Cloneable {
         float ylo = Float.MAX_VALUE;
         float yhi = Float.MIN_VALUE;
 
-        Iterator it = mPlots.iterator();
-        while (it.hasNext()) {
-          Plot2D plot = (Plot2D) it.next();
+	for (Plot2D plot : mPlots) {
           if (!(plot instanceof GraphLine)) {
             if (plot.getYAxis() == i) {
               float plotYLo = plot.getYLo();
@@ -1107,7 +1099,7 @@ public class Graph2D implements Cloneable {
       g.mYAxis[i] = (Axis) mYAxis[i].clone();
     }
 
-    g.mPlots = new ArrayList(mPlots);
+    g.mPlots = new ArrayList<Plot2D>(mPlots);
 
     return g;
   }

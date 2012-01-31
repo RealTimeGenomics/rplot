@@ -945,8 +945,7 @@ public abstract class AbstractRenderer {
 
   // our own special polygon class
   protected static class Poly {
-    
-    ArrayList mPoints = new ArrayList();
+    final ArrayList<Point2D> mPoints = new ArrayList<Point2D>();
 
     public void addPoint(int x, int y) {
       mPoints.add(new Point2D(x, y));
@@ -955,7 +954,7 @@ public abstract class AbstractRenderer {
     public int[] getXs() {
       int[] xs = new int[mPoints.size()];
       for (int i = 0; i < mPoints.size(); i++) {
-        xs[i] = (int) ((Point2D) mPoints.get(i)).getX();
+        xs[i] = (int) mPoints.get(i).getX();
       }
       return xs;
     }
@@ -963,7 +962,7 @@ public abstract class AbstractRenderer {
     public int[] getYs() {
       int[] ys = new int[mPoints.size()];
       for (int i = 0; i < mPoints.size(); i++) {
-        ys[i] = (int) ((Point2D) mPoints.get(i)).getY();
+        ys[i] = (int) mPoints.get(i).getY();
       }
       return ys;
     }

@@ -19,7 +19,7 @@ public class BW8x8PatternGroup implements PatternGroup {
   private static final String PATTERN_PATH = "com/reeltwo/plot/patterns/t";
   private static final String PATTERN_EXTENSION = ".png";
 
-  private ArrayList mPatterns = null;
+  private ArrayList<Paint> mPatterns = null;
 
   /**
    * Creates a new <code>BW8x8PatternGroup</code>.
@@ -37,7 +37,7 @@ public class BW8x8PatternGroup implements PatternGroup {
   /** {@inheritDoc} */
   public Paint[] getPatterns() {
     if (mPatterns == null) {
-      ArrayList patterns = new ArrayList();
+      ArrayList<Paint> patterns = new ArrayList<Paint>();
       try {
         patterns.add(Color.WHITE);
         for (int i = 1; i <= 12; i++) {
@@ -53,7 +53,7 @@ public class BW8x8PatternGroup implements PatternGroup {
         ioe.printStackTrace();
       }
     }
-    return (Paint[]) mPatterns.toArray(new Paint[mPatterns.size()]);
+    return mPatterns.toArray(new Paint[mPatterns.size()]);
   }
 
   /** {@inheritDoc} */

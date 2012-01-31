@@ -309,7 +309,7 @@ public class SwingPlot {
   public static Graph2D genTextureTest() {
     Graph2D graph = new Graph2D();
 
-    ArrayList text = new ArrayList();
+    ArrayList<TextPoint2D> text = new ArrayList<TextPoint2D>();
     for (int y = 0; y < 6; y++) {
       for (int x = 0; x < 9; x++) {
         final int index = y * 9 + x;
@@ -326,7 +326,7 @@ public class SwingPlot {
       }
     }
     TextPlot2D plot = new TextPlot2D();
-    plot.setData((TextPoint2D[]) text.toArray(new TextPoint2D[text.size()]));
+    plot.setData(text.toArray(new TextPoint2D[text.size()]));
     plot.setInvert(true);
 
     graph.addPlot(plot);
