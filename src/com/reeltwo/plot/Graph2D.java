@@ -1,7 +1,6 @@
 package com.reeltwo.plot;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Structure containing all the attributes of a 2D graph.
@@ -971,7 +970,7 @@ public class Graph2D implements Cloneable {
         float xlo = Float.MAX_VALUE;
         float xhi = Float.MIN_VALUE;
 
-	for (Plot2D plot : mPlots) {
+        for (Plot2D plot : mPlots) {
           if (!(plot instanceof GraphLine)) {
             if (plot.getXAxis() == i) {
               float plotXLo = plot.getXLo();
@@ -1002,7 +1001,7 @@ public class Graph2D implements Cloneable {
         float ylo = Float.MAX_VALUE;
         float yhi = Float.MIN_VALUE;
 
-	for (Plot2D plot : mPlots) {
+        for (Plot2D plot : mPlots) {
           if (!(plot instanceof GraphLine)) {
             if (plot.getYAxis() == i) {
               float plotYLo = plot.getYLo();

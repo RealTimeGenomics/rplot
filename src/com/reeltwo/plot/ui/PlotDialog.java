@@ -3,7 +3,6 @@ package com.reeltwo.plot.ui;
 import com.reeltwo.plot.Graph2D;
 import java.awt.Color;
 import java.awt.Paint;
-import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JDialog;
