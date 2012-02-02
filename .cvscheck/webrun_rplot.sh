@@ -34,7 +34,8 @@ export RES_MODULES=" "
 export JAVADOC_MODULES="rplot/src"
 
 # Options controlling how things get run
-export JIKES_OPTS="+E +P -source 1.5 -deprecation"
+export JAVAC_OPTS="-g -source 1.5 -target 1.5 -Xlint -Xlint:-serial"
+export JAVADOC_OPTS="-source 1.5"
 export PLOT_PACKAGE_DEPENDENCIES_OPTS='com.reeltwo com.reeltwo 4 4'
 if [ "$USER" == "syscheck" ]; then
     export EMAIL_NOTIFY=1
