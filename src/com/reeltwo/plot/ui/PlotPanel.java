@@ -300,6 +300,7 @@ public class PlotPanel extends JPanel {
         Graphics g2 = bi.createGraphics();
         g2.setColor(getBackground());
         g2.fillRect(0, 0, screenWidth, screenHeight);
+	g2.setFont(g.getFont());
 
         mGraphicsRenderer.drawGraph(mGraph, g2, screenWidth, screenHeight);
         mMapping = mGraphicsRenderer.getMappings();

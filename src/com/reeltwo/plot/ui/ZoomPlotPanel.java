@@ -121,25 +121,19 @@ public class ZoomPlotPanel extends JComponent {
 
 
     private void redispatchMouseEvent(MouseEvent e) {
+      Point containerPoint = e.getPoint();
 
-      Point glassPanePoint = e.getPoint();
-      Component component = null;
-      Container container = mContainer;
-      Point containerPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, glassPanePoint, ZoomPlotPanel.this);
-      int eventID = e.getID();
+      Component component = SwingUtilities.getDeepestComponentAt(mContainer, containerPoint.x, containerPoint.y);
 
-      component = SwingUtilities.getDeepestComponentAt(container, containerPoint.x, containerPoint.y);
-
-      //System.err.println("Container = " + container);
+      //System.err.println("Container = " + mContainer);
       //System.err.println("Component = " + component);
       if (component == null) {
         return;
       }
-      Point componentPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, glassPanePoint, component);
-      component.dispatchEvent(new MouseEvent(component, eventID, e.getWhen(), e.getModifiers(),
+      Point componentPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, containerPoint, component);
+      component.dispatchEvent(new MouseEvent(component, e.getID(), e.getWhen(), e.getModifiers(),
                                              componentPoint.x, componentPoint.y,
                                              e.getClickCount(), e.isPopupTrigger()));
-
     }
   }
 
@@ -148,6 +142,7 @@ public class ZoomPlotPanel extends JComponent {
    * panel to render graphs.
    *
    * @param panel a <code>PlotPanel</code>
+   * @param container Content pane from parent container
    */
   public ZoomPlotPanel(PlotPanel panel, Container container) {
     MouseInputAdapter listener = new ZoomListener();
