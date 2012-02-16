@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the Mapping class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class MappingTest extends TestCase {
@@ -31,6 +30,7 @@ public class MappingTest extends TestCase {
   }
 
 
+  @Override
   public void setUp() {
     mWl = -10.0f;
     mWr = 10.0f;
@@ -39,37 +39,38 @@ public class MappingTest extends TestCase {
   }
 
 
+  @Override
   public void tearDown() {
   }
 
 
   public void test1() {
-    Mapping map = new Mapping(mWl, mWr, mSl, mSr);
+    final Mapping map = new Mapping(mWl, mWr, mSl, mSr);
 
-    float wpt = 5.0f;
-    float spt = 0.75f;
+    final float wpt = 5.0f;
+    final float spt = 0.75f;
 
     assertEquals(spt, map.worldToScreen(wpt), 0.0001f);
     assertEquals(wpt, map.screenToWorld(spt), 0.0001f);
   }
 
-  
+
   public void testContructor() {
     try {
       new Mapping(0, 0, 1, 2);
       fail("accepted bad parameters");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // expected
     }
 
     try {
       new Mapping(1, 2, 1, 1);
       fail("accepted bad parameters");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // expected
     }
   }
-  
+
 
   public static Test suite() {
     return new TestSuite(MappingTest.class);

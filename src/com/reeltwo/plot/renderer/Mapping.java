@@ -6,13 +6,12 @@ import com.reeltwo.plot.PlotUtils;
  * Provides mappings between world and screen co-ordinate systems in a
  * single dimension.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class Mapping {
   // world and screen minimum and maximums
-  private float mWmin, mWmax, mSmin, mSmax;
+  private final float mWmin, mWmax, mSmin, mSmax;
   // whether to take logs on world values
   private boolean mLog = false;
 
@@ -64,7 +63,7 @@ public class Mapping {
     mSmax = screenMax;
   }
 
-  
+
   /**
    * Returns the world's minimum value.
    *
@@ -103,7 +102,7 @@ public class Mapping {
   public float getScreenMax() {
     return mSmax;
   }
-  
+
 
   /**
    * Transforms the given value <code>p</code> from world co-ordinates
@@ -113,7 +112,7 @@ public class Mapping {
    * @return corresponding screen co-ordinate
    */
   public float worldToScreen(float p) {
-    float p2 = mLog ? (float) PlotUtils.log10(p) : p;
+    final float p2 = mLog ? (float) PlotUtils.log10(p) : p;
     return mSmin + (p2 - mWmin) * (mSmax - mSmin) / (mWmax - mWmin);
   }
 
@@ -126,7 +125,7 @@ public class Mapping {
    * @return corresponding world co-ordinate
    */
   public float screenToWorld(float p) {
-    float s = mWmin + (p - mSmin) * (mWmax - mWmin) / (mSmax - mSmin);
+    final float s = mWmin + (p - mSmin) * (mWmax - mWmin) / (mSmax - mSmin);
     //System.err.println("screenToWorld p:" + p + " mWmin:" + mWmin + " mWmax:" + mWmax + " mSmin:" + mSmin + " mSmax:" + mSmax + " s:" + s);
     return mLog ? (float) Math.pow(10, s) : s;
   }

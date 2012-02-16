@@ -6,8 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the ScatterPlot2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class ScatterPlot2DTest extends AbstractPlot2DTest {
@@ -22,23 +21,26 @@ public class ScatterPlot2DTest extends AbstractPlot2DTest {
   }
 
 
+  @Override
   public Plot2D getPlot() {
     return new ScatterPlot2D();
   }
 
 
+  @Override
   public Plot2D getPlot(int x, int y) {
     return new ScatterPlot2D(x, y);
   }
 
 
+  @Override
   public Datum2D[] getData() {
     return new ScatterPoint2D[]{new ScatterPoint2D(1, 2, 3), new ScatterPoint2D(5, 6, 7)};
   }
 
 
   public void test1() {
-    ScatterPlot2D splot = (ScatterPlot2D) getPlot();
+    final ScatterPlot2D splot = (ScatterPlot2D) getPlot();
 
     assertTrue(0.0f == splot.getScatterFactor());
     splot.setScatterFactor(10.0f);

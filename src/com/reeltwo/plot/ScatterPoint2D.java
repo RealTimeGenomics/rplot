@@ -4,8 +4,7 @@ package com.reeltwo.plot;
  * A point which is actually a group of points. Will be drawn as a
  * scattering of points centered on the point co-ordinates.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class ScatterPoint2D extends Point2D {
@@ -48,15 +47,17 @@ public class ScatterPoint2D extends Point2D {
   }
 
   /** {@inheritDoc} */
+  @Override
   public boolean equals(Object object) {
     if (!(object instanceof ScatterPoint2D)) {
       return false;
     }
-    ScatterPoint2D pobj = (ScatterPoint2D) object;
+    final ScatterPoint2D pobj = (ScatterPoint2D) object;
     return super.equals(pobj) && (mNumPoints == pobj.getNumberOfPoints());
   }
 
   /** {@inheritDoc} */
+  @Override
   public int hashCode() {
     return super.hashCode() * mNumPoints;
   }
@@ -67,8 +68,9 @@ public class ScatterPoint2D extends Point2D {
    *
    * @return a co-ordinate string
    */
+  @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append('(').append(getX()).append(',').append(getY());
     sb.append(',').append(getNumberOfPoints());
     sb.append(')');

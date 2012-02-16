@@ -24,11 +24,12 @@ import javax.swing.event.MouseInputAdapter;
  * A panel that has a special affinity with a plot panel to allow the
  * user to select and zoom in on arbitrary regions of the plot.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class ZoomPlotPanel extends JComponent {
 
+  /** an id */
+  private static final long serialVersionUID = -209546782221560829L;
   private final PlotPanel mPlotPanel;
   private final Container mContainer;
 
@@ -44,26 +45,28 @@ public class ZoomPlotPanel extends JComponent {
   private Graph2D mGraph = null;
   private boolean mPicNPic = false;
 
-  private GraphicsRenderer mGraphicsRenderer;
+  private final GraphicsRenderer mGraphicsRenderer;
 
-  private float[] mXLo = new float[2];
-  private float[] mXHi = new float[2];
-  private float[] mYLo = new float[2];
-  private float[] mYHi = new float[2];
+  private final float[] mXLo = new float[2];
+  private final float[] mXHi = new float[2];
+  private final float[] mYLo = new float[2];
+  private final float[] mYHi = new float[2];
 
 
   private class ZoomListener extends MouseInputAdapter {
     /** {@inheritDoc} */
+    @Override
     public void mouseMoved(MouseEvent e) {
       //System.err.println("Mouse moved");
       redispatchMouseEvent(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void mouseDragged(MouseEvent e) {
       //System.err.println("Mouse Dragged");
       if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-        Point p = e.getPoint();
+        final Point p = e.getPoint();
         if (mPlotPanel == SwingUtilities.getDeepestComponentAt(mContainer, p.x, p.y)) {
           ZoomPlotPanel.this.setPointTwo(p);
           ZoomPlotPanel.this.repaint();
@@ -74,6 +77,7 @@ public class ZoomPlotPanel extends JComponent {
 
 
     /** {@inheritDoc} */
+    @Override
     public void mouseClicked(MouseEvent e) {
       //System.err.println("Mouse Clicked");
       redispatchMouseEvent(e);
@@ -81,22 +85,25 @@ public class ZoomPlotPanel extends JComponent {
 
 
     /** {@inheritDoc} */
+    @Override
     public void mouseEntered(MouseEvent e) {
       redispatchMouseEvent(e);
     }
 
 
     /** {@inheritDoc} */
+    @Override
     public void mouseExited(MouseEvent e) {
       redispatchMouseEvent(e);
     }
 
 
     /** {@inheritDoc} */
+    @Override
     public void mousePressed(MouseEvent e) {
       //System.err.println("Mouse Pressed");
       if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-        Point p = e.getPoint();
+        final Point p = e.getPoint();
         if (mPlotPanel == SwingUtilities.getDeepestComponentAt(mContainer, p.x, p.y)) {
           ZoomPlotPanel.this.setPointOne(p);
           ZoomPlotPanel.this.setPointTwo(p);
@@ -108,10 +115,11 @@ public class ZoomPlotPanel extends JComponent {
 
 
     /** {@inheritDoc} */
+    @Override
     public void mouseReleased(MouseEvent e) {
       //System.err.println("Mouse Released");
       if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-        Point p = e.getPoint();
+        final Point p = e.getPoint();
         ZoomPlotPanel.this.setPointTwo(p);
         ZoomPlotPanel.this.zoomIn();
         ZoomPlotPanel.this.repaint();
@@ -121,19 +129,19 @@ public class ZoomPlotPanel extends JComponent {
 
 
     private void redispatchMouseEvent(MouseEvent e) {
-      Point containerPoint = e.getPoint();
+      final Point containerPoint = e.getPoint();
 
-      Component component = SwingUtilities.getDeepestComponentAt(mContainer, containerPoint.x, containerPoint.y);
+      final Component component = SwingUtilities.getDeepestComponentAt(mContainer, containerPoint.x, containerPoint.y);
 
       //System.err.println("Container = " + mContainer);
       //System.err.println("Component = " + component);
       if (component == null) {
         return;
       }
-      Point componentPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, containerPoint, component);
+      final Point componentPoint = SwingUtilities.convertPoint(ZoomPlotPanel.this, containerPoint, component);
       component.dispatchEvent(new MouseEvent(component, e.getID(), e.getWhen(), e.getModifiers(),
-                                             componentPoint.x, componentPoint.y,
-                                             e.getClickCount(), e.isPopupTrigger()));
+          componentPoint.x, componentPoint.y,
+          e.getClickCount(), e.isPopupTrigger()));
     }
   }
 
@@ -145,7 +153,7 @@ public class ZoomPlotPanel extends JComponent {
    * @param container Content pane from parent container
    */
   public ZoomPlotPanel(PlotPanel panel, Container container) {
-    MouseInputAdapter listener = new ZoomListener();
+    final MouseInputAdapter listener = new ZoomListener();
     addMouseListener(listener);
     addMouseMotionListener(listener);
     mPlotPanel = panel;
@@ -189,7 +197,7 @@ public class ZoomPlotPanel extends JComponent {
     return mGraphicsRenderer.getPatterns();
   }
 
-  
+
   /**
    * Returns an action that resets the zoom.
    *
@@ -197,19 +205,23 @@ public class ZoomPlotPanel extends JComponent {
    */
   public Action getZoomOutAction() {
     return new AbstractAction("Zoom Out", null) {
-        public void actionPerformed(ActionEvent e) {
-          //System.err.println("Zoom Out");
-          Graph2D graph = mPlotPanel.getGraph();
-          if (graph != null) {
-            for (int i = 0; i < 2; i++) {
-              graph.setXRange(i, mXLo[i], mXHi[i]);
-              graph.setYRange(i, mYLo[i], mYHi[i]);
-            }
-          
-            mPlotPanel.setGraph(graph);
+      /** an id */
+      private static final long serialVersionUID = 343566108639393382L;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        //System.err.println("Zoom Out");
+        final Graph2D graph = mPlotPanel.getGraph();
+        if (graph != null) {
+          for (int i = 0; i < 2; i++) {
+            graph.setXRange(i, mXLo[i], mXHi[i]);
+            graph.setYRange(i, mYLo[i], mYHi[i]);
           }
+
+          mPlotPanel.setGraph(graph);
         }
-      };
+      }
+    };
   }
 
   /**
@@ -220,19 +232,23 @@ public class ZoomPlotPanel extends JComponent {
    */
   public Action getPNPAction() {
     return new AbstractAction("Pic In Pic On", null) {
-        public void actionPerformed(ActionEvent e) {
-          mPicNPic = !mPicNPic;
-          putValue("Name", "Pic In Pic " + (mPicNPic ? "Off" : "On"));
-          ZoomPlotPanel.this.repaint();
-        }
-      };
+      /** an id */
+      private static final long serialVersionUID = -4772586876399697951L;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        mPicNPic = !mPicNPic;
+        putValue("Name", "Pic In Pic " + (mPicNPic ? "Off" : "On"));
+        ZoomPlotPanel.this.repaint();
+      }
+    };
   }
 
 
   protected void setPointOne(Point p) {
     if (mPicNPic) {
       if (p.getX() >= mPtPNP.getX() && p.getX() <= (mPtPNP.getX() + mPNPWidth)
-        && p.getY() >= mPtPNP.getY() && p.getY() <= (mPtPNP.getY() + mPNPHeight)) {
+          && p.getY() >= mPtPNP.getY() && p.getY() <= (mPtPNP.getY() + mPNPHeight)) {
         // inside Pic in Pic rectangle
         mPtPNPold = mPtPNP;
         mPtPNP1 = p;
@@ -258,40 +274,41 @@ public class ZoomPlotPanel extends JComponent {
   }
 
   /** {@inheritDoc} */
+  @Override
   public void paint(Graphics g) {
     if (mPtOne != null && mPtTwo != null && !mPtOne.equals(mPtTwo)) {
       g.setColor(Color.BLACK);
-      int x = (int) Math.min(mPtOne.getX(), mPtTwo.getX());
-      int y = (int) Math.min(mPtOne.getY(), mPtTwo.getY());
-      int width = (int) Math.abs(mPtOne.getX() - mPtTwo.getX());
-      int height = (int) Math.abs(mPtOne.getY() - mPtTwo.getY());
+      final int x = (int) Math.min(mPtOne.getX(), mPtTwo.getX());
+      final int y = (int) Math.min(mPtOne.getY(), mPtTwo.getY());
+      final int width = (int) Math.abs(mPtOne.getX() - mPtTwo.getX());
+      final int height = (int) Math.abs(mPtOne.getY() - mPtTwo.getY());
       g.drawRect(x, y, width, height);
     }
 
     if (mPicNPic) {
       if (mGraph != null) {
-        Dimension d = getSize();
-        int screenWidth = (int) d.getWidth();
-        int screenHeight = (int) d.getHeight();
+        final Dimension d = getSize();
+        final int screenWidth = (int) d.getWidth();
+        final int screenHeight = (int) d.getHeight();
         mPNPWidth = screenWidth * 9 / 20;
         mPNPHeight = screenHeight * 9 / 20;
 
         if (mPtPNP1 != null && mPtPNP2 != null) {
-          int x = (int) (mPtPNPold.getX() + mPtPNP2.getX() - mPtPNP1.getX());
-          int y = (int) (mPtPNPold.getY() + mPtPNP2.getY() - mPtPNP1.getY());
+          final int x = (int) (mPtPNPold.getX() + mPtPNP2.getX() - mPtPNP1.getX());
+          final int y = (int) (mPtPNPold.getY() + mPtPNP2.getY() - mPtPNP1.getY());
           mPtPNP = new Point(x, y);
         }
-        int x = Math.max(0, Math.min((int) mPtPNP.getX(), screenWidth - mPNPWidth - 1));
-        int y = Math.max(0, Math.min((int) mPtPNP.getY(), screenHeight - mPNPHeight - 1));
+        final int x = Math.max(0, Math.min((int) mPtPNP.getX(), screenWidth - mPNPWidth - 1));
+        final int y = Math.max(0, Math.min((int) mPtPNP.getY(), screenHeight - mPNPHeight - 1));
         mPtPNP = new Point(x, y);
 
-        int pnpX = (int) mPtPNP.getX();
-        int pnpY = (int) mPtPNP.getY();
+        final int pnpX = (int) mPtPNP.getX();
+        final int pnpY = (int) mPtPNP.getY();
         g.setColor(Color.WHITE);
         g.fillRect(pnpX, pnpY, mPNPWidth, mPNPHeight);
         g.setColor(Color.BLACK);
         g.drawRect(pnpX, pnpY, mPNPWidth, mPNPHeight);
-        Graphics g2 = g.create(pnpX, pnpY, mPNPWidth, mPNPHeight);
+        final Graphics g2 = g.create(pnpX, pnpY, mPNPWidth, mPNPHeight);
         mGraphicsRenderer.drawGraph(mGraph, g2, mPNPWidth, mPNPHeight);
       }
     }
@@ -304,44 +321,44 @@ public class ZoomPlotPanel extends JComponent {
   protected void zoomIn() {
     //System.err.println("Zooming ...");
 
-    Mapping[] mapping = mPlotPanel.getMapping();
+    final Mapping[] mapping = mPlotPanel.getMapping();
 
     if (mapping != null && mGraph != null) {
       if (mPtOne != null && mPtTwo != null && mPtOne.x != mPtTwo.x && mPtOne.y != mPtTwo.y) {
 
-        Point ptOne = ppPoint(mPtOne);
-        Point ptTwo = ppPoint(mPtTwo);
+        final Point ptOne = ppPoint(mPtOne);
+        final Point ptTwo = ppPoint(mPtTwo);
 
         for (int i = 0; i < 2; i++) {
           Mapping map = mapping[i * 2];
           if (mGraph.usesX(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-            float mapOneX = map.screenToWorld((float) ptOne.getX());
-            float mapTwoX = map.screenToWorld((float) ptTwo.getX());
+            final float mapOneX = map.screenToWorld((float) ptOne.getX());
+            final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
             mGraph.setXRange(i, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
           }
 
           map = mapping[i * 2 + 1];
           if (mGraph.usesY(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-            float mapOneY = map.screenToWorld((float) ptOne.getY());
-            float mapTwoY = map.screenToWorld((float) ptTwo.getY());
+            final float mapOneY = map.screenToWorld((float) ptOne.getY());
+            final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
             mGraph.setYRange(i, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
           }
         }
 
         if (!mPicNPic) {
-          Graph2D graph = mPlotPanel.getGraph();
+          final Graph2D graph = mPlotPanel.getGraph();
           for (int i = 0; i < 2; i++) {
             Mapping map = mapping[i * 2];
             if (graph.usesX(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-              float mapOneX = map.screenToWorld((float) ptOne.getX());
-              float mapTwoX = map.screenToWorld((float) ptTwo.getX());
+              final float mapOneX = map.screenToWorld((float) ptOne.getX());
+              final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
               graph.setXRange(i, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
             }
 
             map = mapping[i * 2 + 1];
             if (graph.usesY(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
-              float mapOneY = map.screenToWorld((float) ptOne.getY());
-              float mapTwoY = map.screenToWorld((float) ptTwo.getY());
+              final float mapOneY = map.screenToWorld((float) ptOne.getY());
+              final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
               graph.setYRange(i, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
             }
           }
@@ -368,8 +385,9 @@ public class ZoomPlotPanel extends JComponent {
         mGraph.setYLabel(i, "");
       }
       mGraph.setTitle("");
-    } catch (CloneNotSupportedException cnse) {
-      cnse.printStackTrace();
+    } catch (final CloneNotSupportedException cnse) {
+      System.err.println(cnse.getMessage());
+      //cnse.printStackTrace();
     }
     for (int i = 0; i < 2; i++) {
       mXLo[i] = graph.getXLo(i);
@@ -388,8 +406,9 @@ public class ZoomPlotPanel extends JComponent {
   public Graph2D getGraph() {
     return mGraph;
   }
-   
+
   /** {@inheritDoc} */
+  @Override
   public String getToolTipText(MouseEvent arg0) {
     return mPlotPanel.getToolTipText(arg0);
   }

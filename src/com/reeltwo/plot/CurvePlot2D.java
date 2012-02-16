@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Structure to hold attributes of a curve denoted by points on a 2D graph.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class CurvePlot2D extends FillablePlot2D {
@@ -68,6 +67,7 @@ public class CurvePlot2D extends FillablePlot2D {
    *
    * @param data an array of Datum2D's
    */
+  @Override
   public void setData(Datum2D[] data) {
     if (!(data instanceof Point2D[])) {
       throw new UnsupportedOperationException("Cannot set " + data.getClass().getName() + " in CurvePlot2D.");

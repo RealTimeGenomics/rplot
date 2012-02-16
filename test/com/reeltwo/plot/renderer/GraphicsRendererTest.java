@@ -25,8 +25,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the GraphicsRenderer class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class GraphicsRendererTest extends TestCase {
@@ -41,10 +40,12 @@ public class GraphicsRendererTest extends TestCase {
   }
 
 
+  @Override
   public void setUp() {
   }
 
 
+  @Override
   public void tearDown() {
   }
 

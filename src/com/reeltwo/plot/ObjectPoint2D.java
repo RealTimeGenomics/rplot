@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Object associated with a Point2D.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class ObjectPoint2D extends Point2D {
@@ -32,9 +31,9 @@ public class ObjectPoint2D extends Point2D {
    * @return square of the distance.
    */
   public double distanceSq(double x, double y) {
-      final double xd = x - getX();
-      final double yd = y - getY();
-      return xd * xd + yd * yd;
+    final double xd = x - getX();
+    final double yd = y - getY();
+    return xd * xd + yd * yd;
   }
 
   /**
@@ -44,7 +43,7 @@ public class ObjectPoint2D extends Point2D {
    */
   public void setObject(Object obj) {
     mObject = obj;
-   }
+  }
 
 
   /**
@@ -58,15 +57,17 @@ public class ObjectPoint2D extends Point2D {
 
 
   /** {@inheritDoc} */
+  @Override
   public boolean equals(Object object) {
     if (!(object instanceof ObjectPoint2D)) {
       return false;
     }
-    ObjectPoint2D pobj = (ObjectPoint2D) object;
+    final ObjectPoint2D pobj = (ObjectPoint2D) object;
     return super.equals(pobj) && mObject.equals(pobj.getObject());
   }
 
   /** {@inheritDoc} */
+  @Override
   public int hashCode() {
     return super.hashCode();
   }
@@ -77,8 +78,9 @@ public class ObjectPoint2D extends Point2D {
    *
    * @return a co-ordinate string
    */
+  @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append('(').append(getX()).append(',').append(getY());
     if (getObject() != null) {
       sb.append(',').append(getObject());

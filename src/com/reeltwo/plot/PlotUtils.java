@@ -3,11 +3,10 @@ package com.reeltwo.plot;
 /**
  * Utility functions for plot data.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
-public class PlotUtils {
+public final class PlotUtils {
 
   /**
    * Private to prevent istantiation.
@@ -32,18 +31,18 @@ public class PlotUtils {
   /**
    * Returns the largest (closest to positive infinity) double value
    * that is a power of 10 not greater than the argument.  Special
-   * cases: 
+   * cases:
    * <ul>
    *   <li>If the argument value is already equal to a power of 10,
-   *   then the result is the same as the argument.</li> 
+   *   then the result is the same as the argument.</li>
    *   <li>If the argument is NaN or an infinity or positive zero or
    *   negative zero, then the result is the same as the
-   *   argument.</li> 
+   *   argument.</li>
    * </ul>
    *
    * @param a a number greater than 0.0
    * @return the largest double value that is a power of 10 not
-   * greater than the argument 
+   * greater than the argument
    */
   public static double floor10(double a) {
     return Math.pow(10, Math.floor(log10(a)));
@@ -53,13 +52,13 @@ public class PlotUtils {
   /**
    * Returns the smallest (closest to negative infinity) double value
    * that is a power of 10 not less than the argument.  Special
-   * cases: 
+   * cases:
    * <ul>
    *   <li>If the argument value is already equal to a power of 10,
-   *   then the result is the same as the argument.</li> 
+   *   then the result is the same as the argument.</li>
    *   <li>If the argument is NaN or an infinity or positive zero or
    *   negative zero, then the result is the same as the
-   *   argument.</li> 
+   *   argument.</li>
    * </ul>
    *
    * @param a a number greater than 0.0

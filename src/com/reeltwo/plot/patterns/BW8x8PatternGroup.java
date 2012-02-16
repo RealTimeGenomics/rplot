@@ -12,8 +12,7 @@ import javax.imageio.ImageIO;
 /**
  * Pattern group for black and white patterns.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public class BW8x8PatternGroup implements PatternGroup {
   private static final String PATTERN_PATH = "com/reeltwo/plot/patterns/t";
@@ -28,7 +27,7 @@ public class BW8x8PatternGroup implements PatternGroup {
   }
 
   private Paint loadPattern(String resourceName) throws IOException {
-    ClassLoader loader = getClass().getClassLoader();
+    final ClassLoader loader = getClass().getClassLoader();
     final BufferedImage bi = ImageIO.read(loader.getResource(resourceName));
     final Rectangle r = new Rectangle(0, 0, bi.getWidth(), bi.getHeight());
     return new TexturePaint(bi, r);
@@ -37,7 +36,7 @@ public class BW8x8PatternGroup implements PatternGroup {
   /** {@inheritDoc} */
   public Paint[] getPatterns() {
     if (mPatterns == null) {
-      ArrayList<Paint> patterns = new ArrayList<Paint>();
+      final ArrayList<Paint> patterns = new ArrayList<Paint>();
       try {
         patterns.add(Color.WHITE);
         for (int i = 1; i <= 12; i++) {
@@ -48,20 +47,22 @@ public class BW8x8PatternGroup implements PatternGroup {
           patterns.add(loadPattern(PATTERN_PATH + i + PATTERN_EXTENSION));
         }
         mPatterns = patterns;
-      } catch (IOException ioe) {
+      } catch (final IOException ioe) {
         System.err.println("Exception loading pattern images: " + ioe.getMessage());
-        ioe.printStackTrace();
+        //ioe.printStackTrace();
       }
     }
     return mPatterns.toArray(new Paint[mPatterns.size()]);
   }
 
   /** {@inheritDoc} */
+  @Override
   public String getName() {
     return "Black and White 8x8";
   }
 
   /** {@inheritDoc} */
+  @Override
   public String getDescription() {
     return "Black and white patterns";
   }

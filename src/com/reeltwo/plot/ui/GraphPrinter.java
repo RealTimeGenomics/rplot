@@ -16,8 +16,7 @@ import java.awt.print.PrinterJob;
 /**
  * Handy utility class for sending graphs to the printer.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public class GraphPrinter implements Printable {
 
@@ -87,8 +86,9 @@ public class GraphPrinter implements Printable {
       if (mPrintJob.printDialog()) {
         try {
           mPrintJob.print();
-        } catch (PrinterException pe) {
-          pe.printStackTrace();
+        } catch (final PrinterException pe) {
+          System.err.println(pe.getMessage());
+          //pe.printStackTrace();
         }
       }
     }
@@ -101,25 +101,26 @@ public class GraphPrinter implements Printable {
    *
    * @param g Graphics to draw on
    * @param pf a PageFormat
-   * @param pi page index 
+   * @param pi page index
    * @return whether page exists
    * @exception PrinterException if an error occurs
    */
+  @Override
   public int print(Graphics g, PageFormat pf, int pi) throws PrinterException {
     if (mGraph == null || pi >= 1) {
       return Printable.NO_SUCH_PAGE;
     }
     if (mFontSize > 0) {
-      Font old = g.getFont();
+      final Font old = g.getFont();
       g.setFont(new Font(old.getName(), old.getStyle(), mFontSize));
     }
 
     pf.setOrientation(PageFormat.LANDSCAPE);
-    GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
-    Graphics g2 = g.create((int) pf.getImageableX(), (int) pf.getImageableY(),
-                           (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
+    final GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
+    final Graphics g2 = g.create((int) pf.getImageableX(), (int) pf.getImageableY(),
+        (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
     gr.drawGraph(mGraph, g2, (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
     return Printable.PAGE_EXISTS;
   }
-  
+
 }

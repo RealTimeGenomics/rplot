@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the Arrow2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class Arrow2DTest extends AbstractDatum2DTest {
@@ -23,6 +22,7 @@ public class Arrow2DTest extends AbstractDatum2DTest {
   }
 
 
+  @Override
   public Datum2D getDatum() {
     return new Arrow2D(1, 2, 3, 4);
   }
@@ -31,10 +31,10 @@ public class Arrow2DTest extends AbstractDatum2DTest {
   public void test1() {
     float x1 = 10.0f;
     float y1 = 111.3f;
-    float x2 = 123.0f;
-    float y2 = 1.111f;
+    final float x2 = 123.0f;
+    final float y2 = 1.111f;
 
-    Arrow2D ar = new Arrow2D(x1, y1, x2, y2);
+    final Arrow2D ar = new Arrow2D(x1, y1, x2, y2);
     assertTrue(ar.getX1() == x1);
     assertTrue(ar.getY1() == y1);
     assertTrue(ar.getX2() == x2);
@@ -59,7 +59,7 @@ public class Arrow2DTest extends AbstractDatum2DTest {
     assertTrue(ar.getXHi() == ar.getX1());
     assertTrue(ar.getYHi() == ar.getY2());
 
-    Arrow2D ar2 = new Arrow2D(x1, y1, x2, y2);
+    final Arrow2D ar2 = new Arrow2D(x1, y1, x2, y2);
     assertTrue(ar2.getX1() == x1);
     assertTrue(ar2.getY1() == y1);
     assertTrue(ar2.getX2() == x2);
@@ -74,7 +74,7 @@ public class Arrow2DTest extends AbstractDatum2DTest {
     try {
       new Arrow2D(0, 0, 0, 0);
       fail("Accepted bad arguments");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
 
@@ -83,13 +83,13 @@ public class Arrow2DTest extends AbstractDatum2DTest {
     try {
       ar.setY2(2);
       fail("Accepted bad arguments");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       ar.setY1(4);
       fail("Accepted bad arguments");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
 
@@ -98,13 +98,13 @@ public class Arrow2DTest extends AbstractDatum2DTest {
     try {
       ar.setX2(1);
       fail("Accepted bad arguments");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       ar.setX1(3);
       fail("Accepted bad arguments");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
   }

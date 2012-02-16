@@ -5,8 +5,7 @@ import java.text.NumberFormat;
 /**
  * Default formatter for floating point numbers.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public class DefaultFormatter implements LabelFormatter {
   /** a number formatter */
@@ -38,11 +37,12 @@ public class DefaultFormatter implements LabelFormatter {
 
   /**
    * Formats the given float as determined by the internal number
-   * formatter. 
+   * formatter.
    *
    * @param f float to format
    * @return formatted float
    */
+  @Override
   public String format(float f) {
     return mNF.format(f);
   }

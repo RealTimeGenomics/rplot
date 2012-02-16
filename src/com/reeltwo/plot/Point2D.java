@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Point data used in data plotting structures.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class Point2D implements Datum2D {
   /** co-ordinate */
@@ -68,6 +67,7 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXLo() {
     return getX();
   }
@@ -78,6 +78,7 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXHi() {
     return getX();
   }
@@ -88,6 +89,7 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYLo() {
     return getY();
   }
@@ -98,6 +100,7 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYHi() {
     return getY();
   }
@@ -108,8 +111,9 @@ public class Point2D implements Datum2D {
    *
    * @return a co-ordinate string
    */
+  @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append('(').append(getX()).append(',').append(getY());
     sb.append(')');
     return sb.toString();
@@ -117,11 +121,12 @@ public class Point2D implements Datum2D {
 
 
   /** {@inheritDoc} */
+  @Override
   public boolean equals(Object object) {
     if (!(object instanceof Point2D)) {
       return false;
     }
-    Point2D pobj = (Point2D) object;
+    final Point2D pobj = (Point2D) object;
     if (mX == pobj.getX() && mY == pobj.getY()) {
       return true;
     }
@@ -129,6 +134,7 @@ public class Point2D implements Datum2D {
   }
 
   /** {@inheritDoc} */
+  @Override
   public int hashCode() {
     return (int) (mX * mY);
   }

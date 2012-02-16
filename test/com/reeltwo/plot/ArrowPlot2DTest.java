@@ -6,8 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the ArrowPlot2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class ArrowPlot2DTest extends AbstractPlot2DTest {
@@ -22,23 +21,26 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
   }
 
 
+  @Override
   public Plot2D getPlot() {
     return new ArrowPlot2D();
   }
 
 
+  @Override
   public Plot2D getPlot(int x, int y) {
     return new ArrowPlot2D(x, y);
   }
 
 
+  @Override
   public Datum2D[] getData() {
     return new Arrow2D[]{new Arrow2D(1, 2, 3, 4), new Arrow2D(5, 6, 7, 8)};
   }
 
 
   public void test1() {
-    ArrowPlot2D plot = (ArrowPlot2D) getPlot();
+    final ArrowPlot2D plot = (ArrowPlot2D) getPlot();
 
     assertTrue(4.0f == plot.getHeadWidth());
     plot.setHeadWidth(34.9f);
@@ -48,7 +50,7 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
     plot.setHeadHeight(34.9f);
     assertTrue(34.9f == plot.getHeadHeight());
 
-    assertTrue(ArrowPlot2D.DEFAULT_HEAD == ArrowPlot2D.OPEN_HEAD);
+    assertEquals(ArrowPlot2D.OPEN_HEAD, ArrowPlot2D.DEFAULT_HEAD);
     assertTrue(ArrowPlot2D.DEFAULT_HEAD == plot.getHeadType());
     plot.setHeadType(ArrowPlot2D.OPEN_HEAD);
     assertTrue(ArrowPlot2D.OPEN_HEAD == plot.getHeadType());
@@ -61,8 +63,8 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
     plot.setHeadType(ArrowPlot2D.DEFAULT_HEAD);
     assertTrue(ArrowPlot2D.DEFAULT_HEAD == plot.getHeadType());
 
-    assertTrue(ArrowPlot2D.DEFAULT_MODE == ArrowPlot2D.FORWARD_MODE);
-    assertTrue(ArrowPlot2D.BOTH_MODE == (ArrowPlot2D.FORWARD_MODE | ArrowPlot2D.REVERSE_MODE));
+    assertEquals(ArrowPlot2D.FORWARD_MODE, ArrowPlot2D.DEFAULT_MODE);
+    assertEquals(ArrowPlot2D.FORWARD_MODE | ArrowPlot2D.REVERSE_MODE, ArrowPlot2D.BOTH_MODE);
     assertTrue(ArrowPlot2D.DEFAULT_MODE == plot.getMode());
     plot.setMode(ArrowPlot2D.FORWARD_MODE);
     assertTrue(ArrowPlot2D.FORWARD_MODE == plot.getMode());
@@ -80,41 +82,41 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
   }
 
   public void testBadArguments() {
-    ArrowPlot2D plot = (ArrowPlot2D) getPlot();
+    final ArrowPlot2D plot = (ArrowPlot2D) getPlot();
     try {
       plot.setHeadWidth(-1.0f);
       fail("Accepted bad argumant.");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       plot.setHeadHeight(-1.0f);
       fail("Accepted bad argumant.");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       plot.setHeadType(ArrowPlot2D.OPEN_HEAD - 1);
       fail("Accepted bad argumant.");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       plot.setHeadType(ArrowPlot2D.DIAMOND_HEAD + 1);
       fail("Accepted bad argumant.");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       plot.setMode(ArrowPlot2D.FORWARD_MODE - 1);
       fail("Accepted bad argumant.");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       plot.setMode(ArrowPlot2D.BOTH_MODE + 1);
       fail("Accepted bad argumant.");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
   }

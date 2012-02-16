@@ -6,8 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the BWPoint2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class BWPoint2DTest extends AbstractDatum2DTest {
@@ -22,6 +21,7 @@ public class BWPoint2DTest extends AbstractDatum2DTest {
   }
 
 
+  @Override
   public Datum2D getDatum() {
     return new BWPoint2D(1, 2, 3, 4, 5, 6);
   }
@@ -36,7 +36,7 @@ public class BWPoint2DTest extends AbstractDatum2DTest {
     float yuq = 114.3f;
     float ymax = 115.3f;
 
-    BWPoint2D pt = new BWPoint2D(x, ymin, ylq, ymed, yuq, ymax);
+    final BWPoint2D pt = new BWPoint2D(x, ymin, ylq, ymed, yuq, ymax);
     assertTrue(pt.getX() == x);
     assertTrue(pt.getY(0) == ymin);
     assertTrue(pt.getY(1) == ylq);
@@ -70,7 +70,7 @@ public class BWPoint2DTest extends AbstractDatum2DTest {
     assertTrue(pt.getYLo() == pt.getY(0));
     assertTrue(pt.getYHi() == pt.getY(4));
 
-    BWPoint2D pt2 = new BWPoint2D(x, ymin, ylq, ymed, yuq, ymax);
+    final BWPoint2D pt2 = new BWPoint2D(x, ymin, ylq, ymed, yuq, ymax);
 
     assertTrue(pt2.getX() == x);
     assertTrue(pt2.getY(0) == ymin);

@@ -18,11 +18,11 @@ import javax.swing.JPanel;
  * Plots a graph in a Swing JPanel described by the data in a Plot data
  * object.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class PlotPanel extends JPanel {
+  private static final long serialVersionUID = -5783223316468154958L;
   /** the data that is to be plotted */
   private Graph2D mGraph = null;
   private Mapping[] mMapping = null;
@@ -33,7 +33,7 @@ public class PlotPanel extends JPanel {
   private BufferedImage mBI = null;
 
   private ToolTipProvider mToolTipProvider = null;
-    
+
   /** Default constructor. */
   public PlotPanel() {
     this(false);
@@ -80,6 +80,7 @@ public class PlotPanel extends JPanel {
   }
 
   /** {@inheritDoc} */
+  @Override
   public String getToolTipText(MouseEvent event) {
     if (mToolTipProvider != null) {
       return mToolTipProvider.getToolTipText(event.getX(), event.getY());
@@ -89,7 +90,7 @@ public class PlotPanel extends JPanel {
 
   /**
    * Sets the ToolTipProvider to allow position dependent tool tip
-   * text. 
+   * text.
    *
    * @param provider a <code>ToolTipProvider</code>
    */
@@ -108,15 +109,18 @@ public class PlotPanel extends JPanel {
    */
   public Action getPrintAction() {
     return new AbstractAction("Print") {
-        public void actionPerformed(ActionEvent e) {
-          if (mGraphPrinter == null) {
-            mGraphPrinter = new GraphPrinter();
-          }
-          mGraphPrinter.setColors(getColors());
-          mGraphPrinter.setPatterns(getPatterns());
-          mGraphPrinter.printGraph(getGraph());
+      private static final long serialVersionUID = 3366443762504745619L;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (mGraphPrinter == null) {
+          mGraphPrinter = new GraphPrinter();
         }
-      };
+        mGraphPrinter.setColors(getColors());
+        mGraphPrinter.setPatterns(getPatterns());
+        mGraphPrinter.printGraph(getGraph());
+      }
+    };
   }
 
   /**
@@ -126,15 +130,18 @@ public class PlotPanel extends JPanel {
    */
   public Action getSaveImageAction() {
     return new AbstractAction("Save Image") {
-        public void actionPerformed(ActionEvent e) {
-          if (mGraphSaver == null) {
-            mGraphSaver = new GraphSaver();
-          }
-          mGraphSaver.setColors(getColors());
-          mGraphSaver.setPatterns(getPatterns());
-          mGraphSaver.saveGraph(getGraph());
+      private static final long serialVersionUID = 1943785041287184839L;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (mGraphSaver == null) {
+          mGraphSaver = new GraphSaver();
         }
-      };
+        mGraphSaver.setColors(getColors());
+        mGraphSaver.setPatterns(getPatterns());
+        mGraphSaver.saveGraph(getGraph());
+      }
+    };
   }
 
   /**
@@ -145,18 +152,21 @@ public class PlotPanel extends JPanel {
    */
   public Action getSnapShotAction() {
     return new AbstractAction("Snap Shot", null) {
-        public void actionPerformed(ActionEvent e) {
-          try {
-            PlotDialog pd = new PlotDialog();
-            pd.setLocationRelativeTo(PlotPanel.this);
-            pd.setTitle("Snap Shot");
-            pd.setGraph((Graph2D) mGraph.clone());
-            pd.setVisible(true);
-          } catch (CloneNotSupportedException cnse) {
-            System.err.println("Failed to clone graph: " + cnse.getMessage());
-          }
+      private static final long serialVersionUID = 4440241041537940185L;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          final PlotDialog pd = new PlotDialog();
+          pd.setLocationRelativeTo(PlotPanel.this);
+          pd.setTitle("Snap Shot");
+          pd.setGraph((Graph2D) mGraph.clone());
+          pd.setVisible(true);
+        } catch (final CloneNotSupportedException cnse) {
+          System.err.println("Failed to clone graph: " + cnse.getMessage());
         }
-      };
+      }
+    };
   }
 
   /**
@@ -270,7 +280,7 @@ public class PlotPanel extends JPanel {
   /**
    * Sets whether to buffer graph images.  Speeds things up when it
    * comes to redrawing the same graph, at the tradeoff of extra
-   * memory use. 
+   * memory use.
    *
    * @param flag whether to buffer graphs
    */
@@ -284,10 +294,11 @@ public class PlotPanel extends JPanel {
    *
    * @param g a Graphics component.
    */
+  @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    Dimension d = getSize();
+    final Dimension d = getSize();
 
     final int screenWidth = d.width;
     final int screenHeight = d.height;
@@ -297,16 +308,16 @@ public class PlotPanel extends JPanel {
       if (bi == null || bi.getWidth() != screenWidth || bi.getHeight() != screenHeight) {
         bi = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
         mBI = bi;
-        Graphics g2 = bi.createGraphics();
+        final Graphics g2 = bi.createGraphics();
         g2.setColor(getBackground());
         g2.fillRect(0, 0, screenWidth, screenHeight);
-	g2.setFont(g.getFont());
+        g2.setFont(g.getFont());
 
         mGraphicsRenderer.drawGraph(mGraph, g2, screenWidth, screenHeight);
         mMapping = mGraphicsRenderer.getMappings();
       }
       g.drawImage(bi, 0, 0, null);
-    } else {      
+    } else {
       mGraphicsRenderer.drawGraph(mGraph, g, screenWidth, screenHeight);
       mMapping = mGraphicsRenderer.getMappings();
     }

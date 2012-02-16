@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Structure to hold attributes of a box and whisker line on a 2D graph.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class BWPlot2D extends Plot2D {
@@ -14,7 +13,7 @@ public class BWPlot2D extends Plot2D {
   public static final int MINIMAL = 1;
   /** Render a box and whisker plot where consecutive nodes are joined. */
   public static final int JOINED = 2;
-  
+
   private int mType = STANDARD;
 
   private int mWidth = 20;
@@ -92,6 +91,7 @@ public class BWPlot2D extends Plot2D {
    *
    * @param data an array of Datum2D's
    */
+  @Override
   public void setData(Datum2D[] data) {
     if (!(data instanceof BWPoint2D[])) {
       throw new UnsupportedOperationException("Cannot set " + data.getClass().getName() + " in BWPlot2D.");

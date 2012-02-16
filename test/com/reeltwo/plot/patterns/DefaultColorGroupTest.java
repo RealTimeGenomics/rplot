@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the DefaultColorGroup class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class DefaultColorGroupTest extends AbstractPatternGroupTest {
 
@@ -22,23 +21,26 @@ public class DefaultColorGroupTest extends AbstractPatternGroupTest {
   }
 
 
+  @Override
   public void setUp() {
     super.setUp();
   }
 
 
+  @Override
   public void tearDown() {
     super.tearDown();
   }
 
+  @Override
   public PatternGroup getPatternGroup() {
     return new DefaultColorGroup();
   }
 
   public void testDefaults() {
-    PatternGroup pg = getPatternGroup();
+    final PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint[] patterns = pg.getPatterns();
+    final Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertEquals(8, patterns.length);
 
@@ -46,7 +48,7 @@ public class DefaultColorGroupTest extends AbstractPatternGroupTest {
       assertNotNull(i + " is null", patterns[i]);
     }
 
-    assertEquals("Default Colors", pg.getName());    
+    assertEquals("Default Colors", pg.getName());
   }
 
   public static Test suite() {

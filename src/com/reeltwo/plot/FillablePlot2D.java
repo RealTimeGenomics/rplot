@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Abstract class for those graphs that can fill regions with color or patterns.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public abstract class FillablePlot2D extends Plot2D {
   /** Do not fill plot. */
@@ -41,7 +40,7 @@ public abstract class FillablePlot2D extends Plot2D {
   /**
    * Sets the fill type for this plot. Valid fill types are
    * <code>NO_FILL</code> (the default), <code>COLOR_FILL</code> and
-   * <code>PATTERN_FILL</code>. 
+   * <code>PATTERN_FILL</code>.
    *
    * @param fill the fill type
    */

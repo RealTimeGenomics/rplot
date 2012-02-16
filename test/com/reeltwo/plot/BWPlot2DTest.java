@@ -6,8 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the BWPointPlot2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class BWPlot2DTest extends AbstractPlot2DTest {
@@ -22,23 +21,26 @@ public class BWPlot2DTest extends AbstractPlot2DTest {
   }
 
 
+  @Override
   public Plot2D getPlot() {
     return new BWPlot2D();
   }
 
 
+  @Override
   public Plot2D getPlot(int x, int y) {
     return new BWPlot2D(x, y);
   }
 
 
+  @Override
   public Datum2D[] getData() {
     return new BWPoint2D[]{new BWPoint2D(1, 2, 3, 4, 5, 6), new BWPoint2D(5, 6, 7, 8, 9, 10)};
   }
 
 
   public void testSets() {
-    BWPlot2D plot = (BWPlot2D) getPlot();
+    final BWPlot2D plot = (BWPlot2D) getPlot();
 
     assertEquals(BWPlot2D.STANDARD, plot.getType());
     plot.setType(BWPlot2D.MINIMAL);
@@ -54,24 +56,24 @@ public class BWPlot2DTest extends AbstractPlot2DTest {
   }
 
   public void testBadArgs() {
-    BWPlot2D plot = (BWPlot2D) getPlot();
+    final BWPlot2D plot = (BWPlot2D) getPlot();
 
     try {
       plot.setType(BWPlot2D.STANDARD - 1);
       fail("accepted bad type");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       ; // expected
     }
     try {
       plot.setType(BWPlot2D.JOINED + 1);
       fail("accepted bad type");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       ; // expected
     }
     try {
       plot.setWidth(0);
       fail("accepted bad width");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       ; // expected
     }
   }

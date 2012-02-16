@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Formats axis values from a preset array of strings.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public class StringFormatter implements LabelFormatter {
   private final String[] mLabels;
@@ -30,11 +29,12 @@ public class StringFormatter implements LabelFormatter {
   /**
    * Returns the <code>(int) f</code>th string from a preset array of
    * strings.  Rotates through the array if <code>f</code> is larger
-   * that the array length. 
+   * that the array length.
    *
    * @param f float to format
    * @return formatted float
    */
+  @Override
   public String format(float f) {
     return mLabels[((int) Math.abs(f)) % mLabels.length];
   }

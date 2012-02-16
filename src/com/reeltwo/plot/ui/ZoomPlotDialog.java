@@ -10,42 +10,46 @@ import javax.swing.JPopupMenu;
  * regions of the plot.  Provides a pop up menu to allow the plot to be
  * printed and saved as well as controlling zoom actions.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class ZoomPlotDialog extends PlotDialog {
+  /** an id */
+  private static final long serialVersionUID = -6438674742380059110L;
   /** the zoom panel for the glass pane */
   private final ZoomPlotPanel mZoomPanel;
-  
+
   /** Creates the plot dialog. */
   public ZoomPlotDialog() {
     super();
 
     mZoomPanel = new ZoomPlotPanel(mPlotPanel, getContentPane());
-    
+
     setGlassPane(mZoomPanel);
     getGlassPane().setVisible(true);
-    
+
     // set up a popup menu with zoom and plot controls
-    JPopupMenu popup = getPopupMenu();
+    final JPopupMenu popup = getPopupMenu();
     popup.addSeparator();
     popup.add(mZoomPanel.getZoomOutAction());
     popup.add(mZoomPanel.getPNPAction());
   }
 
   /** {@inheritDoc} */
+  @Override
   public void setColors(Color[] colors) {
     super.setColors(colors);
     mZoomPanel.setColors(colors);
   }
 
   /** {@inheritDoc} */
+  @Override
   public void setPatterns(Paint[] patterns) {
     super.setPatterns(patterns);
     mZoomPanel.setPatterns(patterns);
   }
-    
+
   /** {@inheritDoc} */
+  @Override
   public void setGraph(Graph2D graph) {
     mZoomPanel.setGraph(graph); // sets graph in underlying plotPanel;
   }

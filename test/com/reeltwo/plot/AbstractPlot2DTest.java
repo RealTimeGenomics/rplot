@@ -5,8 +5,7 @@ import junit.framework.TestCase;
 /**
  * Abstract JUnit tests for the Plot2D classes.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public abstract class AbstractPlot2DTest extends TestCase {
@@ -30,10 +29,12 @@ public abstract class AbstractPlot2DTest extends TestCase {
   public abstract Datum2D[] getData();
 
 
+  @Override
   protected void setUp() {
   }
 
 
+  @Override
   protected void tearDown() {
   }
 
@@ -47,16 +48,16 @@ public abstract class AbstractPlot2DTest extends TestCase {
     assertNotNull(plot.getTitle());
     plot.setTitle(text);
     assertTrue(plot.getTitle().equals(text));
-    int color = 123;
+    final int color = 123;
     plot.setColor(color);
     assertTrue(plot.getColor() == color);
 
-    Datum2D[] data = getData();
+    final Datum2D[] data = getData();
     assertNotNull(data);
     try {
       plot.setData(null);
       fail("plot accepted null data.");
-    } catch (NullPointerException npe) {
+    } catch (final NullPointerException npe) {
       ; // should get here
     }
     plot.setData(data);
@@ -103,15 +104,15 @@ public abstract class AbstractPlot2DTest extends TestCase {
   }
 
   public void testBadValues() {
-    Point2D[] points = new Point2D[] {
-      new Point2D(0.0f, 1.0f),
-      new Point2D(2.0f, Float.POSITIVE_INFINITY),
-      new Point2D(1.0f, 0.0f),
-      new Point2D(Float.NEGATIVE_INFINITY, -3.0f),
-      new Point2D(Float.NaN, -1.5f),
+    final Point2D[] points = new Point2D[] {
+        new Point2D(0.0f, 1.0f),
+        new Point2D(2.0f, Float.POSITIVE_INFINITY),
+        new Point2D(1.0f, 0.0f),
+        new Point2D(Float.NEGATIVE_INFINITY, -3.0f),
+        new Point2D(Float.NaN, -1.5f),
     };
-    Plot2D plot = new Plot2D() {
-      };
+    final Plot2D plot = new Plot2D() {
+    };
 
     assertTrue(plot.getXLo() == 0.0f);
     assertTrue(plot.getYLo() == 0.0f);
@@ -121,7 +122,7 @@ public abstract class AbstractPlot2DTest extends TestCase {
     try {
       plot.setData(points);
       fail("accepted bad data");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       //System.err.println("IAE: " + iae.getMessage());
       ; // expected
     }

@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Box data used in data plotting structures.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class Box2D implements Datum2D {
@@ -109,6 +108,7 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXLo() {
     return getLeft();
   }
@@ -119,6 +119,7 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXHi() {
     return getRight();
   }
@@ -129,6 +130,7 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYLo() {
     return getBottom();
   }
@@ -139,6 +141,7 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYHi() {
     return getTop();
   }
@@ -149,8 +152,9 @@ public class Box2D implements Datum2D {
    *
    * @return a co-ordinate string
    */
+  @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append("[(").append(getLeft()).append(',').append(getTop());
     sb.append(")(").append(getRight()).append(',').append(getBottom());
     sb.append(")]");

@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the Graph2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class Graph2DTest extends TestCase {
 
@@ -24,16 +23,18 @@ public class Graph2DTest extends TestCase {
   }
 
 
+  @Override
   public void setUp() {
   }
 
 
+  @Override
   public void tearDown() {
   }
 
 
   public void test1() {
-    Graph2D graph = new Graph2D();
+    final Graph2D graph = new Graph2D();
     // check default/assummed values
     assertTrue(graph.getTitle().equals(""));
     assertTrue(graph.getKeyTitle().equals(""));
@@ -148,7 +149,7 @@ public class Graph2DTest extends TestCase {
     graph.setBorder(true);
     assertTrue(graph.isBorder());
 
-    String[] labels = new String[]{"one", "two"};
+    final String[] labels = new String[]{"one", "two"};
     for (int i = 0; i < 2; i++) {
       graph.setXTicLabelFormatter(i, new StringFormatter(labels));
       assertTrue(graph.getXTicLabelFormatter(i) instanceof StringFormatter);
@@ -159,11 +160,11 @@ public class Graph2DTest extends TestCase {
   }
 
   public void test2() {
-    Graph2D graph = new Graph2D();
-    PointPlot2D pplot = new PointPlot2D();
+    final Graph2D graph = new Graph2D();
+    final PointPlot2D pplot = new PointPlot2D();
     pplot.setData(new Point2D[]{new Point2D(1.3f, 3.1f), new Point2D(-1.2f, 5.1f)});
     graph.addPlot(pplot);
-    PointPlot2D pplot2 = new PointPlot2D(1, 1);
+    final PointPlot2D pplot2 = new PointPlot2D(1, 1);
     pplot2.setData(new Point2D[]{new Point2D(2.0f, 4.0f), new Point2D(-4.4f, 7.3f)});
     graph.addPlot(pplot2);
 

@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the PlotUtils class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class PlotUtilsTest extends TestCase {
@@ -23,10 +22,12 @@ public class PlotUtilsTest extends TestCase {
   }
 
 
+  @Override
   public void setUp() {
   }
 
 
+  @Override
   public void tearDown() {
   }
 

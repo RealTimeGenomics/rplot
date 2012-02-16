@@ -12,10 +12,11 @@ import javax.swing.JPopupMenu;
  * Swing dialog for displaying a single graph.  Has a pop up menu to
  * allow saving and printing of the graph.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class PlotDialog extends JDialog {
+  private static final long serialVersionUID = 1161568295885246259L;
+
   protected final PlotPanel mPlotPanel;
 
   private final JPopupMenu mPopup;
@@ -27,9 +28,9 @@ public class PlotDialog extends JDialog {
     mPlotPanel.setGraphBGColor(new Color(0.8f, 0.9f, 1.0f), Color.WHITE);
     mPlotPanel.setBufferGraphs(true);
     mPlotPanel.setGraphShadowWidth(4);
-    
+
     setContentPane(mPlotPanel);
-    
+
     // set up a popup menu with zoom and plot controls
     mPopup = new JPopupMenu();
     mPopup.setLightWeightPopupEnabled(false);
@@ -70,7 +71,7 @@ public class PlotDialog extends JDialog {
   public JPopupMenu getPopupMenu() {
     return mPopup;
   }
-    
+
   /**
    * Plots the given graph.
    *
@@ -89,7 +90,7 @@ public class PlotDialog extends JDialog {
   public PlotPanel getPlotPanel() {
     return mPlotPanel;
   }
-  
+
   /**
    * Sets a tool tip provider to allow position dependent tool tip
    * text.  A value of null turns tool tips off.
@@ -104,10 +105,12 @@ public class PlotDialog extends JDialog {
    * A class required to listen for right-clicks
    */
   private class PopupListener extends MouseAdapter {
+    @Override
     public void mousePressed(MouseEvent e) {
       maybeShowPopup(e);
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
       maybeShowPopup(e);
     }

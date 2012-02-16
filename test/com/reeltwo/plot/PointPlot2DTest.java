@@ -39,8 +39,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the PointPlot2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class PointPlot2DTest extends AbstractFillablePlot2DTest {
@@ -55,23 +54,26 @@ public class PointPlot2DTest extends AbstractFillablePlot2DTest {
   }
 
 
+  @Override
   public Plot2D getPlot() {
     return new PointPlot2D();
   }
 
 
+  @Override
   public Plot2D getPlot(int x, int y) {
     return new PointPlot2D(x, y);
   }
 
 
+  @Override
   public Datum2D[] getData() {
     return new Point2D[]{new Point2D(1, 2), new Point2D(5, 6)};
   }
 
 
   public void test1() {
-    PointPlot2D plot = (PointPlot2D) getPlot();
+    final PointPlot2D plot = (PointPlot2D) getPlot();
 
     assertTrue(plot.isPoints());
     plot.setPoints(false);

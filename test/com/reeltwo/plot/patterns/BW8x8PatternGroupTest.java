@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the BW8x8PatternGroup class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class BW8x8PatternGroupTest extends AbstractPatternGroupTest {
 
@@ -22,24 +21,27 @@ public class BW8x8PatternGroupTest extends AbstractPatternGroupTest {
   }
 
 
+  @Override
   public void setUp() {
     super.setUp();
   }
 
 
+  @Override
   public void tearDown() {
     super.tearDown();
   }
 
+  @Override
   public PatternGroup getPatternGroup() {
     return new BW8x8PatternGroup();
   }
 
 
   public void testDefaults() {
-    PatternGroup pg = getPatternGroup();
+    final PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint[] patterns = pg.getPatterns();
+    final Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertEquals(50, patterns.length);
 
@@ -47,7 +49,7 @@ public class BW8x8PatternGroupTest extends AbstractPatternGroupTest {
       assertNotNull(i + " is null", patterns[i]);
     }
 
-    assertEquals("Black and White 8x8", pg.getName());    
+    assertEquals("Black and White 8x8", pg.getName());
   }
 
 

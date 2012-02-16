@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Structure to hold attributes of a single plot on a 2D graph.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public abstract class Plot2D {
@@ -158,7 +157,7 @@ public abstract class Plot2D {
 
 
   /**
-   * Sets the data used in this plot.  Override this to check 
+   * Sets the data used in this plot.  Override this to check
    * data is valid.
    *
    * @param data an array of Datum2D's
@@ -192,7 +191,7 @@ public abstract class Plot2D {
       checkValid(yLo);
       checkValid(xHi);
       checkValid(yHi);
-      
+
       mXLo = xLo;
       mXHi = xHi;
       mYLo = yLo;

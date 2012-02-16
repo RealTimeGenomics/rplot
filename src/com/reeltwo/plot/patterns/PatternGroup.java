@@ -5,13 +5,12 @@ import java.awt.Paint;
 /**
  * Interface for different groups of patterns.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public interface PatternGroup {
   /**
    * Returns an array of patterns.  Patterns are any java.awt.Paint
-   * objects. 
+   * objects.
    *
    * @return an array of patterns
    */
@@ -23,7 +22,7 @@ public interface PatternGroup {
    * @return a <code>String</code>
    */
   String getName();
-  
+
   /**
    * Short one line description of the pattern group.
    *

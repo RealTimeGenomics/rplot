@@ -3,10 +3,9 @@ package com.reeltwo.plot;
 /**
  * Point data describing a single arrow.  Arrow is described by its
  * end point locations and the direction goes from (x1, y1) to (x2,
- * y2). 
+ * y2).
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class Arrow2D implements Datum2D {
   /** co-ordinates */
@@ -130,6 +129,7 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXLo() {
     return Math.min(getX1(), getX2());
   }
@@ -140,6 +140,7 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXHi() {
     return Math.max(getX1(), getX2());
   }
@@ -150,6 +151,7 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYLo() {
     return Math.min(getY1(), getY2());
   }
@@ -160,6 +162,7 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYHi() {
     return Math.max(getY1(), getY2());
   }
@@ -170,8 +173,9 @@ public class Arrow2D implements Datum2D {
    *
    * @return a co-ordinate string
    */
+  @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append('(').append(getX1()).append(',').append(getY2());
     sb.append(" -> ");
     sb.append(getX1()).append(',').append(getY2()).append(')');
@@ -179,16 +183,18 @@ public class Arrow2D implements Datum2D {
   }
 
   /** {@inheritDoc} */
+  @Override
   public boolean equals(Object object) {
     if (!(object instanceof Arrow2D)) {
       return false;
     }
-    Arrow2D pobj = (Arrow2D) object;
-    return (mX1 == pobj.getX1() && mY1 == pobj.getY1()
-            && mX2 == pobj.getX2() && mY2 == pobj.getY2());
+    final Arrow2D pobj = (Arrow2D) object;
+    return mX1 == pobj.getX1() && mY1 == pobj.getY1()
+        && mX2 == pobj.getX2() && mY2 == pobj.getY2();
   }
 
   /** {@inheritDoc} */
+  @Override
   public int hashCode() {
     return (int) (mX1 + mX2 + mY1 + mY2);
   }

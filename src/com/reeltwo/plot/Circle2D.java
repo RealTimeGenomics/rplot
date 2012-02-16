@@ -4,8 +4,7 @@ package com.reeltwo.plot;
 /**
  * Draws a circle of a specified diameter at a Point2D.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class Circle2D extends Point2D {
   /** text to be displayed */
@@ -49,15 +48,17 @@ public class Circle2D extends Point2D {
 
 
   /** {@inheritDoc} */
+  @Override
   public boolean equals(Object object) {
     if (!(object instanceof Circle2D)) {
       return false;
     }
-    Circle2D pobj = (Circle2D) object;
+    final Circle2D pobj = (Circle2D) object;
     return super.equals(pobj) && mDiameter == pobj.getDiameter();
   }
 
   /** {@inheritDoc} */
+  @Override
   public int hashCode() {
     return (int) (super.hashCode() * mDiameter);
   }
@@ -67,8 +68,9 @@ public class Circle2D extends Point2D {
    *
    * @return a co-ordinate string
    */
+  @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append('(').append(getX()).append(',').append(getY());
     sb.append(',').append(getDiameter());
     sb.append(')');

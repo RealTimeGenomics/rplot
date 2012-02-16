@@ -29,13 +29,12 @@ import javax.swing.SwingUtilities;
  * Starts a new Swing window for displaying Graph2Ds in. The window has
  * zooming and picture in picture functionality enabled.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class SwingPlot {
   /** the dialog for this window */
-  private ZoomPlotDialog mDialog;
+  private final ZoomPlotDialog mDialog;
 
 
   /** Creates a new swing plot. */
@@ -46,27 +45,32 @@ public class SwingPlot {
     mDialog.setPatterns(new BW8x8PatternGroup().getPatterns());
 
     mDialog.addWindowListener(new WindowAdapter() {
-        public void windowClosing(WindowEvent e) {
-          System.exit(1);
-        }
-      });
+      @Override
+      public void windowClosing(WindowEvent e) {
+        System.exit(1);
+      }
+    });
 
-    JPopupMenu popup = mDialog.getPopupMenu();
+    final JPopupMenu popup = mDialog.getPopupMenu();
 
     popup.addSeparator();
     popup.add(new AbstractAction("Exit") {
-        public void actionPerformed(ActionEvent e) {
-          System.exit(0);
-        }
-      });
+      private static final long serialVersionUID = 1926431490479372450L;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        System.exit(0);
+      }
+    });
 
     mDialog.setVisible(true);
 
     SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-          mDialog.setVisible(true);
-        }
-      });
+      @Override
+      public void run() {
+        mDialog.setVisible(true);
+      }
+    });
   }
 
 
@@ -140,7 +144,7 @@ public class SwingPlot {
     } else {
       graph = genTest();
     }
-    SwingPlot sp = new SwingPlot("A Plot");
+    final SwingPlot sp = new SwingPlot("A Plot");
     sp.setGraph(graph);
   }
 
@@ -152,7 +156,7 @@ public class SwingPlot {
    */
   public static Graph2D genTest() {
 
-    Graph2D graph = new Graph2D();
+    final Graph2D graph = new Graph2D();
     graph.setTitle("Title");
     graph.setXLabel(0, "X label");
     graph.setXLabel(1, "X1 label");
@@ -163,10 +167,10 @@ public class SwingPlot {
     graph.setYRange(0, 0.0f, 1.0f);
     graph.setXRange(0, 0.0f, 10.0f);
 
-    Point2D[] xys1 = new Point2D[11];
-    Point2D[] xys2 = new Point2D[11];
-    Point2D[] xys3 = new Point2D[11];
-    Point2D[] xys4 = new Point2D[11];
+    final Point2D[] xys1 = new Point2D[11];
+    final Point2D[] xys2 = new Point2D[11];
+    final Point2D[] xys3 = new Point2D[11];
+    final Point2D[] xys4 = new Point2D[11];
     for (int i = 0; i <= 10; i++) {
       xys1[i] = new Point2D(i, 1.0f - i * i / 153.0f);
       xys2[i] = new Point2D(i / 10.0f, 0.13f + i * i / 153.0f);
@@ -175,7 +179,7 @@ public class SwingPlot {
     }
 
     PointPlot2D lplot = new PointPlot2D();
-    Point2D[] fpts = new Point2D[]{new Point2D(0.0f, 0.2f),
+    final Point2D[] fpts = new Point2D[]{new Point2D(0.0f, 0.2f),
         new Point2D(4f, 0.65f),
         new Point2D(7f, 0.85f),
         new Point2D(10f, 0.0f)};
@@ -186,8 +190,8 @@ public class SwingPlot {
 
     graph.addPlot(lplot);
 
-    Box2D[] boxes1 = new Box2D[10];
-    Box2D[] boxes2 = new Box2D[10];
+    final Box2D[] boxes1 = new Box2D[10];
+    final Box2D[] boxes2 = new Box2D[10];
     for (int i = 0; i < 10; i++) {
       boxes1[i] = new Box2D(i, (10 - i) / 10.0f, i + 0.5f, (10 - i) / 20.0f);
       boxes2[i] = new Box2D(i - 0.25f, (i + 1) / 10.0f, i + 0.25f, i / 20.0f);
@@ -208,12 +212,12 @@ public class SwingPlot {
 
     graph.addPlot(bplot);
 
-    TextPlot2D tplot = new TextPlot2D();
-    TextPoint2D[] tps = new TextPoint2D[10];
-    CirclePlot2D cplot = new CirclePlot2D();
-    Circle2D[] cps = new Circle2D[10];
-    ScatterPlot2D splot = new ScatterPlot2D();
-    ScatterPoint2D[] sps = new ScatterPoint2D[10];
+    final TextPlot2D tplot = new TextPlot2D();
+    final TextPoint2D[] tps = new TextPoint2D[10];
+    final CirclePlot2D cplot = new CirclePlot2D();
+    final Circle2D[] cps = new Circle2D[10];
+    final ScatterPlot2D splot = new ScatterPlot2D();
+    final ScatterPoint2D[] sps = new ScatterPoint2D[10];
     for (int i = 0; i < 10; i++) {
       tps[i] = new TextPoint2D(i, (i + 1) / 13.3f, "T" + i);
       cps[i] = new Circle2D(i, (i + 1) / 13.3f, i + 1);
@@ -262,16 +266,16 @@ public class SwingPlot {
 
     graph.addPlot(lplot);
 
-    Point2D[] cps2 = new Point2D[] {
-      new Point2D(0, 0),
-      new Point2D(0, 0),
-      new Point2D(2.5f, 0.3f),
-      new Point2D(5f, 0.9f),
-      new Point2D(7.5f, 0.6f),
-      new Point2D(10, 0),
-      new Point2D(10, 0),
+    final Point2D[] cps2 = new Point2D[] {
+        new Point2D(0, 0),
+        new Point2D(0, 0),
+        new Point2D(2.5f, 0.3f),
+        new Point2D(5f, 0.9f),
+        new Point2D(7.5f, 0.6f),
+        new Point2D(10, 0),
+        new Point2D(10, 0),
     };
-    CurvePlot2D cplot2 = new CurvePlot2D();
+    final CurvePlot2D cplot2 = new CurvePlot2D();
     cplot2.setData(cps2);
     cplot2.setTitle("curve");
     //cplot2.setFill(true);
@@ -282,10 +286,10 @@ public class SwingPlot {
     graph.addPlot(cplot2);
 
     //graph.setVerticalLine(0.43f);
-    GraphLine vline = new GraphLine(4.3f, GraphLine.VERTICAL);
+    final GraphLine vline = new GraphLine(4.3f, GraphLine.VERTICAL);
     graph.addPlot(vline);
 
-    GraphLine hline = new GraphLine(4.3f, GraphLine.HORIZONTAL);
+    final GraphLine hline = new GraphLine(4.3f, GraphLine.HORIZONTAL);
     vline.setType(GraphLine.DOTS);
     graph.addPlot(hline);
 
@@ -302,30 +306,30 @@ public class SwingPlot {
 
   /**
    * Returns a graph showing the black and white textures that are
-   * available. 
+   * available.
    *
    * @return a <code>Graph2D</code>
    */
   public static Graph2D genTextureTest() {
-    Graph2D graph = new Graph2D();
+    final Graph2D graph = new Graph2D();
 
-    ArrayList<TextPoint2D> text = new ArrayList<TextPoint2D>();
+    final ArrayList<TextPoint2D> text = new ArrayList<TextPoint2D>();
     for (int y = 0; y < 6; y++) {
       for (int x = 0; x < 9; x++) {
         final int index = y * 9 + x;
         final int y2 = 5 - y;
-        BoxPlot2D plot = new BoxPlot2D();
+        final BoxPlot2D plot = new BoxPlot2D();
         plot.setData(new Box2D[] {new Box2D(x + 0.05f, y2 + 0.05f, x + 0.95f, y2 + 0.95f)});
         plot.setFill(FillablePlot2D.PATTERN_FILL);
         plot.setColor(index);
         plot.setBorder(true);
-        
+
         graph.addPlot(plot);
 
         text.add(new TextPoint2D(x + 0.5f, y2 + 0.5f, "" + index));
       }
     }
-    TextPlot2D plot = new TextPlot2D();
+    final TextPlot2D plot = new TextPlot2D();
     plot.setData(text.toArray(new TextPoint2D[text.size()]));
     plot.setInvert(true);
 

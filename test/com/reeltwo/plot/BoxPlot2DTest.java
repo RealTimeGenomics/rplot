@@ -6,8 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the BoxPlot2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class BoxPlot2DTest extends AbstractFillablePlot2DTest {
 
@@ -21,16 +20,19 @@ public class BoxPlot2DTest extends AbstractFillablePlot2DTest {
   }
 
 
+  @Override
   public Plot2D getPlot() {
     return new BoxPlot2D();
   }
 
 
+  @Override
   public Plot2D getPlot(int x, int y) {
     return new BoxPlot2D(x, y);
   }
 
 
+  @Override
   public Datum2D[] getData() {
     return new Box2D[]{new Box2D(1, 2, 3, 4), new Box2D(5, 6, 7, 8)};
   }

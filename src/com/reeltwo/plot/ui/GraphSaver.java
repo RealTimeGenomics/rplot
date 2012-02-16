@@ -13,8 +13,7 @@ import javax.swing.filechooser.FileFilter;
 /**
  * Handy utility class for saving graphs as images.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class GraphSaver {
   private Color[] mColors = (Color[]) new DefaultColorGroup().getPatterns();
@@ -31,7 +30,7 @@ public class GraphSaver {
    */
   public GraphSaver() {
     mChooser = new JFileChooser();
-    PNGFileFilter pff = new PNGFileFilter();
+    final PNGFileFilter pff = new PNGFileFilter();
     mChooser.addChoosableFileFilter(pff);
     mChooser.setFileFilter(pff);
   }
@@ -44,7 +43,7 @@ public class GraphSaver {
   public void setFontSize(int size) {
     mFontSize = size;
   }
-  
+
   /**
    * Returns the font size.
    *
@@ -67,7 +66,7 @@ public class GraphSaver {
     mWidth = width;
     mHeight = height;
   }
-  
+
   /**
    * Sets the colors to render plots with.
    *
@@ -101,7 +100,7 @@ public class GraphSaver {
 
   /**
    * Saves the given <code>graph</code> to a file as determine via
-   * interactive dialogs. 
+   * interactive dialogs.
    *
    * @param graph a <code>Graph2D</code>
    */
@@ -129,22 +128,24 @@ public class GraphSaver {
 
   private void writeImage(File file, Graph2D graph) {
     try {
-      GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
-      ImageWriter iw = new ImageWriter(gr);
+      final GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
+      final ImageWriter iw = new ImageWriter(gr);
       iw.toPNG(file, graph, mWidth, mHeight, null);
-    } catch (Exception ioe) {
+    } catch (final Exception ioe) {
       System.err.println("Failed to write file " + ioe.getMessage());
     }
 
   }
 
   private static class PNGFileFilter extends FileFilter {
+    @Override
     public String getDescription() {
       return "PNG Files (*.png)";
     }
-    
+
+    @Override
     public boolean accept(File f) {
-      return (f.isDirectory() || f.getName().toLowerCase().endsWith(".png"));
+      return f.isDirectory() || f.getName().toLowerCase().endsWith(".png");
     }
 
   }

@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Structure to hold attributes of a group of labels on a 2D graph.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class ScatterPlot2D extends Plot2D {
@@ -18,8 +17,8 @@ public class ScatterPlot2D extends Plot2D {
   public ScatterPlot2D() {
     super();
   }
-  
-  
+
+
   /**
    * Constructor setting which axes to use in the plot.
    *
@@ -57,6 +56,7 @@ public class ScatterPlot2D extends Plot2D {
    *
    * @param data an array of Datum2D's
    */
+  @Override
   public void setData(Datum2D[] data) {
     if (!(data instanceof ScatterPoint2D[])) {
       throw new UnsupportedOperationException("Cannot set " + data.getClass().getName() + " in ScatterPlot2D.");

@@ -9,8 +9,7 @@ import com.reeltwo.plot.Plot2D;
 /**
  * Code to render a Graph2D object to a String.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class TextRenderer extends AbstractRenderer {
   private static final char SPACE = ' ';
@@ -19,41 +18,47 @@ public class TextRenderer extends AbstractRenderer {
   private static final char[] LINE_CHARS = new char[] {'*', '#', '$', '%', '@', '&', '=', 'o'};
   // ANSI escape sequence color codes
   private static final String[] COLORS =
-    new String[]{"",
-      "31", "32", "34", "33", "35", "36",
-      "1;31", "1;32", "1;34", "1;33", "1;35", "1;36",
-      "41", "42", "44", "43", "45", "46",
-      "1;41", "1;42", "1;44", "1;43", "1;45", "1;46"};
+      new String[]{"",
+    "31", "32", "34", "33", "35", "36",
+    "1;31", "1;32", "1;34", "1;33", "1;35", "1;36",
+    "41", "42", "44", "43", "45", "46",
+    "1;41", "1;42", "1;44", "1;43", "1;45", "1;46"};
 
 
+  @Override
   protected int getTextWidth(Object canvas, String text) {
     return text.length();
   }
 
+  @Override
   protected int getTextHeight(Object canvas, String text) {
     return 1;
   }
 
+  @Override
   protected int getTextDescent(Object canvas, String text) {
     return 0;
   }
 
+  @Override
   protected void setColor(Object canvas, int colorIndex) {
     switch (colorIndex) {
     case BACKGROUND_COLOR_INDEX: ((Canvas) canvas).setColor(0);
-      break;
+    break;
     case FOREGROUND_COLOR_INDEX: ((Canvas) canvas).setColorDefault();
-      break;
+    break;
     default:
       ((Canvas) canvas).setColor(colorIndex % COLORS.length);
     };
 
   }
 
+  @Override
   protected void setClip(Object canvas, int x, int y, int w, int h) {
     ((Canvas) canvas).setClipRectangle(x, y, w, h);
   }
 
+  @Override
   protected void drawString(Object canvas, int x, int y, String text, boolean isVertical) {
     for (int k = 0; k < text.length(); k++) {
       ((Canvas) canvas).putChar(x + k, y, text.charAt(k));
@@ -64,14 +69,17 @@ public class TextRenderer extends AbstractRenderer {
     return LINE_CHARS[getPointIndex() % LINE_CHARS.length];
   }
 
+  @Override
   protected void drawPoint(Object canvas, int x, int y) {
     ((Canvas) canvas).putChar(x, y, getLineChar());
   }
 
+  @Override
   protected void drawLine(Object canvas, int x1, int y1, int x2, int y2) {
     ((Canvas) canvas).putChar(x1, y1, x2, y2, getLineChar());
   }
 
+  @Override
   protected void drawRectangle(Object canvas, int x, int y, int w, int h) {
     drawLine(canvas, x, y, x + w, y);
     drawLine(canvas, x, y, x, y + h);
@@ -79,6 +87,7 @@ public class TextRenderer extends AbstractRenderer {
     drawLine(canvas, x + w, y, x + w, y + h);
   }
 
+  @Override
   protected void fillRectangle(Object canvas, int x, int y, int w, int h) {
     for (int i = 0; i <= h; i++) {
       drawLine(canvas, x, y + i, x + w, y + i);
@@ -86,15 +95,16 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
+  @Override
   protected void drawCircle(Object canvas, int x, int y, int diameter) {
-    int radius = diameter / 2;
+    final int radius = diameter / 2;
 
     drawPoint(canvas, x, y + radius);
     drawPoint(canvas, x, y - radius);
     drawPoint(canvas, x + radius, y);
     drawPoint(canvas, x - radius, y);
 
-    int r2 = radius * radius;
+    final int r2 = radius * radius;
     int xr = 1;
     int yr = (int) (Math.sqrt(r2 - 1) + 0.5);
     while (xr < yr) {
@@ -115,13 +125,15 @@ public class TextRenderer extends AbstractRenderer {
       drawPoint(canvas, x - xr, y + yr);
       drawPoint(canvas, x - xr, y - yr);
     }
-        
+
   }
 
+  @Override
   protected void fillCircle(Object canvas, int x, int y, int diameter) {
     drawCircle(canvas, x, y, diameter);
   }
 
+  @Override
   protected void drawPolygon(Object canvas, int[] xs, int[] ys) {
     if (xs.length != 0) {
       for (int i = 1; i < xs.length; i++) {
@@ -131,6 +143,7 @@ public class TextRenderer extends AbstractRenderer {
     }
   }
 
+  @Override
   protected void fillPolygon(Object canvas, int[] xs, int[] ys) {
     // todo
     for (int y = 0; y < ((Canvas) canvas).getHeight(); y++) {
@@ -147,7 +160,7 @@ public class TextRenderer extends AbstractRenderer {
    * Renders the givne graph to a string that mimics a screen of
    * <code>screenWidth</code> characters by <code>screenHeight</code>
    * characters.  <code>inColor</code> produces ansi color codes if
-   * set. 
+   * set.
    *
    * @param graph a <code>Graph2D</code>
    * @param screenWidth screen width
@@ -159,8 +172,8 @@ public class TextRenderer extends AbstractRenderer {
     if (graph == null) {
       return null;
     }
-    Canvas canvas = new Canvas(screenWidth, screenHeight);
-    Mapping[] mapping = drawPeriphery(graph, canvas);
+    final Canvas canvas = new Canvas(screenWidth, screenHeight);
+    final Mapping[] mapping = drawPeriphery(graph, canvas);
     drawData(canvas, graph.getPlots(), mapping);
     drawKey(graph, canvas);
     return canvas.toString(inColor);
@@ -168,7 +181,7 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private Mapping[] drawPeriphery(Graph2D graph, Canvas canvas) {
-    Mapping[] mapping = new Mapping[4];
+    final Mapping[] mapping = new Mapping[4];
     int sxlo = 0;
     int sxhi = canvas.getWidth() - 1;
     int sylo = canvas.getHeight() - 2;
@@ -181,8 +194,8 @@ public class TextRenderer extends AbstractRenderer {
       sylo--;
     }
     if ((graph.usesX(1) && graph.getXLabel(1).length() > 0)
-      || (graph.usesY(0) && graph.getYLabel(0).length() > 0)
-      || (graph.usesY(1) && graph.getYLabel(1).length() > 0)) {
+        || (graph.usesY(0) && graph.getYLabel(0).length() > 0)
+        || (graph.usesY(1) && graph.getYLabel(1).length() > 0)) {
       syhi++;
     }
 
@@ -195,7 +208,7 @@ public class TextRenderer extends AbstractRenderer {
 
     canvas.setColorDefault();
     // titles
-    int xstart = canvas.getWidth() / 2 - title.length() / 2;
+    final int xstart = canvas.getWidth() / 2 - title.length() / 2;
     for (int i = 0; i < title.length(); i++) {
       canvas.putChar(xstart + i, 0, title.charAt(i));
     }
@@ -208,7 +221,7 @@ public class TextRenderer extends AbstractRenderer {
       final float xhi = graph.getXHi(0);
       final float ylo = graph.getYLo(0);
       final float yhi = graph.getYHi(0);
-      TicInfo yTicInfo = calcYTicSize(graph, 0, ylo, yhi);
+      final TicInfo yTicInfo = calcYTicSize(graph, 0, ylo, yhi);
       if (yTicInfo != null) {
         sxlo = yTicInfo.mMaxWidth;
       }
@@ -217,7 +230,7 @@ public class TextRenderer extends AbstractRenderer {
       final float x2hi = graph.getXHi(1);
       final float y2lo = graph.getYLo(1);
       final float y2hi = graph.getYHi(1);
-      TicInfo y2TicInfo = calcYTicSize(graph, 1, y2lo, y2hi);
+      final TicInfo y2TicInfo = calcYTicSize(graph, 1, y2lo, y2hi);
       if (y2TicInfo != null) {
         sxhi -= y2TicInfo.mMaxWidth;
       }
@@ -229,7 +242,7 @@ public class TextRenderer extends AbstractRenderer {
       // border
       drawBorder(canvas, sxlo, sylo, sxhi, syhi);
 
-      Box2D s = new Box2D(sxlo, sylo, sxhi, syhi);
+      final Box2D s = new Box2D(sxlo, sylo, sxhi, syhi);
       // scales
       drawYTics(graph, canvas, 0, yTicInfo, mapping[1], s);
       drawYTics(graph, canvas, 1, y2TicInfo, mapping[3], s);
@@ -247,10 +260,11 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
+  @Override
   protected int calculateKeyWidth(Object canvas, Graph2D graph) {
     int keyWidth = 0;
     if (graph.isShowKey()) {
-      String keyTitle = graph.getKeyTitle();
+      final String keyTitle = graph.getKeyTitle();
       if (keyTitle != null) {
         keyWidth += getTextWidth(canvas, keyTitle);
       } else {
@@ -260,13 +274,13 @@ public class TextRenderer extends AbstractRenderer {
 
     keyWidth += 1; // for ':'
 
-    Plot2D[] plots = graph.getPlots();
+    final Plot2D[] plots = graph.getPlots();
     for (int j = 0; j < plots.length; j++) {
-      Plot2D plot = plots[j];
-      String dtitle = plot.getTitle();
+      final Plot2D plot = plots[j];
+      final String dtitle = plot.getTitle();
       if (dtitle != null && dtitle.length() != 0
           && plot.getData() != null && plot.getData().length != 0) {
-        int sw = getTextWidth(canvas, dtitle) + 4; // + point and spaces and comma
+        final int sw = getTextWidth(canvas, dtitle) + 4; // + point and spaces and comma
         keyWidth += sw;
       }
     }
@@ -276,6 +290,7 @@ public class TextRenderer extends AbstractRenderer {
     return keyWidth;
   }
 
+  @Override
   protected int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth) {
     return graph.isShowKey() ? getTextHeight(canvas, "A") : 0;
   }
@@ -330,21 +345,21 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private void drawYTics(Graph2D graph, Canvas canvas, int whichTic, TicInfo ticInfo, Mapping mapping, Box2D s) {
-    int sxlo = (int) s.getXLo();
-    int sxhi = (int) s.getXHi();
-    int sylo = (int) s.getYLo();
-    int syhi = (int) s.getYHi();
+    final int sxlo = (int) s.getXLo();
+    final int sxhi = (int) s.getXHi();
+    final int sylo = (int) s.getYLo();
+    final int syhi = (int) s.getYHi();
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
-        float num = ticInfo.mTic * k;
-        int y = (int) mapping.worldToScreen(num);
+        final float num = ticInfo.mTic * k;
+        final int y = (int) mapping.worldToScreen(num);
 
         if (y >= syhi && y <= sylo) {
-          String snum = ticInfo.mLabelFormatter.format(num);
-          int yy = (whichTic == 0) ? sxlo - snum.length() : sxhi + 1;
+          final String snum = ticInfo.mLabelFormatter.format(num);
+          final int yy = (whichTic == 0) ? sxlo - snum.length() : sxhi + 1;
           for (int i = 0; i < snum.length(); i++) {
-            char ch = snum.charAt(i);
+            final char ch = snum.charAt(i);
             canvas.putChar(yy + i, y, ch);
           }
           if (whichTic == 0) {
@@ -365,25 +380,25 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private void drawXTics(Graph2D graph, Canvas canvas, int whichTic, Mapping mapping, float xlo, float xhi, Box2D s) {
-    int sxlo = (int) s.getXLo();
-    int sxhi = (int) s.getXHi();
-    int sylo = (int) s.getYLo();
-    int syhi = (int) s.getYHi();
+    final int sxlo = (int) s.getXLo();
+    final int sxhi = (int) s.getXHi();
+    final int sylo = (int) s.getYLo();
+    final int syhi = (int) s.getYHi();
     // Note: sylo and syhi are swapped in the Box2D object.
 
     if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
-      float xtic = graph.getXTic(whichTic);
-      
-      int start = (int) (xlo / xtic);
-      int end = (int) (xhi / xtic);
-      LabelFormatter lf = graph.getXTicLabelFormatter(whichTic);
+      final float xtic = graph.getXTic(whichTic);
+
+      final int start = (int) (xlo / xtic);
+      final int end = (int) (xhi / xtic);
+      final LabelFormatter lf = graph.getXTicLabelFormatter(whichTic);
       if (lf instanceof DefaultFormatter) {
         ((DefaultFormatter) lf).setNumDecimalDigits(xtic);
       }
       for (int k = start; k <= end; k++) {
-        float num = xtic * k;
-        int x = (int) mapping.worldToScreen(num);
-        
+        final float num = xtic * k;
+        final int x = (int) mapping.worldToScreen(num);
+
         if (x >= sxlo && x <= sxhi) {
           if (whichTic == 0) {
             canvas.putChar(x, syhi, '+');
@@ -396,12 +411,12 @@ public class TextRenderer extends AbstractRenderer {
               canvas.putChar(x, syhi, '+');
             }
           }
-        
-          String snum = lf.format(num);
-        
-          int xx = x - snum.length() / 2;
+
+          final String snum = lf.format(num);
+
+          final int xx = x - snum.length() / 2;
           for (int i = 0; i < snum.length(); i++) {
-            char ch = snum.charAt(i);
+            final char ch = snum.charAt(i);
             canvas.putChar(xx + i, (whichTic == 0) ? syhi + 1 : sylo - 1, ch);
           }
         }
@@ -412,7 +427,7 @@ public class TextRenderer extends AbstractRenderer {
 
   private TicInfo calcYTicSize(Graph2D graph, int whichTic, float ylo, float yhi) {
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
-      TicInfo ticInfo = new TicInfo();
+      final TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (ylo / ticInfo.mTic);
@@ -420,8 +435,8 @@ public class TextRenderer extends AbstractRenderer {
       ticInfo.mMaxWidth = 0;
       ticInfo.mLabelFormatter = graph.getYTicLabelFormatter(whichTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
-        float num = ticInfo.mTic * k;
-        String snum = ticInfo.mLabelFormatter.format(num);
+        final float num = ticInfo.mTic * k;
+        final String snum = ticInfo.mLabelFormatter.format(num);
         if (snum.length() > ticInfo.mMaxWidth) {
           ticInfo.mMaxWidth = snum.length();
         }
@@ -446,18 +461,18 @@ public class TextRenderer extends AbstractRenderer {
       }
     }
 
-    int centerWidth = (sxhi + 1) / 2;
+    final int centerWidth = (sxhi + 1) / 2;
     String xlabel = graph.getXLabel(0);
     if (graph.usesX(0) && xlabel.length() > 0) {
-      int labelHeight = sylo + 1 + ((graph.usesX(0) && graph.isShowXTics(0)) ? 1 : 0);
-      int xstart = centerWidth - xlabel.length() / 2;
+      final int labelHeight = sylo + 1 + ((graph.usesX(0) && graph.isShowXTics(0)) ? 1 : 0);
+      final int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, labelHeight, xlabel.charAt(i));
       }
     }
     xlabel = graph.getXLabel(1);
     if (graph.usesX(1) && xlabel.length() > 0) {
-      int xstart = centerWidth - xlabel.length() / 2;
+      final int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, syhi - 2, xlabel.charAt(i));
       }
@@ -525,7 +540,7 @@ public class TextRenderer extends AbstractRenderer {
         hits++;
       }
     }
-    return ((hits & 1) != 0);
+    return (hits & 1) != 0;
   }
 
 
@@ -627,7 +642,7 @@ public class TextRenderer extends AbstractRenderer {
       }
 
       if (ex - sx >= ey - sy) {
-        int range = ex - sx;
+        final int range = ex - sx;
         if (range == 0) {
           putChar(sx, sy, c);
         } else {
@@ -636,7 +651,7 @@ public class TextRenderer extends AbstractRenderer {
           }
         }
       } else {
-        int range = ey - sy;
+        final int range = ey - sy;
         if (range == 0) {
           putChar(sx, sy, c);
         } else {
@@ -659,26 +674,27 @@ public class TextRenderer extends AbstractRenderer {
     //private char getChar(Point2D pt) {
     //return getChar((int)pt.getX(),(int)pt.getY());
     //}
+    @Override
     public String toString() {
       return toString(false);
     }
 
 
     public String toString(boolean inColor) {
-      String cr = System.getProperty("line.separator");
+      final String cr = System.getProperty("line.separator");
       if (inColor || !cr.equals("" + CR)) {
-        StringBuffer s = new StringBuffer();
+        final StringBuffer s = new StringBuffer();
         //String lineChars = new String(LINE_CHARS);
 
         for (int i = 0; i < mCanvas.length; i++) {
           //int index = lineChars.indexOf(mCanvas[i]);
-          int color = mColors[i];
+          final int color = mColors[i];
           if (inColor && color > 0) {
             s.append("\033[")
-              .append(COLORS[color % COLORS.length])
-              .append("m")
-              .append(mCanvas[i])
-              .append("\033[0m");
+            .append(COLORS[color % COLORS.length])
+            .append("m")
+            .append(mCanvas[i])
+            .append("\033[0m");
           } else {
             if (mCanvas[i] == CR) {
               s.append(cr);

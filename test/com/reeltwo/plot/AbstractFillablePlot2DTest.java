@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * JUnit tests for the FillablePlot2D abstract class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public abstract class AbstractFillablePlot2DTest extends AbstractPlot2DTest {
 
@@ -18,7 +17,7 @@ public abstract class AbstractFillablePlot2DTest extends AbstractPlot2DTest {
   }
 
   public void testFill() {
-    FillablePlot2D plot = (FillablePlot2D) getPlot();
+    final FillablePlot2D plot = (FillablePlot2D) getPlot();
     assertEquals(FillablePlot2D.NO_FILL, plot.getFill());
     plot.setFill(FillablePlot2D.NO_FILL);
     assertEquals(FillablePlot2D.NO_FILL, plot.getFill());
@@ -29,17 +28,17 @@ public abstract class AbstractFillablePlot2DTest extends AbstractPlot2DTest {
   }
 
   public void testBadArguments() {
-    FillablePlot2D plot = (FillablePlot2D) getPlot();
+    final FillablePlot2D plot = (FillablePlot2D) getPlot();
     try {
       plot.setFill(FillablePlot2D.NO_FILL - 1);
       fail("accepted bad argument");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
     try {
       plot.setFill(FillablePlot2D.PATTERN_FILL + 1);
       fail("accepted bad argument");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
   }

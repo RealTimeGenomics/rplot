@@ -6,8 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the CirclePlot2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class CirclePlot2DTest extends AbstractFillablePlot2DTest {
@@ -22,16 +21,19 @@ public class CirclePlot2DTest extends AbstractFillablePlot2DTest {
   }
 
 
+  @Override
   public Plot2D getPlot() {
     return new CirclePlot2D();
   }
 
 
+  @Override
   public Plot2D getPlot(int x, int y) {
     return new CirclePlot2D(x, y);
   }
 
 
+  @Override
   public Datum2D[] getData() {
     return new Circle2D[]{new Circle2D(1, 2, 3), new Circle2D(5, 6, 7)};
   }

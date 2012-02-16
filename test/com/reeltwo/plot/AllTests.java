@@ -10,12 +10,11 @@ import junit.framework.TestSuite;
  * java com.reeltwo.plot.AllTests
  *
  * @author <a href="mailto:rlittin@reeltwo.com">Richard Littin</a>
- * @version $Revision$
  */
 public class AllTests extends TestSuite {
 
   public static Test suite() {
-    TestSuite suite = new TestSuite();
+    final TestSuite suite = new TestSuite();
 
     suite.addTest(Arrow2DTest.suite());
     suite.addTest(ArrowPlot2DTest.suite());

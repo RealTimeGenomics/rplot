@@ -6,8 +6,7 @@ import junit.framework.TestCase;
 /**
  * JUnit tests for the abstract PatternGroup class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public abstract class AbstractPatternGroupTest extends TestCase {
@@ -23,17 +22,19 @@ public abstract class AbstractPatternGroupTest extends TestCase {
 
   abstract PatternGroup getPatternGroup();
 
+  @Override
   public void setUp() {
   }
 
 
+  @Override
   public void tearDown() {
   }
 
   public void testBasics() {
-    PatternGroup pg = getPatternGroup();
+    final PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint[] patterns = pg.getPatterns();
+    final Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertTrue("PatternGroup must return at least one pattern.", patterns.length > 0);
     for (int i = 0; i < patterns.length; i++) {

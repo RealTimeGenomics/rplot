@@ -11,9 +11,8 @@ import java.util.ArrayList;
  * approaches certain levels.
  *
  * @author <a href="mailto:len@reeltwo.com">Len Trigg</a>
- * @version $Revision$
  */
-public class MemoryMonitor extends Thread {
+public final class MemoryMonitor extends Thread {
 
   /**
    * <code>MemoryListener</code> specifies the API for objects wanting
@@ -56,16 +55,18 @@ public class MemoryMonitor extends Thread {
       sInstance = new MemoryMonitor();
       sInstance.start();
       sInstance.addMemoryListener(
-        new MemoryListener() {
-          public void lowMemory(long kbMax, long kbUsed, final float fractionUsed) {
-            System.err.println("Within 10% of memory limit: "
-                               + FORMATER.format(kbMax / 1024) + ", "
-                               + FORMATER.format(kbUsed / 1024));
-          }
+          new MemoryListener() {
+            @Override
+            public void lowMemory(long kbMax, long kbUsed, final float fractionUsed) {
+              System.err.println("Within 10% of memory limit: "
+                  + FORMATER.format(kbMax / 1024) + ", "
+                  + FORMATER.format(kbUsed / 1024));
+            }
 
 
-          public void memoryUpdate(long kbMax, long kbUsed, final float fraction) { }
-        });
+            @Override
+            public void memoryUpdate(long kbMax, long kbUsed, final float fraction) { }
+          });
     }
     return sInstance;
   }
@@ -177,6 +178,7 @@ public class MemoryMonitor extends Thread {
   }
 
   /** {@inheritDoc} */
+  @Override
   public String toString() {
     return "Max " + FORMATER.format(getMaxMemory() / 1024) + "MB , Used " + FORMATER.format(getUsedMemory() / 1024) + "MB";
   }
@@ -215,8 +217,8 @@ public class MemoryMonitor extends Thread {
       for (int i = 0; i < mMemoryListeners.size(); i++) {
         try {
           mMemoryListeners.get(i).lowMemory(kbMax, kbUsed, fraction);
-        } catch (Throwable t) {
-          t.printStackTrace();
+        } catch (final Throwable t) {
+          System.err.println(t.getMessage());
         }
       }
     }
@@ -228,17 +230,18 @@ public class MemoryMonitor extends Thread {
       for (int i = 0; i < mMemoryListeners.size(); i++) {
         try {
           mMemoryListeners.get(i).memoryUpdate(kbMax, kbUsed, fraction);
-        } catch (Throwable t) {
-          t.printStackTrace();
+        } catch (final Throwable t) {
+          System.err.println(t.getMessage());
         }
       }
     }
   }
 
   /** {@inheritDoc} */
+  @Override
   public void run() {
-    Runtime r = Runtime.getRuntime();
-    long max = (r.maxMemory() / 1024) - (mSub64M ? (64 * 1024) : 0);
+    final Runtime r = Runtime.getRuntime();
+    final long max = (r.maxMemory() / 1024) - (mSub64M ? (64 * 1024) : 0);
     setMaxMemory(max);
     boolean lowMem = false;
 
@@ -262,7 +265,7 @@ public class MemoryMonitor extends Thread {
       notifyMemoryUpdate(max, used, fraction);
       try {
         sleep(1000);
-      } catch (InterruptedException ie) {
+      } catch (final InterruptedException ie) {
         ; // ok
       }
     }

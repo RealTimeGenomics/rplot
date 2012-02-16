@@ -6,8 +6,7 @@ import java.awt.Paint;
 /**
  * Set of colors used in gray scale plots.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public class GrayScaleColorGroup implements PatternGroup {
 
@@ -38,6 +37,7 @@ public class GrayScaleColorGroup implements PatternGroup {
 
 
   /** {@inheritDoc} */
+  @Override
   public Paint[] getPatterns() {
     if (mColors == null) {
       mColors = new Color[mNumShades];
@@ -47,17 +47,19 @@ public class GrayScaleColorGroup implements PatternGroup {
         mColors[i] = new Color(shade, shade, shade);
       }
     }
-    Color[] colors = new Color[mColors.length];
+    final Color[] colors = new Color[mColors.length];
     System.arraycopy(mColors, 0, colors, 0, colors.length);
     return colors;
   }
 
   /** {@inheritDoc} */
+  @Override
   public String getName() {
     return "Grayscale " + mNumShades;
   }
 
   /** {@inheritDoc} */
+  @Override
   public String getDescription() {
     return "Gray scaled shades.";
   }

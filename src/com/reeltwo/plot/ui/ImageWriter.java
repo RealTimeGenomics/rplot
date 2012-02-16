@@ -16,8 +16,7 @@ import javax.imageio.ImageIO;
 /**
  * Routines to write Graph2D's to graphics files of various formats.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class ImageWriter {
   /** the thing that does the graph rendering */
@@ -58,7 +57,7 @@ public class ImageWriter {
       throw new NullPointerException("null file given.");
     }
 
-    FileOutputStream fos = new FileOutputStream(file);
+    final FileOutputStream fos = new FileOutputStream(file);
     try {
       return toImage(type, fos, graph, width, height, font);
     } finally {
@@ -84,8 +83,8 @@ public class ImageWriter {
    */
   public Mapping[] toImage(int type, OutputStream os, Graph2D graph, int width, int height, Font font) throws IOException {
     switch (type) {
-      //case GIF_IMAGE:
-      //return toGIF(os, graph, width, height, font);
+    //case GIF_IMAGE:
+    //return toGIF(os, graph, width, height, font);
     case PNG_IMAGE:
       return toPNG(os, graph, width, height, font);
     default:
@@ -113,7 +112,7 @@ public class ImageWriter {
       throw new NullPointerException("null file given.");
     }
 
-    FileOutputStream fos = new FileOutputStream(file);
+    final FileOutputStream fos = new FileOutputStream(file);
     try {
       return toPNG(fos, graph, width, height, font);
     } finally {
@@ -147,8 +146,8 @@ public class ImageWriter {
       throw new IllegalArgumentException("dimensions must be greater than 0");
     }
 
-    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    Graphics2D g = bi.createGraphics();
+    final BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    final Graphics2D g = bi.createGraphics();
     if (font != null) {
       g.setFont(font);
     }
@@ -156,7 +155,7 @@ public class ImageWriter {
     g.fillRect(0, 0, width, height);
 
     mGraphicsRenderer.drawGraph(graph, g, width, height);
-    Mapping[] mapping = mGraphicsRenderer.getMappings();
+    final Mapping[] mapping = mGraphicsRenderer.getMappings();
     ImageIO.write(bi, "png", os);
 
     return mapping;

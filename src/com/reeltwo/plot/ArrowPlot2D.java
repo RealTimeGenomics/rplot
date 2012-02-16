@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Structure to hold attributes of an array of arrows on a 2D graph.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class ArrowPlot2D extends Plot2D {
@@ -30,7 +29,7 @@ public class ArrowPlot2D extends Plot2D {
 
   /** type of arrow head */
   private int mHeadType = DEFAULT_HEAD;
-   /** mode of arrow (end it appears on) */
+  /** mode of arrow (end it appears on) */
   private int mMode = DEFAULT_MODE;
 
   private float mHeadWidth = 4.0f;
@@ -150,6 +149,7 @@ public class ArrowPlot2D extends Plot2D {
    *
    * @param data an array of Datum2D's
    */
+  @Override
   public void setData(Datum2D[] data) {
     if (!(data instanceof Arrow2D[])) {
       throw new UnsupportedOperationException("Cannot set " + data.getClass().getName() + " in ArrowPlot2D.");

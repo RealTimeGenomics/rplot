@@ -6,22 +6,21 @@ import com.reeltwo.plot.renderer.TextRenderer;
 /**
  * A demo rendering a graph to the terminal.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
-public class TextPlot {
+public final class TextPlot {
 
   // Prevent instantiation.
   private TextPlot() { }
-  
+
   /**
    * Main loop.
    *
    * @param args command line arguments
    */
   public static void main(String[] args) {
-    Graph2D graph = SwingPlot.genTest();
-    String str = new TextRenderer().drawGraph(graph, 90, 40, true);
+    final Graph2D graph = SwingPlot.genTest();
+    final String str = new TextRenderer().drawGraph(graph, 90, 40, true);
     System.out.println(str);
   }
 

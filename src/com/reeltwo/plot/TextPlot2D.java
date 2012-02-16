@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Structure to hold attributes of a group of labels on a 2D graph.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class TextPlot2D extends Plot2D {
@@ -87,7 +86,7 @@ public class TextPlot2D extends Plot2D {
   /**
    * Sets the horizontal alignment of the text relative to the point.
    * Valid alignment values are <code>LEFT</code>, <code>CENTER</code>
-   * (the default) and <code>RIGHT</code>. 
+   * (the default) and <code>RIGHT</code>.
    *
    * @param alignment an alignment value
    * @exception IllegalArgumentException if an invalid horizontal
@@ -119,7 +118,7 @@ public class TextPlot2D extends Plot2D {
   /**
    * Sets the vertical alignment of the text relative to the point.
    * Valid alignment values are <code>TOP</code>, <code>CENTER</code>
-   * (the default), <code>BASELINE</code> and <code>BOTTOM</code>. 
+   * (the default), <code>BASELINE</code> and <code>BOTTOM</code>.
    *
    * @param alignment an alignment value
    * @exception IllegalArgumentException if an invalid vertical
@@ -158,7 +157,7 @@ public class TextPlot2D extends Plot2D {
     mInvert = flag;
   }
 
-  
+
   /**
    * Returns whether inverse video mode is set.
    *
@@ -170,7 +169,7 @@ public class TextPlot2D extends Plot2D {
 
   /**
    * Sets whether to draw text using the graphs forground color or one
-   * of the automatically selected plot colors. 
+   * of the automatically selected plot colors.
    *
    * @param flag use foreground color
    */
@@ -193,6 +192,7 @@ public class TextPlot2D extends Plot2D {
    *
    * @param data an array of Datum2D's
    */
+  @Override
   public void setData(Datum2D[] data) {
     if (!(data instanceof TextPoint2D[])) {
       throw new UnsupportedOperationException("Cannot set " + data.getClass().getName() + " in TextPlot2D.");

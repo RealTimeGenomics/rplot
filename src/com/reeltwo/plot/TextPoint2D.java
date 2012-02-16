@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Text to display at a Point2D.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class TextPoint2D extends ObjectPoint2D {

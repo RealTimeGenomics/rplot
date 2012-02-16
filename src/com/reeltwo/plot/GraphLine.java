@@ -2,13 +2,12 @@ package com.reeltwo.plot;
 
 /**
  * Renders a single vertical or horizontal line across the graph at a
- * specified location. 
+ * specified location.
  *
- * @author Richard Littin (richard@reeltwo.com) 
- * @version $Revision$
+ * @author Richard Littin
  */
 public class GraphLine extends Plot2D {
-  
+
   /** Horizontal line */
   public static final int HORIZONTAL = 0;
   /** Vertical line */
@@ -38,7 +37,7 @@ public class GraphLine extends Plot2D {
   public GraphLine(float location, int orientation) {
     this(0, 0, location, orientation);
   }
-  
+
   private GraphLine(int x, int y, float location, int orientation) {
     if (orientation < HORIZONTAL || orientation > VERTICAL) {
       throw new IllegalArgumentException("Invalid orientation: " + orientation);
@@ -46,7 +45,7 @@ public class GraphLine extends Plot2D {
     mLocation = location;
     mOrientation = orientation;
   }
-  
+
   /**
    * Returns the location of the line.
    *
@@ -89,41 +88,49 @@ public class GraphLine extends Plot2D {
   }
 
   /** {@inheritDoc} */
+  @Override
   public void setData(Datum2D[] data) {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
+  @Override
   public Datum2D[] getData() {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
+  @Override
   public float getXLo() {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
+  @Override
   public float getXHi() {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
+  @Override
   public float getYLo() {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
+  @Override
   public float getYHi() {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
+  @Override
   public void setTitle(String title) {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
+  @Override
   public void setColor(int color) {
     throw new UnsupportedOperationException("not applicable.");
   }

@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the GrayScaleColorGroup class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class GrayScaleColorGroupTest extends AbstractPatternGroupTest {
 
@@ -22,23 +21,26 @@ public class GrayScaleColorGroupTest extends AbstractPatternGroupTest {
   }
 
 
+  @Override
   public void setUp() {
     super.setUp();
   }
 
 
+  @Override
   public void tearDown() {
     super.tearDown();
   }
 
+  @Override
   public PatternGroup getPatternGroup() {
     return new GrayScaleColorGroup();
   }
 
   public void testDefaults() {
-    PatternGroup pg = getPatternGroup();
+    final PatternGroup pg = getPatternGroup();
     assertNotNull(pg);
-    Paint[] patterns = pg.getPatterns();
+    final Paint[] patterns = pg.getPatterns();
     assertNotNull(patterns);
     assertEquals(10, patterns.length);
 
@@ -51,9 +53,9 @@ public class GrayScaleColorGroupTest extends AbstractPatternGroupTest {
 
   public void testConstructor() {
     for (int i = 1; i < 100; i *= 3) {
-      PatternGroup pg = new GrayScaleColorGroup(i);
+      final PatternGroup pg = new GrayScaleColorGroup(i);
       assertNotNull(pg);
-      Paint[] patterns = pg.getPatterns();
+      final Paint[] patterns = pg.getPatterns();
       assertNotNull(patterns);
       assertEquals(i, patterns.length);
 
@@ -69,7 +71,7 @@ public class GrayScaleColorGroupTest extends AbstractPatternGroupTest {
     try {
       new GrayScaleColorGroup(0);
       fail("constructor accepted bad parameter.");
-    } catch (IllegalArgumentException iae) {
+    } catch (final IllegalArgumentException iae) {
       ; // expected
     }
   }

@@ -42,8 +42,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the TextPlot2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class TextPlot2DTest extends AbstractPlot2DTest {
@@ -58,23 +57,26 @@ public class TextPlot2DTest extends AbstractPlot2DTest {
   }
 
 
+  @Override
   public Plot2D getPlot() {
     return new TextPlot2D();
   }
 
 
+  @Override
   public Plot2D getPlot(int x, int y) {
     return new TextPlot2D(x, y);
   }
 
 
+  @Override
   public Datum2D[] getData() {
     return new TextPoint2D[]{new TextPoint2D(1, 2, "one"), new TextPoint2D(5, 6, "two")};
   }
 
 
   public void test1() {
-    TextPlot2D plot = (TextPlot2D) getPlot();
+    final TextPlot2D plot = (TextPlot2D) getPlot();
     assertTrue(plot.isUseFGColor());
     plot.setUseFGColor(true);
     assertTrue(plot.isUseFGColor());
@@ -82,7 +84,7 @@ public class TextPlot2DTest extends AbstractPlot2DTest {
     assertTrue(!plot.isUseFGColor());
     plot.setUseFGColor(true);
     assertTrue(plot.isUseFGColor());
-    
+
     assertTrue(!plot.isInvert());
     plot.setInvert(true);
     assertTrue(plot.isInvert());

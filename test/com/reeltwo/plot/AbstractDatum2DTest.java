@@ -28,8 +28,7 @@ import junit.framework.TestCase;
 /**
  * Abstract JUnit tests for the Datum2D classes.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public abstract class AbstractDatum2DTest extends TestCase {
@@ -47,16 +46,18 @@ public abstract class AbstractDatum2DTest extends TestCase {
   public abstract Datum2D getDatum();
 
 
+  @Override
   protected void setUp() {
   }
 
 
+  @Override
   protected void tearDown() {
   }
 
 
   public void testBasics() {
-    Datum2D datum = getDatum();
+    final Datum2D datum = getDatum();
     assertTrue(datum.getXLo() <= datum.getXHi());
     assertTrue(datum.getYLo() <= datum.getYHi());
   }

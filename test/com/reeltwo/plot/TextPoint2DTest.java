@@ -30,8 +30,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the TextPoint2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class TextPoint2DTest extends AbstractDatum2DTest {
@@ -46,6 +45,7 @@ public class TextPoint2DTest extends AbstractDatum2DTest {
   }
 
 
+  @Override
   public Datum2D getDatum() {
     return new TextPoint2D(1, 2, "text");
   }

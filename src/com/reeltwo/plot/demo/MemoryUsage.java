@@ -17,41 +17,47 @@ import javax.swing.UIManager;
 /**
  * A dialog displaying memory use over time.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public class MemoryUsage extends JDialog {
+  private static final long serialVersionUID = -6222507196514885587L;
   private final MemoryPanel mMemoryPanel = new MemoryPanel();
 
   MemoryUsage() {
     super();
     setTitle("Memory Usage");
 
-    JPanel mainPanel = new JPanel(new BorderLayout());
+    final JPanel mainPanel = new JPanel(new BorderLayout());
 
 
     mainPanel.add(mMemoryPanel, BorderLayout.CENTER);
 
-    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+    final JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 
     buttonPanel.add(new JButton(
-      new AbstractAction("GC") {
-        public void actionPerformed(ActionEvent e) {
-          mMemoryPanel.refresh();
-        }
-      }));
+        new AbstractAction("GC") {
+          private static final long serialVersionUID = 3660591807128148259L;
+
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            mMemoryPanel.refresh();
+          }
+        }));
     buttonPanel.add(new JButton(
-      new AbstractAction("Close") {
-        public void actionPerformed(ActionEvent e) {
-          close();
-        }
-      }));
+        new AbstractAction("Close") {
+          private static final long serialVersionUID = 7740156196494085688L;
+
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            close();
+          }
+        }));
     // make all buttons same width and height
-    Component[] components = buttonPanel.getComponents();
+    final Component[] components = buttonPanel.getComponents();
     int maxX = 0;
     int maxY = 0;
     for (int i = 0; i < components.length; i++) {
-      Dimension d = components[i].getPreferredSize();
+      final Dimension d = components[i].getPreferredSize();
       if (d.width > maxX) {
         maxX = d.width;
       }
@@ -59,7 +65,7 @@ public class MemoryUsage extends JDialog {
         maxY = d.height;
       }
     }
-    Dimension d = new Dimension(maxX, maxY);
+    final Dimension d = new Dimension(maxX, maxY);
     for (int i = 0; i < components.length; i++) {
       ((JButton) components[i]).setPreferredSize(d);
     }
@@ -72,11 +78,12 @@ public class MemoryUsage extends JDialog {
     setLocationRelativeTo(getOwner());
 
     addWindowListener(
-      new WindowAdapter() {
-        public void windowClosing(WindowEvent e) {
-          close();
-        }
-      });
+        new WindowAdapter() {
+          @Override
+          public void windowClosing(WindowEvent e) {
+            close();
+          }
+        });
   }
 
 
@@ -97,14 +104,17 @@ public class MemoryUsage extends JDialog {
    */
   public static void main(String[] args) throws Exception {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    MemoryUsage mud = new MemoryUsage() {
-        public void close() {
-          super.close();
-          System.exit(0);
-        }
-      };
+    final MemoryUsage mud = new MemoryUsage() {
+      private static final long serialVersionUID = 5057017502018317041L;
+
+      @Override
+      public void close() {
+        super.close();
+        System.exit(0);
+      }
+    };
     mud.setVisible(true);
-    
+
     //args[0] => class name
     //args[1]..args[n-1] => command line parameters
     if (args.length >= 1) {

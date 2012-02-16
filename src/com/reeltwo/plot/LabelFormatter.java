@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Interface for axis label formatters.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public interface LabelFormatter {
 

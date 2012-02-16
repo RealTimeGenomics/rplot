@@ -3,8 +3,7 @@ package com.reeltwo.plot;
 /**
  * Methods that all point objects must implement.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 public interface Datum2D {
   /**

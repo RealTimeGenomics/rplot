@@ -6,8 +6,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the ScatterPoint2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class ScatterPoint2DTest extends AbstractDatum2DTest {
@@ -22,13 +21,14 @@ public class ScatterPoint2DTest extends AbstractDatum2DTest {
   }
 
 
+  @Override
   public Datum2D getDatum() {
     return new ScatterPoint2D(1, 2, 3);
   }
 
 
   public void test1() {
-    ScatterPoint2D spoint = new ScatterPoint2D(1, 2, 3);
+    final ScatterPoint2D spoint = new ScatterPoint2D(1, 2, 3);
     assertTrue(spoint instanceof Point2D);
     assertTrue(3 == spoint.getNumberOfPoints());
 
@@ -38,16 +38,16 @@ public class ScatterPoint2DTest extends AbstractDatum2DTest {
 
   public void testBadArgs() {
     try {
-      ScatterPoint2D s = new ScatterPoint2D(1, 2, -1);
+      new ScatterPoint2D(1, 2, -1);
       fail("accepted bad number of points");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       ; // expected
     }
     try {
-      ScatterPoint2D s = new ScatterPoint2D(1, 2, 1);
+      final ScatterPoint2D s = new ScatterPoint2D(1, 2, 1);
       s.setNumberOfPoints(0);
       fail("accepted bad number of points");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       ; // expected
     }
   }

@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the Point2D class.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class Point2DTest extends AbstractDatum2DTest {
@@ -23,6 +22,7 @@ public class Point2DTest extends AbstractDatum2DTest {
   }
 
 
+  @Override
   public Datum2D getDatum() {
     return new Point2D(1, 2);
   }
@@ -32,7 +32,7 @@ public class Point2DTest extends AbstractDatum2DTest {
     float x = 10.0f;
     float y = 111.3f;
 
-    Point2D pt = new Point2D(x, y);
+    final Point2D pt = new Point2D(x, y);
     assertTrue(pt.getX() == x);
     assertTrue(pt.getY() == y);
 
@@ -48,7 +48,7 @@ public class Point2DTest extends AbstractDatum2DTest {
     assertTrue(pt.getYLo() == pt.getYHi());
     assertTrue(pt.getYLo() == pt.getY());
 
-    Point2D pt2 = new Point2D(x, y);
+    final Point2D pt2 = new Point2D(x, y);
     assertTrue(pt2.getX() == x);
     assertTrue(pt2.getY() == y);
 

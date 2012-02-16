@@ -6,14 +6,13 @@ import java.util.Arrays;
 /**
  * Point data used for y axis box and whisker plots.
  *
- * @author Richard Littin (richard@reeltwo.com)
- * @version $Revision$
+ * @author Richard Littin
  */
 
 public class BWPoint2D implements Datum2D {
   /** co-ordinate */
   private float mX;
-  private float[] mYs = new float[5];
+  private final float[] mYs = new float[5];
 
   /**
    * Sets x and y co-ordinates for a box and whisker point.
@@ -90,6 +89,7 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXLo() {
     return getX();
   }
@@ -100,6 +100,7 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getXHi() {
     return getX();
   }
@@ -110,6 +111,7 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYLo() {
     return mYs[0];
   }
@@ -120,6 +122,7 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
+  @Override
   public float getYHi() {
     return mYs[mYs.length - 1];
   }
@@ -130,8 +133,9 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a co-ordinate string
    */
+  @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append('(').append(getX());
     for (int i = 0; i < mYs.length; i++) {
       sb.append(',').append(getY(i));
@@ -147,11 +151,12 @@ public class BWPoint2D implements Datum2D {
    * @param object object to compare to
    * @return result of comparison
    */
+  @Override
   public boolean equals(Object object) {
     if (!(object instanceof BWPoint2D)) {
       return false;
     }
-    BWPoint2D pobj = (BWPoint2D) object;
+    final BWPoint2D pobj = (BWPoint2D) object;
     if (mX != pobj.getX()) {
       return false;
     }
@@ -164,6 +169,7 @@ public class BWPoint2D implements Datum2D {
   }
 
   /** {@inheritDoc} */
+  @Override
   public int hashCode() {
     return (int) (mX + mYs[0] + mYs[1] + mYs[2] + mYs[3] + mYs[4]);
   }
