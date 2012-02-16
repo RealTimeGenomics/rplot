@@ -67,7 +67,9 @@
     <module name="JavadocType">
       <property name="scope" value="public"/>
       <property name="authorFormat" value="\S"/>
+<!--
       <property name="versionFormat" value="\$Revision.*\$"/>
+-->
     </module>
 <!-- Don't require javadocs on methods or variables.
      Mainly because these can't handle the fact that javadocs may be inherited 

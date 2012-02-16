@@ -31,8 +31,8 @@ public class MemoryPanel extends JPanel {
   private static final int DEFAULT_SAMPLES = 100;
   private static final int DEFAULT_SAMPLE_PERIOD = 1000;
 
-  private final int mNumberOfSamples = DEFAULT_SAMPLES;
-  private final int mSamplePeriod = DEFAULT_SAMPLE_PERIOD;
+  private int mNumberOfSamples = DEFAULT_SAMPLES;
+  private int mSamplePeriod = DEFAULT_SAMPLE_PERIOD;
   private boolean mKeepRunning = false;
 
   private final MemoryMonitor mMonitor = MemoryMonitor.getInstance();
@@ -227,6 +227,21 @@ public class MemoryPanel extends JPanel {
       this.setEditable(false);
       this.setBorder(null);
     }
-
+  }
+  
+  /**
+   * Sets number of samples to display on graph
+   * @param count sample count
+   */
+  public void setNumberOfSamples(int count) {
+    mNumberOfSamples = count;
+  }
+  
+  /**
+   * Sets how often a sample is taken.
+   * @param period in milliseconds
+   */
+  public void setSamplePeriot(int period) {
+    mSamplePeriod = period;
   }
 }

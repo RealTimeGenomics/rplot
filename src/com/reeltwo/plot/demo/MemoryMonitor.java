@@ -72,7 +72,7 @@ public final class MemoryMonitor extends Thread {
   private static final NumberFormat FORMATER = new DecimalFormat("0.0 MB");
 
   /** Store those wanting event notification */
-  protected ArrayList<MemoryListener> mMemoryListeners = new ArrayList<MemoryListener>();
+  private final ArrayList<MemoryListener> mMemoryListeners = new ArrayList<MemoryListener>();
 
   private long mMaxMemory;
 
