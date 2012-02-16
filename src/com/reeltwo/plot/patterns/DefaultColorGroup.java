@@ -19,7 +19,6 @@ public class DefaultColorGroup implements PatternGroup {
   }
 
   /** {@inheritDoc} */
-  @Override
   public Paint[] getPatterns() {
     if (mColors == null) {
       mColors = new Color[] {
@@ -39,13 +38,11 @@ public class DefaultColorGroup implements PatternGroup {
   }
 
   /** {@inheritDoc} */
-  @Override
   public String getName() {
     return "Default Colors";
   }
 
   /** {@inheritDoc} */
-  @Override
   public String getDescription() {
     return "Default colors that are visible on a white background.";
   }

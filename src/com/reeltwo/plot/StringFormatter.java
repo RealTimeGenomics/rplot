@@ -34,7 +34,6 @@ public class StringFormatter implements LabelFormatter {
    * @param f float to format
    * @return formatted float
    */
-  @Override
   public String format(float f) {
     return mLabels[((int) Math.abs(f)) % mLabels.length];
   }

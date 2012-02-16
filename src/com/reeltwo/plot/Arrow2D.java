@@ -129,7 +129,6 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXLo() {
     return Math.min(getX1(), getX2());
   }
@@ -140,7 +139,6 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXHi() {
     return Math.max(getX1(), getX2());
   }
@@ -151,7 +149,6 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYLo() {
     return Math.min(getY1(), getY2());
   }
@@ -162,7 +159,6 @@ public class Arrow2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYHi() {
     return Math.max(getY1(), getY2());
   }

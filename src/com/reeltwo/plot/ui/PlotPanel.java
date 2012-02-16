@@ -111,7 +111,6 @@ public class PlotPanel extends JPanel {
     return new AbstractAction("Print") {
       private static final long serialVersionUID = 3366443762504745619L;
 
-      @Override
       public void actionPerformed(ActionEvent e) {
         if (mGraphPrinter == null) {
           mGraphPrinter = new GraphPrinter();
@@ -132,7 +131,6 @@ public class PlotPanel extends JPanel {
     return new AbstractAction("Save Image") {
       private static final long serialVersionUID = 1943785041287184839L;
 
-      @Override
       public void actionPerformed(ActionEvent e) {
         if (mGraphSaver == null) {
           mGraphSaver = new GraphSaver();
@@ -154,7 +152,6 @@ public class PlotPanel extends JPanel {
     return new AbstractAction("Snap Shot", null) {
       private static final long serialVersionUID = 4440241041537940185L;
 
-      @Override
       public void actionPerformed(ActionEvent e) {
         try {
           final PlotDialog pd = new PlotDialog();

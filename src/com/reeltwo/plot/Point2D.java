@@ -67,7 +67,6 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXLo() {
     return getX();
   }
@@ -78,7 +77,6 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXHi() {
     return getX();
   }
@@ -89,7 +87,6 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYLo() {
     return getY();
   }
@@ -100,7 +97,6 @@ public class Point2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYHi() {
     return getY();
   }

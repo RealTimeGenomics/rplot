@@ -56,13 +56,11 @@ public class BW8x8PatternGroup implements PatternGroup {
   }
 
   /** {@inheritDoc} */
-  @Override
   public String getName() {
     return "Black and White 8x8";
   }
 
   /** {@inheritDoc} */
-  @Override
   public String getDescription() {
     return "Black and white patterns";
   }

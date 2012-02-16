@@ -38,7 +38,6 @@ public class MemoryUsage extends JDialog {
         new AbstractAction("GC") {
           private static final long serialVersionUID = 3660591807128148259L;
 
-          @Override
           public void actionPerformed(ActionEvent e) {
             mMemoryPanel.refresh();
           }
@@ -47,7 +46,6 @@ public class MemoryUsage extends JDialog {
         new AbstractAction("Close") {
           private static final long serialVersionUID = 7740156196494085688L;
 
-          @Override
           public void actionPerformed(ActionEvent e) {
             close();
           }

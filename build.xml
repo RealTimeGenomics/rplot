@@ -186,7 +186,7 @@
   </target>
 
   <target name="javadoc" depends="compile-src" description="Build javadocs">
-    <javadoc sourcepath="${src.dir}" destdir="${build.dir}/javadocs" source="1.5"
+    <javadoc sourcepath="${src.dir}" destdir="${build.dir}/javadocs" source="1.6"
              Author="true" Version="true" Package="true" useexternalfile="true" additionalparam="-quiet">
       <tag name="has" enabled="false"/>
       <tag name="assoc" enabled="false"/>

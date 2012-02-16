@@ -37,7 +37,6 @@ public class GrayScaleColorGroup implements PatternGroup {
 
 
   /** {@inheritDoc} */
-  @Override
   public Paint[] getPatterns() {
     if (mColors == null) {
       mColors = new Color[mNumShades];
@@ -53,15 +52,12 @@ public class GrayScaleColorGroup implements PatternGroup {
   }
 
   /** {@inheritDoc} */
-  @Override
   public String getName() {
     return "Grayscale " + mNumShades;
   }
 
   /** {@inheritDoc} */
-  @Override
   public String getDescription() {
     return "Gray scaled shades.";
   }
-
 }

@@ -45,7 +45,6 @@ public class SwingPlot {
     mDialog.setPatterns(new BW8x8PatternGroup().getPatterns());
 
     mDialog.addWindowListener(new WindowAdapter() {
-      @Override
       public void windowClosing(WindowEvent e) {
         System.exit(1);
       }
@@ -57,7 +56,6 @@ public class SwingPlot {
     popup.add(new AbstractAction("Exit") {
       private static final long serialVersionUID = 1926431490479372450L;
 
-      @Override
       public void actionPerformed(ActionEvent e) {
         System.exit(0);
       }
@@ -66,7 +64,6 @@ public class SwingPlot {
     mDialog.setVisible(true);
 
     SwingUtilities.invokeLater(new Runnable() {
-      @Override
       public void run() {
         mDialog.setVisible(true);
       }

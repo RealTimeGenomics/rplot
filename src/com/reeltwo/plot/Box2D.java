@@ -108,7 +108,6 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXLo() {
     return getLeft();
   }
@@ -119,7 +118,6 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXHi() {
     return getRight();
   }
@@ -130,7 +128,6 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYLo() {
     return getBottom();
   }
@@ -141,7 +138,6 @@ public class Box2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYHi() {
     return getTop();
   }

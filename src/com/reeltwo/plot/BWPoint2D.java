@@ -89,7 +89,6 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXLo() {
     return getX();
   }
@@ -100,7 +99,6 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getXHi() {
     return getX();
   }
@@ -111,7 +109,6 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYLo() {
     return mYs[0];
   }
@@ -122,7 +119,6 @@ public class BWPoint2D implements Datum2D {
    *
    * @return a number
    */
-  @Override
   public float getYHi() {
     return mYs[mYs.length - 1];
   }

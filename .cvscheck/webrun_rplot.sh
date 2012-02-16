@@ -5,7 +5,7 @@ if [ ! "$HOME" ]; then
     export HOME=/home/$LOGNAME
 fi
 
-export JAVA_HOME=/usr/local/java/jdk1.5
+export JAVA_HOME=/usr/local/java/jdk1.6
 export SYSNAME=cvscheck_rplot
 
 # Set variables for where to check out to and where to put results
@@ -34,8 +34,8 @@ export RES_MODULES=" "
 export JAVADOC_MODULES="rplot/src"
 
 # Options controlling how things get run
-export JAVAC_OPTS="-g -source 1.5 -target 1.5 -Xlint -Xlint:-serial"
-export JAVADOC_OPTS="-source 1.5"
+export JAVAC_OPTS="-g -source 1.6 -target 1.6 -Xlint -Xlint:-serial"
+export JAVADOC_OPTS="-source 1.6"
 export PLOT_PACKAGE_DEPENDENCIES_OPTS='com.reeltwo com.reeltwo 4 4'
 if [ "$USER" == "syscheck" ]; then
     export EMAIL_NOTIFY=1
@@ -49,6 +49,4 @@ export LEVEL=3
 #(
     (sh $SCRIPTS/cvscheck.sh cvscheck_main 2>&1)
 #) >/dev/null
-
-
 

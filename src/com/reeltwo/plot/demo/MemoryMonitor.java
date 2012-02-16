@@ -56,15 +56,12 @@ public final class MemoryMonitor extends Thread {
       sInstance.start();
       sInstance.addMemoryListener(
           new MemoryListener() {
-            @Override
             public void lowMemory(long kbMax, long kbUsed, final float fractionUsed) {
               System.err.println("Within 10% of memory limit: "
                   + FORMATER.format(kbMax / 1024) + ", "
                   + FORMATER.format(kbUsed / 1024));
             }
 
-
-            @Override
             public void memoryUpdate(long kbMax, long kbUsed, final float fraction) { }
           });
     }

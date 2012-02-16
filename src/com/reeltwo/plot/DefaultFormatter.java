@@ -42,7 +42,6 @@ public class DefaultFormatter implements LabelFormatter {
    * @param f float to format
    * @return formatted float
    */
-  @Override
   public String format(float f) {
     return mNF.format(f);
   }

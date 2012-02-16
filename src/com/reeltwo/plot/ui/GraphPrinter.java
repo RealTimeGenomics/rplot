@@ -105,7 +105,6 @@ public class GraphPrinter implements Printable {
    * @return whether page exists
    * @exception PrinterException if an error occurs
    */
-  @Override
   public int print(Graphics g, PageFormat pf, int pi) throws PrinterException {
     if (mGraph == null || pi >= 1) {
       return Printable.NO_SUCH_PAGE;

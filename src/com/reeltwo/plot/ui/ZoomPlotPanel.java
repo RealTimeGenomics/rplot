@@ -208,7 +208,6 @@ public class ZoomPlotPanel extends JComponent {
       /** an id */
       private static final long serialVersionUID = 343566108639393382L;
 
-      @Override
       public void actionPerformed(ActionEvent e) {
         //System.err.println("Zoom Out");
         final Graph2D graph = mPlotPanel.getGraph();
@@ -235,7 +234,6 @@ public class ZoomPlotPanel extends JComponent {
       /** an id */
       private static final long serialVersionUID = -4772586876399697951L;
 
-      @Override
       public void actionPerformed(ActionEvent e) {
         mPicNPic = !mPicNPic;
         putValue("Name", "Pic In Pic " + (mPicNPic ? "Off" : "On"));
