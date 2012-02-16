@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.0//EN" "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+
+<suppressions>
+    <suppress checks="FileLength" files=".*CFlags.java"/>
+    <suppress checks="FileLength" files=".*IndexBase.java"/>
+    <suppress checks="FileLength" files=".*IndexFile.java"/>
+    <suppress checks="FileLength" files=".*Tests?.java"/>
+    <suppress checks="FileLength" files=".*Utils.java"/>
+    <suppress checks="FileLength" files=".*SamValidator.java"/>
+    <suppress checks="FinalLocalVariable" files=".*Tests?.java"/>
+    <suppress checks="IllegalThrows" files=".*ClientJVM.java"/>
+    <suppress checks="JavadocMethod" files=".*Tests1.java"/>
+    <suppress checks="JavadocMethod" files=".*Tests2.java"/>
+    <suppress checks="JavadocMethod" files=".*Tests?.java"/>
+    <suppress checks="PackageHtml" files=".*internal[/\\].*"/>
+    <suppress checks="PackageHtml" files=".*test[/\\].*"/>
+    <suppress checks="ParameterNumber" files=".*AbstractCancerComparison.java"/>
+    <suppress checks="ParameterNumber" files=".*CigarParser.java"/>
+    <suppress checks="ParameterNumber" files=".*CigarParserModel.java"/>
+    <suppress checks="ParameterNumber" files=".*ComplexCaller.java"/>
+    <suppress checks="ParameterNumber" files=".*DiploidSnpTester.java"/>
+    <suppress checks="ParameterNumber" files=".*DiploidComplexScorer.java"/>
+    <suppress checks="ParameterNumber" files=".*ProteinExtractAbstract.java"/>
+    <suppress checks="ParameterNumber" files=".*SequenceDataLoader.java"/>
+    <suppress checks="ParameterNumber" files=".*RecursiveAlignment.java"/>
+    <suppress checks="ParameterNumber" files=".*AllPathsParser.java"/>
+    <suppress checks="ParameterNumber" files=".*ReadParserInterface.java"/>
+    <suppress checks="ParameterNumber" files=".*HwIntegral.java"/>
+    <suppress checks="ParameterNumber" files=".*Tests?.java"/>
+    <suppress checks="Regexp" files=".*JobAdmin.java"/>
+    <suppress checks="Header" files=".*bzip2[/\\].*" />
+    <suppress checks="FileLength" files=".*CBZip2InputStream.java" />
+    <suppress checks="MethodLength" files=".*CBZip2InputStream.java" />
+    <suppress checks="com.rtg.util.checkstyle.Diagnostics" files=".*DiagnosticTest.java"/>
+</suppressions>
+
