@@ -73,7 +73,6 @@ public class GraphicsRenderer extends AbstractRenderer {
     }
   }
 
-
   /**
    * Creates a new <code>GraphicsRenderer</code>.
    */
@@ -134,7 +133,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     } else {
       for (int i = 0; i < patterns.length; i++) {
         if (patterns[i] == null) {
-          throw new NullPointerException("null color given");
+          throw new NullPointerException("null pattern given");
         }
       }
       mPatterns = patterns;
@@ -199,7 +198,6 @@ public class GraphicsRenderer extends AbstractRenderer {
   @Override
   protected void setLineWidth(Object canvas, int width) {
     super.setLineWidth(canvas, width);
-
     if (width > 1) {
       ((Graphics2D) canvas).setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
     } else {
@@ -323,7 +321,6 @@ public class GraphicsRenderer extends AbstractRenderer {
     mAllAntialiasing = flag;
   }
 
-
   /**
    * Sets the graphs background colors.  The color is blended from
    * <code>topColor</code> to <code>bottomColor</code> from top to
@@ -373,7 +370,6 @@ public class GraphicsRenderer extends AbstractRenderer {
   public void setGraphShadowWidth(int width) {
     mGraphShadowWidth = width;
   }
-
 
   private static int getKeyLineWidth(Graphics g) {
     final FontMetrics fm = g.getFontMetrics();
@@ -504,7 +500,6 @@ public class GraphicsRenderer extends AbstractRenderer {
       // set clip so nothing appears outside border
       setClip(g, sxlo, syhi, sxhi - sxlo + 1, sylo - syhi + 1);
       drawData(g, graph.getPlots(), mapping);
-      //drawVerticalLine(graph, g, mapping[0], sylo, syhi);
       if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
         if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
         if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
@@ -532,7 +527,6 @@ public class GraphicsRenderer extends AbstractRenderer {
           RenderingHints.VALUE_RENDER_QUALITY);
     }
   }
-
 
   @Override
   protected int calculateKeyWidth(Object canvas, Graph2D graph) {
@@ -581,9 +575,6 @@ public class GraphicsRenderer extends AbstractRenderer {
       final int keyWidth = calculateKeyWidth(canvas, graph);
       final int cols = keyWidth == 0 ? 0 : Math.max(1, screenWidth / keyWidth);
       final int rows = cols == 0 ? 0 : 1 + (keyHeight - 1) / cols;
-
-      //System.err.println("keyheight " + keyHeight + " : " + cols + " : " + rows);
-
       keyHeight = rows;
     }
 
@@ -801,9 +792,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     } else if (line.getType() == GraphLine.DOTS) {
       ((Graphics2D) canvas).setStroke(new BasicStroke(stroke.getLineWidth(), stroke.getEndCap(), stroke.getLineJoin(), stroke.getMiterLimit(), new float[] {1.0f, 5.0f}, 0.0f));
     }
-
     super.drawGraphLine(canvas, line, convertX, convertY);
-
     ((Graphics2D) canvas).setStroke(stroke);
   }
 
@@ -1063,7 +1052,6 @@ public class GraphicsRenderer extends AbstractRenderer {
     g2.fillRect(0, 0, width, height);
     g2.setColor(g.getColor());
     g2.drawString(text, 0, fontMetrics.getAscent());
-
     img = rotate(img, width, height);
     g.drawImage(img, x, y, transparent, null);
   }
@@ -1087,5 +1075,4 @@ public class GraphicsRenderer extends AbstractRenderer {
       a[j] = temp;
     }
   }
-
 }

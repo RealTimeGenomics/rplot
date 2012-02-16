@@ -32,17 +32,12 @@ import java.util.Random;
  * @author Richard Littin
  */
 public abstract class AbstractRenderer {
-
-
   protected static final int FOREGROUND_COLOR_INDEX = -1;
   protected static final int BACKGROUND_COLOR_INDEX = -2;
 
   private int mColorIndex = 0;
-
   private int mPointIndex = 0;
-
   private int mLineWidth = 1;
-
   private Mapping[] mMappings = null;
 
   /** A small class to hold information about tick spacing. */
@@ -72,8 +67,7 @@ public abstract class AbstractRenderer {
    * @return an array of axis <code>Mapping</code>s
    */
   public Mapping[] getMappings() {
-    // an array of Mapping[ x0, y0, x1, y1 ]
-    return mMappings;
+    return mMappings; // an array of Mapping[ x0, y0, x1, y1 ]
   }
 
   protected void setMappings(Mapping[] mappings) {
@@ -110,11 +104,6 @@ public abstract class AbstractRenderer {
    */
   abstract int getTextDescent(Object canvas, String text);
 
-  // somthing to return ticinfo objects for each axis...
-
-  // something to return bounds for axis labels, key titles...
-
-
   /**
    * Sets the current drawing color.
    *
@@ -122,7 +111,6 @@ public abstract class AbstractRenderer {
    * @param colorIndex color index
    */
   protected void setColor(Object canvas, int colorIndex) {
-    // ??
     mColorIndex = colorIndex;
   }
 
@@ -145,7 +133,6 @@ public abstract class AbstractRenderer {
   protected void setPattern(Object canvas, int patternIndex) {
     setColor(canvas, patternIndex);
   }
-
 
   protected void setPointIndex(int pointIndex) {
     mPointIndex = pointIndex;
@@ -204,24 +191,20 @@ public abstract class AbstractRenderer {
     return (float) Math.sqrt(x * x + y * y);
   }
 
-
   private int distanceX(int x1, int x2) {
     return Math.abs(x2 - x1);
   }
 
   private Point2D bezier(int[] xs, int[] ys, double mu) {
-    int k, kn, nn, nkn;
-    double blend, muk, munk;
     float x = 0, y = 0;
+    double muk = 1;
+    double munk = Math.pow(1 - mu, (double) xs.length - 1);
 
-    muk = 1;
-    munk = Math.pow(1 - mu, (double) xs.length - 1);
-
-    for (k = 0; k < xs.length; k++) {
-      nn = xs.length - 1;
-      kn = k;
-      nkn = nn - k;
-      blend = muk * munk;
+    for (int k = 0; k < xs.length; k++) {
+      int nn = xs.length - 1;
+      int kn = k;
+      int nkn = nn - k;
+      double blend = muk * munk;
       muk *= mu;
       munk /= 1 - mu;
       while (nn >= 1) {
@@ -264,7 +247,7 @@ public abstract class AbstractRenderer {
 
     if (type == CurvePlot2D.BSPLINE) {
       final int m = 50;
-      int x = 0, y = 0, x0, y0;
+      int x = 0, y = 0;
       boolean first = true;
 
       for (int i = 1; i < xs.length - 2; i++) {
@@ -286,8 +269,8 @@ public abstract class AbstractRenderer {
         final float b0 = (yA + 4 * yB + yC) / 6;
 
         for (int j = 0; j <= m; j++) {
-          x0 = x;
-          y0 = y;
+          final int x0 = x;
+          final int y0 = y;
           final float t = (float) j / (float) m;
           x = (int) (((a3 * t + a2) * t + a1) * t + a0);
           y = (int) (((b3 * t + b2) * t + b1) * t + b0);
@@ -305,7 +288,6 @@ public abstract class AbstractRenderer {
       }
     } else if (type == CurvePlot2D.BEZIER) {
       final int m = 50;
-
       int x = 0;
       int y = 0;
       boolean first = true;
@@ -371,8 +353,6 @@ public abstract class AbstractRenderer {
         final float y2 = yip1 + minMag * tangent.getY();
         final Point2D p2 = new Point2D(x2, y2);
 
-        //CubicCurve2D.Double cubic = new CubicCurve2D.Double();
-        //cubic.setCurve(xi, yi, x1, y1, x2, y2, xip1, yip1);
         final int m2 = Math.max(10, (int) (distance(p1, p2) / 5.0f));
         for (int j = 0; j <= m2; j++) {
           final int x0 = x;
@@ -384,7 +364,6 @@ public abstract class AbstractRenderer {
             // get the next bezier point
             polygon.addPoint(x, y);
           } else {
-            //((Graphics2D) canvas).draw(cubic);
             if (first) {
               first = false;
             } else {
@@ -410,16 +389,13 @@ public abstract class AbstractRenderer {
   protected abstract int calculateKeyWidth(Object canvas, Graph2D graph);
   protected abstract int calculateKeyHeight(Object canvas, Graph2D graph, int screenWidth);
 
-  // functions that actully plot the different types of plots
-
+  // functions that actually plot the different types of plots
   protected Mapping[] createMappings(Graph2D graph, int sxlo, int sylo, int sxhi, int syhi) {
     final Mapping[] mappings = new Mapping[4]; // x1, y1, x2, y2
-
     mappings[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi, graph.isLogScaleX(0));
     mappings[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi, graph.isLogScaleY(0));
     mappings[2] = new Mapping(graph.getXLo(1), graph.getXHi(1), sxlo, sxhi, graph.isLogScaleX(1));
     mappings[3] = new Mapping(graph.getYLo(1), graph.getYHi(1), sylo, syhi, graph.isLogScaleY(1));
-
     return mappings;
   }
 
@@ -489,17 +465,12 @@ public abstract class AbstractRenderer {
     return null;
   }
 
-
-
-
   protected TicInfo[] createTicInfos(Object canvas, Graph2D graph) {
     final TicInfo[] ticInfos = new TicInfo[4]; // x1, y1, x2, y2
-
     ticInfos[0] = calcXTicInfo(canvas, graph, 0);
     ticInfos[1] = calcYTicInfo(canvas, graph, 0);
     ticInfos[2] = calcXTicInfo(canvas, graph, 1);
     ticInfos[3] = calcYTicInfo(canvas, graph, 1);
-
     return ticInfos;
   }
 
@@ -516,7 +487,6 @@ public abstract class AbstractRenderer {
         } else if (color >= colorIndex) {
           colorIndex = color + 1;
         }
-        //System.err.println(plot.getColor() + " " + colorIndex + " " + patternIndex);
       }
     }
 
@@ -746,7 +716,6 @@ public abstract class AbstractRenderer {
     }
   }
 
-
   protected void drawTextPlot(Object canvas, TextPlot2D tplot, Mapping convertX, Mapping convertY) {
     final Datum2D[] points = tplot.getData();
     final int tHeight = getTextHeight(canvas, "A");
@@ -796,7 +765,6 @@ public abstract class AbstractRenderer {
     }
   }
 
-
   protected void drawScatterPlot(Object canvas, ScatterPlot2D splot, Mapping convertX, Mapping convertY) {
     final Datum2D[] points = splot.getData();
     if (points != null && points.length != 0) {
@@ -822,7 +790,6 @@ public abstract class AbstractRenderer {
       }
     }
   }
-
 
   protected void drawBoxPlot(Object canvas, BoxPlot2D bplot, Mapping convertX, Mapping convertY) {
     final Datum2D[] points = bplot.getData();
@@ -860,7 +827,6 @@ public abstract class AbstractRenderer {
       }
     }
   }
-
 
   protected void drawCirclePlot(Object canvas, CirclePlot2D cplot, Mapping convertX, Mapping convertY) {
     final Datum2D[] points = cplot.getData();
@@ -902,7 +868,6 @@ public abstract class AbstractRenderer {
     }
   }
 
-
   protected void drawCurvePlot(Object canvas, CurvePlot2D cplot, Mapping convertX, Mapping convertY) {
     final Point2D[] points = (Point2D[]) cplot.getData();
 
@@ -940,7 +905,6 @@ public abstract class AbstractRenderer {
       }
     }
   }
-
 
   // our own special polygon class
   protected static class Poly {

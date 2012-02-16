@@ -3,12 +3,10 @@
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.0//EN" "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-    <suppress checks="FileLength" files=".*CFlags.java"/>
-    <suppress checks="FileLength" files=".*IndexBase.java"/>
-    <suppress checks="FileLength" files=".*IndexFile.java"/>
+    <suppress checks="FileLength" files=".*Graph2D.java" />
+    <suppress checks="FileLength" files=".*GraphicsRenderer.java" />
+    <suppress checks="FileLength" files=".*AbstractRenderer.java" />
     <suppress checks="FileLength" files=".*Tests?.java"/>
-    <suppress checks="FileLength" files=".*Utils.java"/>
-    <suppress checks="FileLength" files=".*SamValidator.java"/>
     <suppress checks="FinalLocalVariable" files=".*Tests?.java"/>
     <suppress checks="IllegalThrows" files=".*ClientJVM.java"/>
     <suppress checks="JavadocMethod" files=".*Tests1.java"/>
@@ -31,7 +29,6 @@
     <suppress checks="ParameterNumber" files=".*Tests?.java"/>
     <suppress checks="Regexp" files=".*JobAdmin.java"/>
     <suppress checks="Header" files=".*bzip2[/\\].*" />
-    <suppress checks="FileLength" files=".*CBZip2InputStream.java" />
     <suppress checks="MethodLength" files=".*CBZip2InputStream.java" />
     <suppress checks="com.rtg.util.checkstyle.Diagnostics" files=".*DiagnosticTest.java"/>
 </suppressions>
