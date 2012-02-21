@@ -9,6 +9,7 @@ import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.Graph2D.KeyPosition;
 import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.PlotUtils;
@@ -408,10 +409,10 @@ public class GraphicsRenderer extends AbstractRenderer {
       if (graph.isBorder()) {
         int keyWidth = 0;
         if (graph.isShowKey()) {
-          if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
+          if (graph.getKeyVerticalPosition() == KeyPosition.BELOW) {
             final int keyHeight = calculateKeyHeight(g, graph, screenWidth);
             sylo -= keyHeight + 2;
-          } else if (graph.getKeyHorizontalPosition() == Graph2D.OUTSIDE) {
+          } else if (graph.getKeyHorizontalPosition() == KeyPosition.OUTSIDE) {
             keyWidth = calculateKeyWidth(g, graph);
             sxhi -= keyWidth + 2;
           }
@@ -500,10 +501,10 @@ public class GraphicsRenderer extends AbstractRenderer {
       // set clip so nothing appears outside border
       setClip(g, sxlo, syhi, sxhi - sxlo + 1, sylo - syhi + 1);
       drawData(g, graph.getPlots(), mapping);
-      if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
+      if (graph.getKeyVerticalPosition() == KeyPosition.BELOW) {
         if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
         if (graph.usesX(0) && graph.getXLabel(0).length() > 0) { sylo += tHeight; }
-      } else if (graph.getKeyHorizontalPosition() == Graph2D.OUTSIDE) {
+      } else if (graph.getKeyHorizontalPosition() == KeyPosition.OUTSIDE) {
         if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
       }
 
@@ -570,7 +571,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       }
     }
 
-    if (keyHeight > 1 && graph.getKeyVerticalPosition() == Graph2D.BELOW) {
+    if (keyHeight > 1 && graph.getKeyVerticalPosition() == KeyPosition.BELOW) {
       // need to take screen width into account...
       final int keyWidth = calculateKeyWidth(canvas, graph);
       final int cols = keyWidth == 0 ? 0 : Math.max(1, screenWidth / keyWidth);
@@ -798,15 +799,15 @@ public class GraphicsRenderer extends AbstractRenderer {
 
   private int calcKeyX(Graph2D graph, Graphics g, int sxlo, int sxhi, int keyWidth) {
     int keyX;
-    if (graph.getKeyVerticalPosition() == Graph2D.BELOW) {
+    if (graph.getKeyVerticalPosition() == KeyPosition.BELOW) {
       keyX = 0;
     } else {
-      final int position = graph.getKeyHorizontalPosition();
-      if (position == Graph2D.OUTSIDE) {
+      final KeyPosition position = graph.getKeyHorizontalPosition();
+      if (position == KeyPosition.OUTSIDE) {
         keyX = sxhi + 2;
-      } else if (position == Graph2D.LEFT) {
+      } else if (position == KeyPosition.LEFT) {
         keyX = sxlo + 2;
-      } else if (position == Graph2D.CENTER) {
+      } else if (position == KeyPosition.CENTER) {
         keyX = (sxhi + sxlo - keyWidth) / 2;
       } else { // assume RIGHT by default
         keyX = sxhi - keyWidth - 2;
@@ -817,12 +818,12 @@ public class GraphicsRenderer extends AbstractRenderer {
 
   private int calcKeyY(Graph2D graph, Graphics g, int screenWidth, int sylo, int syhi, int keyHeight) {
     int keyY;
-    final int position = graph.getKeyVerticalPosition();
-    if (position == Graph2D.BOTTOM) {
+    final KeyPosition position = graph.getKeyVerticalPosition();
+    if (position == KeyPosition.BOTTOM) {
       keyY = sylo - keyHeight - 2;
-    } else if (position == Graph2D.CENTER) {
+    } else if (position == KeyPosition.CENTER) {
       keyY = (syhi + sylo - keyHeight) / 2;
-    } else if (position == Graph2D.BELOW) {
+    } else if (position == KeyPosition.BELOW) {
       keyY = sylo;
     } else { // assume TOP by default
       keyY = syhi + 2;

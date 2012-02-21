@@ -7,6 +7,7 @@ import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.Graph2D.KeyPosition;
 import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -293,7 +294,7 @@ public class SwingPlot {
     graph.setXTic(0, 2);
     graph.setXTicLabelFormatter(0, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
 
-    graph.setKeyVerticalPosition(Graph2D.BELOW);
+    graph.setKeyVerticalPosition(KeyPosition.BELOW);
     //graph.setColoredKey(false);
 
     //System.err.println(graph.getXLo(0) + " -- " + graph.getXHi(0));
