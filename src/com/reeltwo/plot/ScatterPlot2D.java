@@ -25,7 +25,7 @@ public class ScatterPlot2D extends Plot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public ScatterPlot2D(int x, int y) {
+  public ScatterPlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

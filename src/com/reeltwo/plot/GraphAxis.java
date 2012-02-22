@@ -4,7 +4,7 @@ package com.reeltwo.plot;
  * Information about a graph axis.
  * @author Richard Littin
  */
-class Axis implements Cloneable {
+class GraphAxis implements Cloneable {
   private String mTitle = "";
   private float mLo;
   private float mHi;
@@ -19,7 +19,7 @@ class Axis implements Cloneable {
   // axis formatter
   private LabelFormatter mLabelFormatter = null;
 
-  Axis() {
+  GraphAxis() {
   }
 
   /**

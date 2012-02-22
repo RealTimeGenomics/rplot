@@ -33,7 +33,7 @@ public class BWPlot2D extends Plot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public BWPlot2D(int x, int y) {
+  public BWPlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

@@ -1,7 +1,6 @@
 package com.reeltwo.plot;
 
 import junit.framework.Test;
-
 import junit.framework.TestSuite;
 
 /*
@@ -64,7 +63,7 @@ public class TextPlot2DTest extends AbstractPlot2DTest {
 
 
   @Override
-  public Plot2D getPlot(int x, int y) {
+  public Plot2D getPlot(AxisSide x, AxisSide y) {
     return new TextPlot2D(x, y);
   }
 

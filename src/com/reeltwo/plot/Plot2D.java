@@ -19,17 +19,8 @@ public abstract class Plot2D {
   private float mXLo, mXHi;
   private float mYLo, mYHi;
 
-  private int mXAxis = 0;
-  private int mYAxis = 0;
-
-  /** Use the bottom X axis on the graph. */
-  public static final int BOTTOM_X_AXIS = 0;
-  /** Use the top X axis on the graph. */
-  public static final int TOP_X_AXIS = 1;
-  /** Use the left Y axis on the graph. */
-  public static final int LEFT_Y_AXIS = 0;
-  /** Use the right Y axis on the graph. */
-  public static final int RIGHT_Y_AXIS = 1;
+  private final AxisSide mXAxis;
+  private final AxisSide mYAxis;
 
   /** data points in plot */
   private Datum2D[] mData = null;
@@ -39,7 +30,9 @@ public abstract class Plot2D {
    * Default constructor setting the default axes used to the bottom
    * x axis and the left y axis.
    */
-  public Plot2D() { }
+  public Plot2D() {
+    this(AxisSide.ONE, AxisSide.ONE);
+  }
 
 
   /**
@@ -48,47 +41,26 @@ public abstract class Plot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public Plot2D(int x, int y) {
-    setXAxis(x);
-    setYAxis(y);
-  }
-
-
-  private void setXAxis(int x) {
-    if (x < 0 || x > Graph2D.NUM_X_AXES) {
-      throw new IllegalArgumentException("X axis index out of range.");
-    }
+  public Plot2D(AxisSide x, AxisSide y) {
     mXAxis = x;
-  }
-
-
-  /**
-   * Returns the X axis to use for this plot.
-   *
-   * @return X axis value
-   */
-  public int getXAxis() {
-    return mXAxis;
-  }
-
-
-  private void setYAxis(int y) {
-    if (y < 0 || y > Graph2D.NUM_Y_AXES) {
-      throw new IllegalArgumentException("Y axis index out of range.");
-    }
     mYAxis = y;
   }
 
 
-  /**
-   * Returns the Y axis to use for this plot.
-   *
-   * @return Y axis value
-   */
-  public int getYAxis() {
-    return mYAxis;
+  private AxisSide getAxisSide(Axis2D axis) {
+    return axis == Axis2D.X ? mXAxis : mYAxis;
   }
 
+  /**
+   * Returns whether plot is using the specified side for the given axis.
+   *
+   * @param axis axis to check
+   * @param side is using this side
+   * @return using side for axis
+   */
+  public boolean uses(Axis2D axis, AxisSide side) {
+    return getAxisSide(axis) == side;
+  }
 
   /**
    * Sets the plot's title.

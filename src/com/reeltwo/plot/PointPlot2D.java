@@ -28,7 +28,7 @@ public class PointPlot2D extends FillablePlot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public PointPlot2D(int x, int y) {
+  public PointPlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

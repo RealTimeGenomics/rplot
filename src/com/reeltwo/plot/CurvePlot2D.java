@@ -32,7 +32,7 @@ public class CurvePlot2D extends FillablePlot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public CurvePlot2D(int x, int y) {
+  public CurvePlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

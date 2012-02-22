@@ -1,7 +1,12 @@
 package com.reeltwo.plot.renderer;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.reeltwo.plot.Arrow2D;
 import com.reeltwo.plot.ArrowPlot2D;
+import com.reeltwo.plot.Axis2D;
+import com.reeltwo.plot.AxisSide;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPoint2D;
 import com.reeltwo.plot.Box2D;
@@ -10,11 +15,11 @@ import com.reeltwo.plot.Circle2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
+import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.LabelFormatter;
-import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -22,8 +27,6 @@ import com.reeltwo.plot.ScatterPlot2D;
 import com.reeltwo.plot.ScatterPoint2D;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
-import java.util.ArrayList;
-import java.util.Random;
 
 
 /**
@@ -392,14 +395,14 @@ public abstract class AbstractRenderer {
   // functions that actually plot the different types of plots
   protected Mapping[] createMappings(Graph2D graph, int sxlo, int sylo, int sxhi, int syhi) {
     final Mapping[] mappings = new Mapping[4]; // x1, y1, x2, y2
-    mappings[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi, graph.isLogScaleX(0));
-    mappings[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi, graph.isLogScaleY(0));
-    mappings[2] = new Mapping(graph.getXLo(1), graph.getXHi(1), sxlo, sxhi, graph.isLogScaleX(1));
-    mappings[3] = new Mapping(graph.getYLo(1), graph.getYHi(1), sylo, syhi, graph.isLogScaleY(1));
+    mappings[0] = new Mapping(graph.getXLo(AxisSide.ONE), graph.getXHi(AxisSide.ONE), sxlo, sxhi, graph.isLogScaleX(AxisSide.ONE));
+    mappings[1] = new Mapping(graph.getYLo(AxisSide.ONE), graph.getYHi(AxisSide.ONE), sylo, syhi, graph.isLogScaleY(AxisSide.ONE));
+    mappings[2] = new Mapping(graph.getXLo(AxisSide.TWO), graph.getXHi(AxisSide.TWO), sxlo, sxhi, graph.isLogScaleX(AxisSide.TWO));
+    mappings[3] = new Mapping(graph.getYLo(AxisSide.TWO), graph.getYHi(AxisSide.TWO), sylo, syhi, graph.isLogScaleY(AxisSide.TWO));
     return mappings;
   }
 
-  private TicInfo calcXTicInfo(Object canvas, Graph2D graph, int whichTic) {
+  private TicInfo calcXTicInfo(Object canvas, Graph2D graph, AxisSide whichTic) {
     if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
       final TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getXTic(whichTic);
@@ -436,7 +439,7 @@ public abstract class AbstractRenderer {
     return null;
   }
 
-  private TicInfo calcYTicInfo(Object canvas, Graph2D graph, int whichTic) {
+  private TicInfo calcYTicInfo(Object canvas, Graph2D graph, AxisSide whichTic) {
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       final TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
@@ -467,10 +470,10 @@ public abstract class AbstractRenderer {
 
   protected TicInfo[] createTicInfos(Object canvas, Graph2D graph) {
     final TicInfo[] ticInfos = new TicInfo[4]; // x1, y1, x2, y2
-    ticInfos[0] = calcXTicInfo(canvas, graph, 0);
-    ticInfos[1] = calcYTicInfo(canvas, graph, 0);
-    ticInfos[2] = calcXTicInfo(canvas, graph, 1);
-    ticInfos[3] = calcYTicInfo(canvas, graph, 1);
+    ticInfos[0] = calcXTicInfo(canvas, graph, AxisSide.ONE);
+    ticInfos[1] = calcYTicInfo(canvas, graph, AxisSide.ONE);
+    ticInfos[2] = calcXTicInfo(canvas, graph, AxisSide.TWO);
+    ticInfos[3] = calcYTicInfo(canvas, graph, AxisSide.TWO);
     return ticInfos;
   }
 
@@ -492,8 +495,8 @@ public abstract class AbstractRenderer {
 
     for (int j = 0; j < plots.length; j++) {
       final Plot2D plot = plots[j];
-      final Mapping convertX = mapping[2 * plot.getXAxis()];
-      final Mapping convertY = mapping[2 * plot.getYAxis() + 1];
+      final Mapping convertX = mapping[2 * (plot.uses(Axis2D.X, AxisSide.ONE) ? 0 : 1)];
+      final Mapping convertY = mapping[2 * (plot.uses(Axis2D.Y, AxisSide.ONE) ? 0 : 1) + 1];
 
       int lineWidth = plot.getLineWidth();
       if (lineWidth < 1) {

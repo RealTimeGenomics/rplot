@@ -27,7 +27,7 @@ public class BoxPlot2DTest extends AbstractFillablePlot2DTest {
 
 
   @Override
-  public Plot2D getPlot(int x, int y) {
+  public Plot2D getPlot(AxisSide x, AxisSide y) {
     return new BoxPlot2D(x, y);
   }
 

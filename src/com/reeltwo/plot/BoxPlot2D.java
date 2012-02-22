@@ -22,7 +22,7 @@ public class BoxPlot2D extends FillablePlot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public BoxPlot2D(int x, int y) {
+  public BoxPlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

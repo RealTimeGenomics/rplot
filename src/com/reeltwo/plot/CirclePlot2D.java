@@ -23,7 +23,7 @@ public class CirclePlot2D extends FillablePlot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public CirclePlot2D(final int x, final int y) {
+  public CirclePlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

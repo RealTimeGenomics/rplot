@@ -32,7 +32,7 @@ public abstract class FillablePlot2D extends Plot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public FillablePlot2D(int x, int y) {
+  public FillablePlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

@@ -1,5 +1,15 @@
 package com.reeltwo.plot.demo;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+
+import com.reeltwo.plot.AxisSide;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.Circle2D;
@@ -7,8 +17,8 @@ import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.Graph2D.KeyPosition;
 import com.reeltwo.plot.GraphLine;
+import com.reeltwo.plot.KeyPosition;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
 import com.reeltwo.plot.ScatterPlot2D;
@@ -18,13 +28,6 @@ import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
 import com.reeltwo.plot.patterns.BW8x8PatternGroup;
 import com.reeltwo.plot.ui.ZoomPlotDialog;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import javax.swing.AbstractAction;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
 
 /**
  * Starts a new Swing window for displaying Graph2Ds in. The window has
@@ -46,6 +49,7 @@ public class SwingPlot {
     mDialog.setPatterns(new BW8x8PatternGroup().getPatterns());
 
     mDialog.addWindowListener(new WindowAdapter() {
+      @Override
       public void windowClosing(WindowEvent e) {
         System.exit(1);
       }
@@ -57,6 +61,7 @@ public class SwingPlot {
     popup.add(new AbstractAction("Exit") {
       private static final long serialVersionUID = 1926431490479372450L;
 
+      @Override
       public void actionPerformed(ActionEvent e) {
         System.exit(0);
       }
@@ -65,6 +70,7 @@ public class SwingPlot {
     mDialog.setVisible(true);
 
     SwingUtilities.invokeLater(new Runnable() {
+      @Override
       public void run() {
         mDialog.setVisible(true);
       }
@@ -156,14 +162,14 @@ public class SwingPlot {
 
     final Graph2D graph = new Graph2D();
     graph.setTitle("Title");
-    graph.setXLabel(0, "X label");
-    graph.setXLabel(1, "X1 label");
-    graph.setYLabel(0, "Y label");
-    graph.setYLabel(1, "Y2 label");
+    graph.setXLabel(AxisSide.ONE, "X label");
+    graph.setXLabel(AxisSide.TWO, "X1 label");
+    graph.setYLabel(AxisSide.ONE, "Y label");
+    graph.setYLabel(AxisSide.TWO, "Y2 label");
     graph.setKeyTitle("Key title");
     graph.setGrid(true);
-    graph.setYRange(0, 0.0f, 1.0f);
-    graph.setXRange(0, 0.0f, 10.0f);
+    graph.setYRange(AxisSide.ONE, 0.0f, 1.0f);
+    graph.setXRange(AxisSide.ONE, 0.0f, 10.0f);
 
     final Point2D[] xys1 = new Point2D[11];
     final Point2D[] xys2 = new Point2D[11];
@@ -248,14 +254,14 @@ public class SwingPlot {
     lplot.setTitle("points");
 
     graph.addPlot(lplot);
-    lplot = new PointPlot2D(1, 1);
+    lplot = new PointPlot2D(AxisSide.TWO, AxisSide.TWO);
     lplot.setData(xys2);
     lplot.setTitle("lines");
     lplot.setLines(true);
     lplot.setPoints(false);
 
     graph.addPlot(lplot);
-    graph.setYLo(1, -0.15f);
+    graph.setYLo(AxisSide.TWO, -0.15f);
 
     lplot = new PointPlot2D();
     lplot.setData(xys3);
@@ -291,8 +297,8 @@ public class SwingPlot {
     vline.setType(GraphLine.DOTS);
     graph.addPlot(hline);
 
-    graph.setXTic(0, 2);
-    graph.setXTicLabelFormatter(0, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
+    graph.setXTic(AxisSide.ONE, 2);
+    graph.setXTicLabelFormatter(AxisSide.ONE, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
 
     graph.setKeyVerticalPosition(KeyPosition.BELOW);
     //graph.setColoredKey(false);

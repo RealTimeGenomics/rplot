@@ -23,7 +23,7 @@ public abstract class AbstractPlot2DTest extends TestCase {
   public abstract Plot2D getPlot();
 
 
-  public abstract Plot2D getPlot(int x, int y);
+  public abstract Plot2D getPlot(AxisSide x, AxisSide y);
 
 
   public abstract Datum2D[] getData();
@@ -94,11 +94,11 @@ public abstract class AbstractPlot2DTest extends TestCase {
     assertTrue(plot.getYLo() == yLo);
     assertTrue(plot.getYHi() == yHi);
 
-    for (int y = 0; y < 2; y++) {
-      for (int x = 0; x < 2; x++) {
+    for (AxisSide y : AxisSide.values()) {
+      for (AxisSide x : AxisSide.values()) {
         plot = getPlot(x, y);
-        assertTrue(plot.getXAxis() == x);
-        assertTrue(plot.getYAxis() == y);
+        assertTrue(plot.uses(Axis2D.X, x));
+        assertTrue(plot.uses(Axis2D.Y, y));
       }
     }
   }

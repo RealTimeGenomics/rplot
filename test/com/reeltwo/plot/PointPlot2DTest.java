@@ -1,7 +1,6 @@
 package com.reeltwo.plot;
 
 import junit.framework.Test;
-
 import junit.framework.TestSuite;
 
 /*
@@ -61,7 +60,7 @@ public class PointPlot2DTest extends AbstractFillablePlot2DTest {
 
 
   @Override
-  public Plot2D getPlot(int x, int y) {
+  public Plot2D getPlot(AxisSide x, AxisSide y) {
     return new PointPlot2D(x, y);
   }
 

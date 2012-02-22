@@ -1,9 +1,6 @@
 package com.reeltwo.plot.ui;
 
 
-import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.renderer.GraphicsRenderer;
-import com.reeltwo.plot.renderer.Mapping;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -14,11 +11,17 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
+
+import com.reeltwo.plot.AxisSide;
+import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.renderer.GraphicsRenderer;
+import com.reeltwo.plot.renderer.Mapping;
 
 /**
  * A panel that has a special affinity with a plot panel to allow the
@@ -208,13 +211,15 @@ public class ZoomPlotPanel extends JComponent {
       /** an id */
       private static final long serialVersionUID = 343566108639393382L;
 
+      @Override
       public void actionPerformed(ActionEvent e) {
         //System.err.println("Zoom Out");
         final Graph2D graph = mPlotPanel.getGraph();
         if (graph != null) {
           for (int i = 0; i < 2; i++) {
-            graph.setXRange(i, mXLo[i], mXHi[i]);
-            graph.setYRange(i, mYLo[i], mYHi[i]);
+            final AxisSide a = i == 0 ? AxisSide.ONE : AxisSide.TWO;
+            graph.setXRange(a, mXLo[i], mXHi[i]);
+            graph.setYRange(a, mYLo[i], mYHi[i]);
           }
 
           mPlotPanel.setGraph(graph);
@@ -234,6 +239,7 @@ public class ZoomPlotPanel extends JComponent {
       /** an id */
       private static final long serialVersionUID = -4772586876399697951L;
 
+      @Override
       public void actionPerformed(ActionEvent e) {
         mPicNPic = !mPicNPic;
         putValue("Name", "Pic In Pic " + (mPicNPic ? "Off" : "On"));
@@ -329,17 +335,19 @@ public class ZoomPlotPanel extends JComponent {
 
         for (int i = 0; i < 2; i++) {
           Mapping map = mapping[i * 2];
-          if (mGraph.usesX(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
+          final AxisSide a = i == 0 ? AxisSide.ONE : AxisSide.TWO;
+
+          if (mGraph.usesX(a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
             final float mapOneX = map.screenToWorld((float) ptOne.getX());
             final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
-            mGraph.setXRange(i, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
+            mGraph.setXRange(a, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
           }
 
           map = mapping[i * 2 + 1];
-          if (mGraph.usesY(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
+          if (mGraph.usesY(a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
             final float mapOneY = map.screenToWorld((float) ptOne.getY());
             final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
-            mGraph.setYRange(i, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
+            mGraph.setYRange(a, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
           }
         }
 
@@ -347,17 +355,19 @@ public class ZoomPlotPanel extends JComponent {
           final Graph2D graph = mPlotPanel.getGraph();
           for (int i = 0; i < 2; i++) {
             Mapping map = mapping[i * 2];
-            if (graph.usesX(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
+            final AxisSide a = i == 0 ? AxisSide.ONE : AxisSide.TWO;
+
+            if (graph.usesX(a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
               final float mapOneX = map.screenToWorld((float) ptOne.getX());
               final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
-              graph.setXRange(i, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
+              graph.setXRange(a, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
             }
 
             map = mapping[i * 2 + 1];
-            if (graph.usesY(i) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
+            if (graph.usesY(a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
               final float mapOneY = map.screenToWorld((float) ptOne.getY());
               final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
-              graph.setYRange(i, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
+              graph.setYRange(a, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
             }
           }
           mPlotPanel.setGraph(graph);
@@ -378,7 +388,7 @@ public class ZoomPlotPanel extends JComponent {
     try {
       mGraph = (Graph2D) graph.clone();
       mGraph.setShowKey(false);
-      for (int i = 0; i < 2; i++) {
+      for (AxisSide i : AxisSide.values()) {
         mGraph.setXLabel(i, "");
         mGraph.setYLabel(i, "");
       }
@@ -388,10 +398,11 @@ public class ZoomPlotPanel extends JComponent {
       //cnse.printStackTrace();
     }
     for (int i = 0; i < 2; i++) {
-      mXLo[i] = graph.getXLo(i);
-      mXHi[i] = graph.getXHi(i);
-      mYLo[i] = graph.getYLo(i);
-      mYHi[i] = graph.getYHi(i);
+      final AxisSide a = i == 0 ? AxisSide.ONE : AxisSide.TWO;
+      mXLo[i] = graph.getXLo(a);
+      mXHi[i] = graph.getXHi(a);
+      mYLo[i] = graph.getYLo(a);
+      mYHi[i] = graph.getYHi(a );
     }
     mPlotPanel.setGraph(graph);
   }

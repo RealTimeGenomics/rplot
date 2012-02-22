@@ -78,7 +78,7 @@ public class TextPlot2D extends Plot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public TextPlot2D(int x, int y) {
+  public TextPlot2D(AxisSide x, AxisSide y) {
     super(x, y);
   }
 

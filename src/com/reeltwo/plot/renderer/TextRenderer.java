@@ -1,5 +1,6 @@
 package com.reeltwo.plot.renderer;
 
+import com.reeltwo.plot.AxisSide;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.Graph2D;
@@ -190,19 +191,19 @@ public class TextRenderer extends AbstractRenderer {
     if (title.length() != 0) {
       syhi++;
     }
-    if (graph.usesX(0) && graph.getXLabel(0).length() > 0) {
+    if (graph.usesX(AxisSide.ONE) && graph.getXLabel(AxisSide.ONE).length() > 0) {
       sylo--;
     }
-    if ((graph.usesX(1) && graph.getXLabel(1).length() > 0)
-        || (graph.usesY(0) && graph.getYLabel(0).length() > 0)
-        || (graph.usesY(1) && graph.getYLabel(1).length() > 0)) {
+    if ((graph.usesX(AxisSide.TWO) && graph.getXLabel(AxisSide.TWO).length() > 0)
+        || (graph.usesY(AxisSide.ONE) && graph.getYLabel(AxisSide.ONE).length() > 0)
+        || (graph.usesY(AxisSide.TWO) && graph.getYLabel(AxisSide.TWO).length() > 0)) {
       syhi++;
     }
 
-    if (graph.usesX(0) && graph.isShowXTics(0)) {
+    if (graph.usesX(AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE)) {
       sylo--;
     }
-    if (graph.usesX(1) && graph.isShowXTics(1)) {
+    if (graph.usesX(AxisSide.TWO) && graph.isShowXTics(AxisSide.TWO)) {
       syhi++;
     }
 
@@ -217,20 +218,20 @@ public class TextRenderer extends AbstractRenderer {
       // Draw labels
       drawLabels(graph, canvas, sxlo, sylo, sxhi, syhi);
 
-      final float xlo = graph.getXLo(0);
-      final float xhi = graph.getXHi(0);
-      final float ylo = graph.getYLo(0);
-      final float yhi = graph.getYHi(0);
-      final TicInfo yTicInfo = calcYTicSize(graph, 0, ylo, yhi);
+      final float xlo = graph.getXLo(AxisSide.ONE);
+      final float xhi = graph.getXHi(AxisSide.ONE);
+      final float ylo = graph.getYLo(AxisSide.ONE);
+      final float yhi = graph.getYHi(AxisSide.ONE);
+      final TicInfo yTicInfo = calcYTicSize(graph, AxisSide.ONE, ylo, yhi);
       if (yTicInfo != null) {
         sxlo = yTicInfo.mMaxWidth;
       }
 
-      final float x2lo = graph.getXLo(1);
-      final float x2hi = graph.getXHi(1);
-      final float y2lo = graph.getYLo(1);
-      final float y2hi = graph.getYHi(1);
-      final TicInfo y2TicInfo = calcYTicSize(graph, 1, y2lo, y2hi);
+      final float x2lo = graph.getXLo(AxisSide.TWO);
+      final float x2hi = graph.getXHi(AxisSide.TWO);
+      final float y2lo = graph.getYLo(AxisSide.TWO);
+      final float y2hi = graph.getYHi(AxisSide.TWO);
+      final TicInfo y2TicInfo = calcYTicSize(graph, AxisSide.TWO, y2lo, y2hi);
       if (y2TicInfo != null) {
         sxhi -= y2TicInfo.mMaxWidth;
       }
@@ -244,15 +245,15 @@ public class TextRenderer extends AbstractRenderer {
 
       final Box2D s = new Box2D(sxlo, sylo, sxhi, syhi);
       // scales
-      drawYTics(graph, canvas, 0, yTicInfo, mapping[1], s);
-      drawYTics(graph, canvas, 1, y2TicInfo, mapping[3], s);
-      drawXTics(graph, canvas, 0, mapping[0], xlo, xhi, s);
-      drawXTics(graph, canvas, 1, mapping[2], xlo, xhi, s);
+      drawYTics(graph, canvas, AxisSide.ONE, yTicInfo, mapping[1], s);
+      drawYTics(graph, canvas, AxisSide.TWO, y2TicInfo, mapping[3], s);
+      drawXTics(graph, canvas, AxisSide.ONE, mapping[0], xlo, xhi, s);
+      drawXTics(graph, canvas, AxisSide.TWO, mapping[2], xlo, xhi, s);
     } else {
-      mapping[0] = new Mapping(graph.getXLo(0), graph.getXHi(0), sxlo, sxhi);
-      mapping[1] = new Mapping(graph.getYLo(0), graph.getYHi(0), sylo, syhi);
-      mapping[2] = new Mapping(graph.getXLo(1), graph.getXHi(1), sxlo, sxhi);
-      mapping[3] = new Mapping(graph.getYLo(1), graph.getYHi(1), sylo, syhi);
+      mapping[0] = new Mapping(graph.getXLo(AxisSide.ONE), graph.getXHi(AxisSide.ONE), sxlo, sxhi);
+      mapping[1] = new Mapping(graph.getYLo(AxisSide.ONE), graph.getYHi(AxisSide.ONE), sylo, syhi);
+      mapping[2] = new Mapping(graph.getXLo(AxisSide.TWO), graph.getXHi(AxisSide.TWO), sxlo, sxhi);
+      mapping[3] = new Mapping(graph.getYLo(AxisSide.TWO), graph.getYHi(AxisSide.TWO), sylo, syhi);
     }
     // set clipping rectangle for canvas - to keep inside graph...
     canvas.setClipRectangle(sxlo, syhi, sxhi + 1, sylo + 1);
@@ -344,7 +345,7 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private void drawYTics(Graph2D graph, Canvas canvas, int whichTic, TicInfo ticInfo, Mapping mapping, Box2D s) {
+  private void drawYTics(Graph2D graph, Canvas canvas, AxisSide whichTic, TicInfo ticInfo, Mapping mapping, Box2D s) {
     final int sxlo = (int) s.getXLo();
     final int sxhi = (int) s.getXHi();
     final int sylo = (int) s.getYLo();
@@ -357,19 +358,19 @@ public class TextRenderer extends AbstractRenderer {
 
         if (y >= syhi && y <= sylo) {
           final String snum = ticInfo.mLabelFormatter.format(num);
-          final int yy = (whichTic == 0) ? sxlo - snum.length() : sxhi + 1;
+          final int yy = (whichTic == AxisSide.ONE) ? sxlo - snum.length() : sxhi + 1;
           for (int i = 0; i < snum.length(); i++) {
             final char ch = snum.charAt(i);
             canvas.putChar(yy + i, y, ch);
           }
-          if (whichTic == 0) {
+          if (whichTic == AxisSide.ONE) {
             canvas.putChar(sxlo, y, '+');
-            if (!graph.usesY(1)) {
+            if (!graph.usesY(AxisSide.TWO)) {
               canvas.putChar(sxhi, y, '+');
             }
           } else {
             canvas.putChar(sxhi, y, '+');
-            if (!graph.usesY(0)) {
+            if (!graph.usesY(AxisSide.ONE)) {
               canvas.putChar(sxlo, y, '+');
             }
           }
@@ -379,7 +380,7 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private void drawXTics(Graph2D graph, Canvas canvas, int whichTic, Mapping mapping, float xlo, float xhi, Box2D s) {
+  private void drawXTics(Graph2D graph, Canvas canvas, AxisSide whichTic, Mapping mapping, float xlo, float xhi, Box2D s) {
     final int sxlo = (int) s.getXLo();
     final int sxhi = (int) s.getXHi();
     final int sylo = (int) s.getYLo();
@@ -400,14 +401,14 @@ public class TextRenderer extends AbstractRenderer {
         final int x = (int) mapping.worldToScreen(num);
 
         if (x >= sxlo && x <= sxhi) {
-          if (whichTic == 0) {
+          if (whichTic == AxisSide.ONE) {
             canvas.putChar(x, syhi, '+');
-            if (!graph.usesX(1)) {
+            if (!graph.usesX(AxisSide.TWO)) {
               canvas.putChar(x, sylo, '+');
             }
           } else {
             canvas.putChar(x, sylo, '+');
-            if (!graph.usesX(0)) {
+            if (!graph.usesX(AxisSide.ONE)) {
               canvas.putChar(x, syhi, '+');
             }
           }
@@ -417,7 +418,7 @@ public class TextRenderer extends AbstractRenderer {
           final int xx = x - snum.length() / 2;
           for (int i = 0; i < snum.length(); i++) {
             final char ch = snum.charAt(i);
-            canvas.putChar(xx + i, (whichTic == 0) ? syhi + 1 : sylo - 1, ch);
+            canvas.putChar(xx + i, (whichTic == AxisSide.ONE) ? syhi + 1 : sylo - 1, ch);
           }
         }
       }
@@ -425,7 +426,7 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private TicInfo calcYTicSize(Graph2D graph, int whichTic, float ylo, float yhi) {
+  private TicInfo calcYTicSize(Graph2D graph, AxisSide whichTic, float ylo, float yhi) {
     if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
       final TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
@@ -448,30 +449,30 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private void drawLabels(Graph2D graph, Canvas canvas, int sxlo, int sylo, int sxhi, int syhi) {
-    String ylabel = graph.getYLabel(0);
-    if (graph.usesY(0) && ylabel.length() > 0) {
+    String ylabel = graph.getYLabel(AxisSide.ONE);
+    if (graph.usesY(AxisSide.ONE) && ylabel.length() > 0) {
       for (int i = 0; i < ylabel.length(); i++) {
         canvas.putChar(i, syhi - 2, ylabel.charAt(i));
       }
     }
-    ylabel = graph.getYLabel(1);
-    if (graph.usesY(1) && ylabel.length() > 1) {
+    ylabel = graph.getYLabel(AxisSide.TWO);
+    if (graph.usesY(AxisSide.TWO) && ylabel.length() > 1) {
       for (int i = 0; i < ylabel.length(); i++) {
         canvas.putChar(sxhi + 1 - ylabel.length() + i, syhi - 2, ylabel.charAt(i));
       }
     }
 
     final int centerWidth = (sxhi + 1) / 2;
-    String xlabel = graph.getXLabel(0);
-    if (graph.usesX(0) && xlabel.length() > 0) {
-      final int labelHeight = sylo + 1 + ((graph.usesX(0) && graph.isShowXTics(0)) ? 1 : 0);
+    String xlabel = graph.getXLabel(AxisSide.ONE);
+    if (graph.usesX(AxisSide.ONE) && xlabel.length() > 0) {
+      final int labelHeight = sylo + 1 + ((graph.usesX(AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE)) ? 1 : 0);
       final int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, labelHeight, xlabel.charAt(i));
       }
     }
-    xlabel = graph.getXLabel(1);
-    if (graph.usesX(1) && xlabel.length() > 0) {
+    xlabel = graph.getXLabel(AxisSide.TWO);
+    if (graph.usesX(AxisSide.TWO) && xlabel.length() > 0) {
       final int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, syhi - 2, xlabel.charAt(i));
