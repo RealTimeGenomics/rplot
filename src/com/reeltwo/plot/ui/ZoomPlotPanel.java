@@ -402,7 +402,7 @@ public class ZoomPlotPanel extends JComponent {
       mXLo[i] = graph.getXLo(a);
       mXHi[i] = graph.getXHi(a);
       mYLo[i] = graph.getYLo(a);
-      mYHi[i] = graph.getYHi(a );
+      mYHi[i] = graph.getYHi(a);
     }
     mPlotPanel.setGraph(graph);
   }
