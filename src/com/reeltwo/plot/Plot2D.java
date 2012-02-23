@@ -210,8 +210,9 @@ public abstract class Plot2D {
   }
 
   /**
-   * Returns the lower bound of the x range.
+   * Returns the lower bound of the axis range.
    *
+   * @param axis graph axis
    * @return a number
    */
   public float getLo(Axis2D axis) {
@@ -220,8 +221,9 @@ public abstract class Plot2D {
 
 
   /**
-   * Returns the upper bound of the x range.
+   * Returns the upper bound of the axis range.
    *
+   * @param axis graph axis
    * @return a number
    */
   public float getHi(Axis2D axis) {

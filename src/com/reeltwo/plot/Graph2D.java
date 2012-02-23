@@ -180,9 +180,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets the graph's <code>i</code><sup>th</sup> x axis <code>label</code>.
+   * Sets label for given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param label some text
    */
   public void setLabel(Axis2D axis, AxisSide side, String label) {
@@ -190,8 +191,9 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Shortcut to set bottom x axis label.
+   * Shortcut to set first axis label.
    *
+   * @param axis graph axis
    * @param label some text
    */
   public void setLabel(Axis2D axis, String label) {
@@ -199,9 +201,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Returns the graph's <code>i</code><sup>th</sup> x axis label.
+   * Returns the label for figen axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return label
    */
   public String getLabel(Axis2D axis, AxisSide side) {
@@ -223,10 +226,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets whether or not to display a grid for the
-   * <code>i</code><sup>th</sup> x axis.
+   * Sets whether or not to display a grid for the given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param flag whether to show grid
    */
   public void setGrid(Axis2D axis, AxisSide side, boolean flag) {
@@ -234,10 +237,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Returns whether or not to display a grid for the
-   * <code>i</code><sup>th</sup> x axis.
+   * Returns whether or not to display a grid for the given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return whether to show grid
    */
   public boolean isGrid(Axis2D axis, AxisSide side) {
@@ -265,10 +268,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets the automatic calculation of <code>i</code><sup>th</sup> X
-   * axis range.
+   * Sets the automatic calculation of range on given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    */
   public void setAutoScale(Axis2D axis, AxisSide side) {
     final GraphAxis ga = getAxis(axis, side);
@@ -278,11 +281,12 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets the <code>i</code><sup>th</sup> x axis to range from
-   * <code>lo</code> to hi. If <code>hi</code> &lt; <code>lo</code>
+   * Sets the range from <code>lo</code> to <code>hi</code> for the 
+   * given axis and side. If <code>hi</code> &lt; <code>lo</code>
    * the meaning of <code>lo</code> and <code>hi</code> is swapped.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param lo lower end of range
    * @param hi upper end of range
    */
@@ -292,8 +296,9 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Shortcut to set bottom x axis range.
+   * Shortcut to set first axis range.
    *
+   * @param axis graph axis
    * @param lo lower end of range
    * @param hi upper end of range
    */
@@ -302,9 +307,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets the low end of the <code>i</code><sup>th</sup> x axis range.
+   * Sets the low end of the given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param x low end of range
    */
   public void setLo(Axis2D axis, AxisSide side, float x) {
@@ -313,9 +319,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Returns the low end of the <code>i</code><sup>th</sup> x axis range.
+   * Returns the low end of range for the given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return low end of range
    */
   public float getLo(Axis2D axis, AxisSide side) {
@@ -323,10 +330,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets the high end of the <code>i</code><sup>th</sup> x axis
-   * range.
+   * Sets the high end of the given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param x high end of range
    */
   public void setHi(Axis2D axis, AxisSide side, float x) {
@@ -335,10 +342,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Returns the high end of the <code>i</code><sup>th</sup> x axis
-   * range.
+   * Returns the high end of range for the axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return high end of range
    */
   public float getHi(Axis2D axis, AxisSide side) {
@@ -508,11 +515,12 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Set the label formatter to use for formatting of numbers on the
-   * <code>i</code><sup>th</sup> y axis.  If a null formatter is given
-   * then the default formatter is used.
+   * Set the label formatter to use for formatting of numbers on the given
+   * axis and side. If a null formatter is given then the default formatter
+   * is used.
    *
-   * @param i y axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param lf a label formatter
    */
   public void setTicLabelFormatter(Axis2D axis, AxisSide side, LabelFormatter lf) {
@@ -520,10 +528,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Returns the label formater used for the
-   * <code>i</code><sup>th</sup> y axis.
+   * Returns the label formatter used for the given axis and side.
    *
-   * @param i y axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return <code>LabelFormatter</code>
    */
   public LabelFormatter getTicLabelFormatter(Axis2D axis, AxisSide side) {
@@ -532,11 +540,11 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets whether to use a log scale on the
-   * <code>i</code><sup>th</sup> y axis. Default is not to used log
-   * scale.
+   * Sets whether to use a log scale on the given axis and side.
+   * Default is not to use log scale.
    *
-   * @param i y axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param flag whether to use log scale
    */
   public void setLogScale(Axis2D axis, AxisSide side, boolean flag) {
@@ -545,10 +553,10 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Returns whether to use log scale on the
-   * <code>i</code><sup>th</sup> y axis.
+   * Returns whether to use log scale on given axis and side.
    *
-   * @param i y axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return whether using log scale
    */
   public boolean isLogScale(Axis2D axis, AxisSide side) {
@@ -578,9 +586,10 @@ public class Graph2D implements Cloneable {
 
 
   /**
-   * Returns whether any plot in this graph uses the <code>i</code><sup>th</sup> y axis.
+   * Returns whether any plot in this graph uses the given axis and side.
    *
-   * @param i y axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return whether any plot uses the y axis
    */
   public boolean uses(Axis2D axis, AxisSide side) {
