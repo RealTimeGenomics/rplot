@@ -41,15 +41,15 @@ public class Graph2DTest extends TestCase {
     assertTrue(graph.isBorder());
 
     for (AxisSide i : AxisSide.values()) {
-      assertTrue(graph.getXLabel(i).equals(""));
-      assertTrue(graph.getYLabel(i).equals(""));
-      assertTrue(!graph.isXGrid(i));
-      assertTrue(!graph.isYGrid(i));
+      for (Axis2D axis : Axis2D.values()) {
+        assertTrue(graph.getLabel(axis, i).equals(""));
+        assertTrue(!graph.isGrid(axis, i));
+      }
 
-      assertEquals(-1.0f, graph.getXLo(i), PRECISION);
-      assertEquals(1.0f, graph.getXHi(i), PRECISION);
-      assertEquals(-1.0f, graph.getYLo(i), PRECISION);
-      assertEquals(1.0f, graph.getYHi(i), PRECISION);
+      assertEquals(-1.0f, graph.getLo(Axis2D.X, i), PRECISION);
+      assertEquals(1.0f, graph.getHi(Axis2D.X, i), PRECISION);
+      assertEquals(-1.0f, graph.getLo(Axis2D.Y, i), PRECISION);
+      assertEquals(1.0f, graph.getHi(Axis2D.Y, i), PRECISION);
 
       assertEquals(0.2f, graph.getXTic(i), PRECISION);
       assertEquals(0.2f, graph.getYTic(i), PRECISION);
@@ -57,10 +57,10 @@ public class Graph2DTest extends TestCase {
       assertTrue(graph.isShowXTics(i));
       assertTrue(graph.isShowYTics(i));
 
-      assertNotNull(graph.getXTicLabelFormatter(i));
+      assertNotNull(graph.getTicLabelFormatter(Axis2D.X, i));
 
-      assertTrue(!graph.usesX(i));
-      assertTrue(!graph.usesY(i));
+      assertTrue(!graph.uses(Axis2D.X, i));
+      assertTrue(!graph.uses(Axis2D.Y, i));
     }
 
     // check sets/gets
@@ -75,53 +75,53 @@ public class Graph2DTest extends TestCase {
     assertTrue(graph.getKeyTitle().equals("key title"));
 
     for (AxisSide i : AxisSide.values()) {
-      graph.setXLabel(i, null);
-      assertTrue(graph.getXLabel(i).equals(""));
-      graph.setXLabel(i, "xlabel");
-      assertTrue(graph.getXLabel(i).equals("xlabel"));
+      graph.setLabel(Axis2D.X, i, null);
+      assertTrue(graph.getLabel(Axis2D.X, i).equals(""));
+      graph.setLabel(Axis2D.X, i, "xlabel");
+      assertTrue(graph.getLabel(Axis2D.X, i).equals("xlabel"));
 
-      graph.setYLabel(i, null);
-      assertTrue(graph.getYLabel(i).equals(""));
-      graph.setYLabel(i, "ylabel");
-      assertTrue(graph.getYLabel(i).equals("ylabel"));
+      graph.setLabel(Axis2D.Y, i, null);
+      assertTrue(graph.getLabel(Axis2D.Y, i).equals(""));
+      graph.setLabel(Axis2D.Y, i, "ylabel");
+      assertTrue(graph.getLabel(Axis2D.Y, i).equals("ylabel"));
 
-      graph.setXGrid(i, true);
-      assertTrue(graph.isXGrid(i));
-      graph.setXGrid(i, false);
-      assertTrue(!graph.isXGrid(i));
+      graph.setGrid(Axis2D.X, i, true);
+      assertTrue(graph.isGrid(Axis2D.X, i));
+      graph.setGrid(Axis2D.X, i, false);
+      assertTrue(!graph.isGrid(Axis2D.X, i));
 
-      graph.setXGrid(i, true);
-      assertTrue(graph.isXGrid(i));
-      graph.setXGrid(i, false);
-      assertTrue(!graph.isXGrid(i));
+      graph.setGrid(Axis2D.X, i, true);
+      assertTrue(graph.isGrid(Axis2D.X, i));
+      graph.setGrid(Axis2D.X, i, false);
+      assertTrue(!graph.isGrid(Axis2D.X, i));
 
-      graph.setXLo(i, 0.0f);
-      assertEquals(0.0f, graph.getXLo(i), PRECISION);
-      assertEquals(1.0f, graph.getXHi(i), PRECISION);
-      graph.setAutoScaleX(i);
-      graph.setXHi(i, 0.0f);
-      assertEquals(-1.0f, graph.getXLo(i), PRECISION);
-      assertEquals(0.0f, graph.getXHi(i), PRECISION);
-      graph.setXRange(i, 1.0f, 2.0f);
-      assertEquals(1.0f, graph.getXLo(i), PRECISION);
-      assertEquals(2.0f, graph.getXHi(i), PRECISION);
-      graph.setAutoScaleX(i);
-      assertEquals(-1.0f, graph.getXLo(i), PRECISION);
-      assertEquals(1.0f, graph.getXHi(i), PRECISION);
+      graph.setLo(Axis2D.X, i, 0.0f);
+      assertEquals(0.0f, graph.getLo(Axis2D.X, i), PRECISION);
+      assertEquals(1.0f, graph.getHi(Axis2D.X, i), PRECISION);
+      graph.setAutoScale(Axis2D.X, i);
+      graph.setHi(Axis2D.X, i, 0.0f);
+      assertEquals(-1.0f, graph.getLo(Axis2D.X, i), PRECISION);
+      assertEquals(0.0f, graph.getHi(Axis2D.X, i), PRECISION);
+      graph.setRange(Axis2D.X, i, 1.0f, 2.0f);
+      assertEquals(1.0f, graph.getLo(Axis2D.X, i), PRECISION);
+      assertEquals(2.0f, graph.getHi(Axis2D.X, i), PRECISION);
+      graph.setAutoScale(Axis2D.X, i);
+      assertEquals(-1.0f, graph.getLo(Axis2D.X, i), PRECISION);
+      assertEquals(1.0f, graph.getHi(Axis2D.X, i), PRECISION);
 
-      graph.setYLo(i, 0.0f);
-      assertEquals(0.0f, graph.getYLo(i), PRECISION);
-      assertEquals(1.0f, graph.getYHi(i), PRECISION);
-      graph.setAutoScaleY(i);
-      graph.setYHi(i, 0.0f);
-      assertEquals(-1.0f, graph.getYLo(i), PRECISION);
-      assertEquals(0.0f, graph.getYHi(i), PRECISION);
-      graph.setYRange(i, 1.0f, 2.0f);
-      assertEquals(1.0f, graph.getYLo(i), PRECISION);
-      assertEquals(2.0f, graph.getYHi(i), PRECISION);
-      graph.setAutoScaleY(i);
-      assertEquals(-1.0f, graph.getYLo(i), PRECISION);
-      assertEquals(1.0f, graph.getYHi(i), PRECISION);
+      graph.setLo(Axis2D.Y, i, 0.0f);
+      assertEquals(0.0f, graph.getLo(Axis2D.Y, i), PRECISION);
+      assertEquals(1.0f, graph.getHi(Axis2D.Y, i), PRECISION);
+      graph.setAutoScale(Axis2D.Y, i);
+      graph.setHi(Axis2D.Y, i, 0.0f);
+      assertEquals(-1.0f, graph.getLo(Axis2D.Y, i), PRECISION);
+      assertEquals(0.0f, graph.getHi(Axis2D.Y, i), PRECISION);
+      graph.setRange(Axis2D.Y, i, 1.0f, 2.0f);
+      assertEquals(1.0f, graph.getLo(Axis2D.Y, i), PRECISION);
+      assertEquals(2.0f, graph.getHi(Axis2D.Y, i), PRECISION);
+      graph.setAutoScale(Axis2D.Y, i);
+      assertEquals(-1.0f, graph.getLo(Axis2D.Y, i), PRECISION);
+      assertEquals(1.0f, graph.getHi(Axis2D.Y, i), PRECISION);
 
       graph.setXTic(i, 0.34f);
       assertEquals(0.34f, graph.getXTic(i), PRECISION);
@@ -151,11 +151,10 @@ public class Graph2DTest extends TestCase {
 
     final String[] labels = new String[]{"one", "two"};
     for (AxisSide i : AxisSide.values()) {
-      graph.setXTicLabelFormatter(i, new StringFormatter(labels));
-      assertTrue(graph.getXTicLabelFormatter(i) instanceof StringFormatter);
-
-      graph.setYTicLabelFormatter(i, new StringFormatter(labels));
-      assertTrue(graph.getYTicLabelFormatter(i) instanceof StringFormatter);
+      for (Axis2D axis : Axis2D.values()) {
+        graph.setTicLabelFormatter(axis, i, new StringFormatter(labels));
+        assertTrue(graph.getTicLabelFormatter(axis, i) instanceof StringFormatter);
+      }
     }
   }
 
@@ -170,25 +169,26 @@ public class Graph2DTest extends TestCase {
 
     assertNotNull(graph.getPlots());
     assertTrue(graph.getPlots().length == 2);
-    assertTrue(graph.usesX(AxisSide.ONE));
-    assertTrue(graph.usesX(AxisSide.TWO));
-    assertTrue(graph.usesY(AxisSide.ONE));
-    assertTrue(graph.usesY(AxisSide.TWO));
+    for (Axis2D axis : Axis2D.values()) {
+      for (AxisSide side : AxisSide.values()) {
+        assertTrue(graph.uses(axis, side));
+      }
+    }
 
-    assertEquals(-1.5f, graph.getXLo(AxisSide.ONE), PRECISION);
-    assertEquals(1.5f, graph.getXHi(AxisSide.ONE), PRECISION);
+    assertEquals(-1.5f, graph.getLo(Axis2D.X, AxisSide.ONE), PRECISION);
+    assertEquals(1.5f, graph.getHi(Axis2D.X, AxisSide.ONE), PRECISION);
     assertEquals(0.5f, graph.getXTic(AxisSide.ONE), PRECISION);
 
-    assertEquals(3.0f, graph.getYLo(AxisSide.ONE), PRECISION);
-    assertEquals(5.2f, graph.getYHi(AxisSide.ONE), PRECISION);
+    assertEquals(3.0f, graph.getLo(Axis2D.Y, AxisSide.ONE), PRECISION);
+    assertEquals(5.2f, graph.getHi(Axis2D.Y, AxisSide.ONE), PRECISION);
     assertEquals(0.5f, graph.getYTic(AxisSide.ONE), PRECISION);
 
-    assertEquals(-5.0f, graph.getXLo(AxisSide.TWO), PRECISION);
-    assertEquals(2.0f, graph.getXHi(AxisSide.TWO), PRECISION);
+    assertEquals(-5.0f, graph.getLo(Axis2D.X, AxisSide.TWO), PRECISION);
+    assertEquals(2.0f, graph.getHi(Axis2D.X, AxisSide.TWO), PRECISION);
     assertEquals(1.0f, graph.getXTic(AxisSide.TWO), PRECISION);
 
-    assertEquals(4.0f, graph.getYLo(AxisSide.TWO), PRECISION);
-    assertEquals(7.5f, graph.getYHi(AxisSide.TWO), PRECISION);
+    assertEquals(4.0f, graph.getLo(Axis2D.Y, AxisSide.TWO), PRECISION);
+    assertEquals(7.5f, graph.getHi(Axis2D.Y, AxisSide.TWO), PRECISION);
     assertEquals(0.5f, graph.getYTic(AxisSide.TWO), PRECISION);
   }
 

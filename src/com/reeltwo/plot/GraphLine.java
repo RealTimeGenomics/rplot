@@ -101,25 +101,13 @@ public class GraphLine extends Plot2D {
 
   /** {@inheritDoc} */
   @Override
-  public float getXLo() {
+  public float getLo(Axis2D axis) {
     throw new UnsupportedOperationException("not applicable.");
   }
 
   /** {@inheritDoc} */
   @Override
-  public float getXHi() {
-    throw new UnsupportedOperationException("not applicable.");
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public float getYLo() {
-    throw new UnsupportedOperationException("not applicable.");
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public float getYHi() {
+  public float getHi(Axis2D axis) {
     throw new UnsupportedOperationException("not applicable.");
   }
 

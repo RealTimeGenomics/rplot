@@ -46,11 +46,6 @@ public abstract class Plot2D {
     mYAxis = y;
   }
 
-
-  private AxisSide getAxisSide(Axis2D axis) {
-    return axis == Axis2D.X ? mXAxis : mYAxis;
-  }
-
   /**
    * Returns whether plot is using the specified side for the given axis.
    *
@@ -59,7 +54,7 @@ public abstract class Plot2D {
    * @return using side for axis
    */
   public boolean uses(Axis2D axis, AxisSide side) {
-    return getAxisSide(axis) == side;
+    return (axis == Axis2D.X ? mXAxis : mYAxis) == side;
   }
 
   /**
@@ -219,8 +214,8 @@ public abstract class Plot2D {
    *
    * @return a number
    */
-  public float getXLo() {
-    return mXLo;
+  public float getLo(Axis2D axis) {
+    return axis == Axis2D.X ? mXLo : mYLo;
   }
 
 
@@ -229,27 +224,7 @@ public abstract class Plot2D {
    *
    * @return a number
    */
-  public float getXHi() {
-    return mXHi;
-  }
-
-
-  /**
-   * Returns the lower bound of the y range.
-   *
-   * @return a number
-   */
-  public float getYLo() {
-    return mYLo;
-  }
-
-
-  /**
-   * Returns the upper bound of the y range.
-   *
-   * @return a number
-   */
-  public float getYHi() {
-    return mYHi;
+  public float getHi(Axis2D axis) {
+    return axis == Axis2D.X ? mXHi : mYHi;
   }
 }

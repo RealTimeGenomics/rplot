@@ -395,27 +395,27 @@ public abstract class AbstractRenderer {
   // functions that actually plot the different types of plots
   protected Mapping[] createMappings(Graph2D graph, int sxlo, int sylo, int sxhi, int syhi) {
     final Mapping[] mappings = new Mapping[4]; // x1, y1, x2, y2
-    mappings[0] = new Mapping(graph.getXLo(AxisSide.ONE), graph.getXHi(AxisSide.ONE), sxlo, sxhi, graph.isLogScaleX(AxisSide.ONE));
-    mappings[1] = new Mapping(graph.getYLo(AxisSide.ONE), graph.getYHi(AxisSide.ONE), sylo, syhi, graph.isLogScaleY(AxisSide.ONE));
-    mappings[2] = new Mapping(graph.getXLo(AxisSide.TWO), graph.getXHi(AxisSide.TWO), sxlo, sxhi, graph.isLogScaleX(AxisSide.TWO));
-    mappings[3] = new Mapping(graph.getYLo(AxisSide.TWO), graph.getYHi(AxisSide.TWO), sylo, syhi, graph.isLogScaleY(AxisSide.TWO));
+    mappings[0] = new Mapping(graph.getLo(Axis2D.X, AxisSide.ONE), graph.getHi(Axis2D.X, AxisSide.ONE), sxlo, sxhi, graph.isLogScale(Axis2D.X, AxisSide.ONE));
+    mappings[1] = new Mapping(graph.getLo(Axis2D.Y, AxisSide.ONE), graph.getHi(Axis2D.Y, AxisSide.ONE), sylo, syhi, graph.isLogScale(Axis2D.Y, AxisSide.ONE));
+    mappings[2] = new Mapping(graph.getLo(Axis2D.X, AxisSide.TWO), graph.getHi(Axis2D.X, AxisSide.TWO), sxlo, sxhi, graph.isLogScale(Axis2D.X, AxisSide.TWO));
+    mappings[3] = new Mapping(graph.getLo(Axis2D.Y, AxisSide.TWO), graph.getHi(Axis2D.Y, AxisSide.TWO), sylo, syhi, graph.isLogScale(Axis2D.Y, AxisSide.TWO));
     return mappings;
   }
 
   private TicInfo calcXTicInfo(Object canvas, Graph2D graph, AxisSide whichTic) {
-    if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
+    if (graph.uses(Axis2D.X, whichTic) && graph.isShowXTics(whichTic)) {
       final TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getXTic(whichTic);
       ticInfo.mMinorTic = graph.getXMinorTic(whichTic);
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
-      ticInfo.mStart = (int) (graph.getXLo(whichTic) / ticInfo.mTic);
-      ticInfo.mEnd = (int) (graph.getXHi(whichTic) / ticInfo.mTic);
+      ticInfo.mStart = (int) (graph.getLo(Axis2D.X, whichTic) / ticInfo.mTic);
+      ticInfo.mEnd = (int) (graph.getHi(Axis2D.X, whichTic) / ticInfo.mTic);
       if (ticInfo.mMinorTic > 0.0f) {
-        ticInfo.mMinorStart = (int) (graph.getXLo(whichTic) / ticInfo.mMinorTic);
-        ticInfo.mMinorEnd = (int) (graph.getXHi(whichTic) / ticInfo.mMinorTic);
+        ticInfo.mMinorStart = (int) (graph.getLo(Axis2D.X, whichTic) / ticInfo.mMinorTic);
+        ticInfo.mMinorEnd = (int) (graph.getHi(Axis2D.X, whichTic) / ticInfo.mMinorTic);
       }
 
-      ticInfo.mLabelFormatter = graph.getXTicLabelFormatter(whichTic);
+      ticInfo.mLabelFormatter = graph.getTicLabelFormatter(Axis2D.X, whichTic);
 
       ticInfo.mMaxWidth = 0;
       ticInfo.mMaxHeight = 0;
@@ -440,14 +440,14 @@ public abstract class AbstractRenderer {
   }
 
   private TicInfo calcYTicInfo(Object canvas, Graph2D graph, AxisSide whichTic) {
-    if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
+    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowYTics(whichTic)) {
       final TicInfo ticInfo = new TicInfo();
       ticInfo.mTic = graph.getYTic(whichTic);
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
-      ticInfo.mStart = (int) (graph.getYLo(whichTic) / ticInfo.mTic);
-      ticInfo.mEnd = (int) (graph.getYHi(whichTic) / ticInfo.mTic);
+      ticInfo.mStart = (int) (graph.getLo(Axis2D.Y, whichTic) / ticInfo.mTic);
+      ticInfo.mEnd = (int) (graph.getHi(Axis2D.Y, whichTic) / ticInfo.mTic);
 
-      ticInfo.mLabelFormatter =  graph.getYTicLabelFormatter(whichTic);
+      ticInfo.mLabelFormatter =  graph.getTicLabelFormatter(Axis2D.Y, whichTic);
 
       ticInfo.mMaxWidth = 0;
       ticInfo.mMaxHeight = 0;

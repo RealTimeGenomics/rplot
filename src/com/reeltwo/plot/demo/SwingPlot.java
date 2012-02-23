@@ -9,6 +9,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
+import com.reeltwo.plot.Axis2D;
 import com.reeltwo.plot.AxisSide;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
@@ -162,14 +163,14 @@ public class SwingPlot {
 
     final Graph2D graph = new Graph2D();
     graph.setTitle("Title");
-    graph.setXLabel(AxisSide.ONE, "X label");
-    graph.setXLabel(AxisSide.TWO, "X1 label");
-    graph.setYLabel(AxisSide.ONE, "Y label");
-    graph.setYLabel(AxisSide.TWO, "Y2 label");
+    graph.setLabel(Axis2D.X, AxisSide.ONE, "X label");
+    graph.setLabel(Axis2D.X, AxisSide.TWO, "X1 label");
+    graph.setLabel(Axis2D.Y, AxisSide.ONE, "Y label");
+    graph.setLabel(Axis2D.Y, AxisSide.TWO, "Y2 label");
     graph.setKeyTitle("Key title");
     graph.setGrid(true);
-    graph.setYRange(AxisSide.ONE, 0.0f, 1.0f);
-    graph.setXRange(AxisSide.ONE, 0.0f, 10.0f);
+    graph.setRange(Axis2D.Y, AxisSide.ONE, 0.0f, 1.0f);
+    graph.setRange(Axis2D.X, AxisSide.ONE, 0.0f, 10.0f);
 
     final Point2D[] xys1 = new Point2D[11];
     final Point2D[] xys2 = new Point2D[11];
@@ -261,7 +262,7 @@ public class SwingPlot {
     lplot.setPoints(false);
 
     graph.addPlot(lplot);
-    graph.setYLo(AxisSide.TWO, -0.15f);
+    graph.setLo(Axis2D.Y, AxisSide.TWO, -0.15f);
 
     lplot = new PointPlot2D();
     lplot.setData(xys3);
@@ -298,7 +299,7 @@ public class SwingPlot {
     graph.addPlot(hline);
 
     graph.setXTic(AxisSide.ONE, 2);
-    graph.setXTicLabelFormatter(AxisSide.ONE, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
+    graph.setTicLabelFormatter(Axis2D.X, AxisSide.ONE, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
 
     graph.setKeyVerticalPosition(KeyPosition.BELOW);
     //graph.setColoredKey(false);

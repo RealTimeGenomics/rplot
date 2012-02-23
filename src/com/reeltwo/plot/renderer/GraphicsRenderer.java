@@ -13,6 +13,7 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
 import com.reeltwo.plot.ArrowPlot2D;
+import com.reeltwo.plot.Axis2D;
 import com.reeltwo.plot.AxisSide;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPoint2D;
@@ -419,25 +420,25 @@ public class GraphicsRenderer extends AbstractRenderer {
             sxhi -= keyWidth + 2;
           }
         }
-        if (graph.usesX(AxisSide.ONE) && graph.getXLabel(AxisSide.ONE).length() > 0) {
+        if (graph.uses(Axis2D.X, AxisSide.ONE) && graph.getLabel(Axis2D.X, AxisSide.ONE).length() > 0) {
           sylo -= tHeight + 2;
           // draw x label later when border width is known
         }
-        if (graph.usesY(AxisSide.ONE) && graph.getYLabel(AxisSide.ONE).length() > 0) {
-          g.drawString(graph.getYLabel(AxisSide.ONE), sxlo, tHeight * (1 + (title.length() > 0 ? 1 : 0)));
+        if (graph.uses(Axis2D.Y, AxisSide.ONE) && graph.getLabel(Axis2D.Y, AxisSide.ONE).length() > 0) {
+          g.drawString(graph.getLabel(Axis2D.Y, AxisSide.ONE), sxlo, tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
-        if (graph.usesY(AxisSide.TWO) && graph.getYLabel(AxisSide.TWO).length() > 0) {
-          final String yLabel = graph.getYLabel(AxisSide.TWO);
+        if (graph.uses(Axis2D.Y, AxisSide.TWO) && graph.getLabel(Axis2D.Y, AxisSide.TWO).length() > 0) {
+          final String yLabel = graph.getLabel(Axis2D.Y, AxisSide.TWO);
           g.drawString(yLabel, sxhi - getTextWidth(g, yLabel), tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
-        if ((graph.usesX(AxisSide.TWO) && graph.getXLabel(AxisSide.TWO).length() > 0)
-            || (graph.usesY(AxisSide.ONE) && graph.getYLabel(AxisSide.ONE).length() > 0)
-            || (graph.usesY(AxisSide.TWO) && graph.getYLabel(AxisSide.TWO).length() > 0)) {
+        if ((graph.uses(Axis2D.X, AxisSide.TWO) && graph.getLabel(Axis2D.X, AxisSide.TWO).length() > 0)
+            || (graph.uses(Axis2D.Y, AxisSide.ONE) && graph.getLabel(Axis2D.Y, AxisSide.ONE).length() > 0)
+            || (graph.uses(Axis2D.Y, AxisSide.TWO) && graph.getLabel(Axis2D.Y, AxisSide.TWO).length() > 0)) {
           syhi += tHeight;
         }
         // extra height for digits on axes
-        if ((graph.usesY(AxisSide.ONE) && graph.isShowYTics(AxisSide.ONE))
-            || (graph.usesY(AxisSide.TWO) && graph.isShowYTics(AxisSide.TWO))) {
+        if ((graph.uses(Axis2D.Y, AxisSide.ONE) && graph.isShowYTics(AxisSide.ONE))
+            || (graph.uses(Axis2D.Y, AxisSide.TWO) && graph.isShowYTics(AxisSide.TWO))) {
           syhi += tHeight / 2;
         }
         final TicInfo[] ticInfos = createTicInfos(g, graph);
@@ -452,20 +453,20 @@ public class GraphicsRenderer extends AbstractRenderer {
         xTicInfo = ticInfos[0];
         if (xTicInfo != null) {
           sylo -= xTicInfo.mMaxHeight;
-          if (!(graph.usesY(AxisSide.ONE) && graph.isShowYTics(AxisSide.ONE))) {
+          if (!(graph.uses(Axis2D.Y, AxisSide.ONE) && graph.isShowYTics(AxisSide.ONE))) {
             sxlo += xTicInfo.mMaxWidth / 2 + 2;
           }
-          if (!(graph.usesY(AxisSide.TWO) && graph.isShowYTics(AxisSide.TWO)) && keyWidth == 0) {
+          if (!(graph.uses(Axis2D.Y, AxisSide.TWO) && graph.isShowYTics(AxisSide.TWO)) && keyWidth == 0) {
             sxhi -= xTicInfo.mMaxWidth / 2 + 2;
           }
         }
         final TicInfo x2TicInfo = ticInfos[2];
         if (x2TicInfo != null) {
           syhi += xTicInfo.mMaxHeight;
-          if (!graph.isShowYTics(AxisSide.ONE) && !(graph.usesX(AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE))) {
+          if (!graph.isShowYTics(AxisSide.ONE) && !(graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE))) {
             sxlo += x2TicInfo.mMaxWidth / 2 + 2;
           }
-          if (!graph.isShowYTics(AxisSide.TWO) && !(graph.usesX(AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE))) {
+          if (!graph.isShowYTics(AxisSide.TWO) && !(graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE))) {
             sxhi -= x2TicInfo.mMaxWidth / 2 + 2;
           }
         }
@@ -481,11 +482,11 @@ public class GraphicsRenderer extends AbstractRenderer {
         drawXTics(graph, g, AxisSide.TWO, x2TicInfo, mapping[2], s);
         setColor(g, FOREGROUND_COLOR_INDEX);
         String xLabel;
-        if (graph.usesX(AxisSide.ONE) && (xLabel = graph.getXLabel(AxisSide.ONE)).length() > 0) {
-          final int extra = tHeight + ((graph.usesX(AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE)) ? xTicInfo.mMaxHeight : 0);
+        if (graph.uses(Axis2D.X, AxisSide.ONE) && (xLabel = graph.getLabel(Axis2D.X, AxisSide.ONE)).length() > 0) {
+          final int extra = tHeight + ((graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE)) ? xTicInfo.mMaxHeight : 0);
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, sylo + extra);
         }
-        if (graph.usesX(AxisSide.TWO) && (xLabel = graph.getXLabel(AxisSide.TWO)).length() > 0) {
+        if (graph.uses(Axis2D.X, AxisSide.TWO) && (xLabel = graph.getLabel(Axis2D.X, AxisSide.TWO)).length() > 0) {
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
         // draw border
@@ -505,7 +506,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       drawData(g, graph.getPlots(), mapping);
       if (graph.getKeyVerticalPosition() == KeyPosition.BELOW) {
         if (xTicInfo != null) { sylo += xTicInfo.mMaxHeight; }
-        if (graph.usesX(AxisSide.ONE) && graph.getXLabel(AxisSide.ONE).length() > 0) { sylo += tHeight; }
+        if (graph.uses(Axis2D.X, AxisSide.ONE) && graph.getLabel(Axis2D.X, AxisSide.ONE).length() > 0) { sylo += tHeight; }
       } else if (graph.getKeyHorizontalPosition() == KeyPosition.OUTSIDE) {
         if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
       }
@@ -619,26 +620,26 @@ public class GraphicsRenderer extends AbstractRenderer {
     final int sxhi = s.getXHi();
     final int sylo = s.getYLo();
     final int syhi = s.getYHi();
-    if (graph.usesY(whichTic) && graph.isShowYTics(whichTic)) {
+    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowYTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       final FontMetrics fm = g.getFontMetrics();
       final int tHeight = fm.getHeight();
       yTicInfo.setNumDecimalDigits(yTicInfo.mTic);
 
-      if (graph.isLogScaleY(whichTic)) {
+      if (graph.isLogScale(Axis2D.Y, whichTic)) {
         // log scale...
-        final float start = (float) PlotUtils.floor10(graph.getYLo(whichTic));
-        final float end = (float) PlotUtils.ceil10(graph.getYHi(whichTic));
+        final float start = (float) PlotUtils.floor10(graph.getLo(Axis2D.Y, whichTic));
+        final float end = (float) PlotUtils.ceil10(graph.getHi(Axis2D.Y, whichTic));
         //System.err.println("min = " + start + ", max = " + end);
         for (int i = 1; i <= (int) (end / start); i *= 10) {
           for (int j = 1; j < 10 && i * j <= yTicInfo.mEnd; j++) {
             final float num = start * i * j;
             final int y = (int) mapping.worldToScreen(num);
             if (y >= syhi && y <= sylo) {
-              if ((whichTic == AxisSide.TWO) || !graph.usesY(AxisSide.TWO)) {
+              if ((whichTic == AxisSide.TWO) || !graph.uses(Axis2D.Y, AxisSide.TWO)) {
                 g.drawLine(sxhi, y, sxhi - (j == 1 ? 4 : 2), y);
               }
-              if ((whichTic == AxisSide.ONE) || !graph.usesY(AxisSide.ONE)) {
+              if ((whichTic == AxisSide.ONE) || !graph.uses(Axis2D.Y, AxisSide.ONE)) {
                 g.drawLine(sxlo, y, sxlo + (j == 1 ? 4 : 2), y);
               }
             }
@@ -646,7 +647,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           final float num = start * i;
           final int y = (int) mapping.worldToScreen(num);
           if (y >= syhi && y <= sylo) {
-            if (graph.isYGrid(whichTic)) {
+            if (graph.isGrid(Axis2D.Y, whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(sxlo + 4, y, sxhi - 4, y);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -663,13 +664,13 @@ public class GraphicsRenderer extends AbstractRenderer {
           final int y = (int) mapping.worldToScreen(num);
 
           if (y >= syhi && y <= sylo) {
-            if ((whichTic == AxisSide.TWO) || !graph.usesY(AxisSide.TWO)) {
+            if ((whichTic == AxisSide.TWO) || !graph.uses(Axis2D.Y, AxisSide.TWO)) {
               g.drawLine(sxhi, y, sxhi - 4, y);
             }
-            if ((whichTic == AxisSide.ONE) || !graph.usesY(AxisSide.ONE)) {
+            if ((whichTic == AxisSide.ONE) || !graph.uses(Axis2D.Y, AxisSide.ONE)) {
               g.drawLine(sxlo, y, sxlo + 4, y);
             }
-            if (graph.isYGrid(whichTic)) {
+            if (graph.isGrid(Axis2D.Y, whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(sxlo + 4, y, sxhi - 4, y);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -685,10 +686,10 @@ public class GraphicsRenderer extends AbstractRenderer {
             final float num = yTicInfo.mMinorTic * k;
             final int y = (int) mapping.worldToScreen(num);
             if (y >= syhi && y <= sylo) {
-              if ((whichTic == AxisSide.TWO) || !graph.usesY(AxisSide.TWO)) {
+              if ((whichTic == AxisSide.TWO) || !graph.uses(Axis2D.Y, AxisSide.TWO)) {
                 g.drawLine(sxhi, y, sxhi - 2, y);
               }
-              if ((whichTic == AxisSide.ONE) || !graph.usesY(AxisSide.ONE)) {
+              if ((whichTic == AxisSide.ONE) || !graph.uses(Axis2D.Y, AxisSide.ONE)) {
                 g.drawLine(sxlo, y, sxlo + 2, y);
               }
             }
@@ -704,26 +705,26 @@ public class GraphicsRenderer extends AbstractRenderer {
     final int sxhi = s.getXHi();
     final int sylo = s.getYLo();
     final int syhi = s.getYHi();
-    if (graph.usesX(whichTic) && graph.isShowXTics(whichTic)) {
+    if (graph.uses(Axis2D.X, whichTic) && graph.isShowXTics(whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       final FontMetrics fm = g.getFontMetrics();
       final int tHeight = fm.getHeight();
       xTicInfo.setNumDecimalDigits(xTicInfo.mTic);
 
-      if (graph.isLogScaleX(whichTic)) {
+      if (graph.isLogScale(Axis2D.X, whichTic)) {
         // log scale...
-        final float start = (float) PlotUtils.floor10(graph.getXLo(whichTic));
-        final float end = (float) PlotUtils.ceil10(graph.getXHi(whichTic));
+        final float start = (float) PlotUtils.floor10(graph.getLo(Axis2D.X, whichTic));
+        final float end = (float) PlotUtils.ceil10(graph.getHi(Axis2D.X, whichTic));
         //System.err.println("min = " + start + ", max = " + end);
         for (int i = 1; i <= (int) (end / start); i *= 10) {
           for (int j = 1; j < 10 && i * j <= xTicInfo.mEnd; j++) {
             final float num = start * i * j;
             final int x = (int) mapping.worldToScreen(num);
             if (x >= sxlo && x <= sxhi) {
-              if ((whichTic == AxisSide.ONE) || !graph.usesX(AxisSide.ONE)) {
+              if ((whichTic == AxisSide.ONE) || !graph.uses(Axis2D.X, AxisSide.ONE)) {
                 g.drawLine(x, sylo, x, sylo - (j == 1 ? 4 : 2));
               }
-              if ((whichTic == AxisSide.TWO) || !graph.usesX(AxisSide.TWO)) {
+              if ((whichTic == AxisSide.TWO) || !graph.uses(Axis2D.X, AxisSide.TWO)) {
                 g.drawLine(x, syhi, x, syhi + (j == 1 ? 4 : 2));
               }
             }
@@ -731,7 +732,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           final float num = start * i;
           final int x = (int) mapping.worldToScreen(num);
           if (x >= sxlo && x <= sxhi) {
-            if (graph.isXGrid(whichTic)) {
+            if (graph.isGrid(Axis2D.X, whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(x, sylo - 4, x, syhi + 4);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -747,13 +748,13 @@ public class GraphicsRenderer extends AbstractRenderer {
           final int x = (int) mapping.worldToScreen(num);
 
           if (x >= sxlo && x <= sxhi) {
-            if ((whichTic == AxisSide.ONE) || !graph.usesX(AxisSide.ONE)) {
+            if ((whichTic == AxisSide.ONE) || !graph.uses(Axis2D.X, AxisSide.ONE)) {
               g.drawLine(x, sylo, x, sylo - 4);
             }
-            if ((whichTic == AxisSide.TWO) || !graph.usesX(AxisSide.TWO)) {
+            if ((whichTic == AxisSide.TWO) || !graph.uses(Axis2D.X, AxisSide.TWO)) {
               g.drawLine(x, syhi, x, syhi + 4);
             }
-            if (graph.isXGrid(whichTic)) {
+            if (graph.isGrid(Axis2D.X, whichTic)) {
               g.setColor(mGridColor);
               g.drawLine(x, sylo - 4, x, syhi + 4);
               setColor(g, FOREGROUND_COLOR_INDEX);
@@ -774,10 +775,10 @@ public class GraphicsRenderer extends AbstractRenderer {
             final int x = (int) mapping.worldToScreen(num);
 
             if (x >= sxlo && x <= sxhi) {
-              if ((whichTic == AxisSide.ONE) || !graph.usesX(AxisSide.ONE)) {
+              if ((whichTic == AxisSide.ONE) || !graph.uses(Axis2D.X, AxisSide.ONE)) {
                 g.drawLine(x, sylo, x, sylo - 2);
               }
-              if ((whichTic == AxisSide.TWO) || !graph.usesX(AxisSide.TWO)) {
+              if ((whichTic == AxisSide.TWO) || !graph.uses(Axis2D.X, AxisSide.TWO)) {
                 g.drawLine(x, syhi, x, syhi + 2);
               }
             }

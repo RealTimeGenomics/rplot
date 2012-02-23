@@ -86,13 +86,13 @@ public abstract class AbstractPlot2DTest extends TestCase {
         }
       }
     }
-    assertTrue(plot.getXLo() <= plot.getXHi());
-    assertTrue(plot.getYLo() <= plot.getYHi());
+    assertTrue(plot.getLo(Axis2D.X) <= plot.getHi(Axis2D.X));
+    assertTrue(plot.getLo(Axis2D.Y) <= plot.getHi(Axis2D.Y));
 
-    assertTrue(plot.getXLo() == xLo);
-    assertTrue(plot.getXHi() == xHi);
-    assertTrue(plot.getYLo() == yLo);
-    assertTrue(plot.getYHi() == yHi);
+    assertTrue(plot.getLo(Axis2D.X) == xLo);
+    assertTrue(plot.getHi(Axis2D.X) == xHi);
+    assertTrue(plot.getLo(Axis2D.Y) == yLo);
+    assertTrue(plot.getHi(Axis2D.Y) == yHi);
 
     for (AxisSide y : AxisSide.values()) {
       for (AxisSide x : AxisSide.values()) {
@@ -114,10 +114,10 @@ public abstract class AbstractPlot2DTest extends TestCase {
     final Plot2D plot = new Plot2D() {
     };
 
-    assertTrue(plot.getXLo() == 0.0f);
-    assertTrue(plot.getYLo() == 0.0f);
-    assertTrue(plot.getXHi() == 0.0f);
-    assertTrue(plot.getYHi() == 0.0f);
+    assertTrue(plot.getLo(Axis2D.X) == 0.0f);
+    assertTrue(plot.getLo(Axis2D.Y) == 0.0f);
+    assertTrue(plot.getHi(Axis2D.X) == 0.0f);
+    assertTrue(plot.getHi(Axis2D.Y) == 0.0f);
 
     try {
       plot.setData(points);
@@ -127,10 +127,10 @@ public abstract class AbstractPlot2DTest extends TestCase {
       ; // expected
     }
 
-    assertTrue(plot.getXLo() == 0.0f);
-    assertTrue(plot.getYLo() == 0.0f);
-    assertTrue(plot.getXHi() == 0.0f);
-    assertTrue(plot.getYHi() == 0.0f);
+    assertTrue(plot.getLo(Axis2D.X) == 0.0f);
+    assertTrue(plot.getLo(Axis2D.Y) == 0.0f);
+    assertTrue(plot.getHi(Axis2D.X) == 0.0f);
+    assertTrue(plot.getHi(Axis2D.Y) == 0.0f);
 
     assertTrue(Plot2D.isValid(0.0f));
     assertFalse(Plot2D.isValid(Float.POSITIVE_INFINITY));
