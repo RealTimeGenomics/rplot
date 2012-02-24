@@ -201,10 +201,10 @@ public class TextRenderer extends AbstractRenderer {
       syhi++;
     }
 
-    if (graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE)) {
+    if (graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowTics(Axis2D.X, AxisSide.ONE)) {
       sylo--;
     }
-    if (graph.uses(Axis2D.X, AxisSide.TWO) && graph.isShowXTics(AxisSide.TWO)) {
+    if (graph.uses(Axis2D.X, AxisSide.TWO) && graph.isShowTics(Axis2D.X, AxisSide.TWO)) {
       syhi++;
     }
 
@@ -351,7 +351,7 @@ public class TextRenderer extends AbstractRenderer {
     final int sxhi = (int) s.getXHi();
     final int sylo = (int) s.getYLo();
     final int syhi = (int) s.getYHi();
-    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowYTics(whichTic)) {
+    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowTics(Axis2D.Y, whichTic)) {
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         final float num = ticInfo.mTic * k;
@@ -388,8 +388,8 @@ public class TextRenderer extends AbstractRenderer {
     final int syhi = (int) s.getYHi();
     // Note: sylo and syhi are swapped in the Box2D object.
 
-    if (graph.uses(Axis2D.X, whichTic) && graph.isShowXTics(whichTic)) {
-      final float xtic = graph.getXTic(whichTic);
+    if (graph.uses(Axis2D.X, whichTic) && graph.isShowTics(Axis2D.X, whichTic)) {
+      final float xtic = graph.getTic(Axis2D.X, whichTic);
 
       final int start = (int) (xlo / xtic);
       final int end = (int) (xhi / xtic);
@@ -428,9 +428,9 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private TicInfo calcYTicSize(Graph2D graph, AxisSide whichTic, float ylo, float yhi) {
-    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowYTics(whichTic)) {
+    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowTics(Axis2D.Y, whichTic)) {
       final TicInfo ticInfo = new TicInfo();
-      ticInfo.mTic = graph.getYTic(whichTic);
+      ticInfo.mTic = graph.getTic(Axis2D.Y, whichTic);
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (ylo / ticInfo.mTic);
       ticInfo.mEnd = (int) (yhi / ticInfo.mTic);
@@ -466,7 +466,7 @@ public class TextRenderer extends AbstractRenderer {
     final int centerWidth = (sxhi + 1) / 2;
     String xlabel = graph.getLabel(Axis2D.X, AxisSide.ONE);
     if (graph.uses(Axis2D.X, AxisSide.ONE) && xlabel.length() > 0) {
-      final int labelHeight = sylo + 1 + ((graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE)) ? 1 : 0);
+      final int labelHeight = sylo + 1 + ((graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowTics(Axis2D.X, AxisSide.ONE)) ? 1 : 0);
       final int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, labelHeight, xlabel.charAt(i));

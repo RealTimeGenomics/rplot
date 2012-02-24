@@ -298,7 +298,7 @@ public class SwingPlot {
     vline.setType(GraphLine.DOTS);
     graph.addPlot(hline);
 
-    graph.setXTic(AxisSide.ONE, 2);
+    graph.setTic(Axis2D.X, AxisSide.ONE, 2);
     graph.setTicLabelFormatter(Axis2D.X, AxisSide.ONE, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
 
     graph.setKeyVerticalPosition(KeyPosition.BELOW);

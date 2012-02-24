@@ -403,10 +403,10 @@ public abstract class AbstractRenderer {
   }
 
   private TicInfo calcXTicInfo(Object canvas, Graph2D graph, AxisSide whichTic) {
-    if (graph.uses(Axis2D.X, whichTic) && graph.isShowXTics(whichTic)) {
+    if (graph.uses(Axis2D.X, whichTic) && graph.isShowTics(Axis2D.X, whichTic)) {
       final TicInfo ticInfo = new TicInfo();
-      ticInfo.mTic = graph.getXTic(whichTic);
-      ticInfo.mMinorTic = graph.getXMinorTic(whichTic);
+      ticInfo.mTic = graph.getTic(Axis2D.X, whichTic);
+      ticInfo.mMinorTic = graph.getMinorTic(Axis2D.X, whichTic);
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (graph.getLo(Axis2D.X, whichTic) / ticInfo.mTic);
       ticInfo.mEnd = (int) (graph.getHi(Axis2D.X, whichTic) / ticInfo.mTic);
@@ -440,9 +440,9 @@ public abstract class AbstractRenderer {
   }
 
   private TicInfo calcYTicInfo(Object canvas, Graph2D graph, AxisSide whichTic) {
-    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowYTics(whichTic)) {
+    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowTics(Axis2D.Y, whichTic)) {
       final TicInfo ticInfo = new TicInfo();
-      ticInfo.mTic = graph.getYTic(whichTic);
+      ticInfo.mTic = graph.getTic(Axis2D.Y, whichTic);
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (graph.getLo(Axis2D.Y, whichTic) / ticInfo.mTic);
       ticInfo.mEnd = (int) (graph.getHi(Axis2D.Y, whichTic) / ticInfo.mTic);

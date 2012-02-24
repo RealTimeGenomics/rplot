@@ -437,8 +437,8 @@ public class GraphicsRenderer extends AbstractRenderer {
           syhi += tHeight;
         }
         // extra height for digits on axes
-        if ((graph.uses(Axis2D.Y, AxisSide.ONE) && graph.isShowYTics(AxisSide.ONE))
-            || (graph.uses(Axis2D.Y, AxisSide.TWO) && graph.isShowYTics(AxisSide.TWO))) {
+        if ((graph.uses(Axis2D.Y, AxisSide.ONE) && graph.isShowTics(Axis2D.Y, AxisSide.ONE))
+            || (graph.uses(Axis2D.Y, AxisSide.TWO) && graph.isShowTics(Axis2D.Y, AxisSide.TWO))) {
           syhi += tHeight / 2;
         }
         final TicInfo[] ticInfos = createTicInfos(g, graph);
@@ -453,20 +453,20 @@ public class GraphicsRenderer extends AbstractRenderer {
         xTicInfo = ticInfos[0];
         if (xTicInfo != null) {
           sylo -= xTicInfo.mMaxHeight;
-          if (!(graph.uses(Axis2D.Y, AxisSide.ONE) && graph.isShowYTics(AxisSide.ONE))) {
+          if (!(graph.uses(Axis2D.Y, AxisSide.ONE) && graph.isShowTics(Axis2D.Y, AxisSide.ONE))) {
             sxlo += xTicInfo.mMaxWidth / 2 + 2;
           }
-          if (!(graph.uses(Axis2D.Y, AxisSide.TWO) && graph.isShowYTics(AxisSide.TWO)) && keyWidth == 0) {
+          if (!(graph.uses(Axis2D.Y, AxisSide.TWO) && graph.isShowTics(Axis2D.Y, AxisSide.TWO)) && keyWidth == 0) {
             sxhi -= xTicInfo.mMaxWidth / 2 + 2;
           }
         }
         final TicInfo x2TicInfo = ticInfos[2];
         if (x2TicInfo != null) {
           syhi += xTicInfo.mMaxHeight;
-          if (!graph.isShowYTics(AxisSide.ONE) && !(graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE))) {
+          if (!graph.isShowTics(Axis2D.Y, AxisSide.ONE) && !(graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowTics(Axis2D.X, AxisSide.ONE))) {
             sxlo += x2TicInfo.mMaxWidth / 2 + 2;
           }
-          if (!graph.isShowYTics(AxisSide.TWO) && !(graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE))) {
+          if (!graph.isShowTics(Axis2D.Y, AxisSide.TWO) && !(graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowTics(Axis2D.X, AxisSide.ONE))) {
             sxhi -= x2TicInfo.mMaxWidth / 2 + 2;
           }
         }
@@ -483,7 +483,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         setColor(g, FOREGROUND_COLOR_INDEX);
         String xLabel;
         if (graph.uses(Axis2D.X, AxisSide.ONE) && (xLabel = graph.getLabel(Axis2D.X, AxisSide.ONE)).length() > 0) {
-          final int extra = tHeight + ((graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowXTics(AxisSide.ONE)) ? xTicInfo.mMaxHeight : 0);
+          final int extra = tHeight + ((graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowTics(Axis2D.X, AxisSide.ONE)) ? xTicInfo.mMaxHeight : 0);
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, sylo + extra);
         }
         if (graph.uses(Axis2D.X, AxisSide.TWO) && (xLabel = graph.getLabel(Axis2D.X, AxisSide.TWO)).length() > 0) {
@@ -620,7 +620,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     final int sxhi = s.getXHi();
     final int sylo = s.getYLo();
     final int syhi = s.getYHi();
-    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowYTics(whichTic)) {
+    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowTics(Axis2D.Y, whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       final FontMetrics fm = g.getFontMetrics();
       final int tHeight = fm.getHeight();
@@ -705,7 +705,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     final int sxhi = s.getXHi();
     final int sylo = s.getYLo();
     final int syhi = s.getYHi();
-    if (graph.uses(Axis2D.X, whichTic) && graph.isShowXTics(whichTic)) {
+    if (graph.uses(Axis2D.X, whichTic) && graph.isShowTics(Axis2D.X, whichTic)) {
       setColor(g, FOREGROUND_COLOR_INDEX);
       final FontMetrics fm = g.getFontMetrics();
       final int tHeight = fm.getHeight();

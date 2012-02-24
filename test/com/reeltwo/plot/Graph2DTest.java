@@ -51,11 +51,11 @@ public class Graph2DTest extends TestCase {
       assertEquals(-1.0f, graph.getLo(Axis2D.Y, i), PRECISION);
       assertEquals(1.0f, graph.getHi(Axis2D.Y, i), PRECISION);
 
-      assertEquals(0.2f, graph.getXTic(i), PRECISION);
-      assertEquals(0.2f, graph.getYTic(i), PRECISION);
+      assertEquals(0.2f, graph.getTic(Axis2D.X, i), PRECISION);
+      assertEquals(0.2f, graph.getTic(Axis2D.Y, i), PRECISION);
 
-      assertTrue(graph.isShowXTics(i));
-      assertTrue(graph.isShowYTics(i));
+      assertTrue(graph.isShowTics(Axis2D.X, i));
+      assertTrue(graph.isShowTics(Axis2D.Y, i));
 
       assertNotNull(graph.getTicLabelFormatter(Axis2D.X, i));
 
@@ -123,25 +123,25 @@ public class Graph2DTest extends TestCase {
       assertEquals(-1.0f, graph.getLo(Axis2D.Y, i), PRECISION);
       assertEquals(1.0f, graph.getHi(Axis2D.Y, i), PRECISION);
 
-      graph.setXTic(i, 0.34f);
-      assertEquals(0.34f, graph.getXTic(i), PRECISION);
-      graph.setAutoScaleXTic(i);
-      assertEquals(0.2f, graph.getXTic(i), PRECISION);
+      graph.setTic(Axis2D.X, i, 0.34f);
+      assertEquals(0.34f, graph.getTic(Axis2D.X, i), PRECISION);
+      graph.setAutoScaleTic(Axis2D.X, i);
+      assertEquals(0.2f, graph.getTic(Axis2D.X, i), PRECISION);
 
-      graph.setYTic(i, 0.34f);
-      assertEquals(0.34f, graph.getYTic(i), PRECISION);
-      graph.setAutoScaleYTic(i);
-      assertEquals(0.2f, graph.getYTic(i), PRECISION);
+      graph.setTic(Axis2D.Y, i, 0.34f);
+      assertEquals(0.34f, graph.getTic(Axis2D.Y, i), PRECISION);
+      graph.setAutoScaleTic(Axis2D.Y, i);
+      assertEquals(0.2f, graph.getTic(Axis2D.Y, i), PRECISION);
 
-      graph.setShowXTics(i, false);
-      assertTrue(!graph.isShowXTics(i));
-      graph.setShowXTics(i, true);
-      assertTrue(graph.isShowXTics(i));
+      graph.setShowTics(Axis2D.X, i, false);
+      assertTrue(!graph.isShowTics(Axis2D.X, i));
+      graph.setShowTics(Axis2D.X, i, true);
+      assertTrue(graph.isShowTics(Axis2D.X, i));
 
-      graph.setShowYTics(i, false);
-      assertTrue(!graph.isShowYTics(i));
-      graph.setShowYTics(i, true);
-      assertTrue(graph.isShowYTics(i));
+      graph.setShowTics(Axis2D.Y, i, false);
+      assertTrue(!graph.isShowTics(Axis2D.Y, i));
+      graph.setShowTics(Axis2D.Y, i, true);
+      assertTrue(graph.isShowTics(Axis2D.Y, i));
     }
 
     graph.setBorder(false);
@@ -177,19 +177,19 @@ public class Graph2DTest extends TestCase {
 
     assertEquals(-1.5f, graph.getLo(Axis2D.X, AxisSide.ONE), PRECISION);
     assertEquals(1.5f, graph.getHi(Axis2D.X, AxisSide.ONE), PRECISION);
-    assertEquals(0.5f, graph.getXTic(AxisSide.ONE), PRECISION);
+    assertEquals(0.5f, graph.getTic(Axis2D.X, AxisSide.ONE), PRECISION);
 
     assertEquals(3.0f, graph.getLo(Axis2D.Y, AxisSide.ONE), PRECISION);
     assertEquals(5.2f, graph.getHi(Axis2D.Y, AxisSide.ONE), PRECISION);
-    assertEquals(0.5f, graph.getYTic(AxisSide.ONE), PRECISION);
+    assertEquals(0.5f, graph.getTic(Axis2D.Y, AxisSide.ONE), PRECISION);
 
     assertEquals(-5.0f, graph.getLo(Axis2D.X, AxisSide.TWO), PRECISION);
     assertEquals(2.0f, graph.getHi(Axis2D.X, AxisSide.TWO), PRECISION);
-    assertEquals(1.0f, graph.getXTic(AxisSide.TWO), PRECISION);
+    assertEquals(1.0f, graph.getTic(Axis2D.X, AxisSide.TWO), PRECISION);
 
     assertEquals(4.0f, graph.getLo(Axis2D.Y, AxisSide.TWO), PRECISION);
     assertEquals(7.5f, graph.getHi(Axis2D.Y, AxisSide.TWO), PRECISION);
-    assertEquals(0.5f, graph.getYTic(AxisSide.TWO), PRECISION);
+    assertEquals(0.5f, graph.getTic(Axis2D.Y, AxisSide.TWO), PRECISION);
   }
 
 

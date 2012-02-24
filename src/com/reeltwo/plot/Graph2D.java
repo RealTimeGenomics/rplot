@@ -281,7 +281,7 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets the range from <code>lo</code> to <code>hi</code> for the 
+   * Sets the range from <code>lo</code> to <code>hi</code> for the
    * given axis and side. If <code>hi</code> &lt; <code>lo</code>
    * the meaning of <code>lo</code> and <code>hi</code> is swapped.
    *
@@ -353,165 +353,91 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Sets the automatic calculation of <code>i</code><sup>th</sup> X axis tics.
+   * Sets the automatic calculation of tics on given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    */
-  public void setAutoScaleXTic(AxisSide i) {
-    getAxis(Axis2D.X, i).setTicAuto(true);
+  public void setAutoScaleTic(Axis2D axis, AxisSide side) {
+    getAxis(axis, side).setTicAuto(true);
     setRanges();
   }
 
   /**
-   * Sets the tick spacing for the <code>i</code><sup>th</sup> x
-   * axis. This value represents the distance from the origin in the
+   * Sets the tick spacing for the given axis and side.
+   * This value represents the distance from the origin in the
    * positive direction of the first tick.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param tic tick spacing
    */
-  public void setXTic(AxisSide i, float tic) {
-    getAxis(Axis2D.X, i).setTic(tic);
+  public void setTic(Axis2D axis, AxisSide side, float tic) {
+    getAxis(axis, side).setTic(tic);
   }
 
   /**
-   * Returns the tick spacing for the <code>i</code><sup>th</sup> x
-   * axis. This value represents the distance from the origin in the
+   * Returns the tick spacing for the given axis and side.
+   * This value represents the distance from the origin in the
    * positive direction of the first tick.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return tick spacing
    */
-  public float getXTic(AxisSide i) {
-    return getAxis(Axis2D.X, i).getTic();
+  public float getTic(Axis2D axis, AxisSide side) {
+    return getAxis(axis, side).getTic();
   }
 
   /**
-   * Sets the tick spacing for small tics on the
-   * <code>i</code><sup>th</sup> x axis. This value represents the
+   * Sets the tick spacing for small tics on the given axis and side.
+   * This value represents the
    * distance from the origin in the positive direction of the first
    * tick.  A value of 0 or less will result in no minor ticks being
    * displayed (the default).
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param tic tick spacing
    */
-  public void setXMinorTic(AxisSide i, float tic) {
-    getAxis(Axis2D.X, i).setMinorTic(tic);
+  public void setMinorTic(Axis2D axis, AxisSide side, float tic) {
+    getAxis(axis, side).setMinorTic(tic);
   }
 
   /**
-   * Returns the tick spacing for small tics on the
-   * <code>i</code><sup>th</sup> x axis. This value represents the
+   * Returns the tick spacing for small tics on the given axis and side.
+   * This value represents the
    * distance from the origin in the positive direction of the first
    * tick.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return tick spacing
    */
-  public float getXMinorTic(AxisSide i) {
-    return getAxis(Axis2D.X, i).getMinorTic();
+  public float getMinorTic(Axis2D axis, AxisSide side) {
+    return getAxis(axis, side).getMinorTic();
   }
 
   /**
-   * Sets the automatic calculation of <code>i</code><sup>th</sup> Y axis tics.
+   * Sets whether to show tics on given axis and side.
    *
-   * @param i y axis index
-   */
-  public void setAutoScaleYTic(AxisSide i) {
-    getAxis(Axis2D.Y, i).setTicAuto(true);
-    setRanges();
-  }
-
-  /**
-   * Sets the tick spacing for the <code>i</code><sup>th</sup> y
-   * axis. This value represents the distance from the origin in the
-   * positive direction of the first tick.
-   *
-   * @param i y axis index
-   * @param tic tick spacing
-   */
-  public void setYTic(AxisSide i, float tic) {
-    getAxis(Axis2D.Y, i).setTic(tic);
-  }
-
-  /**
-   * Returns the tick spacing for the <code>i</code><sup>th</sup> y
-   * axis. This value represents the distance from the origin in the
-   * positive direction of the first tick.
-   *
-   * @param i y axis index
-   * @return tick spacing
-   */
-  public float getYTic(AxisSide i) {
-    return getAxis(Axis2D.Y, i).getTic();
-  }
-
-  /**
-   * Sets the tick spacing for small tics on the
-   * <code>i</code><sup>th</sup> y axis. This value represents the
-   * distance from the origin in the positive direction of the first
-   * tick.  A value of 0 or less will result in no minor ticks being
-   * displayed (the default).
-   *
-   * @param i y axis index
-   * @param tic tick spacing
-   */
-  public void setYMinorTic(AxisSide i, float tic) {
-    getAxis(Axis2D.Y, i).setMinorTic(tic);
-  }
-
-  /**
-   * Returns the tick spacing for small tics on the
-   * <code>i</code><sup>th</sup> y axis. This value represents the
-   * distance from the origin in the positive direction of the first
-   * tick.
-   *
-   * @param i y axis index
-   * @return tick spacing
-   */
-  public float getYMinorTic(AxisSide i) {
-    return getAxis(Axis2D.Y, i).getMinorTic();
-  }
-
-  /**
-   * Sets whether to show <code>i</code><sup>th</sup> x tics on graph.
-   *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @param flag whether to show tics
    */
-  public void setShowXTics(AxisSide i, boolean flag) {
-    getAxis(Axis2D.X, i).setShowTics(flag);
+  public void setShowTics(Axis2D axis, AxisSide side, boolean flag) {
+    getAxis(axis, side).setShowTics(flag);
   }
 
   /**
-   * Returns whether to show <code>i</code><sup>th</sup> x tics on graph.
+   * Returns whether to show tics on given axis and side.
    *
-   * @param i x axis index
+   * @param axis graph axis
+   * @param side axis side
    * @return whether to show tics
    */
-  public boolean isShowXTics(AxisSide i) {
-    return getAxis(Axis2D.X, i).isShowTics();
-  }
-
-  /**
-   * Sets whether to show <code>i</code><sup>th</sup> y tics on graph.
-   *
-   * @param i y axis index
-   * @param flag whether to show tics
-   */
-  public void setShowYTics(AxisSide i, boolean flag) {
-    getAxis(Axis2D.Y, i).setShowTics(flag);
-  }
-
-  /**
-   * Returns whether to show <code>i</code><sup>th</sup> y tics on graph.
-   *
-   * @param i y axis index
-   * @return whether to show tics
-   */
-  public boolean isShowYTics(AxisSide i) {
-    return getAxis(Axis2D.Y, i).isShowTics();
+  public boolean isShowTics(Axis2D axis, AxisSide side) {
+    return getAxis(axis, side).isShowTics();
   }
 
   /**
