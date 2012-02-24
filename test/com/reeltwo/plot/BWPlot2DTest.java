@@ -3,6 +3,8 @@ package com.reeltwo.plot;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import com.reeltwo.plot.BWPlot2D.BoxWhiskerStyle;
+
 /**
  * JUnit tests for the BWPointPlot2D class.
  *
@@ -42,13 +44,13 @@ public class BWPlot2DTest extends AbstractPlot2DTest {
   public void testSets() {
     final BWPlot2D plot = (BWPlot2D) getPlot();
 
-    assertEquals(BWPlot2D.STANDARD, plot.getType());
-    plot.setType(BWPlot2D.MINIMAL);
-    assertEquals(BWPlot2D.MINIMAL, plot.getType());
-    plot.setType(BWPlot2D.JOINED);
-    assertEquals(BWPlot2D.JOINED, plot.getType());
-    plot.setType(BWPlot2D.STANDARD);
-    assertEquals(BWPlot2D.STANDARD, plot.getType());
+    assertEquals(BoxWhiskerStyle.STANDARD, plot.getStyle());
+    plot.setType(BoxWhiskerStyle.MINIMAL);
+    assertEquals(BoxWhiskerStyle.MINIMAL, plot.getStyle());
+    plot.setType(BoxWhiskerStyle.JOINED);
+    assertEquals(BoxWhiskerStyle.JOINED, plot.getStyle());
+    plot.setType(BoxWhiskerStyle.STANDARD);
+    assertEquals(BoxWhiskerStyle.STANDARD, plot.getStyle());
 
     assertEquals(20, plot.getWidth());
     plot.setWidth(10);
@@ -57,19 +59,6 @@ public class BWPlot2DTest extends AbstractPlot2DTest {
 
   public void testBadArgs() {
     final BWPlot2D plot = (BWPlot2D) getPlot();
-
-    try {
-      plot.setType(BWPlot2D.STANDARD - 1);
-      fail("accepted bad type");
-    } catch (final IllegalArgumentException e) {
-      ; // expected
-    }
-    try {
-      plot.setType(BWPlot2D.JOINED + 1);
-      fail("accepted bad type");
-    } catch (final IllegalArgumentException e) {
-      ; // expected
-    }
     try {
       plot.setWidth(0);
       fail("accepted bad width");

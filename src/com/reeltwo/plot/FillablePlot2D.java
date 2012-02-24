@@ -6,14 +6,20 @@ package com.reeltwo.plot;
  * @author Richard Littin
  */
 public abstract class FillablePlot2D extends Plot2D {
-  /** Do not fill plot. */
-  public static final int NO_FILL = 0;
-  /** Fill plot with solid color. */
-  public static final int COLOR_FILL = 1;
-  /** Fill plot with a pattern. */
-  public static final int PATTERN_FILL = 2;
 
-  private int mFill = NO_FILL;
+  /**
+   * Possible fill styles.
+   */
+  public enum FillStyle {
+    /** Do not fill plot. */
+    NONE,
+    /** Fill plot with solid color. */
+    COLOR,
+    /** Fill plot with a pattern. */
+    PATTERN,
+  }
+
+  private FillStyle mFill = FillStyle.NONE;
 
   private boolean mBorder = false;
 
@@ -44,10 +50,7 @@ public abstract class FillablePlot2D extends Plot2D {
    *
    * @param fill the fill type
    */
-  public void setFill(int fill) {
-    if (fill < NO_FILL || fill > PATTERN_FILL) {
-      throw new IllegalArgumentException("Illegal fill type: " + fill);
-    }
+  public void setFill(FillStyle fill) {
     mFill = fill;
   }
 
@@ -56,7 +59,7 @@ public abstract class FillablePlot2D extends Plot2D {
    *
    * @return the fill type
    */
-  public int getFill() {
+  public FillStyle getFill() {
     return mFill;
   }
 
@@ -66,7 +69,7 @@ public abstract class FillablePlot2D extends Plot2D {
    * @return whether their is some form of filling
    */
   public boolean isFill() {
-    return mFill != NO_FILL;
+    return mFill != FillStyle.NONE;
   }
 
   /**

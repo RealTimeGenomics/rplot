@@ -8,22 +8,32 @@ package com.reeltwo.plot;
  */
 public class GraphLine extends Plot2D {
 
-  /** Horizontal line */
-  public static final int HORIZONTAL = 0;
-  /** Vertical line */
-  public static final int VERTICAL = 1;
+  /**
+   * Possible line orientations.
+   */
+  public enum LineOrientation {
+    /** Horizontal line */
+    HORIZONTAL,
+    /** Vertical line */
+    VERTICAL
+  }
 
-  /** Dashed line */
-  public static final int DASHES = 0;
-  /** Dotted line */
-  public static final int DOTS = 1;
-  /** Solid line */
-  public static final int SOLID = 2;
+  /**
+   * Possible line styles.
+   */
+  public enum LineStyle {
+    /** Dashed line */
+    DASHES,
+    /** Dotted line */
+    DOTS,
+    /** Solid line */
+    SOLID
+  }
 
   private final float mLocation;
-  private final int mOrientation;
+  private final LineOrientation mOrientation;
 
-  private int mType = DASHES;
+  private LineStyle mStyle = LineStyle.DASHES;
 
   /**
    * Creates a new <code>GraphLine</code> at the given
@@ -34,14 +44,11 @@ public class GraphLine extends Plot2D {
    * @param location position on axis
    * @param orientation horizontal or vertical
    */
-  public GraphLine(float location, int orientation) {
+  public GraphLine(float location, LineOrientation orientation) {
     this(0, 0, location, orientation);
   }
 
-  private GraphLine(int x, int y, float location, int orientation) {
-    if (orientation < HORIZONTAL || orientation > VERTICAL) {
-      throw new IllegalArgumentException("Invalid orientation: " + orientation);
-    }
+  private GraphLine(int x, int y, float location, LineOrientation orientation) {
     mLocation = location;
     mOrientation = orientation;
   }
@@ -60,7 +67,7 @@ public class GraphLine extends Plot2D {
    *
    * @return orientation
    */
-  public int getOrientation() {
+  public LineOrientation getOrientation() {
     return mOrientation;
   }
 
@@ -71,11 +78,8 @@ public class GraphLine extends Plot2D {
    *
    * @param type line type
    */
-  public void setType(int type) {
-    if (type < DASHES || type > SOLID) {
-      throw new IllegalArgumentException("Invalid type: " + type);
-    }
-    mType = type;
+  public void setStyle(LineStyle type) {
+    mStyle = type;
   }
 
   /**
@@ -83,8 +87,8 @@ public class GraphLine extends Plot2D {
    *
    * @return line type
    */
-  public int getType() {
-    return mType;
+  public LineStyle getStyle() {
+    return mStyle;
   }
 
   /** {@inheritDoc} */

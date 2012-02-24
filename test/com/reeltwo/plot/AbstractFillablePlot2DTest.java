@@ -1,5 +1,7 @@
 package com.reeltwo.plot;
 
+import com.reeltwo.plot.FillablePlot2D.FillStyle;
+
 /**
  * JUnit tests for the FillablePlot2D abstract class.
  *
@@ -18,28 +20,13 @@ public abstract class AbstractFillablePlot2DTest extends AbstractPlot2DTest {
 
   public void testFill() {
     final FillablePlot2D plot = (FillablePlot2D) getPlot();
-    assertEquals(FillablePlot2D.NO_FILL, plot.getFill());
-    plot.setFill(FillablePlot2D.NO_FILL);
-    assertEquals(FillablePlot2D.NO_FILL, plot.getFill());
-    plot.setFill(FillablePlot2D.COLOR_FILL);
-    assertEquals(FillablePlot2D.COLOR_FILL, plot.getFill());
-    plot.setFill(FillablePlot2D.PATTERN_FILL);
-    assertEquals(FillablePlot2D.PATTERN_FILL, plot.getFill());
+    assertEquals(FillStyle.NONE, plot.getFill());
+    plot.setFill(FillStyle.NONE);
+    assertEquals(FillStyle.NONE, plot.getFill());
+    plot.setFill(FillStyle.COLOR);
+    assertEquals(FillStyle.COLOR, plot.getFill());
+    plot.setFill(FillStyle.PATTERN);
+    assertEquals(FillStyle.PATTERN, plot.getFill());
   }
 
-  public void testBadArguments() {
-    final FillablePlot2D plot = (FillablePlot2D) getPlot();
-    try {
-      plot.setFill(FillablePlot2D.NO_FILL - 1);
-      fail("accepted bad argument");
-    } catch (final IllegalArgumentException iae) {
-      ; // should get here
-    }
-    try {
-      plot.setFill(FillablePlot2D.PATTERN_FILL + 1);
-      fail("accepted bad argument");
-    } catch (final IllegalArgumentException iae) {
-      ; // should get here
-    }
-  }
 }

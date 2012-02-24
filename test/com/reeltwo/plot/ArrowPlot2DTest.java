@@ -3,6 +3,9 @@ package com.reeltwo.plot;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import com.reeltwo.plot.ArrowPlot2D.ArrowDirection;
+import com.reeltwo.plot.ArrowPlot2D.ArrowHead;
+
 /**
  * JUnit tests for the ArrowPlot2D class.
  *
@@ -50,35 +53,34 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
     plot.setHeadHeight(34.9f);
     assertTrue(34.9f == plot.getHeadHeight());
 
-    assertEquals(ArrowPlot2D.OPEN_HEAD, ArrowPlot2D.DEFAULT_HEAD);
+    assertEquals(ArrowHead.OPEN, ArrowPlot2D.DEFAULT_HEAD);
     assertTrue(ArrowPlot2D.DEFAULT_HEAD == plot.getHeadType());
-    plot.setHeadType(ArrowPlot2D.OPEN_HEAD);
-    assertTrue(ArrowPlot2D.OPEN_HEAD == plot.getHeadType());
-    plot.setHeadType(ArrowPlot2D.ARROW_HEAD);
-    assertTrue(ArrowPlot2D.ARROW_HEAD == plot.getHeadType());
-    plot.setHeadType(ArrowPlot2D.TRIANGLE_HEAD);
-    assertTrue(ArrowPlot2D.TRIANGLE_HEAD == plot.getHeadType());
-    plot.setHeadType(ArrowPlot2D.DIAMOND_HEAD);
-    assertTrue(ArrowPlot2D.DIAMOND_HEAD == plot.getHeadType());
+    plot.setHeadType(ArrowHead.OPEN);
+    assertTrue(ArrowHead.OPEN == plot.getHeadType());
+    plot.setHeadType(ArrowHead.ARROW);
+    assertTrue(ArrowHead.ARROW == plot.getHeadType());
+    plot.setHeadType(ArrowHead.TRIANGLE);
+    assertTrue(ArrowHead.TRIANGLE == plot.getHeadType());
+    plot.setHeadType(ArrowHead.DIAMOND);
+    assertTrue(ArrowHead.DIAMOND == plot.getHeadType());
     plot.setHeadType(ArrowPlot2D.DEFAULT_HEAD);
     assertTrue(ArrowPlot2D.DEFAULT_HEAD == plot.getHeadType());
 
-    assertEquals(ArrowPlot2D.FORWARD_MODE, ArrowPlot2D.DEFAULT_MODE);
-    assertEquals(ArrowPlot2D.FORWARD_MODE | ArrowPlot2D.REVERSE_MODE, ArrowPlot2D.BOTH_MODE);
-    assertTrue(ArrowPlot2D.DEFAULT_MODE == plot.getMode());
-    plot.setMode(ArrowPlot2D.FORWARD_MODE);
-    assertTrue(ArrowPlot2D.FORWARD_MODE == plot.getMode());
-    plot.setMode(ArrowPlot2D.REVERSE_MODE);
-    assertTrue(ArrowPlot2D.REVERSE_MODE == plot.getMode());
-    plot.setMode(ArrowPlot2D.BOTH_MODE);
-    assertTrue(ArrowPlot2D.BOTH_MODE == plot.getMode());
-    plot.setMode(ArrowPlot2D.DEFAULT_MODE);
-    assertTrue(ArrowPlot2D.DEFAULT_MODE == plot.getMode());
+    assertEquals(ArrowDirection.FORWARD, ArrowPlot2D.DEFAULT_DIRECTION);
+    assertTrue(ArrowPlot2D.DEFAULT_DIRECTION == plot.getDirection());
+    plot.setDirection(ArrowDirection.FORWARD);
+    assertTrue(ArrowDirection.FORWARD == plot.getDirection());
+    plot.setDirection(ArrowDirection.REVERSE);
+    assertTrue(ArrowDirection.REVERSE == plot.getDirection());
+    plot.setDirection(ArrowDirection.BOTH);
+    assertTrue(ArrowDirection.BOTH == plot.getDirection());
+    plot.setDirection(ArrowPlot2D.DEFAULT_DIRECTION);
+    assertTrue(ArrowPlot2D.DEFAULT_DIRECTION == plot.getDirection());
 
     assertTrue(34.9f == plot.getHeadWidth());
     assertTrue(34.9f == plot.getHeadHeight());
     assertTrue(ArrowPlot2D.DEFAULT_HEAD == plot.getHeadType());
-    assertTrue(ArrowPlot2D.DEFAULT_MODE == plot.getMode());
+    assertTrue(ArrowPlot2D.DEFAULT_DIRECTION == plot.getDirection());
   }
 
   public void testBadArguments() {
@@ -95,30 +97,14 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
     } catch (final IllegalArgumentException iae) {
       ; // should get here
     }
-    try {
-      plot.setHeadType(ArrowPlot2D.OPEN_HEAD - 1);
-      fail("Accepted bad argumant.");
-    } catch (final IllegalArgumentException iae) {
-      ; // should get here
-    }
-    try {
-      plot.setHeadType(ArrowPlot2D.DIAMOND_HEAD + 1);
-      fail("Accepted bad argumant.");
-    } catch (final IllegalArgumentException iae) {
-      ; // should get here
-    }
-    try {
-      plot.setMode(ArrowPlot2D.FORWARD_MODE - 1);
-      fail("Accepted bad argumant.");
-    } catch (final IllegalArgumentException iae) {
-      ; // should get here
-    }
-    try {
-      plot.setMode(ArrowPlot2D.BOTH_MODE + 1);
-      fail("Accepted bad argumant.");
-    } catch (final IllegalArgumentException iae) {
-      ; // should get here
-    }
+  }
+
+  public void testArrowHeads() {
+    // some of the rendering math relies on these values
+    assertEquals(0, ArrowHead.OPEN.ordinal());
+    assertEquals(1, ArrowHead.ARROW.ordinal());
+    assertEquals(2, ArrowHead.TRIANGLE.ordinal());
+    assertEquals(3, ArrowHead.DIAMOND.ordinal());
   }
 
 

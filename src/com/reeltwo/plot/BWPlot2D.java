@@ -7,14 +7,19 @@ package com.reeltwo.plot;
  */
 
 public class BWPlot2D extends Plot2D {
-  /** Render a standard looking box and whisker plot. */
-  public static final int STANDARD = 0;
-  /** Render a minimal box and whisker plot. */
-  public static final int MINIMAL = 1;
-  /** Render a box and whisker plot where consecutive nodes are joined. */
-  public static final int JOINED = 2;
+  /**
+   * Box and Whisker plot rendering style.
+   */
+  public enum BoxWhiskerStyle {
+    /** Render a standard looking box and whisker plot. */
+    STANDARD,
+    /** Render a minimal box and whisker plot. */
+    MINIMAL,
+    /** Render a box and whisker plot where consecutive nodes are joined. */
+    JOINED
+  }
 
-  private int mType = STANDARD;
+  private BoxWhiskerStyle mStyle = BoxWhiskerStyle.STANDARD;
 
   private int mWidth = 20;
 
@@ -43,13 +48,10 @@ public class BWPlot2D extends Plot2D {
    * Valid styles are <code>STANDARD</code> (the default),
    * <code>MINIMAL</code> and <code>JOINED</code>.
    *
-   * @param type box and whisker type
+   * @param style box and whisker type
    */
-  public void setType(int type) {
-    if (type < STANDARD || type > JOINED) {
-      throw new IllegalArgumentException("Invalid type: " + type);
-    }
-    mType = type;
+  public void setType(BoxWhiskerStyle style) {
+    mStyle = style;
   }
 
 
@@ -58,8 +60,8 @@ public class BWPlot2D extends Plot2D {
    *
    * @return plot style
    */
-  public int getType() {
-    return mType;
+  public BoxWhiskerStyle getStyle() {
+    return mStyle;
   }
 
 

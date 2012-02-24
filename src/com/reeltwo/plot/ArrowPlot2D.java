@@ -7,30 +7,41 @@ package com.reeltwo.plot;
  */
 
 public class ArrowPlot2D extends Plot2D {
-  /** Render arrows with an open head. */
-  public static final int OPEN_HEAD = 0;
-  /** Render arrows with an arrow shaped head */
-  public static final int ARROW_HEAD = 1;
-  /** Render rarows with a triangular head. */
-  public static final int TRIANGLE_HEAD = 2;
-  /** Render arrows with a diamond shaped head. */
-  public static final int DIAMOND_HEAD = 3;
+  /**
+   * Arrow head types.
+   */
+  public enum ArrowHead {
+    /** Render arrows with an open head. */
+    OPEN,
+    /** Render arrows with an arrow shaped head */
+    ARROW,
+    /** Render rarows with a triangular head. */
+    TRIANGLE,
+    /** Render arrows with a diamond shaped head. */
+    DIAMOND,
+  }
   /** The default head to render. */
-  public static final int DEFAULT_HEAD = OPEN_HEAD;
+  public static final ArrowHead DEFAULT_HEAD = ArrowHead.OPEN;
 
-  /** Put head on front of arrow. */
-  public static final int FORWARD_MODE = 1;
-  /** Put head on rear of arrow. */
-  public static final int REVERSE_MODE = 2;
-  /** Put head on both ends of arrow. */
-  public static final int BOTH_MODE = FORWARD_MODE | REVERSE_MODE;
+  /**
+   * Direction of arrow.
+   */
+  public enum ArrowDirection {
+    /** Put head on front of arrow. */
+    FORWARD,
+    /** Put head on rear of arrow. */
+    REVERSE,
+    /** Put head on both ends of arrow. */
+    BOTH
+  }
+
   /** The default head location. */
-  public static final int DEFAULT_MODE = FORWARD_MODE;
+  public static final ArrowDirection DEFAULT_DIRECTION = ArrowDirection.FORWARD;
 
   /** type of arrow head */
-  private int mHeadType = DEFAULT_HEAD;
+  private ArrowHead mHeadType = DEFAULT_HEAD;
   /** mode of arrow (end it appears on) */
-  private int mMode = DEFAULT_MODE;
+  private ArrowDirection mDirection = DEFAULT_DIRECTION;
 
   private float mHeadWidth = 4.0f;
   private float mHeadHeight = 8.0f;
@@ -57,16 +68,10 @@ public class ArrowPlot2D extends Plot2D {
 
   /**
    * Sets the head type to render for the arrows in this plot.
-   * Valid head types are <code>OPEN_HEAD</code> (the default),
-   * <code>ARROW_HEAD</code>, <code>TRIANGLE_HEAD</code> and
-   * <code>DIAMOND_HEAD</code>.
    *
    * @param type the head type
    */
-  public void setHeadType(final int type) {
-    if (type < OPEN_HEAD || type > DIAMOND_HEAD) {
-      throw new IllegalArgumentException("Invalid arrow head type: " + type);
-    }
+  public void setHeadType(ArrowHead type) {
     mHeadType = type;
   }
 
@@ -75,22 +80,17 @@ public class ArrowPlot2D extends Plot2D {
    *
    * @return the head type
    */
-  public int getHeadType() {
+  public ArrowHead getHeadType() {
     return mHeadType;
   }
 
   /**
    * Sets the direction that the arrows point.
-   * Valid mode values are <code>FORWARD_MODE</code> (the default),
-   * <code>REVERSE_MODE</code> and <code>BOTH_MODE</code>.
    *
-   * @param mode the arrow direction
+   * @param dir the arrow direction
    */
-  public void setMode(final int mode) {
-    if (mode < FORWARD_MODE || mode > BOTH_MODE) {
-      throw new IllegalArgumentException("Invalid arrow mode: " + mode);
-    }
-    mMode = mode;
+  public void setDirection(ArrowDirection dir) {
+    mDirection = dir;
   }
 
   /**
@@ -98,8 +98,8 @@ public class ArrowPlot2D extends Plot2D {
    *
    * @return the arrow direction
    */
-  public int getMode() {
-    return mMode;
+  public ArrowDirection getDirection() {
+    return mDirection;
   }
 
   /**

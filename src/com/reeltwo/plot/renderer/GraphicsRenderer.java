@@ -16,14 +16,17 @@ import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.Axis2D;
 import com.reeltwo.plot.AxisSide;
 import com.reeltwo.plot.BWPlot2D;
+import com.reeltwo.plot.BWPlot2D.BoxWhiskerStyle;
 import com.reeltwo.plot.BWPoint2D;
 import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
 import com.reeltwo.plot.FillablePlot2D;
+import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
+import com.reeltwo.plot.GraphLine.LineStyle;
 import com.reeltwo.plot.KeyPosition;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.PlotUtils;
@@ -791,9 +794,9 @@ public class GraphicsRenderer extends AbstractRenderer {
   @Override
   protected void drawGraphLine(Object canvas, GraphLine line, Mapping convertX, Mapping convertY) {
     final BasicStroke stroke = (BasicStroke) ((Graphics2D) canvas).getStroke();
-    if (line.getType() == GraphLine.DASHES) {
+    if (line.getStyle() == LineStyle.DASHES) {
       ((Graphics2D) canvas).setStroke(new BasicStroke(stroke.getLineWidth(), stroke.getEndCap(), stroke.getLineJoin(), stroke.getMiterLimit(), new float[] {5.0f, 5.0f}, 0.0f));
-    } else if (line.getType() == GraphLine.DOTS) {
+    } else if (line.getStyle() == LineStyle.DOTS) {
       ((Graphics2D) canvas).setStroke(new BasicStroke(stroke.getLineWidth(), stroke.getEndCap(), stroke.getLineJoin(), stroke.getMiterLimit(), new float[] {1.0f, 5.0f}, 0.0f));
     }
     super.drawGraphLine(canvas, line, convertX, convertY);
@@ -870,7 +873,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             final int xx = keyX + c * keyWidth;
             int yy = keyY + (r + 1) * tHeight;
             if ((plot instanceof TextPlot2D && ((TextPlot2D) plot).isUseFGColor())
-                || (plot instanceof FillablePlot2D && ((FillablePlot2D) plot).getFill() == FillablePlot2D.PATTERN_FILL)) {
+                || (plot instanceof FillablePlot2D && ((FillablePlot2D) plot).getFill() == FillStyle.PATTERN)) {
               setColor(g, FOREGROUND_COLOR_INDEX);
             } else if (graph.isColoredKey()) {
               setColor(g, plot.getColor());
@@ -882,8 +885,8 @@ public class GraphicsRenderer extends AbstractRenderer {
               setColor(g, plot.getColor());
             }
             yy -= tHeight / 2 - 2;
-            final int doFill = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).getFill() : FillablePlot2D.NO_FILL;
-            if (doFill == FillablePlot2D.PATTERN_FILL) {
+            final FillStyle doFill = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).getFill() : FillStyle.NONE;
+            if (doFill == FillStyle.PATTERN) {
               setPattern(g, plot.getColor());
             }
             final boolean doBorder = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).isBorder() : false;
@@ -897,7 +900,7 @@ public class GraphicsRenderer extends AbstractRenderer {
               final PointPlot2D lplot = (PointPlot2D) plot;
               final boolean doLines = lplot.isLines();
               final boolean doPoints = lplot.isPoints();
-              if (doFill != FillablePlot2D.NO_FILL) {
+              if (doFill != FillStyle.NONE) {
                 final Polygon polygon = new Polygon();
                 polygon.addPoint(keyX5, yy + tHeight / 2 - 1);
                 polygon.addPoint(keyX5 + keyLineWidth / 2, yy - tHeight / 2);
@@ -929,7 +932,7 @@ public class GraphicsRenderer extends AbstractRenderer {
               g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
               g.drawRect(keyX5 + keyLineWidth / 2, yy, 0, 0);
             } else if (plot instanceof CurvePlot2D) {
-              if (doFill != FillablePlot2D.NO_FILL) {
+              if (doFill != FillStyle.NONE) {
                 g.fillArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
                 if (doBorder) {
                   setColor(g, FOREGROUND_COLOR_INDEX);
@@ -939,7 +942,7 @@ public class GraphicsRenderer extends AbstractRenderer {
                 g.drawArc(keyX5, yy - tHeight / 4, keyLineWidth, tHeight - 2, 0, 180);
               }
             } else if (plot instanceof BoxPlot2D) {
-              if (doFill != FillablePlot2D.NO_FILL) {
+              if (doFill != FillStyle.NONE) {
                 g.fillRect(keyX5, yy - tHeight / 2, keyLineWidth, tHeight - 2);
                 if (doBorder) {
                   setColor(g, FOREGROUND_COLOR_INDEX);
@@ -951,7 +954,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             } else if (plot instanceof ScatterPlot2D) {
               g.drawRect(keyX5 + keyLineWidth / 2, yy, 1, 1);
             } else if (plot instanceof CirclePlot2D) {
-              if (doFill != FillablePlot2D.NO_FILL) {
+              if (doFill != FillStyle.NONE) {
                 fillCircle(g, keyX5 + 1 + keyLineWidth / 2, yy, tHeight - 2);
                 if (doBorder) {
                   setColor(g, FOREGROUND_COLOR_INDEX);
@@ -986,7 +989,7 @@ public class GraphicsRenderer extends AbstractRenderer {
   protected void drawBWPlot(Object canvas, BWPlot2D bwplot, Mapping convertX, Mapping convertY) {
     final Datum2D[] points = bwplot.getData();
     if (points != null && points.length != 0) {
-      if (bwplot.getType() == BWPlot2D.JOINED) {
+      if (bwplot.getStyle() == BoxWhiskerStyle.JOINED) {
         final Graphics g = (Graphics) canvas;
         final Color old = g.getColor();
         g.setColor(new Color((old.getRed() + 255) / 2, (old.getGreen() + 255) / 2, (old.getBlue() + 255) / 2, 127));

@@ -16,9 +16,11 @@ import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.Circle2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
-import com.reeltwo.plot.FillablePlot2D;
+import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
+import com.reeltwo.plot.GraphLine.LineOrientation;
+import com.reeltwo.plot.GraphLine.LineStyle;
 import com.reeltwo.plot.KeyPosition;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -190,7 +192,7 @@ public class SwingPlot {
         new Point2D(10f, 0.0f)};
     lplot.setData(fpts);
     lplot.setTitle("filled lines");
-    lplot.setFill(FillablePlot2D.COLOR_FILL);
+    lplot.setFill(FillStyle.COLOR);
     lplot.setBorder(true);
 
     graph.addPlot(lplot);
@@ -205,7 +207,7 @@ public class SwingPlot {
     BoxPlot2D bplot = new BoxPlot2D();
     bplot.setData(boxes2);
     bplot.setTitle("filled box");
-    bplot.setFill(FillablePlot2D.PATTERN_FILL);
+    bplot.setFill(FillStyle.PATTERN);
     bplot.setBorder(true);
 
     graph.addPlot(bplot);
@@ -213,7 +215,7 @@ public class SwingPlot {
     bplot = new BoxPlot2D();
     bplot.setData(boxes1);
     bplot.setTitle("box");
-    bplot.setFill(FillablePlot2D.NO_FILL);
+    bplot.setFill(FillStyle.NONE);
 
     graph.addPlot(bplot);
 
@@ -291,11 +293,11 @@ public class SwingPlot {
     graph.addPlot(cplot2);
 
     //graph.setVerticalLine(0.43f);
-    final GraphLine vline = new GraphLine(4.3f, GraphLine.VERTICAL);
+    final GraphLine vline = new GraphLine(4.3f, LineOrientation.VERTICAL);
     graph.addPlot(vline);
 
-    final GraphLine hline = new GraphLine(4.3f, GraphLine.HORIZONTAL);
-    vline.setType(GraphLine.DOTS);
+    final GraphLine hline = new GraphLine(4.3f, LineOrientation.HORIZONTAL);
+    vline.setStyle(LineStyle.DOTS);
     graph.addPlot(hline);
 
     graph.setTic(Axis2D.X, AxisSide.ONE, 2);
@@ -325,7 +327,7 @@ public class SwingPlot {
         final int y2 = 5 - y;
         final BoxPlot2D plot = new BoxPlot2D();
         plot.setData(new Box2D[] {new Box2D(x + 0.05f, y2 + 0.05f, x + 0.95f, y2 + 0.95f)});
-        plot.setFill(FillablePlot2D.PATTERN_FILL);
+        plot.setFill(FillStyle.PATTERN);
         plot.setColor(index);
         plot.setBorder(true);
 

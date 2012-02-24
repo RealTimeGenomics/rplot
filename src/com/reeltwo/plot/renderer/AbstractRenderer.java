@@ -5,9 +5,12 @@ import java.util.Random;
 
 import com.reeltwo.plot.Arrow2D;
 import com.reeltwo.plot.ArrowPlot2D;
+import com.reeltwo.plot.ArrowPlot2D.ArrowDirection;
+import com.reeltwo.plot.ArrowPlot2D.ArrowHead;
 import com.reeltwo.plot.Axis2D;
 import com.reeltwo.plot.AxisSide;
 import com.reeltwo.plot.BWPlot2D;
+import com.reeltwo.plot.BWPlot2D.BoxWhiskerStyle;
 import com.reeltwo.plot.BWPoint2D;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
@@ -16,9 +19,10 @@ import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
 import com.reeltwo.plot.DefaultFormatter;
-import com.reeltwo.plot.FillablePlot2D;
+import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
+import com.reeltwo.plot.GraphLine.LineOrientation;
 import com.reeltwo.plot.LabelFormatter;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.Point2D;
@@ -532,7 +536,7 @@ public abstract class AbstractRenderer {
 
   protected void drawGraphLine(Object canvas, GraphLine line, Mapping convertX, Mapping convertY) {
     setColor(canvas, FOREGROUND_COLOR_INDEX);
-    if (line.getOrientation() == GraphLine.VERTICAL) {
+    if (line.getOrientation() == LineOrientation.VERTICAL) {
       final int sptX = (int) convertX.worldToScreen(line.getLocation());
       drawLine(canvas, sptX, (int) convertY.getScreenMin(), sptX, (int) convertY.getScreenMax());
     } else {
@@ -546,16 +550,16 @@ public abstract class AbstractRenderer {
     if (points != null && points.length != 0) {
       final boolean doPoints = lplot.isPoints();
       final boolean doLines = lplot.isLines();
-      final int doFill = lplot.getFill();
+      final FillStyle doFill = lplot.getFill();
       final boolean doBorder = lplot.isBorder();
 
-      if (doFill == FillablePlot2D.PATTERN_FILL) {
+      if (doFill == FillStyle.PATTERN) {
         setPattern(canvas, lplot.getColor());
       } else {
         setColor(canvas, lplot.getColor());
       }
 
-      if (doFill != FillablePlot2D.NO_FILL) {
+      if (doFill != FillStyle.NONE) {
         final Poly polygon = new Poly();
         for (int i = 0; i < points.length; i++) {
           final Point2D point = (Point2D) points[i];
@@ -568,7 +572,7 @@ public abstract class AbstractRenderer {
         if (doBorder) {
           setColor(canvas, FOREGROUND_COLOR_INDEX);
           drawPolygon(canvas, polygon.getXs(), polygon.getYs());
-          if (doFill == FillablePlot2D.PATTERN_FILL) {
+          if (doFill == FillStyle.PATTERN) {
             setPattern(canvas, lplot.getColor());
           } else {
             setColor(canvas, lplot.getColor());
@@ -603,7 +607,7 @@ public abstract class AbstractRenderer {
     }
   }
 
-  protected Poly arrowHead(final int x1, final int y1, final int x2, final int y2, final float w, final float h, final int type) {
+  protected Poly arrowHead(int x1, int y1, int x2, int y2, float w, float h, ArrowHead type) {
     final Poly poly = new Poly();
 
     if (x1 == x2 && y1 == y2) { // just do a diamond
@@ -628,8 +632,8 @@ public abstract class AbstractRenderer {
       poly.addPoint(x2, y2);
       poly.addPoint((int) (w2 * normX1 + xh), (int) (w2 * normY1 + yh));
 
-      if (type != ArrowPlot2D.TRIANGLE_HEAD) {
-        final float h2 = type * h / 2;
+      if (type != ArrowHead.TRIANGLE) {
+        final float h2 = (type.ordinal() - 1) * h / 2;
         poly.addPoint((int) (x2 - h2 * xdiff / length), (int) (y2 - h2 * ydiff / length));
       }
 
@@ -642,8 +646,8 @@ public abstract class AbstractRenderer {
   protected void drawArrowPlot(Object canvas, ArrowPlot2D aplot, Mapping convertX, Mapping convertY) {
     final Datum2D[] points = aplot.getData();
     if (points != null && points.length != 0) {
-      final int type = aplot.getHeadType();
-      final int mode = aplot.getMode();
+      final ArrowHead head = aplot.getHeadType();
+      final ArrowDirection direction = aplot.getDirection();
       final float width = aplot.getHeadWidth();
       final float height = aplot.getHeadHeight();
 
@@ -658,15 +662,15 @@ public abstract class AbstractRenderer {
 
         drawLine(canvas, sptX1, sptY1, sptX2, sptY2);
 
-        if ((mode & ArrowPlot2D.FORWARD_MODE) == ArrowPlot2D.FORWARD_MODE) {
-          final Poly polygon = arrowHead(sptX1, sptY1, sptX2, sptY2, width, height, type);
+        if (direction == ArrowDirection.FORWARD || direction == ArrowDirection.BOTH) {
+          final Poly polygon = arrowHead(sptX1, sptY1, sptX2, sptY2, width, height, head);
           final int[] xs = polygon.getXs();
           final int[] ys = polygon.getYs();
           fillPolygon(canvas, xs, ys);
           drawPolygon(canvas, xs, ys);
         }
-        if ((mode & ArrowPlot2D.REVERSE_MODE) == ArrowPlot2D.REVERSE_MODE) {
-          final Poly polygon = arrowHead(sptX2, sptY2, sptX1, sptY1, width, height, type);
+        if (direction == ArrowDirection.REVERSE || direction == ArrowDirection.BOTH) {
+          final Poly polygon = arrowHead(sptX2, sptY2, sptX1, sptY1, width, height, head);
           final int[] xs = polygon.getXs();
           final int[] ys = polygon.getYs();
           fillPolygon(canvas, xs, ys);
@@ -680,7 +684,7 @@ public abstract class AbstractRenderer {
     final Datum2D[] points = bwplot.getData();
     if (points != null && points.length != 0) {
       setColor(canvas, bwplot.getColor());
-      if (bwplot.getType() == BWPlot2D.STANDARD) {
+      if (bwplot.getStyle() == BoxWhiskerStyle.STANDARD) {
         final int width = bwplot.getWidth();
         for (int i = 0; i < points.length; i++) {
           final BWPoint2D point = (BWPoint2D) points[i];
@@ -698,7 +702,7 @@ public abstract class AbstractRenderer {
           sptY1 = (int) convertY.worldToScreen(point.getY(2));
           drawLine(canvas, sptX - width / 2, sptY1, sptX + width / 2, sptY1);
         }
-      } else if (bwplot.getType() == BWPlot2D.MINIMAL) {
+      } else if (bwplot.getStyle() == BoxWhiskerStyle.MINIMAL) {
         for (int i = 0; i < points.length; i++) {
           final BWPoint2D point = (BWPoint2D) points[i];
           final int sptX = (int) convertX.worldToScreen(point.getX());
@@ -723,22 +727,22 @@ public abstract class AbstractRenderer {
     final Datum2D[] points = tplot.getData();
     final int tHeight = getTextHeight(canvas, "A");
 
-    int halign = tplot.getHorizontalAlignment();
-    switch (halign) {
-    case TextPlot2D.LEFT: halign = 0; break;
-    case TextPlot2D.CENTER: halign = 1; break;
-    case TextPlot2D.RIGHT: halign = 2; break;
+    int halign = 0;
+    switch (tplot.getHorizontalAlignment()) {
+    case LEFT: halign = 0; break;
+    case CENTER: halign = 1; break;
+    case RIGHT: halign = 2; break;
     default:
       throw new IllegalStateException("Invalid halign");
     }
 
-    int valign = tplot.getVerticalAlignment();
+    int valign = 0;
     final int descent = getTextDescent(canvas, "A");
-    switch (valign) {
-    case TextPlot2D.CENTER: valign = tHeight / 2 - descent; break;
-    case TextPlot2D.BASELINE: valign = 0; break;
-    case TextPlot2D.TOP: valign = tHeight - descent; break;
-    case TextPlot2D.BOTTOM: valign = -descent; break;
+    switch (tplot.getVerticalAlignment()) {
+    case CENTER: valign = tHeight / 2 - descent; break;
+    case BASELINE: valign = 0; break;
+    case TOP: valign = tHeight - descent; break;
+    case BOTTOM: valign = -descent; break;
     default:
       throw new IllegalStateException("Invalid valign");
     }
@@ -798,9 +802,9 @@ public abstract class AbstractRenderer {
     final Datum2D[] points = bplot.getData();
 
     if (points != null && points.length != 0) {
-      final int doFill = bplot.getFill();
+      final FillStyle doFill = bplot.getFill();
       final boolean doBorder = bplot.isBorder();
-      if (doFill == FillablePlot2D.PATTERN_FILL) {
+      if (doFill == FillStyle.PATTERN) {
         setPattern(canvas, bplot.getColor());
       } else {
         setColor(canvas, bplot.getColor());
@@ -813,12 +817,12 @@ public abstract class AbstractRenderer {
         final int width = (int) convertX.worldToScreen(box.getRight()) - x;
         final int height = (int) convertY.worldToScreen(box.getBottom()) - y;
 
-        if (doFill != FillablePlot2D.NO_FILL) {
+        if (doFill != FillStyle.NONE) {
           fillRectangle(canvas, x, y, width, height);
           if (doBorder) {
             setColor(canvas, FOREGROUND_COLOR_INDEX);
             drawRectangle(canvas, x, y, width, height);
-            if (doFill == FillablePlot2D.PATTERN_FILL) {
+            if (doFill == FillStyle.PATTERN) {
               setPattern(canvas, bplot.getColor());
             } else {
               setColor(canvas, bplot.getColor());
@@ -835,10 +839,10 @@ public abstract class AbstractRenderer {
     final Datum2D[] points = cplot.getData();
 
     if (points != null && points.length != 0) {
-      final int doFill = cplot.getFill();
+      final FillStyle doFill = cplot.getFill();
       final boolean doBorder = cplot.isBorder();
 
-      if (doFill == FillablePlot2D.PATTERN_FILL) {
+      if (doFill == FillStyle.PATTERN) {
         setPattern(canvas, cplot.getColor());
       } else {
         setColor(canvas, cplot.getColor());
@@ -853,12 +857,12 @@ public abstract class AbstractRenderer {
 
         final int idiameter = (int) diameter + 1;
 
-        if (doFill != FillablePlot2D.NO_FILL) {
+        if (doFill != FillStyle.NONE) {
           fillCircle(canvas, x, y, idiameter);
           if (doBorder) {
             setColor(canvas, FOREGROUND_COLOR_INDEX);
             drawCircle(canvas, x, y, idiameter);
-            if (doFill == FillablePlot2D.PATTERN_FILL) {
+            if (doFill == FillStyle.PATTERN) {
               setPattern(canvas, cplot.getColor());
             } else {
               setColor(canvas, cplot.getColor());
@@ -876,10 +880,10 @@ public abstract class AbstractRenderer {
 
     if (points != null && points.length != 0) {
       final int type = cplot.getType();
-      final int doFill = cplot.getFill();
+      final FillStyle doFill = cplot.getFill();
       final boolean doBorder = cplot.isBorder();
 
-      if (doFill == FillablePlot2D.PATTERN_FILL) {
+      if (doFill == FillStyle.PATTERN) {
         setPattern(canvas, cplot.getColor());
       } else {
         setColor(canvas, cplot.getColor());
@@ -892,12 +896,12 @@ public abstract class AbstractRenderer {
         ys[i] = (int) convertY.worldToScreen(points[i].getY());
       }
 
-      if (doFill != FillablePlot2D.NO_FILL) {
+      if (doFill != FillStyle.NONE) {
         fillCurve(canvas, xs, ys, type);
         if (doBorder) {
           setColor(canvas, FOREGROUND_COLOR_INDEX);
           drawCurve(canvas, xs, ys, type);
-          if (doFill == FillablePlot2D.PATTERN_FILL) {
+          if (doFill == FillStyle.PATTERN) {
             setPattern(canvas, cplot.getColor());
           } else {
             setColor(canvas, cplot.getColor());

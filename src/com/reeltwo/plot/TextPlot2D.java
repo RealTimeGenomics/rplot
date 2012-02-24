@@ -7,38 +7,28 @@ package com.reeltwo.plot;
  */
 
 public class TextPlot2D extends Plot2D {
-  /**
-   * Text centered about point.
-   */
-  public static final int CENTER = 0;
 
   /**
-   * Text aligned with left edge on point.
+   * Enumeration of possible text alignments in a text plot.
    */
-  public static final int LEFT = 1;
-
-  /**
-   * Text aligned with right edge on point.
-   */
-  public static final int RIGHT = 2;
-
-  /**
-   * Text aligned with top edge on point.
-   */
-  public static final int BASELINE = 4;
-  /**
-   * Text aligned with top edge on point.
-   */
-  public static final int TOP = 5;
-
-  /**
-   * Text aligned with bottom edge on point.
-   */
-  public static final int BOTTOM = 6;
+  public enum TextAlignment {
+    /** Text centered about point.*/
+    CENTER,
+    /** Text aligned with left edge on point. */
+    LEFT,
+    /** Text aligned with right edge on point. */
+    RIGHT,
+    /** Text aligned with top edge on point. */
+    BASELINE,
+    /** Text aligned with top edge on point. */
+    TOP,
+    /** Text aligned with bottom edge on point. */
+    BOTTOM,
+  }
 
   /** alignment of text */
-  private int mHorizontalAlignment = CENTER;
-  private int mVerticalAlignment = BASELINE;
+  private TextAlignment mHorizontalAlignment = TextAlignment.CENTER;
+  private TextAlignment mVerticalAlignment = TextAlignment.BASELINE;
 
   /** inverse video on text */
   private boolean mInvert = false;
@@ -92,7 +82,7 @@ public class TextPlot2D extends Plot2D {
    * @exception IllegalArgumentException if an invalid horizontal
    * alignment value is given
    */
-  public void setHorizontalAlignment(int alignment) {
+  public void setHorizontalAlignment(TextAlignment alignment) {
     switch (alignment) {
     case CENTER:
     case LEFT:
@@ -110,7 +100,7 @@ public class TextPlot2D extends Plot2D {
    *
    * @return an alignment value
    */
-  public int getHorizontalAlignment() {
+  public TextAlignment getHorizontalAlignment() {
     return mHorizontalAlignment;
   }
 
@@ -124,7 +114,7 @@ public class TextPlot2D extends Plot2D {
    * @exception IllegalArgumentException if an invalid vertical
    * alignment value is given
    */
-  public void setVerticalAlignment(int alignment) {
+  public void setVerticalAlignment(TextAlignment alignment) {
     switch (alignment) {
     case CENTER:
     case BASELINE:
@@ -143,7 +133,7 @@ public class TextPlot2D extends Plot2D {
    *
    * @return an alignment value
    */
-  public int getVerticalAlignment() {
+  public TextAlignment getVerticalAlignment() {
     return mVerticalAlignment;
   }
 

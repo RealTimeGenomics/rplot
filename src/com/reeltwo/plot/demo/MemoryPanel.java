@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import com.reeltwo.plot.Axis2D;
 import com.reeltwo.plot.AxisSide;
-import com.reeltwo.plot.FillablePlot2D;
+import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -149,10 +149,10 @@ public class MemoryPanel extends JPanel {
         mplot.setColor(2);
 
         final PointPlot2D tplot = new PointPlot2D();
-        tplot.setFill(FillablePlot2D.COLOR_FILL);
+        tplot.setFill(FillStyle.COLOR);
 
         final PointPlot2D uplot = new PointPlot2D();
-        uplot.setFill(FillablePlot2D.COLOR_FILL);
+        uplot.setFill(FillStyle.COLOR);
 
         while (mKeepRunning) {
           final Graph2D graph = new Graph2D();
