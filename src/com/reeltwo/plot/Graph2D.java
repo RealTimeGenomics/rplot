@@ -12,7 +12,16 @@ import java.util.HashMap;
 public class Graph2D implements Cloneable {
 
   private static final LabelFormatter DEFAULT_FORMATTER = new DefaultFormatter();
-
+  
+  /** X axis */
+  public static final Axis X = Axis.X;
+  /** Y axis */
+  public static final Axis Y = Axis.Y;
+  /** Left/bottom axis */
+  public static final Edge ONE = Edge.MAIN;
+  /** Right/top axis */
+  public static final Edge TWO = Edge.ALTERNATE;
+  
   /** graph title */
   private String mTitle = "";
   /** key title */
@@ -22,8 +31,8 @@ public class Graph2D implements Cloneable {
   private KeyPosition mKeyHorizontalPosition = KeyPosition.OUTSIDE;
   private KeyPosition mKeyVerticalPosition = KeyPosition.TOP;
 
-  private final HashMap<AxisSide, GraphAxis> mXAxes = new HashMap<AxisSide, GraphAxis>();
-  private final HashMap<AxisSide, GraphAxis> mYAxes = new HashMap<AxisSide, GraphAxis>();
+  private final HashMap<Edge, GraphAxis> mXAxes = new HashMap<Edge, GraphAxis>();
+  private final HashMap<Edge, GraphAxis> mYAxes = new HashMap<Edge, GraphAxis>();
 
   /** whether to display border lines and labels */
   private boolean mDisplayBorder = true;
@@ -33,7 +42,7 @@ public class Graph2D implements Cloneable {
 
   /** Default constructor. */
   public Graph2D() {
-    for (AxisSide a : AxisSide.values()) {
+    for (Edge a : Edge.values()) {
       mXAxes.put(a, new GraphAxis());
       mYAxes.put(a, new GraphAxis());
     }
@@ -175,8 +184,8 @@ public class Graph2D implements Cloneable {
     return mKeyVerticalPosition;
   }
 
-  private GraphAxis getAxis(Axis2D axis, AxisSide side) {
-    return (axis == Axis2D.X ? mXAxes : mYAxes).get(side);
+  private GraphAxis getAxis(Axis axis, Edge side) {
+    return (axis == Axis.X ? mXAxes : mYAxes).get(side);
   }
 
   /**
@@ -186,7 +195,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param label some text
    */
-  public void setLabel(Axis2D axis, AxisSide side, String label) {
+  public void setLabel(Axis axis, Edge side, String label) {
     getAxis(axis, side).setTitle(label);
   }
 
@@ -196,8 +205,8 @@ public class Graph2D implements Cloneable {
    * @param axis graph axis
    * @param label some text
    */
-  public void setLabel(Axis2D axis, String label) {
-    setLabel(axis, AxisSide.ONE, label);
+  public void setLabel(Axis axis, String label) {
+    setLabel(axis, ONE, label);
   }
 
   /**
@@ -207,7 +216,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return label
    */
-  public String getLabel(Axis2D axis, AxisSide side) {
+  public String getLabel(Axis axis, Edge side) {
     return getAxis(axis, side).getTitle();
   }
 
@@ -218,8 +227,8 @@ public class Graph2D implements Cloneable {
    * @param flag whether to show grid
    */
   public void setGrid(boolean flag) {
-    for (AxisSide side : AxisSide.values()) {
-      for (Axis2D axis : Axis2D.values()) {
+    for (Edge side : Edge.values()) {
+      for (Axis axis : Axis.values()) {
         setGrid(axis, side, flag);
       }
     }
@@ -232,7 +241,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param flag whether to show grid
    */
-  public void setGrid(Axis2D axis, AxisSide side, boolean flag) {
+  public void setGrid(Axis axis, Edge side, boolean flag) {
     getAxis(axis, side).setShowGrid(flag);
   }
 
@@ -243,7 +252,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return whether to show grid
    */
-  public boolean isGrid(Axis2D axis, AxisSide side) {
+  public boolean isGrid(Axis axis, Edge side) {
     return getAxis(axis, side).isShowGrid();
   }
 
@@ -273,7 +282,7 @@ public class Graph2D implements Cloneable {
    * @param axis graph axis
    * @param side axis side
    */
-  public void setAutoScale(Axis2D axis, AxisSide side) {
+  public void setAutoScale(Axis axis, Edge side) {
     final GraphAxis ga = getAxis(axis, side);
     ga.setLoAuto(true);
     ga.setHiAuto(true);
@@ -290,7 +299,7 @@ public class Graph2D implements Cloneable {
    * @param lo lower end of range
    * @param hi upper end of range
    */
-  public void setRange(Axis2D axis, AxisSide side, float lo, float hi) {
+  public void setRange(Axis axis, Edge side, float lo, float hi) {
     getAxis(axis, side).setRange(lo, hi);
     setRanges();
   }
@@ -302,8 +311,8 @@ public class Graph2D implements Cloneable {
    * @param lo lower end of range
    * @param hi upper end of range
    */
-  public void setRange(Axis2D axis, float lo, float hi) {
-    setRange(axis, AxisSide.ONE, lo, hi);
+  public void setRange(Axis axis, float lo, float hi) {
+    setRange(axis, ONE, lo, hi);
   }
 
   /**
@@ -313,7 +322,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param x low end of range
    */
-  public void setLo(Axis2D axis, AxisSide side, float x) {
+  public void setLo(Axis axis, Edge side, float x) {
     getAxis(axis, side).setLo(x);
     setRanges();
   }
@@ -325,7 +334,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return low end of range
    */
-  public float getLo(Axis2D axis, AxisSide side) {
+  public float getLo(Axis axis, Edge side) {
     return getAxis(axis, side).getLo();
   }
 
@@ -336,7 +345,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param x high end of range
    */
-  public void setHi(Axis2D axis, AxisSide side, float x) {
+  public void setHi(Axis axis, Edge side, float x) {
     getAxis(axis, side).setHi(x);
     setRanges();
   }
@@ -348,7 +357,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return high end of range
    */
-  public float getHi(Axis2D axis, AxisSide side) {
+  public float getHi(Axis axis, Edge side) {
     return getAxis(axis, side).getHi();
   }
 
@@ -358,7 +367,7 @@ public class Graph2D implements Cloneable {
    * @param axis graph axis
    * @param side axis side
    */
-  public void setAutoScaleTic(Axis2D axis, AxisSide side) {
+  public void setAutoScaleTic(Axis axis, Edge side) {
     getAxis(axis, side).setTicAuto(true);
     setRanges();
   }
@@ -372,7 +381,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param tic tick spacing
    */
-  public void setTic(Axis2D axis, AxisSide side, float tic) {
+  public void setTic(Axis axis, Edge side, float tic) {
     getAxis(axis, side).setTic(tic);
   }
 
@@ -385,7 +394,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return tick spacing
    */
-  public float getTic(Axis2D axis, AxisSide side) {
+  public float getTic(Axis axis, Edge side) {
     return getAxis(axis, side).getTic();
   }
 
@@ -400,7 +409,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param tic tick spacing
    */
-  public void setMinorTic(Axis2D axis, AxisSide side, float tic) {
+  public void setMinorTic(Axis axis, Edge side, float tic) {
     getAxis(axis, side).setMinorTic(tic);
   }
 
@@ -414,7 +423,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return tick spacing
    */
-  public float getMinorTic(Axis2D axis, AxisSide side) {
+  public float getMinorTic(Axis axis, Edge side) {
     return getAxis(axis, side).getMinorTic();
   }
 
@@ -425,7 +434,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param flag whether to show tics
    */
-  public void setShowTics(Axis2D axis, AxisSide side, boolean flag) {
+  public void setShowTics(Axis axis, Edge side, boolean flag) {
     getAxis(axis, side).setShowTics(flag);
   }
 
@@ -436,7 +445,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return whether to show tics
    */
-  public boolean isShowTics(Axis2D axis, AxisSide side) {
+  public boolean isShowTics(Axis axis, Edge side) {
     return getAxis(axis, side).isShowTics();
   }
 
@@ -449,7 +458,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param lf a label formatter
    */
-  public void setTicLabelFormatter(Axis2D axis, AxisSide side, LabelFormatter lf) {
+  public void setTicLabelFormatter(Axis axis, Edge side, LabelFormatter lf) {
     getAxis(axis, side).setLabelFormatter(lf);
   }
 
@@ -460,7 +469,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return <code>LabelFormatter</code>
    */
-  public LabelFormatter getTicLabelFormatter(Axis2D axis, AxisSide side) {
+  public LabelFormatter getTicLabelFormatter(Axis axis, Edge side) {
     final LabelFormatter lf = getAxis(axis, side).getLabelFormatter();
     return lf == null ? DEFAULT_FORMATTER : lf;
   }
@@ -473,7 +482,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @param flag whether to use log scale
    */
-  public void setLogScale(Axis2D axis, AxisSide side, boolean flag) {
+  public void setLogScale(Axis axis, Edge side, boolean flag) {
     getAxis(axis, side).setLogScale(flag);
     setRanges();
   }
@@ -485,7 +494,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return whether using log scale
    */
-  public boolean isLogScale(Axis2D axis, AxisSide side) {
+  public boolean isLogScale(Axis axis, Edge side) {
     return getAxis(axis, side).isLogScale();
   }
 
@@ -518,7 +527,7 @@ public class Graph2D implements Cloneable {
    * @param side axis side
    * @return whether any plot uses the y axis
    */
-  public boolean uses(Axis2D axis, AxisSide side) {
+  public boolean uses(Axis axis, Edge side) {
     for (final Plot2D plot : mPlots) {
       if (plot.uses(axis, side)) {
         return true;
@@ -532,7 +541,7 @@ public class Graph2D implements Cloneable {
    * corresponding autoscale flags are set.
    */
   private void setRanges() {
-    for (AxisSide side : AxisSide.values()) {
+    for (Edge side : Edge.values()) {
       final GraphAxis xAxis = mXAxes.get(side);
       if (xAxis.isLogScale() || xAxis.isLoAuto() || xAxis.isHiAuto() || xAxis.isTicAuto()) {
         boolean rangeSet = false;
@@ -541,12 +550,12 @@ public class Graph2D implements Cloneable {
 
         for (final Plot2D plot : mPlots) {
           if (!(plot instanceof GraphLine)) {
-            if (plot.uses(Axis2D.X, side)) {
-              final float plotXLo = plot.getLo(Axis2D.X);
+            if (plot.uses(Axis.X, side)) {
+              final float plotXLo = plot.getLo(Axis.X);
               if (plotXLo < xlo) {
                 xlo = plotXLo;
               }
-              final float plotXHi = plot.getHi(Axis2D.X);
+              final float plotXHi = plot.getHi(Axis.X);
               if (plotXHi > xhi) {
                 xhi = plotXHi;
               }
@@ -561,7 +570,7 @@ public class Graph2D implements Cloneable {
       }
     }
 
-    for (AxisSide side : AxisSide.values()) {
+    for (Edge side : Edge.values()) {
       final GraphAxis yAxis = mYAxes.get(side);
       if (yAxis.isLogScale() || yAxis.isLoAuto() || yAxis.isHiAuto() || yAxis.isTicAuto()) {
         boolean rangeSet = false;
@@ -570,12 +579,12 @@ public class Graph2D implements Cloneable {
 
         for (final Plot2D plot : mPlots) {
           if (!(plot instanceof GraphLine)) {
-            if (plot.uses(Axis2D.Y, side)) {
-              final float plotYLo = plot.getLo(Axis2D.Y);
+            if (plot.uses(Axis.Y, side)) {
+              final float plotYLo = plot.getLo(Axis.Y);
               if (plotYLo < ylo) {
                 ylo = plotYLo;
               }
-              final float plotYHi = plot.getHi(Axis2D.Y);
+              final float plotYHi = plot.getHi(Axis.Y);
               if (plotYHi > yhi) {
                 yhi = plotYHi;
               }
@@ -598,7 +607,7 @@ public class Graph2D implements Cloneable {
     // only need to clone the members of this object
     // used same data arrays as in this object
     final Graph2D g = (Graph2D) super.clone();
-    for (AxisSide i : AxisSide.values()) {
+    for (Edge i : Edge.values()) {
       g.mXAxes.put(i, (GraphAxis) mXAxes.get(i).clone());
       g.mYAxes.put(i, (GraphAxis) mYAxes.get(i).clone());
     }

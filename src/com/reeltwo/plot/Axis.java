@@ -1,10 +1,11 @@
 package com.reeltwo.plot;
 
 /**
- * 2D plot axes.
+ * Plot axes.
+ * 
  * @author Richard Littin
  */
-public enum Axis2D {
+public enum Axis {
   /** X axis */
   X,
   /** Y axis */

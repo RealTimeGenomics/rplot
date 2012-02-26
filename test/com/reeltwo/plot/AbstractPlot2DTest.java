@@ -23,7 +23,7 @@ public abstract class AbstractPlot2DTest extends TestCase {
   public abstract Plot2D getPlot();
 
 
-  public abstract Plot2D getPlot(AxisSide x, AxisSide y);
+  public abstract Plot2D getPlot(Edge x, Edge y);
 
 
   public abstract Datum2D[] getData();
@@ -86,19 +86,19 @@ public abstract class AbstractPlot2DTest extends TestCase {
         }
       }
     }
-    assertTrue(plot.getLo(Axis2D.X) <= plot.getHi(Axis2D.X));
-    assertTrue(plot.getLo(Axis2D.Y) <= plot.getHi(Axis2D.Y));
+    assertTrue(plot.getLo(Axis.X) <= plot.getHi(Axis.X));
+    assertTrue(plot.getLo(Axis.Y) <= plot.getHi(Axis.Y));
 
-    assertTrue(plot.getLo(Axis2D.X) == xLo);
-    assertTrue(plot.getHi(Axis2D.X) == xHi);
-    assertTrue(plot.getLo(Axis2D.Y) == yLo);
-    assertTrue(plot.getHi(Axis2D.Y) == yHi);
+    assertTrue(plot.getLo(Axis.X) == xLo);
+    assertTrue(plot.getHi(Axis.X) == xHi);
+    assertTrue(plot.getLo(Axis.Y) == yLo);
+    assertTrue(plot.getHi(Axis.Y) == yHi);
 
-    for (AxisSide y : AxisSide.values()) {
-      for (AxisSide x : AxisSide.values()) {
+    for (Edge y : Edge.values()) {
+      for (Edge x : Edge.values()) {
         plot = getPlot(x, y);
-        assertTrue(plot.uses(Axis2D.X, x));
-        assertTrue(plot.uses(Axis2D.Y, y));
+        assertTrue(plot.uses(Axis.X, x));
+        assertTrue(plot.uses(Axis.Y, y));
       }
     }
   }
@@ -114,10 +114,10 @@ public abstract class AbstractPlot2DTest extends TestCase {
     final Plot2D plot = new Plot2D() {
     };
 
-    assertTrue(plot.getLo(Axis2D.X) == 0.0f);
-    assertTrue(plot.getLo(Axis2D.Y) == 0.0f);
-    assertTrue(plot.getHi(Axis2D.X) == 0.0f);
-    assertTrue(plot.getHi(Axis2D.Y) == 0.0f);
+    assertTrue(plot.getLo(Axis.X) == 0.0f);
+    assertTrue(plot.getLo(Axis.Y) == 0.0f);
+    assertTrue(plot.getHi(Axis.X) == 0.0f);
+    assertTrue(plot.getHi(Axis.Y) == 0.0f);
 
     try {
       plot.setData(points);
@@ -127,10 +127,10 @@ public abstract class AbstractPlot2DTest extends TestCase {
       ; // expected
     }
 
-    assertTrue(plot.getLo(Axis2D.X) == 0.0f);
-    assertTrue(plot.getLo(Axis2D.Y) == 0.0f);
-    assertTrue(plot.getHi(Axis2D.X) == 0.0f);
-    assertTrue(plot.getHi(Axis2D.Y) == 0.0f);
+    assertTrue(plot.getLo(Axis.X) == 0.0f);
+    assertTrue(plot.getLo(Axis.Y) == 0.0f);
+    assertTrue(plot.getHi(Axis.X) == 0.0f);
+    assertTrue(plot.getHi(Axis.Y) == 0.0f);
 
     assertTrue(Plot2D.isValid(0.0f));
     assertFalse(Plot2D.isValid(Float.POSITIVE_INFINITY));

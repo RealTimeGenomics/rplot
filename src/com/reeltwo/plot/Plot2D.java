@@ -19,8 +19,8 @@ public abstract class Plot2D {
   private float mXLo, mXHi;
   private float mYLo, mYHi;
 
-  private final AxisSide mXAxis;
-  private final AxisSide mYAxis;
+  private final Edge mXAxis;
+  private final Edge mYAxis;
 
   /** data points in plot */
   private Datum2D[] mData = null;
@@ -31,7 +31,7 @@ public abstract class Plot2D {
    * x axis and the left y axis.
    */
   public Plot2D() {
-    this(AxisSide.ONE, AxisSide.ONE);
+    this(Edge.MAIN, Edge.MAIN);
   }
 
 
@@ -41,7 +41,7 @@ public abstract class Plot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public Plot2D(AxisSide x, AxisSide y) {
+  public Plot2D(Edge x, Edge y) {
     mXAxis = x;
     mYAxis = y;
   }
@@ -53,8 +53,8 @@ public abstract class Plot2D {
    * @param side is using this side
    * @return using side for axis
    */
-  public boolean uses(Axis2D axis, AxisSide side) {
-    return (axis == Axis2D.X ? mXAxis : mYAxis) == side;
+  public boolean uses(Axis axis, Edge side) {
+    return (axis == Axis.X ? mXAxis : mYAxis) == side;
   }
 
   /**
@@ -215,8 +215,8 @@ public abstract class Plot2D {
    * @param axis graph axis
    * @return a number
    */
-  public float getLo(Axis2D axis) {
-    return axis == Axis2D.X ? mXLo : mYLo;
+  public float getLo(Axis axis) {
+    return axis == Axis.X ? mXLo : mYLo;
   }
 
 
@@ -226,7 +226,7 @@ public abstract class Plot2D {
    * @param axis graph axis
    * @return a number
    */
-  public float getHi(Axis2D axis) {
-    return axis == Axis2D.X ? mXHi : mYHi;
+  public float getHi(Axis axis) {
+    return axis == Axis.X ? mXHi : mYHi;
   }
 }

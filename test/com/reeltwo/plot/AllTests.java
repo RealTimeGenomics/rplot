@@ -25,6 +25,7 @@ public class AllTests extends TestSuite {
     suite.addTest(Circle2DTest.suite());
     suite.addTest(CirclePlot2DTest.suite());
     suite.addTest(CurvePlot2DTest.suite());
+    suite.addTest(DefaultFormatterTest.suite());
     suite.addTest(Graph2DTest.suite());
     suite.addTest(PlotUtilsTest.suite());
     suite.addTest(Point2DTest.suite());

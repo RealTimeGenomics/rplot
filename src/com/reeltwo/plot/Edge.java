@@ -5,9 +5,9 @@ package com.reeltwo.plot;
  *
  * @author Richard Littin
  */
-public enum AxisSide {
+public enum Edge {
   /** left or bottom axis */
-  ONE,
+  MAIN,
   /** right or top axis */
-  TWO,
+  ALTERNATE,
 }

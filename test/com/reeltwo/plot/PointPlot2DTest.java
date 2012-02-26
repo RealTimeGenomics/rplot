@@ -60,7 +60,7 @@ public class PointPlot2DTest extends AbstractFillablePlot2DTest {
 
 
   @Override
-  public Plot2D getPlot(AxisSide x, AxisSide y) {
+  public Plot2D getPlot(Edge x, Edge y) {
     return new PointPlot2D(x, y);
   }
 

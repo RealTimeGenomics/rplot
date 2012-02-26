@@ -31,7 +31,7 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
 
 
   @Override
-  public Plot2D getPlot(AxisSide x, AxisSide y) {
+  public Plot2D getPlot(Edge x, Edge y) {
     return new ArrowPlot2D(x, y);
   }
 

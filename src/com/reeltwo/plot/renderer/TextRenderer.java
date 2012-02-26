@@ -1,7 +1,7 @@
 package com.reeltwo.plot.renderer;
 
-import com.reeltwo.plot.Axis2D;
-import com.reeltwo.plot.AxisSide;
+import com.reeltwo.plot.Axis;
+import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.DefaultFormatter;
 import com.reeltwo.plot.Graph2D;
@@ -192,19 +192,19 @@ public class TextRenderer extends AbstractRenderer {
     if (title.length() != 0) {
       syhi++;
     }
-    if (graph.uses(Axis2D.X, AxisSide.ONE) && graph.getLabel(Axis2D.X, AxisSide.ONE).length() > 0) {
+    if (graph.uses(Axis.X, Edge.MAIN) && graph.getLabel(Axis.X, Edge.MAIN).length() > 0) {
       sylo--;
     }
-    if ((graph.uses(Axis2D.X, AxisSide.TWO) && graph.getLabel(Axis2D.X, AxisSide.TWO).length() > 0)
-        || (graph.uses(Axis2D.Y, AxisSide.ONE) && graph.getLabel(Axis2D.Y, AxisSide.ONE).length() > 0)
-        || (graph.uses(Axis2D.Y, AxisSide.TWO) && graph.getLabel(Axis2D.Y, AxisSide.TWO).length() > 0)) {
+    if ((graph.uses(Axis.X, Edge.ALTERNATE) && graph.getLabel(Axis.X, Edge.ALTERNATE).length() > 0)
+        || (graph.uses(Axis.Y, Edge.MAIN) && graph.getLabel(Axis.Y, Edge.MAIN).length() > 0)
+        || (graph.uses(Axis.Y, Edge.ALTERNATE) && graph.getLabel(Axis.Y, Edge.ALTERNATE).length() > 0)) {
       syhi++;
     }
 
-    if (graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowTics(Axis2D.X, AxisSide.ONE)) {
+    if (graph.uses(Axis.X, Edge.MAIN) && graph.isShowTics(Axis.X, Edge.MAIN)) {
       sylo--;
     }
-    if (graph.uses(Axis2D.X, AxisSide.TWO) && graph.isShowTics(Axis2D.X, AxisSide.TWO)) {
+    if (graph.uses(Axis.X, Edge.ALTERNATE) && graph.isShowTics(Axis.X, Edge.ALTERNATE)) {
       syhi++;
     }
 
@@ -219,20 +219,20 @@ public class TextRenderer extends AbstractRenderer {
       // Draw labels
       drawLabels(graph, canvas, sxlo, sylo, sxhi, syhi);
 
-      final float xlo = graph.getLo(Axis2D.X, AxisSide.ONE);
-      final float xhi = graph.getHi(Axis2D.X, AxisSide.ONE);
-      final float ylo = graph.getLo(Axis2D.Y, AxisSide.ONE);
-      final float yhi = graph.getHi(Axis2D.Y, AxisSide.ONE);
-      final TicInfo yTicInfo = calcYTicSize(graph, AxisSide.ONE, ylo, yhi);
+      final float xlo = graph.getLo(Axis.X, Edge.MAIN);
+      final float xhi = graph.getHi(Axis.X, Edge.MAIN);
+      final float ylo = graph.getLo(Axis.Y, Edge.MAIN);
+      final float yhi = graph.getHi(Axis.Y, Edge.MAIN);
+      final TicInfo yTicInfo = calcYTicSize(graph, Edge.MAIN, ylo, yhi);
       if (yTicInfo != null) {
         sxlo = yTicInfo.mMaxWidth;
       }
 
-      final float x2lo = graph.getLo(Axis2D.X, AxisSide.TWO);
-      final float x2hi = graph.getHi(Axis2D.X, AxisSide.TWO);
-      final float y2lo = graph.getLo(Axis2D.Y, AxisSide.TWO);
-      final float y2hi = graph.getHi(Axis2D.Y, AxisSide.TWO);
-      final TicInfo y2TicInfo = calcYTicSize(graph, AxisSide.TWO, y2lo, y2hi);
+      final float x2lo = graph.getLo(Axis.X, Edge.ALTERNATE);
+      final float x2hi = graph.getHi(Axis.X, Edge.ALTERNATE);
+      final float y2lo = graph.getLo(Axis.Y, Edge.ALTERNATE);
+      final float y2hi = graph.getHi(Axis.Y, Edge.ALTERNATE);
+      final TicInfo y2TicInfo = calcYTicSize(graph, Edge.ALTERNATE, y2lo, y2hi);
       if (y2TicInfo != null) {
         sxhi -= y2TicInfo.mMaxWidth;
       }
@@ -246,15 +246,15 @@ public class TextRenderer extends AbstractRenderer {
 
       final Box2D s = new Box2D(sxlo, sylo, sxhi, syhi);
       // scales
-      drawYTics(graph, canvas, AxisSide.ONE, yTicInfo, mapping[1], s);
-      drawYTics(graph, canvas, AxisSide.TWO, y2TicInfo, mapping[3], s);
-      drawXTics(graph, canvas, AxisSide.ONE, mapping[0], xlo, xhi, s);
-      drawXTics(graph, canvas, AxisSide.TWO, mapping[2], xlo, xhi, s);
+      drawYTics(graph, canvas, Edge.MAIN, yTicInfo, mapping[1], s);
+      drawYTics(graph, canvas, Edge.ALTERNATE, y2TicInfo, mapping[3], s);
+      drawXTics(graph, canvas, Edge.MAIN, mapping[0], xlo, xhi, s);
+      drawXTics(graph, canvas, Edge.ALTERNATE, mapping[2], xlo, xhi, s);
     } else {
-      mapping[0] = new Mapping(graph.getLo(Axis2D.X, AxisSide.ONE), graph.getHi(Axis2D.X, AxisSide.ONE), sxlo, sxhi);
-      mapping[1] = new Mapping(graph.getLo(Axis2D.Y, AxisSide.ONE), graph.getHi(Axis2D.Y, AxisSide.ONE), sylo, syhi);
-      mapping[2] = new Mapping(graph.getLo(Axis2D.X, AxisSide.TWO), graph.getHi(Axis2D.X, AxisSide.TWO), sxlo, sxhi);
-      mapping[3] = new Mapping(graph.getLo(Axis2D.Y, AxisSide.TWO), graph.getHi(Axis2D.Y, AxisSide.TWO), sylo, syhi);
+      mapping[0] = new Mapping(graph.getLo(Axis.X, Edge.MAIN), graph.getHi(Axis.X, Edge.MAIN), sxlo, sxhi);
+      mapping[1] = new Mapping(graph.getLo(Axis.Y, Edge.MAIN), graph.getHi(Axis.Y, Edge.MAIN), sylo, syhi);
+      mapping[2] = new Mapping(graph.getLo(Axis.X, Edge.ALTERNATE), graph.getHi(Axis.X, Edge.ALTERNATE), sxlo, sxhi);
+      mapping[3] = new Mapping(graph.getLo(Axis.Y, Edge.ALTERNATE), graph.getHi(Axis.Y, Edge.ALTERNATE), sylo, syhi);
     }
     // set clipping rectangle for canvas - to keep inside graph...
     canvas.setClipRectangle(sxlo, syhi, sxhi + 1, sylo + 1);
@@ -346,12 +346,12 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private void drawYTics(Graph2D graph, Canvas canvas, AxisSide whichTic, TicInfo ticInfo, Mapping mapping, Box2D s) {
+  private void drawYTics(Graph2D graph, Canvas canvas, Edge whichTic, TicInfo ticInfo, Mapping mapping, Box2D s) {
     final int sxlo = (int) s.getXLo();
     final int sxhi = (int) s.getXHi();
     final int sylo = (int) s.getYLo();
     final int syhi = (int) s.getYHi();
-    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowTics(Axis2D.Y, whichTic)) {
+    if (graph.uses(Axis.Y, whichTic) && graph.isShowTics(Axis.Y, whichTic)) {
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         final float num = ticInfo.mTic * k;
@@ -359,19 +359,19 @@ public class TextRenderer extends AbstractRenderer {
 
         if (y >= syhi && y <= sylo) {
           final String snum = ticInfo.mLabelFormatter.format(num);
-          final int yy = (whichTic == AxisSide.ONE) ? sxlo - snum.length() : sxhi + 1;
+          final int yy = (whichTic == Edge.MAIN) ? sxlo - snum.length() : sxhi + 1;
           for (int i = 0; i < snum.length(); i++) {
             final char ch = snum.charAt(i);
             canvas.putChar(yy + i, y, ch);
           }
-          if (whichTic == AxisSide.ONE) {
+          if (whichTic == Edge.MAIN) {
             canvas.putChar(sxlo, y, '+');
-            if (!graph.uses(Axis2D.Y, AxisSide.TWO)) {
+            if (!graph.uses(Axis.Y, Edge.ALTERNATE)) {
               canvas.putChar(sxhi, y, '+');
             }
           } else {
             canvas.putChar(sxhi, y, '+');
-            if (!graph.uses(Axis2D.Y, AxisSide.ONE)) {
+            if (!graph.uses(Axis.Y, Edge.MAIN)) {
               canvas.putChar(sxlo, y, '+');
             }
           }
@@ -381,19 +381,19 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private void drawXTics(Graph2D graph, Canvas canvas, AxisSide whichTic, Mapping mapping, float xlo, float xhi, Box2D s) {
+  private void drawXTics(Graph2D graph, Canvas canvas, Edge whichTic, Mapping mapping, float xlo, float xhi, Box2D s) {
     final int sxlo = (int) s.getXLo();
     final int sxhi = (int) s.getXHi();
     final int sylo = (int) s.getYLo();
     final int syhi = (int) s.getYHi();
     // Note: sylo and syhi are swapped in the Box2D object.
 
-    if (graph.uses(Axis2D.X, whichTic) && graph.isShowTics(Axis2D.X, whichTic)) {
-      final float xtic = graph.getTic(Axis2D.X, whichTic);
+    if (graph.uses(Axis.X, whichTic) && graph.isShowTics(Axis.X, whichTic)) {
+      final float xtic = graph.getTic(Axis.X, whichTic);
 
       final int start = (int) (xlo / xtic);
       final int end = (int) (xhi / xtic);
-      final LabelFormatter lf = graph.getTicLabelFormatter(Axis2D.X, whichTic);
+      final LabelFormatter lf = graph.getTicLabelFormatter(Axis.X, whichTic);
       if (lf instanceof DefaultFormatter) {
         ((DefaultFormatter) lf).setNumDecimalDigits(xtic);
       }
@@ -402,14 +402,14 @@ public class TextRenderer extends AbstractRenderer {
         final int x = (int) mapping.worldToScreen(num);
 
         if (x >= sxlo && x <= sxhi) {
-          if (whichTic == AxisSide.ONE) {
+          if (whichTic == Edge.MAIN) {
             canvas.putChar(x, syhi, '+');
-            if (!graph.uses(Axis2D.X, AxisSide.TWO)) {
+            if (!graph.uses(Axis.X, Edge.ALTERNATE)) {
               canvas.putChar(x, sylo, '+');
             }
           } else {
             canvas.putChar(x, sylo, '+');
-            if (!graph.uses(Axis2D.X, AxisSide.ONE)) {
+            if (!graph.uses(Axis.X, Edge.MAIN)) {
               canvas.putChar(x, syhi, '+');
             }
           }
@@ -419,7 +419,7 @@ public class TextRenderer extends AbstractRenderer {
           final int xx = x - snum.length() / 2;
           for (int i = 0; i < snum.length(); i++) {
             final char ch = snum.charAt(i);
-            canvas.putChar(xx + i, (whichTic == AxisSide.ONE) ? syhi + 1 : sylo - 1, ch);
+            canvas.putChar(xx + i, (whichTic == Edge.MAIN) ? syhi + 1 : sylo - 1, ch);
           }
         }
       }
@@ -427,15 +427,15 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private TicInfo calcYTicSize(Graph2D graph, AxisSide whichTic, float ylo, float yhi) {
-    if (graph.uses(Axis2D.Y, whichTic) && graph.isShowTics(Axis2D.Y, whichTic)) {
+  private TicInfo calcYTicSize(Graph2D graph, Edge whichTic, float ylo, float yhi) {
+    if (graph.uses(Axis.Y, whichTic) && graph.isShowTics(Axis.Y, whichTic)) {
       final TicInfo ticInfo = new TicInfo();
-      ticInfo.mTic = graph.getTic(Axis2D.Y, whichTic);
+      ticInfo.mTic = graph.getTic(Axis.Y, whichTic);
       ticInfo.setNumDecimalDigits(ticInfo.mTic);
       ticInfo.mStart = (int) (ylo / ticInfo.mTic);
       ticInfo.mEnd = (int) (yhi / ticInfo.mTic);
       ticInfo.mMaxWidth = 0;
-      ticInfo.mLabelFormatter = graph.getTicLabelFormatter(Axis2D.Y, whichTic);
+      ticInfo.mLabelFormatter = graph.getTicLabelFormatter(Axis.Y, whichTic);
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         final float num = ticInfo.mTic * k;
         final String snum = ticInfo.mLabelFormatter.format(num);
@@ -450,30 +450,30 @@ public class TextRenderer extends AbstractRenderer {
 
 
   private void drawLabels(Graph2D graph, Canvas canvas, int sxlo, int sylo, int sxhi, int syhi) {
-    String ylabel = graph.getLabel(Axis2D.Y, AxisSide.ONE);
-    if (graph.uses(Axis2D.Y, AxisSide.ONE) && ylabel.length() > 0) {
+    String ylabel = graph.getLabel(Axis.Y, Edge.MAIN);
+    if (graph.uses(Axis.Y, Edge.MAIN) && ylabel.length() > 0) {
       for (int i = 0; i < ylabel.length(); i++) {
         canvas.putChar(i, syhi - 2, ylabel.charAt(i));
       }
     }
-    ylabel = graph.getLabel(Axis2D.Y, AxisSide.TWO);
-    if (graph.uses(Axis2D.Y, AxisSide.TWO) && ylabel.length() > 1) {
+    ylabel = graph.getLabel(Axis.Y, Edge.ALTERNATE);
+    if (graph.uses(Axis.Y, Edge.ALTERNATE) && ylabel.length() > 1) {
       for (int i = 0; i < ylabel.length(); i++) {
         canvas.putChar(sxhi + 1 - ylabel.length() + i, syhi - 2, ylabel.charAt(i));
       }
     }
 
     final int centerWidth = (sxhi + 1) / 2;
-    String xlabel = graph.getLabel(Axis2D.X, AxisSide.ONE);
-    if (graph.uses(Axis2D.X, AxisSide.ONE) && xlabel.length() > 0) {
-      final int labelHeight = sylo + 1 + ((graph.uses(Axis2D.X, AxisSide.ONE) && graph.isShowTics(Axis2D.X, AxisSide.ONE)) ? 1 : 0);
+    String xlabel = graph.getLabel(Axis.X, Edge.MAIN);
+    if (graph.uses(Axis.X, Edge.MAIN) && xlabel.length() > 0) {
+      final int labelHeight = sylo + 1 + ((graph.uses(Axis.X, Edge.MAIN) && graph.isShowTics(Axis.X, Edge.MAIN)) ? 1 : 0);
       final int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, labelHeight, xlabel.charAt(i));
       }
     }
-    xlabel = graph.getLabel(Axis2D.X, AxisSide.TWO);
-    if (graph.uses(Axis2D.X, AxisSide.TWO) && xlabel.length() > 0) {
+    xlabel = graph.getLabel(Axis.X, Edge.ALTERNATE);
+    if (graph.uses(Axis.X, Edge.ALTERNATE) && xlabel.length() > 0) {
       final int xstart = centerWidth - xlabel.length() / 2;
       for (int i = 0; i < xlabel.length(); i++) {
         canvas.putChar(xstart + i, syhi - 2, xlabel.charAt(i));

@@ -9,8 +9,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import com.reeltwo.plot.Axis2D;
-import com.reeltwo.plot.AxisSide;
+import com.reeltwo.plot.Axis;
+import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.Circle2D;
@@ -165,14 +165,14 @@ public class SwingPlot {
 
     final Graph2D graph = new Graph2D();
     graph.setTitle("Title");
-    graph.setLabel(Axis2D.X, AxisSide.ONE, "X label");
-    graph.setLabel(Axis2D.X, AxisSide.TWO, "X1 label");
-    graph.setLabel(Axis2D.Y, AxisSide.ONE, "Y label");
-    graph.setLabel(Axis2D.Y, AxisSide.TWO, "Y2 label");
+    graph.setLabel(Axis.X, Edge.MAIN, "X label");
+    graph.setLabel(Axis.X, Edge.ALTERNATE, "X1 label");
+    graph.setLabel(Axis.Y, Edge.MAIN, "Y label");
+    graph.setLabel(Axis.Y, Edge.ALTERNATE, "Y2 label");
     graph.setKeyTitle("Key title");
     graph.setGrid(true);
-    graph.setRange(Axis2D.Y, AxisSide.ONE, 0.0f, 1.0f);
-    graph.setRange(Axis2D.X, AxisSide.ONE, 0.0f, 10.0f);
+    graph.setRange(Axis.Y, Edge.MAIN, 0.0f, 1.0f);
+    graph.setRange(Axis.X, Edge.MAIN, 0.0f, 10.0f);
 
     final Point2D[] xys1 = new Point2D[11];
     final Point2D[] xys2 = new Point2D[11];
@@ -257,14 +257,14 @@ public class SwingPlot {
     lplot.setTitle("points");
 
     graph.addPlot(lplot);
-    lplot = new PointPlot2D(AxisSide.TWO, AxisSide.TWO);
+    lplot = new PointPlot2D(Edge.ALTERNATE, Edge.ALTERNATE);
     lplot.setData(xys2);
     lplot.setTitle("lines");
     lplot.setLines(true);
     lplot.setPoints(false);
 
     graph.addPlot(lplot);
-    graph.setLo(Axis2D.Y, AxisSide.TWO, -0.15f);
+    graph.setLo(Axis.Y, Edge.ALTERNATE, -0.15f);
 
     lplot = new PointPlot2D();
     lplot.setData(xys3);
@@ -300,8 +300,8 @@ public class SwingPlot {
     vline.setStyle(LineStyle.DOTS);
     graph.addPlot(hline);
 
-    graph.setTic(Axis2D.X, AxisSide.ONE, 2);
-    graph.setTicLabelFormatter(Axis2D.X, AxisSide.ONE, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
+    graph.setTic(Axis.X, Edge.MAIN, 2);
+    graph.setTicLabelFormatter(Axis.X, Edge.MAIN, new StringFormatter(new String[]{"The", "quick", "brown", "fox", "jumped"}));
 
     graph.setKeyVerticalPosition(KeyPosition.BELOW);
     //graph.setColoredKey(false);

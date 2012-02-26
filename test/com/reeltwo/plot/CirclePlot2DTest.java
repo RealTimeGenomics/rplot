@@ -28,7 +28,7 @@ public class CirclePlot2DTest extends AbstractFillablePlot2DTest {
 
 
   @Override
-  public Plot2D getPlot(AxisSide x, AxisSide y) {
+  public Plot2D getPlot(Edge x, Edge y) {
     return new CirclePlot2D(x, y);
   }
 

@@ -38,7 +38,7 @@ public class BWPlot2D extends Plot2D {
    * @param x x axis to use.
    * @param y y axis to use.
    */
-  public BWPlot2D(AxisSide x, AxisSide y) {
+  public BWPlot2D(Edge x, Edge y) {
     super(x, y);
   }
 

@@ -28,7 +28,7 @@ public class ScatterPlot2DTest extends AbstractPlot2DTest {
 
 
   @Override
-  public Plot2D getPlot(AxisSide x, AxisSide y) {
+  public Plot2D getPlot(Edge x, Edge y) {
     return new ScatterPlot2D(x, y);
   }
 

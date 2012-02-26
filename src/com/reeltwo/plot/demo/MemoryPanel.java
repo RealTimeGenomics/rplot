@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
-import com.reeltwo.plot.Axis2D;
-import com.reeltwo.plot.AxisSide;
+import com.reeltwo.plot.Axis;
+import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.Point2D;
@@ -187,7 +187,7 @@ public class MemoryPanel extends JPanel {
           tplot.setData(totalPoints);
           uplot.setData(usedPoints);
 
-          final float ymax = graph.getHi(Axis2D.Y, AxisSide.ONE);
+          final float ymax = graph.getHi(Axis.Y, Edge.MAIN);
           if (max <= ymax) {
             maxPoints[0].setX(mSampleIndex2 < -1 ? 0 : mSampleIndex2 + 1);
             maxPoints[1].setX(mSampleIndex2 + mNumberOfSamples);
@@ -195,7 +195,7 @@ public class MemoryPanel extends JPanel {
             graph.addPlot(mplot);
           }
 
-          graph.setRange(Axis2D.X, mSampleIndex2 < -1 ? 0 : mSampleIndex2 + 1, mSampleIndex2 + mNumberOfSamples);
+          graph.setRange(Axis.X, mSampleIndex2 < -1 ? 0 : mSampleIndex2 + 1, mSampleIndex2 + mNumberOfSamples);
 
           mGraph.setGraph(graph);
 
