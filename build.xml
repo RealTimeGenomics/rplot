@@ -123,7 +123,7 @@
         <include name="com/reeltwo/**/*.txt"/>
         <include name="com/reeltwo/**/resources/*"/>
       </fileset>
-      <zipfileset src="${lib.dir}/junit.jar" excludes="META-INF/**"/>
+<!--      <zipfileset src="${lib.dir}/junit.jar" excludes="META-INF/**"/> -->
     </jar>
   </target>
 
