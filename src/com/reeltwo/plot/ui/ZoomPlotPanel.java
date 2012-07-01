@@ -58,6 +58,9 @@ public class ZoomPlotPanel extends JComponent {
 
 
   private class ZoomListener extends MouseInputAdapter {
+
+    private Component mMouseDownComponent;
+
     /** {@inheritDoc} */
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -74,6 +77,7 @@ public class ZoomPlotPanel extends JComponent {
         if (mPlotPanel == SwingUtilities.getDeepestComponentAt(mContainer, p.x, p.y)) {
           ZoomPlotPanel.this.setPointTwo(p);
           ZoomPlotPanel.this.repaint();
+         // System.err.println("Mouse dragged in panel");
         }
       }
       redispatchMouseEvent(e);
@@ -91,6 +95,7 @@ public class ZoomPlotPanel extends JComponent {
     /** {@inheritDoc} */
     @Override
     public void mouseEntered(MouseEvent e) {
+      //System.err.println("Mouse entered");
       redispatchMouseEvent(e);
     }
 
@@ -98,6 +103,7 @@ public class ZoomPlotPanel extends JComponent {
     /** {@inheritDoc} */
     @Override
     public void mouseExited(MouseEvent e) {
+      //System.err.println("Mouse exited");
       redispatchMouseEvent(e);
     }
 
@@ -108,10 +114,14 @@ public class ZoomPlotPanel extends JComponent {
       //System.err.println("Mouse Pressed");
       if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
         final Point p = e.getPoint();
-        if (mPlotPanel == SwingUtilities.getDeepestComponentAt(mContainer, p.x, p.y)) {
+        final Component deepestComponentAt = SwingUtilities.getDeepestComponentAt(mContainer, p.x, p.y);
+        if (mPlotPanel == deepestComponentAt) {
           ZoomPlotPanel.this.setPointOne(p);
           ZoomPlotPanel.this.setPointTwo(p);
           ZoomPlotPanel.this.repaint();
+          mMouseDownComponent = null;
+        } else {
+          mMouseDownComponent = deepestComponentAt;
         }
       }
       redispatchMouseEvent(e);
@@ -128,6 +138,7 @@ public class ZoomPlotPanel extends JComponent {
         ZoomPlotPanel.this.zoomIn();
         ZoomPlotPanel.this.repaint();
       }
+      mMouseDownComponent = null;
       redispatchMouseEvent(e);
     }
 
@@ -135,7 +146,7 @@ public class ZoomPlotPanel extends JComponent {
     private void redispatchMouseEvent(MouseEvent e) {
       final Point containerPoint = e.getPoint();
 
-      final Component component = SwingUtilities.getDeepestComponentAt(mContainer, containerPoint.x, containerPoint.y);
+      final Component component = mMouseDownComponent != null ? mMouseDownComponent : SwingUtilities.getDeepestComponentAt(mContainer, containerPoint.x, containerPoint.y);
 
       //System.err.println("Container = " + mContainer);
       //System.err.println("Component = " + component);
