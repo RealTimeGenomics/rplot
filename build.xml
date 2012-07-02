@@ -22,7 +22,8 @@
 
   <property name="vcs.info.cmd" value="svn"/>
   <property name="vcs.info.args" value="info -r HEAD"/>
-
+  <property name="ant.build.javac.source" value="1.6" />
+  <property name="ant.build.javac.target" value="1.6" />
   <defaultexcludes add="**/.hg"/>
   <defaultexcludes add="**/.hg/**"/>
 
@@ -59,7 +60,7 @@
 
 
   <target name="compile-src" depends="init" description="Compiles all code in src.">
-    <javac destdir="${build.src}" srcdir="${src.dir}" includes="**/*.java"  source="1.6" debug="true">
+    <javac destdir="${build.src}" srcdir="${src.dir}" includes="**/*.java"  debug="true">
       <compilerarg value="-Xlint" />
       <compilerarg value="-Xlint:-serial" />
       <classpath>
@@ -72,7 +73,7 @@
   </target>
 
   <target name="compile-test" depends="compile-src" description="Compiles all code in test.">
-    <javac destdir="${build.test}" srcdir="${test.dir}" includes="**/*.java" source="1.6" debug="true">
+    <javac destdir="${build.test}" srcdir="${test.dir}" includes="**/*.java" debug="true">
       <compilerarg value="-Xlint" />
       <compilerarg value="-Xlint:-serial" />
       <classpath>
