@@ -285,8 +285,24 @@ class GraphAxis implements Cloneable {
     mLabelFormatter = labelFormatter;
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#clone()
+   */
   @Override
-  public Object clone() throws CloneNotSupportedException {
-    return super.clone();
+  protected Object clone() throws CloneNotSupportedException {
+    final GraphAxis ga = (GraphAxis) super.clone();
+    ga.mTitle = mTitle;
+    ga.mLo = mLo;
+    ga.mHi = mHi;
+    ga.mLoAuto = mLoAuto;
+    ga.mHiAuto = mHiAuto;
+    ga.mTic = mTic;
+    ga.mMinorTic = mMinorTic;
+    ga.mShowGrid = mShowGrid;
+    ga.mShowTics = mShowTics;
+    ga.mLogScale = mLogScale;
+    ga.mLabelFormatter = mLabelFormatter;
+    return ga;
   }
+
 }

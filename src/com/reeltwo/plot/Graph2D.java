@@ -606,7 +606,18 @@ public class Graph2D implements Cloneable {
   public Object clone() throws CloneNotSupportedException {
     // only need to clone the members of this object
     // used same data arrays as in this object
-    final Graph2D g = (Graph2D) super.clone();
+    final Graph2D g = new Graph2D();
+        
+    g.mTitle = mTitle;
+    g.mKeyTitle = mKeyTitle;
+    g.mShowKey = mShowKey;
+    g.mColoredKey = mColoredKey;
+    g.mKeyHorizontalPosition = mKeyHorizontalPosition;
+    g.mKeyVerticalPosition = mKeyVerticalPosition;
+    g.mDisplayBorder = mDisplayBorder;
+
+    
+    
     for (Edge i : Edge.values()) {
       g.mXAxes.put(i, (GraphAxis) mXAxes.get(i).clone());
       g.mYAxes.put(i, (GraphAxis) mYAxes.get(i).clone());
