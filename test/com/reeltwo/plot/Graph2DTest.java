@@ -22,17 +22,6 @@ public class Graph2DTest extends TestCase {
     super(name);
   }
 
-
-  @Override
-  public void setUp() {
-  }
-
-
-  @Override
-  public void tearDown() {
-  }
-
-
   public void test1() {
     final Graph2D graph = new Graph2D();
     // check default/assummed values
@@ -199,7 +188,7 @@ public class Graph2DTest extends TestCase {
     assertEquals(Axis.X, Graph2D.X);
     assertEquals(Axis.Y, Graph2D.Y);
   }
-  
+
   public static Test suite() {
     return new TestSuite(Graph2DTest.class);
   }

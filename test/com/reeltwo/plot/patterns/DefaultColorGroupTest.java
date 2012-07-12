@@ -20,18 +20,6 @@ public class DefaultColorGroupTest extends AbstractPatternGroupTest {
     super(name);
   }
 
-
-  @Override
-  public void setUp() {
-    super.setUp();
-  }
-
-
-  @Override
-  public void tearDown() {
-    super.tearDown();
-  }
-
   @Override
   public PatternGroup getPatternGroup() {
     return new DefaultColorGroup();

@@ -45,10 +45,6 @@ public class GraphLine extends Plot2D {
    * @param orientation horizontal or vertical
    */
   public GraphLine(float location, LineOrientation orientation) {
-    this(0, 0, location, orientation);
-  }
-
-  private GraphLine(int x, int y, float location, LineOrientation orientation) {
     mLocation = location;
     mOrientation = orientation;
   }

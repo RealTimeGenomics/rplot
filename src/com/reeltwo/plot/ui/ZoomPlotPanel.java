@@ -276,7 +276,6 @@ public class ZoomPlotPanel extends JComponent {
     }
   }
 
-
   protected void setPointTwo(Point p) {
     if (mPicNPic) {
       if (mPtPNP1 != null) {

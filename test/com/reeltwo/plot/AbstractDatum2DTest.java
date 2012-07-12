@@ -42,19 +42,7 @@ public abstract class AbstractDatum2DTest extends TestCase {
     super(name);
   }
 
-
   public abstract Datum2D getDatum();
-
-
-  @Override
-  protected void setUp() {
-  }
-
-
-  @Override
-  protected void tearDown() {
-  }
-
 
   public void testBasics() {
     final Datum2D datum = getDatum();

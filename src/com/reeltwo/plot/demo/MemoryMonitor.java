@@ -62,7 +62,10 @@ public final class MemoryMonitor extends Thread {
                   + FORMATER.format(kbUsed / 1024));
             }
 
-            public void memoryUpdate(long kbMax, long kbUsed, final float fraction) { }
+            @Override
+            public void memoryUpdate(long kbMax, long kbUsed, final float fraction) {
+              throw new UnsupportedOperationException();
+            }
           });
     }
     return sInstance;

@@ -19,25 +19,11 @@ public abstract class AbstractPlot2DTest extends TestCase {
     super(name);
   }
 
-
   public abstract Plot2D getPlot();
-
 
   public abstract Plot2D getPlot(Edge x, Edge y);
 
-
   public abstract Datum2D[] getData();
-
-
-  @Override
-  protected void setUp() {
-  }
-
-
-  @Override
-  protected void tearDown() {
-  }
-
 
   public void testBasics() {
     //System.err.println("In Plot2DTest testBasics()");
@@ -111,7 +97,10 @@ public abstract class AbstractPlot2DTest extends TestCase {
         new Point2D(Float.NEGATIVE_INFINITY, -3.0f),
         new Point2D(Float.NaN, -1.5f),
     };
+
+
     final Plot2D plot = new Plot2D() {
+      /** empty */
     };
 
     assertTrue(plot.getLo(Axis.X) == 0.0f);

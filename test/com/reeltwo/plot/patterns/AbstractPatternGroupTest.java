@@ -22,14 +22,6 @@ public abstract class AbstractPatternGroupTest extends TestCase {
 
   abstract PatternGroup getPatternGroup();
 
-  @Override
-  public void setUp() {
-  }
-
-
-  @Override
-  public void tearDown() {
-  }
 
   public void testBasics() {
     final PatternGroup pg = getPatternGroup();

@@ -22,17 +22,6 @@ public class BW8x8PatternGroupTest extends AbstractPatternGroupTest {
 
 
   @Override
-  public void setUp() {
-    super.setUp();
-  }
-
-
-  @Override
-  public void tearDown() {
-    super.tearDown();
-  }
-
-  @Override
   public PatternGroup getPatternGroup() {
     return new BW8x8PatternGroup();
   }

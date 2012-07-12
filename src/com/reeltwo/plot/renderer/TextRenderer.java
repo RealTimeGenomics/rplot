@@ -217,7 +217,7 @@ public class TextRenderer extends AbstractRenderer {
 
     if (graph.isBorder()) {
       // Draw labels
-      drawLabels(graph, canvas, sxlo, sylo, sxhi, syhi);
+      drawLabels(graph, canvas, sylo, sxhi, syhi);
 
       final float xlo = graph.getLo(Axis.X, Edge.MAIN);
       final float xhi = graph.getHi(Axis.X, Edge.MAIN);
@@ -449,7 +449,7 @@ public class TextRenderer extends AbstractRenderer {
   }
 
 
-  private void drawLabels(Graph2D graph, Canvas canvas, int sxlo, int sylo, int sxhi, int syhi) {
+  private void drawLabels(Graph2D graph, Canvas canvas, int sylo, int sxhi, int syhi) {
     String ylabel = graph.getLabel(Axis.Y, Edge.MAIN);
     if (graph.uses(Axis.Y, Edge.MAIN) && ylabel.length() > 0) {
       for (int i = 0; i < ylabel.length(); i++) {

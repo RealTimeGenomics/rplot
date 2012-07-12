@@ -16,10 +16,7 @@ public class AllTests extends TestSuite {
   public static Test suite() {
     final TestSuite suite = new TestSuite();
 
-    suite.addTest(GraphicsRendererTest.suite());
-    suite.addTest(ImageWriterTest.suite());
     suite.addTest(MappingTest.suite());
-    suite.addTest(TextRendererTest.suite());
     return suite;
   }
 

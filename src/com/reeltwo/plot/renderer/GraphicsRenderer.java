@@ -803,7 +803,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     ((Graphics2D) canvas).setStroke(stroke);
   }
 
-  private int calcKeyX(Graph2D graph, Graphics g, int sxlo, int sxhi, int keyWidth) {
+  private int calcKeyX(Graph2D graph, int sxlo, int sxhi, int keyWidth) {
     int keyX;
     if (graph.getKeyVerticalPosition() == KeyPosition.BELOW) {
       keyX = 0;
@@ -822,7 +822,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     return keyX;
   }
 
-  private int calcKeyY(Graph2D graph, Graphics g, int screenWidth, int sylo, int syhi, int keyHeight) {
+  private int calcKeyY(Graph2D graph, int sylo, int syhi, int keyHeight) {
     int keyY;
     final KeyPosition position = graph.getKeyVerticalPosition();
     if (position == KeyPosition.BOTTOM) {
@@ -843,9 +843,9 @@ public class GraphicsRenderer extends AbstractRenderer {
       final String keyTitle = graph.getKeyTitle();
       final int tHeight = getTextHeight(g, "A");
       final int keyWidth = calculateKeyWidth(g, graph);
-      final int keyX = calcKeyX(graph, g, sxlo, sxhi, keyWidth);
+      final int keyX = calcKeyX(graph, sxlo, sxhi, keyWidth);
       final int keyHeight = calculateKeyHeight(g, graph, screenWidth);
-      final int keyY = calcKeyY(graph, g, screenWidth, sylo, syhi, keyHeight);
+      final int keyY = calcKeyY(graph, sylo, syhi, keyHeight);
       if (keyTitle != null && keyTitle.length() != 0) {
         setColor(g, FOREGROUND_COLOR_INDEX);
         final int yy = keyY + tHeight;

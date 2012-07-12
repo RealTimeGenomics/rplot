@@ -21,17 +21,6 @@ public class PlotUtilsTest extends TestCase {
     super(name);
   }
 
-
-  @Override
-  public void setUp() {
-  }
-
-
-  @Override
-  public void tearDown() {
-  }
-
-
   public void testFloor10() {
     assertTrue(10.0 == PlotUtils.floor10(10));
     assertTrue(0.0 == PlotUtils.floor10(0.0));

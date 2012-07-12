@@ -38,12 +38,6 @@ public class MappingTest extends TestCase {
     mSr = 1.0f;
   }
 
-
-  @Override
-  public void tearDown() {
-  }
-
-
   public void test1() {
     final Mapping map = new Mapping(mWl, mWr, mSl, mSr);
 
@@ -53,7 +47,6 @@ public class MappingTest extends TestCase {
     assertEquals(spt, map.worldToScreen(wpt), 0.0001f);
     assertEquals(wpt, map.screenToWorld(spt), 0.0001f);
   }
-
 
   public void testContructor() {
     try {
