@@ -56,6 +56,7 @@ public class ZoomPlotPanel extends JComponent {
   private final float[] mYLo = new float[2];
   private final float[] mYHi = new float[2];
 
+  private boolean mOriginIsMin = false;
 
   private class ZoomListener extends MouseInputAdapter {
 
@@ -174,6 +175,14 @@ public class ZoomPlotPanel extends JComponent {
     mPlotPanel = panel;
     mContainer = container;
     mGraphicsRenderer = new GraphicsRenderer();
+  }
+  
+  /**
+   * Sets things so the origin is the lowest point that can be zoomed to
+   * @param flag origin is min
+   */
+  public void setOriginIsMin(boolean flag) {
+    mOriginIsMin = flag;
   }
 
   /**
@@ -351,14 +360,22 @@ public class ZoomPlotPanel extends JComponent {
           if (mGraph.uses(Axis.X, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
             final float mapOneX = map.screenToWorld((float) ptOne.getX());
             final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
-            mGraph.setRange(Axis.X, a, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
+            float rangeMin = Math.min(mapOneX, mapTwoX);
+            if (mOriginIsMin) {
+              rangeMin = Math.max(0.0f, rangeMin);
+            }
+            mGraph.setRange(Axis.X, a, rangeMin, Math.max(mapOneX, mapTwoX));
           }
 
           map = mapping[i * 2 + 1];
           if (mGraph.uses(Axis.Y, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
             final float mapOneY = map.screenToWorld((float) ptOne.getY());
             final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
-            mGraph.setRange(Axis.Y, a, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
+            float rangeMin = Math.min(mapOneY, mapTwoY);
+            if (mOriginIsMin) {
+              rangeMin = Math.max(0.0f, rangeMin);
+            }
+            mGraph.setRange(Axis.Y, a, rangeMin, Math.max(mapOneY, mapTwoY));
           }
         }
 
@@ -371,14 +388,22 @@ public class ZoomPlotPanel extends JComponent {
             if (graph.uses(Axis.X, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
               final float mapOneX = map.screenToWorld((float) ptOne.getX());
               final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
-              graph.setRange(Axis.X, a, Math.min(mapOneX, mapTwoX), Math.max(mapOneX, mapTwoX));
+              float rangeMin = Math.min(mapOneX, mapTwoX);
+              if (mOriginIsMin) {
+                rangeMin = Math.max(0.0f, rangeMin);
+              }
+              graph.setRange(Axis.X, a, rangeMin, Math.max(mapOneX, mapTwoX));
             }
 
             map = mapping[i * 2 + 1];
             if (graph.uses(Axis.Y, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
               final float mapOneY = map.screenToWorld((float) ptOne.getY());
               final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
-              graph.setRange(Axis.Y, a, Math.min(mapOneY, mapTwoY), Math.max(mapOneY, mapTwoY));
+              float rangeMin = Math.min(mapOneY, mapTwoY);
+              if (mOriginIsMin) {
+                rangeMin = Math.max(0.0f, rangeMin);
+              }
+              graph.setRange(Axis.Y, a, rangeMin, Math.max(mapOneY, mapTwoY));
             }
           }
           mPlotPanel.setGraph(graph);
