@@ -604,6 +604,7 @@ public class Graph2D implements Cloneable {
   /** {@inheritDoc} */
   @Override
   public Object clone() throws CloneNotSupportedException {
+    super.clone();
     // only need to clone the members of this object
     // used same data arrays as in this object
     final Graph2D g = new Graph2D();
@@ -615,8 +616,6 @@ public class Graph2D implements Cloneable {
     g.mKeyHorizontalPosition = mKeyHorizontalPosition;
     g.mKeyVerticalPosition = mKeyVerticalPosition;
     g.mDisplayBorder = mDisplayBorder;
-
-    
     
     for (Edge i : Edge.values()) {
       g.mXAxes.put(i, (GraphAxis) mXAxes.get(i).clone());

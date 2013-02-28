@@ -230,7 +230,7 @@ class GraphAxis implements Cloneable {
   }
 
   /**
-   * @return ShowGrid
+   * @return true if grid is shown
    */
   public boolean isShowGrid() {
     return mShowGrid;
