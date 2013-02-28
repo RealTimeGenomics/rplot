@@ -71,28 +71,28 @@ class GraphAxis implements Cloneable {
   }
 
   /**
-   * @return whether loAuto is set
+   * @return whether {@code loAuto} is set
    */
   public boolean isLoAuto() {
     return mLoAuto;
   }
 
   /**
-   * @param loAuto set loAuto
+   * @param loAuto set {@code loAuto}
    */
   public void setLoAuto(boolean loAuto) {
     mLoAuto = loAuto;
   }
 
   /**
-   * @return whether hiAuto is set
+   * @return whether {@code hiAuto} is set
    */
   public boolean isHiAuto() {
     return mHiAuto;
   }
 
   /**
-   * @param hiAuto set hiAuto
+   * @param hiAuto set {@code hiAuto}
    */
   public void setHiAuto(boolean hiAuto) {
     mHiAuto = hiAuto;
@@ -202,28 +202,28 @@ class GraphAxis implements Cloneable {
   }
 
   /**
-   * @return the minorTic
+   * @return the minor tic
    */
   public float getMinorTic() {
     return mMinorTic;
   }
 
   /**
-   * @param minorTic the minorTic to set
+   * @param minorTic the minor tic to set
    */
   public void setMinorTic(float minorTic) {
     mMinorTic = minorTic;
   }
 
   /**
-   * @return ticAuto
+   * @return {@code ticAuto}
    */
   public boolean isTicAuto() {
     return mTicAuto;
   }
 
   /**
-   * @param ticAuto the mTicAuto to set
+   * @param ticAuto the {@code mTicAuto} to set
    */
   public void setTicAuto(boolean ticAuto) {
     mTicAuto = ticAuto;
@@ -237,7 +237,7 @@ class GraphAxis implements Cloneable {
   }
 
   /**
-   * @param showGrid the mShowGrid to set
+   * @param showGrid show the grid
    */
   public void setShowGrid(boolean showGrid) {
     mShowGrid = showGrid;
@@ -265,21 +265,21 @@ class GraphAxis implements Cloneable {
   }
 
   /**
-   * @param logScale the logScale to set
+   * @param logScale the log scale to set
    */
   public void setLogScale(boolean logScale) {
     mLogScale = logScale;
   }
 
   /**
-   * @return the LabelFormatter
+   * @return the label formatter
    */
   public LabelFormatter getLabelFormatter() {
     return mLabelFormatter;
   }
 
   /**
-   * @param labelFormatter the LabelFormatter to set
+   * @param labelFormatter the label formatter to set
    */
   public void setLabelFormatter(LabelFormatter labelFormatter) {
     mLabelFormatter = labelFormatter;

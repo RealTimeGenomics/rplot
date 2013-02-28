@@ -37,14 +37,14 @@ public class Mapping {
    * Initializes Mapping object with the world's <code>worldMin</code>
    * and <code>worldMax</code> and the screen's matching
    * <code>screenMin</code> and <code>screenMax</code>.  If
-   * <code>log</code> is set then a log<sub>10</sub> transformation on
+   * <code>log</code> is set then a {@code log}<sub>10</sub> transformation on
    * world values is performed.
    *
    * @param worldMin world's minimum value
    * @param worldMax world's maximum value
    * @param screenMin screen's minimum value
    * @param screenMax screen's maximum value
-   * @param log whether to take log<sub>10</sub> of world values
+   * @param log whether to take {@code log}<sub>10</sub> of world values
    * @exception IllegalArgumentException if world values or screen
    * values are equal.
    */

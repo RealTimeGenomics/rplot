@@ -69,7 +69,7 @@ public abstract class AbstractRenderer {
   /**
    * Returns an array of screen to world mappings, one for each of the
    * 4 axes.  Mappings can be null if there is no mapping for an
-   * axis.  The axis order x0, y0, x1, y1.
+   * axis.  The axis order {@code x0, y0, x1, y1}.
    *
    * @return an array of axis <code>Mapping</code>s
    */

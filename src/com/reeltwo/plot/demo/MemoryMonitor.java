@@ -85,7 +85,7 @@ public final class MemoryMonitor extends Thread {
 
   private float mFractionUsed;
 
-  /** whether to subtract 64MB off max memory value - JVM problem */
+  /** Whether to subtract 64 MB off max memory value - JVM problem */
   private boolean mSub64M = false;
 
 
@@ -159,7 +159,7 @@ public final class MemoryMonitor extends Thread {
 
 
   /**
-   * Returns the facation of memory used.
+   * Returns the fraction of memory used.
    *
    * @return fraction of memory
    */

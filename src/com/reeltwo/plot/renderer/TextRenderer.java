@@ -159,7 +159,7 @@ public class TextRenderer extends AbstractRenderer {
 
 
   /**
-   * Renders the givne graph to a string that mimics a screen of
+   * Renders the given graph to a string that mimics a screen of
    * <code>screenWidth</code> characters by <code>screenHeight</code>
    * characters.  <code>inColor</code> produces ansi color codes if
    * set.

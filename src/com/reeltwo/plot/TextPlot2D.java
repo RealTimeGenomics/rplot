@@ -158,7 +158,7 @@ public class TextPlot2D extends Plot2D {
   }
 
   /**
-   * Sets whether to draw text using the graphs forground color or one
+   * Sets whether to draw text using the graphs foreground color or one
    * of the automatically selected plot colors.
    *
    * @param flag use foreground color

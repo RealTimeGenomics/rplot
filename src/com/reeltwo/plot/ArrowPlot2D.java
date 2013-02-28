@@ -15,7 +15,7 @@ public class ArrowPlot2D extends Plot2D {
     OPEN,
     /** Render arrows with an arrow shaped head */
     ARROW,
-    /** Render rarows with a triangular head. */
+    /** Render arrows with a triangular head. */
     TRIANGLE,
     /** Render arrows with a diamond shaped head. */
     DIAMOND,
@@ -103,7 +103,7 @@ public class ArrowPlot2D extends Plot2D {
   }
 
   /**
-   * Sets the width of the arrow head in screen units.  The defualt is 4.
+   * Sets the width of the arrow head in screen units.  The default is 4.
    *
    * @param w arrow head width
    */
@@ -124,7 +124,7 @@ public class ArrowPlot2D extends Plot2D {
   }
 
   /**
-   * Sets the height, or length, of the arrow head in screen units.  The defualt is 8.
+   * Sets the height, or length, of the arrow head in screen units.  The default is 8.
    *
    * @param h arrow head height
    */

@@ -7,11 +7,11 @@ package com.reeltwo.plot;
  */
 
 public class CurvePlot2D extends FillablePlot2D {
-  /** Use a bspline curve through points. */
+  /** Use a b-spline curve through points. */
   public static final int BSPLINE = 0;
-  /** Use a bezier curve through points. */
+  /** Use a Bezier curve through points. */
   public static final int BEZIER = 1;
-  /** Use a cubic bezier curve through points. */
+  /** Use a cubic Bezier curve through points. */
   public static final int CUBIC_BEZIER = 2;
 
   /** the curve type */

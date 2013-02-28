@@ -105,7 +105,7 @@ public class Graph2D implements Cloneable {
 
   /**
    * Set whether to use plots color in key text or to use the
-   * forground color.  Default is to use colors.
+   * foreground color.  Default is to use colors.
    *
    * @param flag use plot colors in text
    */
@@ -210,7 +210,7 @@ public class Graph2D implements Cloneable {
   }
 
   /**
-   * Returns the label for figen axis and side.
+   * Returns the label for axis and side.
    *
    * @param axis graph axis
    * @param side axis side

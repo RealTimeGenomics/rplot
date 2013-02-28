@@ -143,7 +143,7 @@ public class PlotPanel extends JPanel {
   }
 
   /**
-   * Returns an action allowing a shapshot of the graph to be rendered
+   * Returns an action allowing a snapshot of the graph to be rendered
    * in a separate dialog.
    *
    * @return an <code>Action</code>
@@ -286,7 +286,7 @@ public class PlotPanel extends JPanel {
   }
 
   /**
-   * Overrides JPanel.paintComponent and actually renders the graph in
+   * Overrides {@code JPanel.paintComponent} and actually renders the graph in
    * the given Graphics object.
    *
    * @param g a Graphics component.

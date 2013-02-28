@@ -351,7 +351,7 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
   /**
-   * Sets the forground color for the whole graph.  This is the color
+   * Sets the foreground color for the whole graph.  This is the color
    * used for border lines and text.
    *
    * @param color a <code>Color</code>
@@ -387,7 +387,7 @@ public class GraphicsRenderer extends AbstractRenderer {
    * Actually draws the graph on the given Graphics. Offsets and screen
    * dimensions are used to provide limits on the area to draw in. The
    * mappings from world to screen data points for each axis pair is
-   * returned (in order x1,y1,x2,y2,...).
+   * returned (in order {@code x1,y1,x2,y2},...).
    *
    * @param graph the Graph2D to draw
    * @param g a Graphics to draw on

@@ -8,12 +8,9 @@ package com.reeltwo.plot;
 
 public final class PlotUtils {
 
-  /**
-   * Private to prevent istantiation.
-   */
   private PlotUtils() { }
 
-  /** Natural log of 10, used in log10 function. */
+  /** Natural log of 10, used in {@code log10} function. */
   public static final double L10 = Math.log(10.0);
 
 
@@ -21,7 +18,7 @@ public final class PlotUtils {
    * Returns the log base 10 of <code>a</code> double value.
    *
    * @param a a number greater than 0.0
-   * @return the value log<sub>10</sub>(<code>a</code>)
+   * @return the value {@code log<sub>10</sub>(a)}
    */
   public static double log10(double a) {
     return Math.log(a) / L10;
@@ -74,7 +71,7 @@ public final class PlotUtils {
    *
    * @param x value to raise
    * @param y amount to raise to
-   * @return x<sup>y</sup>
+   * @return <code>x<sup>y</sup></code>
    */
   public static float pow(float x, int y) {
     float val = 1.0f;

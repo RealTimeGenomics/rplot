@@ -62,7 +62,7 @@ public class BWPoint2D implements Datum2D {
 
 
   /**
-   * Sets the <code>i</code><sup>th</sup> y co-ordinate.
+   * Sets the ith y co-ordinate.
    *
    * @param i ith y value
    * @param y y co-ordinate.
@@ -74,7 +74,7 @@ public class BWPoint2D implements Datum2D {
 
 
   /**
-   * Returns <code>i</code><sup>th</sup> y co-ordinate.
+   * Returns ith y co-ordinate.
    *
    * @param i ith y value
    * @return y co-ordinate.

@@ -2,8 +2,8 @@ package com.reeltwo.plot;
 
 /**
  * Point data describing a single arrow.  Arrow is described by its
- * end point locations and the direction goes from (x1, y1) to (x2,
- * y2).
+ * end point locations and the direction goes from {@code (x1, y1)} to
+ * {@code (x2, y2)}.
  *
  * @author Richard Littin
  */
@@ -33,7 +33,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Sets the x1 co-ordinate.
+   * Sets the {@code x1} co-ordinate.
    *
    * @param x x co-ordinate.
    */
@@ -46,7 +46,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Returns x1 co-ordinate.
+   * Returns {@code x1} co-ordinate.
    *
    * @return x co-ordinate.
    */
@@ -56,7 +56,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Sets the y1 co-ordinate.
+   * Sets the {@code y1} co-ordinate.
    *
    * @param y y co-ordinate.
    */
@@ -69,7 +69,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Returns y1 co-ordinate.
+   * Returns {@code y1} co-ordinate.
    *
    * @return y co-ordinate.
    */
@@ -79,7 +79,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Sets the x2 co-ordinate.
+   * Sets the {@code x2} co-ordinate.
    *
    * @param x x co-ordinate.
    */
@@ -92,7 +92,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Returns x2 co-ordinate.
+   * Returns {@code x2} co-ordinate.
    *
    * @return x co-ordinate.
    */
@@ -102,7 +102,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Sets the y2 co-ordinate.
+   * Sets the {@code y2} co-ordinate.
    *
    * @param y y co-ordinate.
    */
@@ -115,7 +115,7 @@ public class Arrow2D implements Datum2D {
 
 
   /**
-   * Returns y2 co-ordinate.
+   * Returns {@code y2} co-ordinate.
    *
    * @return y co-ordinate.
    */

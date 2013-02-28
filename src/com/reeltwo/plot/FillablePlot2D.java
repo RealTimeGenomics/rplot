@@ -73,7 +73,7 @@ public abstract class FillablePlot2D extends Plot2D {
   }
 
   /**
-   * Sets whether to draw a foreground colored border around the plto.  Default is
+   * Sets whether to draw a foreground colored border around the plot.  Default is
    * not to draw the border.  Will only draw the border if fill is enabled.
    *
    * @param flag whether to draw a border

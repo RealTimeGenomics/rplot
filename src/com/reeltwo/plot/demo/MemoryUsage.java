@@ -92,7 +92,7 @@ public class MemoryUsage extends JDialog {
 
 
   /**
-   * If 1 or more arguments are given, MemoryUsageDialog will attempt
+   * If 1 or more arguments are given, will attempt
    * to invoke the first argument's main method with the remaining
    * arguments as parameters. It will exit if any exceptions are
    * thrown.

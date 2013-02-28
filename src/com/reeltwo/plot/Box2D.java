@@ -13,8 +13,8 @@ public class Box2D implements Datum2D {
 
 
   /**
-   * Creates a box for the given co-ordinates. If right < left their
-   * values are swapped. If top < bottom their values are swapped.
+   * Creates a box for the given co-ordinates. If right &lt; left their
+   * values are swapped. If top &lt; bottom their values are swapped.
    *
    * @param left left edge of box
    * @param top top edge of box
@@ -28,7 +28,7 @@ public class Box2D implements Datum2D {
 
 
   /**
-   * Sets the left and right edges of the box. If right < left their
+   * Sets the left and right edges of the box. If right &lt; left their
    * values are swapped.
    *
    * @param left left edge of box
@@ -46,7 +46,7 @@ public class Box2D implements Datum2D {
 
 
   /**
-   * Sets the bottom and top edges of the box. If top < bottom their
+   * Sets the bottom and top edges of the box. If top &lt; bottom their
    * values are swapped.
    *
    * @param bottom bottom edge of box

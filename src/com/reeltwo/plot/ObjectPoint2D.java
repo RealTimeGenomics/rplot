@@ -25,7 +25,7 @@ public class ObjectPoint2D extends Point2D {
   }
 
   /**
-   * Compute the square of the distance from the point to another point (specified as x, y co-oridinates).
+   * Compute the square of the distance from the point to another point (specified as x, y co-ordinates).
    * @param x co-ordinate of other point.
    * @param y co-ordinate of other point.
    * @return square of the distance.
