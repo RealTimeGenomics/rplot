@@ -45,8 +45,8 @@ public abstract class FillablePlot2D extends Plot2D {
 
   /**
    * Sets the fill type for this plot. Valid fill types are
-   * <code>NO_FILL</code> (the default), <code>COLOR_FILL</code> and
-   * <code>PATTERN_FILL</code>.
+   * <code>NONE</code> (the default), <code>COLOR</code> and
+   * <code>PATTERN</code>.
    *
    * @param fill the fill type
    */
