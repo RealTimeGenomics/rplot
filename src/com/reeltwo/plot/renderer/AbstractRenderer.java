@@ -24,6 +24,8 @@ import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
 import com.reeltwo.plot.GraphLine.LineOrientation;
 import com.reeltwo.plot.LabelFormatter;
+import com.reeltwo.plot.Note2D;
+import com.reeltwo.plot.NotePlot2D;
 import com.reeltwo.plot.Plot2D;
 import com.reeltwo.plot.Point2D;
 import com.reeltwo.plot.PointPlot2D;
@@ -528,6 +530,8 @@ public abstract class AbstractRenderer {
           drawBoxPlot(canvas, (BoxPlot2D) plot, convertX, convertY);
         } else if (plot instanceof CirclePlot2D) {
           drawCirclePlot(canvas, (CirclePlot2D) plot, convertX, convertY);
+        } else if (plot instanceof NotePlot2D) {
+          drawNotePlot(canvas, (NotePlot2D) plot, convertX, convertY);
         }
       }
     }
@@ -909,6 +913,42 @@ public abstract class AbstractRenderer {
         }
       } else {
         drawCurve(canvas, xs, ys, type);
+      }
+    }
+  }
+
+  protected void drawNotePlot(Object canvas, NotePlot2D nplot, Mapping convertX, Mapping convertY) {
+    final Datum2D[] points = nplot.getData();
+
+    if (points != null && points.length != 0) {
+      drawBoxPlot(canvas, nplot.getBoxPlot(), convertX, convertY);
+      drawArrowPlot(canvas, nplot.getArrowPlot(), convertX, convertY);
+
+      final int tHeight = getTextHeight(canvas, "A");
+      final int descent = getTextDescent(canvas, "A");
+
+      setColor(canvas, FOREGROUND_COLOR_INDEX);
+
+      for (int i = 0; i < points.length; i++) {
+        final Note2D note = (Note2D) points[i];
+        final String[] lines = note.getText().split("\n");
+
+        int maxWidth = 0;
+        for (int j = 0; j < lines.length; j++) {
+          maxWidth = Math.max(maxWidth, getTextWidth(canvas, lines[j]));
+        }
+
+        final int x = (int) convertX.worldToScreen(note.getLeft());
+        final int y = (int) convertY.worldToScreen(note.getTop());
+        final int width = (int) convertX.worldToScreen(note.getRight()) - x;
+        final int height = (int) convertY.worldToScreen(note.getBottom()) - y;
+
+        final int xOffset = x + (width - maxWidth) / 2;
+        final int yOffset = y + (height - tHeight * lines.length) / 2 + tHeight - descent;
+
+        for (int j = 0; j < lines.length; j++) {
+          drawString(canvas, xOffset, yOffset + tHeight * j, lines[j]);
+        }
       }
     }
   }
