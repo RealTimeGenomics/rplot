@@ -46,8 +46,8 @@ public class NotePlot2D extends FillablePlot2D {
    * @return a <code>BoxPlot2D</code>.
    */
   public BoxPlot2D getBoxPlot() {
-    Note2D[] data = (Note2D[]) getData();
-    BoxPlot2D boxPlot = new BoxPlot2D(); //TODO: find the axes and pass them in the constructor
+    final Note2D[] data = (Note2D[]) getData();
+    final BoxPlot2D boxPlot = new BoxPlot2D(); //TODO: find the axes and pass them in the constructor
     boxPlot.setData(data);
     boxPlot.setFill(getFill());
     boxPlot.setColor(getColor());
@@ -61,9 +61,9 @@ public class NotePlot2D extends FillablePlot2D {
    * @return a <code>ArrowPlot2D</code>.
    */
   public ArrowPlot2D getArrowPlot() {
-    Note2D[] data = (Note2D[]) getData();
-    ArrowPlot2D arrowPlot = new ArrowPlot2D(); //TODO: find the axes and pass them in the constructor
-    Arrow2D[] arrowData = new Arrow2D[data.length];
+    final Note2D[] data = (Note2D[]) getData();
+    final ArrowPlot2D arrowPlot = new ArrowPlot2D(); //TODO: find the axes and pass them in the constructor
+    final Arrow2D[] arrowData = new Arrow2D[data.length];
     for (int i = 0; i < data.length; i++) {
       arrowData[i] = data[i].getArrow();
     }
