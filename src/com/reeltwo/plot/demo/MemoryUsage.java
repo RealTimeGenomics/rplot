@@ -117,7 +117,7 @@ public class MemoryUsage extends JDialog {
     //args[1]..args[n-1] => command line parameters
     if (args.length >= 1) {
       final Class<?> c = ClassLoader.getSystemClassLoader().loadClass(args[0]);
-      final Method m = c.getMethod("main", new Class[]{String[].class});
+      final Method m = c.getMethod("main", new Class<?>[]{String[].class});
       final String[] a = new String[args.length - 1];
       System.arraycopy(args, 1, a, 0, a.length);
       System.out.println("Invoking: " + c.getName() + ".main()");

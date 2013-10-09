@@ -421,24 +421,52 @@ public class ZoomPlotPanel extends JComponent {
    * @param graph a <code>Graph2D</code>
    */
   public void setGraph(Graph2D graph) {
-    try {
-      mGraph = (Graph2D) graph.clone();
-      mGraph.setShowKey(false);
-      for (Edge i : Edge.values()) {
-        mGraph.setLabel(Axis.X, i, "");
-        mGraph.setLabel(Axis.Y, i, "");
+    setGraph(graph, false);
+  }
+
+  /**
+   * Sets the graph to plot.
+   *
+   * @param graph a <code>Graph2D</code>
+   * @param retainZoom whether to reset zoom
+   */
+  public void setGraph(Graph2D graph, boolean retainZoom) {
+    if (graph == null) {
+      mGraph = null;
+    } else {
+      try {
+        mGraph = (Graph2D) graph.clone();
+        mGraph.setShowKey(false);
+        for (Edge i : Edge.values()) {
+          mGraph.setLabel(Axis.X, i, "");
+          mGraph.setLabel(Axis.Y, i, "");
+        }
+        mGraph.setTitle("");
+      } catch (final CloneNotSupportedException cnse) {
+        System.err.println(cnse.getMessage());
+        //cnse.printStackTrace();
       }
-      mGraph.setTitle("");
-    } catch (final CloneNotSupportedException cnse) {
-      System.err.println(cnse.getMessage());
-      //cnse.printStackTrace();
-    }
-    for (int i = 0; i < 2; i++) {
-      final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
-      mXLo[i] = graph.getLo(Axis.X, a);
-      mXHi[i] = graph.getHi(Axis.X, a);
-      mYLo[i] = graph.getLo(Axis.Y, a);
-      mYHi[i] = graph.getHi(Axis.Y, a);
+      for (int i = 0; i < 2; i++) {
+        final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
+        mXLo[i] = graph.getLo(Axis.X, a);
+        mXHi[i] = graph.getHi(Axis.X, a);
+        mYLo[i] = graph.getLo(Axis.Y, a);
+        mYHi[i] = graph.getHi(Axis.Y, a);
+      }
+      final Graph2D oldGraph = mPlotPanel.getGraph();
+      if (retainZoom && oldGraph != null) {
+        for (Axis axis : Axis.values()) {
+          for (Edge edge : Edge.values()) {
+            if (oldGraph.uses(axis, edge)) {
+              final float hi = oldGraph.getHi(axis, edge);
+              final float lo = oldGraph.getLo(axis, edge);
+              //System.err.println(axis + " " + edge + " " + lo + " " + hi);
+              //mGraph.setRange(axis, edge, lo, hi);
+              graph.setRange(axis, edge, lo, hi);
+            }
+          }
+        }
+      }
     }
     mPlotPanel.setGraph(graph);
   }

@@ -1,5 +1,7 @@
 package com.reeltwo.plot;
 
+import java.util.Collection;
+
 import junit.framework.TestCase;
 
 /**
@@ -25,6 +27,8 @@ public abstract class AbstractPlot2DTest extends TestCase {
 
   public abstract Datum2D[] getData();
 
+  public abstract Collection<Datum2D> getDataCollection();
+  
   public void testBasics() {
     //System.err.println("In Plot2DTest testBasics()");
     Plot2D plot = getPlot();
@@ -41,7 +45,13 @@ public abstract class AbstractPlot2DTest extends TestCase {
     final Datum2D[] data = getData();
     assertNotNull(data);
     try {
-      plot.setData(null);
+      plot.setData((Datum2D[]) null);
+      fail("plot accepted null data.");
+    } catch (final NullPointerException npe) {
+      ; // should get here
+    }
+    try {
+      plot.setData((Collection<Datum2D>) null);
       fail("plot accepted null data.");
     } catch (final NullPointerException npe) {
       ; // should get here
@@ -130,6 +140,22 @@ public abstract class AbstractPlot2DTest extends TestCase {
     assertFalse(Plot2D.isValid(new float[] {Float.POSITIVE_INFINITY}));
     assertFalse(Plot2D.isValid(new float[] {Float.NEGATIVE_INFINITY}));
     assertFalse(Plot2D.isValid(new float[] {Float.NaN}));
+  }
+  
+  public void testCollectionData() {
+    final Collection<Datum2D> data = getDataCollection();
+    final Plot2D plot = getPlot();
+    
+    assertNull(plot.getData());
+    plot.setData(data);
+    final Datum2D[] data2 = plot.getData();
+    assertNotNull(data2);
+    assertEquals(data.size(), data2.length);
+    int i = 0;
+    for (Datum2D d : data) {
+      assertEquals(d, data2[i]);
+      i++;
+    }
   }
 }
 

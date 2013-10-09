@@ -1,5 +1,8 @@
 package com.reeltwo.plot;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -35,6 +38,14 @@ public class BoxPlot2DTest extends AbstractFillablePlot2DTest {
   @Override
   public Datum2D[] getData() {
     return new Box2D[]{new Box2D(1, 2, 3, 4), new Box2D(5, 6, 7, 8)};
+  }
+
+  @Override
+  public Collection<Datum2D> getDataCollection() {
+    final ArrayList<Datum2D> res = new ArrayList<Datum2D>();
+    res.add(new Box2D(1, 2, 3, 4));
+    res.add(new Box2D(5, 6, 7, 8));
+    return res;
   }
 
 

@@ -1,5 +1,8 @@
 package com.reeltwo.plot;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -73,6 +76,15 @@ public class TextPlot2DTest extends AbstractPlot2DTest {
     return new TextPoint2D[]{new TextPoint2D(1, 2, "one"), new TextPoint2D(5, 6, "two")};
   }
 
+  @Override
+  public Collection<Datum2D> getDataCollection() {
+    final ArrayList<Datum2D> res = new ArrayList<Datum2D>();
+    for (Datum2D d : getData()) {
+      res.add(d);
+      res.add(d);
+    }
+    return res;
+  }
 
   public void test1() {
     final TextPlot2D plot = (TextPlot2D) getPlot();

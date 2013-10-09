@@ -1,5 +1,9 @@
 package com.reeltwo.plot;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+
+
 /**
  * Structure to hold attributes of a single plot on a 2D graph.
  *
@@ -167,7 +171,25 @@ public abstract class Plot2D {
     mData = data;
   }
 
-
+  /**
+   * Sets the data to use in this plot.
+   * 
+   * @param data a collection of Datum2D objects
+   * @param <T> something of type Datum2D
+   */
+  @SuppressWarnings("unchecked")
+  public <T extends Datum2D> void setData(Collection<T> data) {
+    T[] x = null;
+    if (data != null && data.size() != 0) {
+      Class<?> c = null;
+      for (T d : data) {
+        c = d.getClass();
+      }
+      x = data.toArray((T[]) Array.newInstance(c, data.size()));
+    }
+    setData(x);
+  }
+  
   /**
    * Returns the data used in this plot.
    *

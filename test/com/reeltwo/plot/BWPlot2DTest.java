@@ -1,5 +1,8 @@
 package com.reeltwo.plot;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -40,6 +43,15 @@ public class BWPlot2DTest extends AbstractPlot2DTest {
     return new BWPoint2D[]{new BWPoint2D(1, 2, 3, 4, 5, 6), new BWPoint2D(5, 6, 7, 8, 9, 10)};
   }
 
+  @Override
+  public Collection<Datum2D> getDataCollection() {
+    final ArrayList<Datum2D> res = new ArrayList<Datum2D>();
+    for (Datum2D d : getData()) {
+      res.add(d);
+      res.add(d);
+    }
+    return res;
+  }
 
   public void testSets() {
     final BWPlot2D plot = (BWPlot2D) getPlot();

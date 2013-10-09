@@ -1,5 +1,8 @@
 package com.reeltwo.plot;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -39,6 +42,14 @@ public class ArrowPlot2DTest extends AbstractPlot2DTest {
   @Override
   public Datum2D[] getData() {
     return new Arrow2D[]{new Arrow2D(1, 2, 3, 4), new Arrow2D(5, 6, 7, 8)};
+  }
+  
+  @Override
+  public Collection<Datum2D> getDataCollection() {
+    final ArrayList<Datum2D> res = new ArrayList<Datum2D>();
+    res.add(new Arrow2D(1, 2, 3, 4));
+    res.add(new Arrow2D(5, 6, 7, 8));
+    return res;
   }
 
 

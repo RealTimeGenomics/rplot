@@ -1,5 +1,8 @@
 package com.reeltwo.plot;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -38,6 +41,15 @@ public class CurvePlot2DTest extends AbstractFillablePlot2DTest {
     return new Point2D[]{new Point2D(1, 2), new Point2D(5, 6)};
   }
 
+  @Override
+  public Collection<Datum2D> getDataCollection() {
+    final ArrayList<Datum2D> res = new ArrayList<Datum2D>();
+    for (Datum2D d : getData()) {
+      res.add(d);
+      res.add(d);
+    }
+    return res;
+  }
 
   public void testCurves() {
     final CurvePlot2D plot = (CurvePlot2D) getPlot();

@@ -509,7 +509,7 @@ public class Graph2D implements Cloneable {
       setRanges();
     }
   }
-
+  
   /**
    * Returns an array of the plots that are in this graph.
    *
@@ -615,7 +615,7 @@ public class Graph2D implements Cloneable {
     g.mColoredKey = mColoredKey;
     g.mKeyHorizontalPosition = mKeyHorizontalPosition;
     g.mKeyVerticalPosition = mKeyVerticalPosition;
-    g.mDisplayBorder = mDisplayBorder;
+    g.mDisplayBorder = mDisplayBorder;    
     
     for (Edge i : Edge.values()) {
       g.mXAxes.put(i, (GraphAxis) mXAxes.get(i).clone());
