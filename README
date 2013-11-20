@@ -1,5 +1,5 @@
- RPlot instructions
-====================
+RPlot instructions
+==================
 
 Basically I wrote RPlot to have a look and feel similar to GNUPlot, and to work in a manner such that it can be programatically added to java applications.  As a result many of the API calls bare some resemblance to GNUPlot commands.  I have not written, and do not intend to write, an interactive command line based UI for RPlot.  If you want to use one I recommend that you install GNUPlot.
 
