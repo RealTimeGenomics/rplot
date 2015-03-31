@@ -20,9 +20,19 @@ public class ZoomPlotDialog extends PlotDialog {
 
   /** Creates the plot dialog. */
   public ZoomPlotDialog() {
+    this(false);
+  }
+
+  /**
+   * Creates a plot dialog setting weather zooming on negative locations is allowed.
+   *
+   * @param originIsMin whether the origin is the smallest value.
+   */
+  public ZoomPlotDialog(boolean originIsMin) {
     super();
 
     mZoomPanel = new ZoomPlotPanel(mPlotPanel, getContentPane());
+    mZoomPanel.setOriginIsMin(originIsMin);
 
     setGlassPane(mZoomPanel);
     getGlassPane().setVisible(true);

@@ -46,7 +46,7 @@ public class SwingPlot {
 
   /** Creates a new swing plot. */
   public SwingPlot() {
-    mDialog = new ZoomPlotDialog();
+    mDialog = new ZoomPlotDialog(true);
     mDialog.validate();
 
     mDialog.setPatterns(new BW8x8PatternGroup().getPatterns());

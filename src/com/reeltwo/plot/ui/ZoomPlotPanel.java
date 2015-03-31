@@ -342,6 +342,22 @@ public class ZoomPlotPanel extends JComponent {
     return SwingUtilities.convertPoint(ZoomPlotPanel.this, p, mPlotPanel);
   }
 
+  private float rangeMin(float s, float e) {
+    float rangeMin = Math.min(s, e);
+    if (mOriginIsMin) {
+      rangeMin = Math.max(0.0f, rangeMin);
+    }
+    return rangeMin;
+  }
+
+  private float rangeMax(float s, float e) {
+    float rangeMax = Math.max(s, e);
+    if (mOriginIsMin) {
+      rangeMax = Math.max(0.0f, rangeMax);
+    }
+    return rangeMax;
+  }
+
   protected void zoomIn() {
     //System.err.println("Zooming ...");
 
@@ -360,22 +376,22 @@ public class ZoomPlotPanel extends JComponent {
           if (mGraph.uses(Axis.X, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
             final float mapOneX = map.screenToWorld((float) ptOne.getX());
             final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
-            float rangeMin = Math.min(mapOneX, mapTwoX);
-            if (mOriginIsMin) {
-              rangeMin = Math.max(0.0f, rangeMin);
+            final float rangeMin = rangeMin(mapOneX, mapTwoX);
+            final float rangeMax = rangeMax(mapOneX, mapTwoX);
+            if (rangeMin != rangeMax) {
+              mGraph.setRange(Axis.X, a, rangeMin, rangeMax);
             }
-            mGraph.setRange(Axis.X, a, rangeMin, Math.max(mapOneX, mapTwoX));
           }
 
           map = mapping[i * 2 + 1];
           if (mGraph.uses(Axis.Y, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
             final float mapOneY = map.screenToWorld((float) ptOne.getY());
             final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
-            float rangeMin = Math.min(mapOneY, mapTwoY);
-            if (mOriginIsMin) {
-              rangeMin = Math.max(0.0f, rangeMin);
+            final float rangeMin = rangeMin(mapOneY, mapTwoY);
+            final float rangeMax = rangeMax(mapOneY, mapTwoY);
+            if (rangeMin != rangeMax) {
+              mGraph.setRange(Axis.Y, a, rangeMin, rangeMax);
             }
-            mGraph.setRange(Axis.Y, a, rangeMin, Math.max(mapOneY, mapTwoY));
           }
         }
 
@@ -388,22 +404,22 @@ public class ZoomPlotPanel extends JComponent {
             if (graph.uses(Axis.X, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
               final float mapOneX = map.screenToWorld((float) ptOne.getX());
               final float mapTwoX = map.screenToWorld((float) ptTwo.getX());
-              float rangeMin = Math.min(mapOneX, mapTwoX);
-              if (mOriginIsMin) {
-                rangeMin = Math.max(0.0f, rangeMin);
+              final float rangeMin = rangeMin(mapOneX, mapTwoX);
+              final float rangeMax = rangeMax(mapOneX, mapTwoX);
+              if (rangeMin != rangeMax) {
+                graph.setRange(Axis.X, a, rangeMin, rangeMax);
               }
-              graph.setRange(Axis.X, a, rangeMin, Math.max(mapOneX, mapTwoX));
             }
 
             map = mapping[i * 2 + 1];
             if (graph.uses(Axis.Y, a) && (Math.abs(map.getWorldMax() - map.getWorldMin()) > 0.01f)) {
               final float mapOneY = map.screenToWorld((float) ptOne.getY());
               final float mapTwoY = map.screenToWorld((float) ptTwo.getY());
-              float rangeMin = Math.min(mapOneY, mapTwoY);
-              if (mOriginIsMin) {
-                rangeMin = Math.max(0.0f, rangeMin);
+              final float rangeMin = rangeMin(mapOneY, mapTwoY);
+              final float rangeMax = rangeMax(mapOneY, mapTwoY);
+              if (rangeMin != rangeMax) {
+                graph.setRange(Axis.Y, a, rangeMin, rangeMax);
               }
-              graph.setRange(Axis.Y, a, rangeMin, Math.max(mapOneY, mapTwoY));
             }
           }
           mPlotPanel.setGraph(graph);
