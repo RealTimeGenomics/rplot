@@ -21,7 +21,7 @@
   <property name="build.junit" location="${build.dir}/junit"/>
 
   <property name="vcs.info.cmd" value="git"/>
-  <property name="vcs.info.args" value="describe --always"/>
+  <property name="vcs.info.args" value="rev-list --abbrev-commit -n 1 HEAD"/>
   <property name="ant.build.javac.source" value="1.6" />
   <property name="ant.build.javac.target" value="1.6" />
   <defaultexcludes add="**/.hg"/>
@@ -48,7 +48,7 @@
     <exec executable="${vcs.info.cmd}" outputproperty="rplot.vcs.commit.revision">
       <arg line="${vcs.info.args}"/>
     </exec>
-    <echo message="Sandbox revision is ${rplot.vcs.commit.revision}"/>
+    <echo message="Current build revision is ${rplot.vcs.commit.revision}"/>
   </target>
 
 
