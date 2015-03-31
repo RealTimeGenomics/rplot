@@ -20,8 +20,8 @@
   <property name="build.test" location="${build.dir}/test"/>
   <property name="build.junit" location="${build.dir}/junit"/>
 
-  <property name="vcs.info.cmd" value="svn"/>
-  <property name="vcs.info.args" value="info -r HEAD"/>
+  <property name="vcs.info.cmd" value="git"/>
+  <property name="vcs.info.args" value="describe --always"/>
   <property name="ant.build.javac.source" value="1.6" />
   <property name="ant.build.javac.target" value="1.6" />
   <defaultexcludes add="**/.hg"/>
@@ -45,17 +45,10 @@
   </target>
 
   <target name="rplot-vcs-info" depends="init" unless="rplot.vcs.commit.revision">
-    <exec executable="${vcs.info.cmd}" output="${build.dir}/tmprevision" dir="${rplot.sandbox.dir}">
+    <exec executable="${vcs.info.cmd}" outputproperty="rplot.vcs.commit.revision">
       <arg line="${vcs.info.args}"/>
     </exec>
-    <property prefix="rev" file="${build.dir}/tmprevision" />
-    <property name="rplot.vcs.commit.revision" value="${rev.Revision}" />
-<!--
-    <exec executable="${vcs.info.cmd}" outputproperty="rplot.vcs.commit.revision" dir="${rplot.sandbox.dir}">
-      <arg line="${vcs.info.args}"/>
-    </exec>
--->
-    <echo message="Sandbox bevision is ${rplot.vcs.commit.revision}"/>
+    <echo message="Sandbox revision is ${rplot.vcs.commit.revision}"/>
   </target>
 
 
