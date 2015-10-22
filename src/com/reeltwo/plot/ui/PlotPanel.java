@@ -1,18 +1,22 @@
 package com.reeltwo.plot.ui;
 
-import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.renderer.GraphicsRenderer;
-import com.reeltwo.plot.renderer.Mapping;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.renderer.GraphicsRenderer;
+import com.reeltwo.plot.renderer.Mapping;
 
 /**
  * Plots a graph in a Swing JPanel described by the data in a Plot data
@@ -47,6 +51,7 @@ public class PlotPanel extends JPanel {
    */
   public PlotPanel(boolean bufferGraphs) {
     setBufferGraphs(bufferGraphs);
+    setBorder(new EmptyBorder(5, 5, 5,5));
     mGraphicsRenderer = new GraphicsRenderer();
   }
 
@@ -296,26 +301,27 @@ public class PlotPanel extends JPanel {
     super.paintComponent(g);
 
     final Dimension d = getSize();
+    final Insets i = getInsets();
 
-    final int screenWidth = d.width;
-    final int screenHeight = d.height;
+    final int screenWidth = d.width - i.left - i.right;
+    final int screenHeight = d.height - i.top - i.bottom;
 
     if (mBufferGraphs) {
       BufferedImage bi = mBI;
-      if (bi == null || bi.getWidth() != screenWidth || bi.getHeight() != screenHeight) {
-        bi = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
+      if (bi == null || bi.getWidth() != d.width || bi.getHeight() != d.height) {
+        bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
         mBI = bi;
         final Graphics g2 = bi.createGraphics();
         g2.setColor(getBackground());
-        g2.fillRect(0, 0, screenWidth, screenHeight);
+        g2.fillRect(0, 0, d.width, d.height);
         g2.setFont(g.getFont());
 
-        mGraphicsRenderer.drawGraph(mGraph, g2, screenWidth, screenHeight);
+        mGraphicsRenderer.drawGraph(mGraph, g2, i.left, i.top, screenWidth, screenHeight);
         mMapping = mGraphicsRenderer.getMappings();
       }
       g.drawImage(bi, 0, 0, null);
     } else {
-      mGraphicsRenderer.drawGraph(mGraph, g, screenWidth, screenHeight);
+      mGraphicsRenderer.drawGraph(mGraph, g, i.left, i.top, screenWidth, screenHeight);
       mMapping = mGraphicsRenderer.getMappings();
     }
     //System.err.println("Set mapping:" + mMapping);

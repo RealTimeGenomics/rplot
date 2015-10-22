@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 
 import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.Axis;
-import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPlot2D.BoxWhiskerStyle;
 import com.reeltwo.plot.BWPoint2D;
@@ -22,6 +21,7 @@ import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
+import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.FillablePlot2D;
 import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
@@ -384,7 +384,7 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
   /**
-   * Actually draws the graph on the given Graphics. Offsets and screen
+   * Actually draws the graph on the given Graphics. Screen
    * dimensions are used to provide limits on the area to draw in. The
    * mappings from world to screen data points for each axis pair is
    * returned (in order {@code x1,y1,x2,y2},...).
@@ -395,15 +395,32 @@ public class GraphicsRenderer extends AbstractRenderer {
    * @param screenHeight height of drawing region
    */
   public void drawGraph(Graph2D graph, Graphics g, int screenWidth, int screenHeight) {
+    drawGraph(graph, g, 0, 0, screenWidth, screenHeight);
+  }
+
+  /**
+   * Actually draws the graph on the given Graphics. Offsets and screen
+   * dimensions are used to provide limits on the area to draw in. The
+   * mappings from world to screen data points for each axis pair is
+   * returned (in order {@code x1,y1,x2,y2},...).
+   *
+   * @param graph the Graph2D to draw
+   * @param g a Graphics to draw on
+   * @param offsetX the horizontal offset
+   * @param offsetY the vertical offset
+   * @param screenWidth width of drawing region
+   * @param screenHeight height of drawing region
+   */
+  public void drawGraph(Graph2D graph, Graphics g, int offsetX, int offsetY, int screenWidth, int screenHeight) {
     Mapping[] mapping = null;
     setMappings(null);
     if (graph != null) {
+      int sxlo = offsetX;
+      int sxhi = offsetX + screenWidth - 1;
+      int sylo = offsetY + screenHeight - 1;
+      int syhi = offsetY;
+      setClip(g, offsetX, offsetY, screenWidth, screenHeight);
       setColor(g, FOREGROUND_COLOR_INDEX);
-      setClip(g, 0, 0, screenWidth, screenHeight);
-      int sxlo = 0;
-      int sxhi = screenWidth - 1;
-      int sylo = screenHeight - 1;
-      int syhi = 0;
       final String title = graph.getTitle();
       final int tHeight = getTextHeight(g, "A");
       if (title.length() > 0) {
@@ -428,11 +445,11 @@ public class GraphicsRenderer extends AbstractRenderer {
           // draw x label later when border width is known
         }
         if (graph.uses(Axis.Y, Edge.MAIN) && graph.getLabel(Axis.Y, Edge.MAIN).length() > 0) {
-          g.drawString(graph.getLabel(Axis.Y, Edge.MAIN), sxlo, tHeight * (1 + (title.length() > 0 ? 1 : 0)));
+          g.drawString(graph.getLabel(Axis.Y, Edge.MAIN), sxlo, offsetY + tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
         if (graph.uses(Axis.Y, Edge.ALTERNATE) && graph.getLabel(Axis.Y, Edge.ALTERNATE).length() > 0) {
           final String yLabel = graph.getLabel(Axis.Y, Edge.ALTERNATE);
-          g.drawString(yLabel, sxhi - getTextWidth(g, yLabel), tHeight * (1 + (title.length() > 0 ? 1 : 0)));
+          g.drawString(yLabel, sxhi - getTextWidth(g, yLabel), offsetY + tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
         if ((graph.uses(Axis.X, Edge.ALTERNATE) && graph.getLabel(Axis.X, Edge.ALTERNATE).length() > 0)
             || (graph.uses(Axis.Y, Edge.MAIN) && graph.getLabel(Axis.Y, Edge.MAIN).length() > 0)
@@ -490,7 +507,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, sylo + extra);
         }
         if (graph.uses(Axis.X, Edge.ALTERNATE) && (xLabel = graph.getLabel(Axis.X, Edge.ALTERNATE)).length() > 0) {
-          g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, tHeight * (1 + (title.length() > 0 ? 1 : 0)));
+          g.drawString(xLabel, (sxhi + sxlo) / 2 - getTextWidth(g, xLabel) / 2, offsetY + tHeight * (1 + (title.length() > 0 ? 1 : 0)));
         }
         // draw border
         setColor(g, FOREGROUND_COLOR_INDEX);
@@ -502,7 +519,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       setColor(g, FOREGROUND_COLOR_INDEX);
       // draw title
       if (title.length() > 0) {
-        g.drawString(title, (sxhi + sxlo) / 2 - g.getFontMetrics().stringWidth(title) / 2, tHeight);
+        g.drawString(title, (sxhi + sxlo) / 2 - g.getFontMetrics().stringWidth(title) / 2, offsetY + tHeight);
       }
       // set clip so nothing appears outside border
       setClip(g, sxlo, syhi, sxhi - sxlo + 1, sylo - syhi + 1);
@@ -514,7 +531,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         if (y2TicInfo != null) { sxhi += y2TicInfo.mMaxWidth + 2; }
       }
 
-      drawKey(graph, g, screenWidth, screenHeight, sxlo, sylo, sxhi, syhi);
+      drawKey(graph, g, offsetX, offsetY, screenWidth, screenHeight, sxlo, sylo, sxhi, syhi);
     }
     setMappings(mapping);
   }
@@ -837,9 +854,9 @@ public class GraphicsRenderer extends AbstractRenderer {
     return keyY;
   }
 
-  private void drawKey(Graph2D graph, Graphics g, int screenWidth, int screenHeight, int sxlo, int sylo, int sxhi, int syhi) {
+  private void drawKey(Graph2D graph, Graphics g, int offsetX, int offsetY, int screenWidth, int screenHeight, int sxlo, int sylo, int sxhi, int syhi) {
     if (graph.isBorder() && graph.isShowKey()) {
-      setClip(g, 0, 0, screenWidth, screenHeight);
+      setClip(g, offsetX, offsetY, screenWidth, screenHeight);
       final String keyTitle = graph.getKeyTitle();
       final int tHeight = getTextHeight(g, "A");
       final int keyWidth = calculateKeyWidth(g, graph);
