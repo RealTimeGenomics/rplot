@@ -11,8 +11,6 @@ import java.util.HashMap;
 
 public class Graph2D implements Cloneable {
 
-  private static final LabelFormatter DEFAULT_FORMATTER = new DefaultFormatter();
-  
   /** X axis */
   public static final Axis X = Axis.X;
   /** Y axis */
@@ -470,8 +468,7 @@ public class Graph2D implements Cloneable {
    * @return <code>LabelFormatter</code>
    */
   public LabelFormatter getTicLabelFormatter(Axis axis, Edge side) {
-    final LabelFormatter lf = getAxis(axis, side).getLabelFormatter();
-    return lf == null ? DEFAULT_FORMATTER : lf;
+    return getAxis(axis, side).getLabelFormatter();
   }
 
   /**

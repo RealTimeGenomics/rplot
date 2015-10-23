@@ -17,7 +17,7 @@ class GraphAxis implements Cloneable {
   private boolean mShowTics = true;
   private boolean mLogScale = false;
   // axis formatter
-  private LabelFormatter mLabelFormatter = null;
+  private LabelFormatter mLabelFormatter = new DefaultFormatter();
 
   GraphAxis() {
   }
