@@ -51,7 +51,7 @@ public class PlotPanel extends JPanel {
    */
   public PlotPanel(boolean bufferGraphs) {
     setBufferGraphs(bufferGraphs);
-    setBorder(new EmptyBorder(5, 5, 5,5));
+    setBorder(new EmptyBorder(5, 5, 5, 5));
     mGraphicsRenderer = new GraphicsRenderer();
   }
 
