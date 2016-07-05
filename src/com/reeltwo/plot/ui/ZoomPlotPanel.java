@@ -139,8 +139,8 @@ public class ZoomPlotPanel extends JComponent {
         ZoomPlotPanel.this.zoomIn();
         ZoomPlotPanel.this.repaint();
       }
-      mMouseDownComponent = null;
       redispatchMouseEvent(e);
+      mMouseDownComponent = null;
     }
 
 
