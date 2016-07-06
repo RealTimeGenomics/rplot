@@ -194,6 +194,8 @@ public class ImageWriter {
     final VectorGraphics2D g = new VectorGraphics2D();
     if (font != null) {
       g.setFont(font);
+    } else {
+      g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
     }
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, width, height);
