@@ -195,7 +195,7 @@ public class ImageWriter {
     if (font != null) {
       g.setFont(font);
     } else {
-      g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+      g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 8));
     }
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, width, height);
