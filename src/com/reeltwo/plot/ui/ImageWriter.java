@@ -165,6 +165,32 @@ public class ImageWriter {
 
     return mapping;
   }
+  /**
+   * Writes the given graph out to a PNG formatted file. The width and
+   * height parameters determine the dimension of the image (in
+   * pixels). The mappings from world to screen data points for each
+   * axis pair is returned.
+   *
+   * @param file File to save graph to.
+   * @param graph graph to save.
+   * @param width width of image.
+   * @param height height of image.
+   * @param font font to use in graph.
+   * @return an array of world to screen mappings.
+   * @exception IOException if a file writing error occurs.
+   */
+  public Mapping[] toSVG(File file, Graph2D graph, int width, int height, Font font) throws IOException {
+    if (file == null) {
+      throw new NullPointerException("null file given.");
+    }
+
+    final FileOutputStream fos = new FileOutputStream(file);
+    try {
+      return toSVG(fos, graph, width, height, font);
+    } finally {
+      fos.close();
+    }
+  }
 
   /**
    * Writes the given graph out to a SVG formatted output stream. The
