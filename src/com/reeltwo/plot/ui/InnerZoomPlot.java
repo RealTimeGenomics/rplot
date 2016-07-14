@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Paint;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -118,43 +117,6 @@ public class InnerZoomPlot extends PlotPanel {
   public void setOriginIsMin(boolean flag) {
     mOriginIsMin = flag;
   }
-
-  /**
-   * Sets the colors to render plots with.
-   *
-   * @param colors an array of colors
-   */
-  public void setColors(Color[] colors) {
-    mGraphicsRenderer.setColors(colors);
-  }
-
-  /**
-   * Returns the plot colors.
-   *
-   * @return an array of <code>Color</code>s
-   */
-  public Color[] getColors() {
-    return mGraphicsRenderer.getColors();
-  }
-
-  /**
-   * Sets the patterns to use when rendering plots.
-   *
-   * @param patterns an array of patterns
-   */
-  public void setPatterns(Paint[] patterns) {
-    mGraphicsRenderer.setPatterns(patterns);
-  }
-
-  /**
-   * Returns the plot patterns.
-   *
-   * @return an array of patterns
-   */
-  public Paint[] getPatterns() {
-    return mGraphicsRenderer.getPatterns();
-  }
-
 
   /**
    * Returns an action that resets the zoom.
