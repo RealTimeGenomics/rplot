@@ -44,6 +44,7 @@ public class InnerZoomPlot extends PlotPanel {
   private int mPNPHeight;
 
   private boolean mPicNPic = false;
+private Graph2D mWholeGraph;
 
   private final GraphicsRenderer mGraphicsRenderer;
 
@@ -130,7 +131,7 @@ public class InnerZoomPlot extends PlotPanel {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        final Graph2D graph = getGraph();
+        final Graph2D graph = InnerZoomPlot.super.getGraph();
         if (graph != null) {
           for (int i = 0; i < 2; i++) {
             final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
@@ -138,7 +139,7 @@ public class InnerZoomPlot extends PlotPanel {
             graph.setRange(Axis.Y, a, mYLo[i], mYHi[i]);
           }
 
-          setGraph(graph);
+          InnerZoomPlot.super.setGraph(graph);
         }
       }
     };
@@ -206,7 +207,7 @@ public class InnerZoomPlot extends PlotPanel {
     }
 
     if (mPicNPic) {
-      if (getGraph() != null) {
+      if (mWholeGraph != null) {
         final Dimension d = getSize();
         final int screenWidth = (int) d.getWidth();
         final int screenHeight = (int) d.getHeight();
@@ -229,7 +230,7 @@ public class InnerZoomPlot extends PlotPanel {
         g.setColor(Color.BLACK);
         g.drawRect(pnpX, pnpY, mPNPWidth, mPNPHeight);
         final Graphics g2 = g.create(pnpX, pnpY, mPNPWidth, mPNPHeight);
-        mGraphicsRenderer.drawGraph(getGraph(), g2, mPNPWidth, mPNPHeight);
+        mGraphicsRenderer.drawGraph(mWholeGraph, g2, mPNPWidth, mPNPHeight);
       }
     }
   }
@@ -259,18 +260,18 @@ public class InnerZoomPlot extends PlotPanel {
 
     final Mapping[] mapping = this.getMapping();
 
-    if (mapping != null && getGraph() != null) {
+    if (mapping != null && mWholeGraph != null) {
       if (mPtOne != null && mPtTwo != null && mPtOne.x != mPtTwo.x && mPtOne.y != mPtTwo.y) {
 
         final Point ptOne = ppPoint(mPtOne);
         final Point ptTwo = ppPoint(mPtTwo);
 
-        graphMap(mapping, ptOne, ptTwo, getGraph());
+        graphMap(mapping, ptOne, ptTwo, mWholeGraph);
 
         if (!mPicNPic) {
-          final Graph2D graph = getGraph();
+          final Graph2D graph = super.getGraph();
           graphMap(mapping, ptOne, ptTwo, graph);
-          this.setGraph(graph);
+          super.setGraph(graph);
         }
       }
     }
@@ -326,6 +327,18 @@ public class InnerZoomPlot extends PlotPanel {
     if (graph == null) {
       return;
     } else {
+      try {
+        mWholeGraph = (Graph2D) graph.clone();
+        mWholeGraph.setShowKey(false);
+        for (Edge i : Edge.values()) {
+          mWholeGraph.setLabel(Axis.X, i, "");
+          mWholeGraph.setLabel(Axis.Y, i, "");
+        }
+        mWholeGraph.setTitle("");
+      } catch (final CloneNotSupportedException cnse) {
+        System.err.println(cnse.getMessage());
+        //cnse.printStackTrace();
+      }
       for (int i = 0; i < 2; i++) {
         final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
         mXLo[i] = graph.getLo(Axis.X, a);
@@ -333,7 +346,7 @@ public class InnerZoomPlot extends PlotPanel {
         mYLo[i] = graph.getLo(Axis.Y, a);
         mYHi[i] = graph.getHi(Axis.Y, a);
       }
-      final Graph2D oldGraph = getGraph();
+      final Graph2D oldGraph = super.getGraph();
       if (retainZoom && oldGraph != null) {
         for (Axis axis : Axis.values()) {
           for (Edge edge : Edge.values()) {
@@ -349,6 +362,11 @@ public class InnerZoomPlot extends PlotPanel {
       }
     }
     super.setGraph(graph);
+  }
+
+  @Override
+  public Graph2D getGraph() {
+    return mWholeGraph;    //TODO
   }
 }
 
