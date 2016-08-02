@@ -837,7 +837,7 @@ public class GraphicsRenderer extends AbstractRenderer {
       } else if (position == KeyPosition.CENTER) {
         keyX = (sxhi + sxlo - keyWidth) / 2;
       } else { // assume RIGHT by default
-        keyX = sxhi - keyWidth - 2;
+        keyX = sxhi - keyWidth - 10;
       }
     }
     return keyX;

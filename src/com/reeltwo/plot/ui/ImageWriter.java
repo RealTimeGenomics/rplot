@@ -1,13 +1,5 @@
 package com.reeltwo.plot.ui;
 
-import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.renderer.GraphicsRenderer;
-import com.reeltwo.plot.renderer.Mapping;
-import de.erichseifert.vectorgraphics2d.Document;
-import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
-import de.erichseifert.vectorgraphics2d.svg.SVGProcessor;
-import de.erichseifert.vectorgraphics2d.util.PageSize;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -16,7 +8,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
 import javax.imageio.ImageIO;
+
+import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.renderer.GraphicsRenderer;
+import com.reeltwo.plot.renderer.Mapping;
+
+import de.erichseifert.vectorgraphics2d.Document;
+import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
+import de.erichseifert.vectorgraphics2d.svg.SVGProcessor;
+import de.erichseifert.vectorgraphics2d.util.PageSize;
 
 /**
  * Routines to write Graph2D's to graphics files of various formats.
@@ -221,12 +223,12 @@ public class ImageWriter {
     if (font != null) {
       g.setFont(font);
     } else {
-      g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 8));
+      g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
     }
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, width, height);
-
-    mGraphicsRenderer.drawGraph(graph, g, 5, 5, width - 10, height - 10);
+    int inset = 5;
+    mGraphicsRenderer.drawGraph(graph, g, inset, inset, width - 2 * inset, height - 2 * inset);
     final Mapping[] mapping = mGraphicsRenderer.getMappings();
     final SVGProcessor proc = new SVGProcessor();
     final Document document = proc.getDocument(g.getCommands(), new PageSize(width, height));

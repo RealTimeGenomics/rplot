@@ -8,7 +8,6 @@ import com.reeltwo.plot.ArrowPlot2D;
 import com.reeltwo.plot.ArrowPlot2D.ArrowDirection;
 import com.reeltwo.plot.ArrowPlot2D.ArrowHead;
 import com.reeltwo.plot.Axis;
-import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.BWPlot2D;
 import com.reeltwo.plot.BWPlot2D.BoxWhiskerStyle;
 import com.reeltwo.plot.BWPoint2D;
@@ -19,6 +18,7 @@ import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
 import com.reeltwo.plot.Datum2D;
 import com.reeltwo.plot.DefaultFormatter;
+import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
@@ -430,7 +430,7 @@ public abstract class AbstractRenderer {
         final String snum = ticInfo.mLabelFormatter.format(num);
         final String[] nums = snum.split("\n");
         for (int i = 0; i < nums.length; i++) {
-          final int width = getTextWidth(canvas, nums[i]);
+          final int width = getTextWidth(canvas, nums[i]) + 2;
           if (width > ticInfo.mMaxWidth) {
             ticInfo.mMaxWidth = width;
           }
@@ -460,7 +460,7 @@ public abstract class AbstractRenderer {
       for (int k = ticInfo.mStart; k <= ticInfo.mEnd; k++) {
         final float num = ticInfo.mTic * k;
         final String snum = ticInfo.mLabelFormatter.format(num);
-        final int width = getTextWidth(canvas, snum);
+        final int width = getTextWidth(canvas, snum) + 2;
         if (width > ticInfo.mMaxWidth) {
           ticInfo.mMaxWidth = width;
         }
