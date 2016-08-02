@@ -645,6 +645,8 @@ public class GraphicsRenderer extends AbstractRenderer {
       final FontMetrics fm = g.getFontMetrics();
       final int tHeight = fm.getHeight();
       yTicInfo.setNumDecimalDigits(yTicInfo.mTic);
+      int gridlo = (whichTic == Edge.MAIN) || !graph.uses(Axis.Y, Edge.MAIN) ? sxlo + 4 : sxlo;
+      int gridhi = (whichTic == Edge.ALTERNATE) || !graph.uses(Axis.Y, Edge.ALTERNATE) ? sxhi - 4 : sxhi;
 
       if (graph.isLogScale(Axis.Y, whichTic)) {
         // log scale...
@@ -669,7 +671,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           if (y >= syhi && y <= sylo) {
             if (graph.isGrid(Axis.Y, whichTic)) {
               g.setColor(mGridColor);
-              g.drawLine(sxlo + 4, y, sxhi - 4, y);
+              g.drawLine(gridlo, y, gridhi, y);
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
             final String snum = num >= 1 ? yTicInfo.mLabelFormatter.format(num) : "" + num;
@@ -692,7 +694,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             }
             if (graph.isGrid(Axis.Y, whichTic)) {
               g.setColor(mGridColor);
-              g.drawLine(sxlo + 4, y, sxhi - 4, y);
+              g.drawLine(gridlo, y, gridhi, y);
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
 
@@ -730,6 +732,8 @@ public class GraphicsRenderer extends AbstractRenderer {
       final FontMetrics fm = g.getFontMetrics();
       final int tHeight = fm.getHeight();
       xTicInfo.setNumDecimalDigits(xTicInfo.mTic);
+      int gridlo = (whichTic == Edge.MAIN) || !graph.uses(Axis.X, Edge.MAIN) ? sylo - 4 : sylo;
+      int gridhi = (whichTic == Edge.ALTERNATE) || !graph.uses(Axis.X, Edge.ALTERNATE) ? syhi + 4 : syhi;
 
       if (graph.isLogScale(Axis.X, whichTic)) {
         // log scale...
@@ -754,7 +758,7 @@ public class GraphicsRenderer extends AbstractRenderer {
           if (x >= sxlo && x <= sxhi) {
             if (graph.isGrid(Axis.X, whichTic)) {
               g.setColor(mGridColor);
-              g.drawLine(x, sylo - 4, x, syhi + 4);
+              g.drawLine(x, gridlo, x, gridhi);
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
             final String snum = num >= 1 ? xTicInfo.mLabelFormatter.format(num) : "" + num;
@@ -776,7 +780,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             }
             if (graph.isGrid(Axis.X, whichTic)) {
               g.setColor(mGridColor);
-              g.drawLine(x, sylo - 4, x, syhi + 4);
+              g.drawLine(x, gridlo, x, gridhi);
               setColor(g, FOREGROUND_COLOR_INDEX);
             }
 
