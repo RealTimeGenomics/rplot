@@ -3,38 +3,49 @@ RPlot Instructions
 
 Basically I wrote RPlot to have a look and feel similar to GNUPlot, and to work in a manner such that it can be programatically added to java applications.  As a result many of the API calls bare some resemblance to GNUPlot commands.  I have not written, and do not intend to write, an interactive command line based UI for RPlot.  If you want to use one I recommend that you install GNUPlot.
 
-Demo
-----
 
-To see a demo graph showing several of the plot types available in a Swing dialog run
+Build
+-----
 
-    java -jar RPlot.jar
+First check you have apache ant and Java 1.7 or later. Then:
 
-Right click on the graph produces a popup menu allowing you to print, save as an image.  Left click and drag a region to zoom in.
-
-To see some pretty black and white textures run
-
-    java -jar RPlot.jar textures
+    $ ant RPlot.jar
 
 
 Tests
 -----
 
-There are some unit tests, if you are interested in running them then do the following.
+There are some unit tests, if you are interested in running them then do the following:
 
-    java -cp RPlot.jar:junit.jar AllTests
+    $ ant runalltests
+
+
+Demo
+----
+
+To see a demo graph showing several of the plot types available in a Swing dialog run:
+
+    $ java -jar build/RPlot.jar
+
+Right click on the graph produces a popup menu allowing you to print, save as an image.  Left click and drag a region to zoom in.
+
+To see some pretty black and white textures run:
+
+    $ java -jar build/RPlot.jar textures
 
 
 Documentation
 -------------
 
-Untar docs.tar.gz and open docs/index.html in you favourite browser.
+    $ ant javadoc
+
+Then open `build/javadocs/index.html` in your favourite browser.
 
 
 Examples
 --------
 
-In RPlot.jar there is source code for com.reeltwo.plot.demo.SwingPlot.  The method genTest shows you how to set up a graph object.  Once the graph object has been setup its just a matter of giving it to a PlotPanel to render.
+In `RPlot.jar` there is source code for `com.reeltwo.plot.demo.SwingPlot`.  The method `genTest` shows you how to set up a graph object.  Once the graph object has been setup its just a matter of giving it to a `PlotPanel` to render.
 
 Here's a very simple example of a line graph.
 
@@ -53,7 +64,7 @@ Here's a very simple example of a line graph.
 
     plotPanel.setGraph(graph);  // assume plot panel is created elsewhere
 
-NOTE: At this stage the code in com.reeltwo.plot.renderers is a bit volatile.  The API shouldn't change (much), I am in the process of unifying code that is common across the different renderers.
+NOTE: At this stage the code in `com.reeltwo.plot.renderers` is a bit volatile.  The API shouldn't change (much), I am in the process of unifying code that is common across the different renderers.
 
 Have fun.
 
