@@ -1,60 +1,60 @@
-RPlot instructions
+RPlot Instructions
 ==================
 
 Basically I wrote RPlot to have a look and feel similar to GNUPlot, and to work in a manner such that it can be programatically added to java applications.  As a result many of the API calls bare some resemblance to GNUPlot commands.  I have not written, and do not intend to write, an interactive command line based UI for RPlot.  If you want to use one I recommend that you install GNUPlot.
 
-
- Demo
-------
+Demo
+----
 
 To see a demo graph showing several of the plot types available in a Swing dialog run
 
-java -jar RPlot.jar
+    java -jar RPlot.jar
 
 Right click on the graph produces a popup menu allowing you to print, save as an image.  Left click and drag a region to zoom in.
 
 To see some pretty black and white textures run
 
-java -jar RPlot.jar textures
+    java -jar RPlot.jar textures
 
 
- Tests
--------
+Tests
+-----
 
 There are some unit tests, if you are interested in running them then do the following.
 
-java -cp RPlot.jar:junit.jar AllTests
+    java -cp RPlot.jar:junit.jar AllTests
 
 
- Documentation
----------------
+Documentation
+-------------
 
 Untar docs.tar.gz and open docs/index.html in you favourite browser.
 
 
- Examples
-----------
+Examples
+--------
 
 In RPlot.jar there is source code for com.reeltwo.plot.demo.SwingPlot.  The method genTest shows you how to set up a graph object.  Once the graph object has been setup its just a matter of giving it to a PlotPanel to render.
 
 Here's a very simple example of a line graph.
 
-Point2D [] points = new Point2D[3];
-points[0] = new Point2D(1.0f, 1.0f);
-points[1] = new Point2D(3.0f, 2.1f);
-points[2] = new Point2D(5.0f, 1.5f);
+    Point2D [] points = new Point2D[3];
+    points[0] = new Point2D(1.0f, 1.0f);
+    points[1] = new Point2D(3.0f, 2.1f);
+    points[2] = new Point2D(5.0f, 1.5f);
 
-PointPlot2D plot = new PointPlot2D();
-plot.setData(points);
-plot.setLines(true);
-plot.setPoints(true);
+    PointPlot2D plot = new PointPlot2D();
+    plot.setData(points);
+    plot.setLines(true);
+    plot.setPoints(true);
 
-Graph2D graph = new Graph2D();
-graph.addPlot(plot);
+    Graph2D graph = new Graph2D();
+    graph.addPlot(plot);
 
-plotPanel.setGraph(graph);  // assume plot panel is created elsewhere
-
+    plotPanel.setGraph(graph);  // assume plot panel is created elsewhere
 
 NOTE: At this stage the code in com.reeltwo.plot.renderers is a bit volatile.  The API shouldn't change (much), I am in the process of unifying code that is common across the different renderers.
 
 Have fun.
+
+Richard.
