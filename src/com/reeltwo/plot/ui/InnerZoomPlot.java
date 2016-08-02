@@ -363,10 +363,5 @@ private Graph2D mWholeGraph;
     }
     super.setGraph(graph);
   }
-
-  @Override
-  public Graph2D getGraph() {
-    return mWholeGraph;    //TODO
-  }
 }
 
