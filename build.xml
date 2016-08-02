@@ -61,6 +61,7 @@
         <fileset dir="${lib.dir}">
 <!--          <include name="gzipfix.jar" /> -->
         </fileset>
+        <fileset dir="${lib.dir}" includes="**/*.jar" />
       </classpath>
     </javac>
   </target>
@@ -93,8 +94,15 @@
       </then>
     </if>
   </target>
+  <target name="copy-dependencies">
+    <jar jarfile="${build.src}/dependencies-all.jar">
+      <zipgroupfileset dir="${lib.dir}/">
+        <include name="VectorGraphics2D*.jar" />
+      </zipgroupfileset>
+    </jar>
+  </target>
 
-  <target name="RPlot.jar" depends="compile-src,compile-test,set-rplot-build-version" description="Version with all code.">
+  <target name="RPlot.jar" depends="compile-src,compile-test,copy-dependencies" description="Version with all code.">
     <jar destfile="${build.dir}/RPlot.jar" duplicate="fail">
       <manifest>
         <attribute name="Main-Class" value="com.reeltwo.plot.demo.SwingPlot"/>
@@ -118,6 +126,7 @@
         <include name="com/reeltwo/**/resources/*"/>
       </fileset>
 <!--      <zipfileset src="${lib.dir}/junit.jar" excludes="META-INF/**"/> -->
+      <zipfileset src="${build.src}/dependencies-all.jar" excludes="META-INF/**"/>
     </jar>
   </target>
 
