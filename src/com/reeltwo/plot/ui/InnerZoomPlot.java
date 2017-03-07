@@ -1,12 +1,6 @@
 package com.reeltwo.plot.ui;
 
 
-import com.reeltwo.plot.Axis;
-import com.reeltwo.plot.Edge;
-import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.renderer.GraphicsRenderer;
-import com.reeltwo.plot.renderer.Mapping;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -15,10 +9,17 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
+
+import com.reeltwo.plot.Axis;
+import com.reeltwo.plot.Edge;
+import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.renderer.GraphicsRenderer;
+import com.reeltwo.plot.renderer.Mapping;
 
 /**
  * A zoomable version of plot panel that doesn't try to control the whole world and allows
@@ -143,6 +144,25 @@ private Graph2D mWholeGraph;
         }
       }
     };
+  }
+
+  /**
+   * @return true if the current plot is zoomed in
+   */
+  public boolean isZoomed() {
+    final Graph2D graph = InnerZoomPlot.super.getGraph();
+    if (graph != null) {
+      for (int i = 0; i < 2; i++) {
+        final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
+        if (graph.getLo(Axis.X, a) != mXLo[i]
+          || graph.getHi(Axis.X, a) != mXHi[i]
+          || graph.getLo(Axis.Y, a) != mYLo[i]
+          || graph.getHi(Axis.Y, a) != mYHi[i]) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /**
