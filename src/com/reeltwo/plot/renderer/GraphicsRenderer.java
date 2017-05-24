@@ -194,7 +194,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     break;
     default:
       ((Graphics) canvas).setColor(mColors[colorIndex % mColors.length]);
-    };
+    }
   }
 
   @Override
@@ -307,6 +307,12 @@ public class GraphicsRenderer extends AbstractRenderer {
   @Override
   protected void fillPolygon(Object canvas, int[] xs, int[] ys) {
     ((Graphics) canvas).fillPolygon(createPolygon(xs, ys));
+  }
+
+  @Override
+  protected void drawPolyline(Object canvas, int[] xs, int[] ys) {
+    assert xs.length == ys.length;
+    ((Graphics) canvas).drawPolyline(xs, ys, xs.length);
   }
 
   // render specific
@@ -482,7 +488,7 @@ public class GraphicsRenderer extends AbstractRenderer {
         }
         final TicInfo x2TicInfo = ticInfos[2];
         if (x2TicInfo != null) {
-          syhi += xTicInfo.mMaxHeight;
+          syhi += x2TicInfo.mMaxHeight;
           if (!graph.isShowTics(Axis.Y, Edge.MAIN) && !(graph.uses(Axis.X, Edge.MAIN) && graph.isShowTics(Axis.X, Edge.MAIN))) {
             sxlo += x2TicInfo.mMaxWidth / 2 + 2;
           }
@@ -910,7 +916,7 @@ public class GraphicsRenderer extends AbstractRenderer {
             if (doFill == FillStyle.PATTERN) {
               setPattern(g, plot.getColor());
             }
-            final boolean doBorder = (plot instanceof FillablePlot2D) ? ((FillablePlot2D) plot).isBorder() : false;
+            final boolean doBorder = (plot instanceof FillablePlot2D) && ((FillablePlot2D) plot).isBorder();
             Stroke s = null;
             if (plot.getLineWidth() > 1) {
               s = ((Graphics2D) g).getStroke();
@@ -939,7 +945,9 @@ public class GraphicsRenderer extends AbstractRenderer {
                   g.drawLine(keyX5, yy, keyX5 + keyLineWidth, yy);
                 }
                 //g.drawRect(keyX5 + keyLineWidth / 2, yy, 0, 0);
-                g.drawLine(keyX5 + keyLineWidth / 2, yy, keyX5 + keyLineWidth / 2, yy);
+                if (!doPoints && !doLines) {
+                  g.drawLine(keyX5 + keyLineWidth / 2, yy, keyX5 + keyLineWidth / 2, yy);
+                }
               }
             } else if (plot instanceof ArrowPlot2D) {
               final ArrowPlot2D aplot = (ArrowPlot2D) plot;

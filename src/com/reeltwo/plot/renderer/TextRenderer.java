@@ -1,9 +1,9 @@
 package com.reeltwo.plot.renderer;
 
 import com.reeltwo.plot.Axis;
-import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.DefaultFormatter;
+import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.LabelFormatter;
 import com.reeltwo.plot.Plot2D;
@@ -51,7 +51,7 @@ public class TextRenderer extends AbstractRenderer {
     break;
     default:
       ((Canvas) canvas).setColor(colorIndex % COLORS.length);
-    };
+    }
 
   }
 
@@ -157,6 +157,24 @@ public class TextRenderer extends AbstractRenderer {
     }
   }
 
+  @Override
+  protected void drawPolyline(Object canvas, int[] xs, int[] ys) {
+    assert xs.length == ys.length;
+    if (xs.length != 0) {
+      int lastX = xs[0];
+      int lastY = ys[0];
+      drawLine(canvas, lastX, lastY, lastX, lastY);
+      for (int i = 1; i < xs.length; i++) {
+        final int sptX = xs[i];
+        final int sptY = ys[i];
+        if (sptX != lastX || sptY != lastY) {
+          drawLine(canvas, lastX, lastY, sptX, sptY);
+        }
+        lastX = sptX;
+        lastY = sptY;
+      }
+    }
+  }
 
   /**
    * Renders the given graph to a string that mimics a screen of
@@ -186,7 +204,7 @@ public class TextRenderer extends AbstractRenderer {
     final Mapping[] mapping = new Mapping[4];
     int sxlo = 0;
     int sxhi = canvas.getWidth() - 1;
-    int sylo = canvas.getHeight() - 2;
+    int sylo = canvas.getHeight() - (graph.isShowKey() ? 2 : 1);
     int syhi = 0;
     final String title = graph.getTitle();
     if (title.length() != 0) {
@@ -298,37 +316,39 @@ public class TextRenderer extends AbstractRenderer {
   }
 
   private void drawKey(Graph2D graph, Canvas canvas) {
-    canvas.setColorDefault();
-    canvas.setClipRectangle(0, 0, canvas.getWidth(), canvas.getHeight());
-    String key = graph.getKeyTitle();
-    if (key == null || key.length() == 0) {
-      key = "KEY";
-    }
-    key += ":";
-    for (int i = 0; i < key.length(); i++) {
-      canvas.putChar(i, canvas.getHeight() - 1, key.charAt(i));
-    }
+    if (graph.isShowKey()) {
+      canvas.setColorDefault();
+      canvas.setClipRectangle(0, 0, canvas.getWidth(), canvas.getHeight());
+      String key = graph.getKeyTitle();
+      if (key == null || key.length() == 0) {
+        key = "KEY";
+      }
+      key += ":";
+      for (int i = 0; i < key.length(); i++) {
+        canvas.putChar(i, canvas.getHeight() - 1, key.charAt(i));
+      }
 
-    int offset = key.length() + 1;
+      int offset = key.length() + 1;
 
-    boolean comma = false;
-    final Plot2D[] plots = graph.getPlots();
-    for (int j = 0; j < plots.length; j++) {
-      setPointIndex(j);
-      if ((key = plots[j].getTitle()) != null && key.length() != 0) {
-        if (comma) {
-          setColor(canvas, FOREGROUND_COLOR_INDEX);
-          canvas.putChar(offset, canvas.getHeight() - 1, ',');
+      boolean comma = false;
+      final Plot2D[] plots = graph.getPlots();
+      for (int j = 0; j < plots.length; j++) {
+        setPointIndex(j);
+        if ((key = plots[j].getTitle()) != null && key.length() != 0) {
+          if (comma) {
+            setColor(canvas, FOREGROUND_COLOR_INDEX);
+            canvas.putChar(offset, canvas.getHeight() - 1, ',');
+            offset += 2;
+          }
+          setColor(canvas, plots[j].getColor());
+          drawPoint(canvas, offset, canvas.getHeight() - 1);
           offset += 2;
+          for (int i = 0; i < key.length(); i++) {
+            canvas.putChar(offset + i, canvas.getHeight() - 1, key.charAt(i));
+          }
+          offset += key.length();
+          comma = true;
         }
-        setColor(canvas, plots[j].getColor());
-        drawPoint(canvas, offset, canvas.getHeight() - 1);
-        offset += 2;
-        for (int i = 0; i < key.length(); i++) {
-          canvas.putChar(offset + i, canvas.getHeight() - 1, key.charAt(i));
-        }
-        offset += key.length();
-        comma = true;
       }
     }
   }

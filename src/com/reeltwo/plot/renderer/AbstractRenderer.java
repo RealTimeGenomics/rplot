@@ -180,6 +180,7 @@ public abstract class AbstractRenderer {
   protected abstract void fillCircle(Object canvas, int x, int y, int diameter);
   protected abstract void drawPolygon(Object canvas, int[] xs, int[] ys);
   protected abstract void fillPolygon(Object canvas, int[] xs, int[] ys);
+  protected abstract void drawPolyline(Object canvas, int[] xs, int[] ys);
 
   // methods to help when drawing curves
   private Point2D tangent(int x1, int y1, int x2, int y2) {
@@ -563,19 +564,21 @@ public abstract class AbstractRenderer {
         setColor(canvas, lplot.getColor());
       }
 
+      final Poly polygon = new Poly();
+      for (int i = 0; i < points.length; i++) {
+        final Point2D point = (Point2D) points[i];
+        final int sptX = (int) convertX.worldToScreen(point.getX());
+        final int sptY = (int) convertY.worldToScreen(point.getY());
+        polygon.addPoint(sptX, sptY);
+      }
+      int[] xs = polygon.getXs();
+      int[] ys = polygon.getYs();
       if (doFill != FillStyle.NONE) {
-        final Poly polygon = new Poly();
-        for (int i = 0; i < points.length; i++) {
-          final Point2D point = (Point2D) points[i];
-          final int sptX = (int) convertX.worldToScreen(point.getX());
-          final int sptY = (int) convertY.worldToScreen(point.getY());
-          polygon.addPoint(sptX, sptY);
-        }
 
-        fillPolygon(canvas, polygon.getXs(), polygon.getYs());
+        fillPolygon(canvas, xs, ys);
         if (doBorder) {
           setColor(canvas, FOREGROUND_COLOR_INDEX);
-          drawPolygon(canvas, polygon.getXs(), polygon.getYs());
+          drawPolygon(canvas, xs, ys);
           if (doFill == FillStyle.PATTERN) {
             setPattern(canvas, lplot.getColor());
           } else {
@@ -583,28 +586,14 @@ public abstract class AbstractRenderer {
           }
         }
       } else {
-        Point2D point = (Point2D) points[0];
-        int lastX = (int) convertX.worldToScreen(point.getX());
-        int lastY = (int) convertY.worldToScreen(point.getY());
-        if (doPoints) {
-          drawPoint(canvas, lastX, lastY);
+        if (doLines) {
+          drawPolyline(canvas, xs, ys);
         }
-        drawLine(canvas, lastX, lastY, lastX, lastY);
-        for (int i = 1; i < points.length; i++) {
-          point = (Point2D) points[i];
-          final int sptX = (int) convertX.worldToScreen(point.getX());
-          final int sptY = (int) convertY.worldToScreen(point.getY());
-          if (sptX != lastX || sptY != lastY) {
-            if (doLines) {
-              drawLine(canvas, lastX, lastY, sptX, sptY);
-            }
-            if (doPoints) {
-              drawPoint(canvas, sptX, sptY);
-            }
-            drawLine(canvas, sptX, sptY, sptX, sptY);
-
-            lastX = sptX;
-            lastY = sptY;
+        for (int i = 0; i < xs.length; i++) {
+          if (doPoints) {
+            drawPoint(canvas, xs[i], ys[i]);
+          } else if (!doLines) {
+            drawLine(canvas, xs[i], ys[i], xs[i], ys[i]);
           }
         }
       }
