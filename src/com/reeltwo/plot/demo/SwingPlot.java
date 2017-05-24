@@ -4,18 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import com.reeltwo.plot.Axis;
-import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.BoxPlot2D;
 import com.reeltwo.plot.Circle2D;
 import com.reeltwo.plot.CirclePlot2D;
 import com.reeltwo.plot.CurvePlot2D;
+import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.FillablePlot2D.FillStyle;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.GraphLine;
@@ -30,6 +32,7 @@ import com.reeltwo.plot.StringFormatter;
 import com.reeltwo.plot.TextPlot2D;
 import com.reeltwo.plot.TextPoint2D;
 import com.reeltwo.plot.patterns.BW8x8PatternGroup;
+import com.reeltwo.plot.renderer.TextRenderer;
 import com.reeltwo.plot.ui.ZoomPlotDialog;
 
 /**
@@ -146,13 +149,24 @@ public class SwingPlot {
    */
   public static void main(String[] args) throws Exception {
     final Graph2D graph;
-    if (args.length != 0) {
-      graph = genTextureTest();
+    List<String> a = Arrays.asList(args);
+    if (a.contains("help")) {
+      System.out.println("Give argument 'textures' to demo textures.\n"
+        + "Give argument 'console' to output to console rather than GUI.");
     } else {
-      graph = genTest();
+      if (a.contains("textures")) {
+        graph = genTextureTest();
+      } else {
+        graph = genTest();
+      }
+      if (a.contains("console")) {
+        final String str = new TextRenderer().drawGraph(graph, 160, 70, true);
+        System.out.print(str);
+      } else {
+        final SwingPlot sp = new SwingPlot("A Plot");
+        sp.setGraph(graph);
+      }
     }
-    final SwingPlot sp = new SwingPlot("A Plot");
-    sp.setGraph(graph);
   }
 
 
@@ -319,6 +333,7 @@ public class SwingPlot {
    */
   public static Graph2D genTextureTest() {
     final Graph2D graph = new Graph2D();
+    graph.setTitle("Title");
 
     final ArrayList<TextPoint2D> text = new ArrayList<TextPoint2D>();
     for (int y = 0; y < 6; y++) {
@@ -339,7 +354,7 @@ public class SwingPlot {
     final TextPlot2D plot = new TextPlot2D();
     plot.setData(text.toArray(new TextPoint2D[text.size()]));
     plot.setInvert(true);
-
+    graph.setShowKey(false);
     graph.addPlot(plot);
 
     return graph;

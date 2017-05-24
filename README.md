@@ -53,7 +53,9 @@ You should see a window appear containing the following plot:
 
 ![rplot example 2](rplot-example-2.png)
 
-The code for both of these is in [SwingPlot.java](src/com/reeltwo/plot/demo/SwingPlot.java). The method `genTest` shows you how to set up a graph object.  Once the graph object has been setup its just a matter of giving it to a `PlotPanel` to render.
+You can use the argument `help` to show additional options to the demo.
+
+The code for these is in [SwingPlot.java](src/com/reeltwo/plot/demo/SwingPlot.java). The method `genTest` shows you how to set up a graph object.  Once the graph object has been setup its just a matter of giving it to a `PlotPanel` to render.
 
 
 Examples
