@@ -253,7 +253,7 @@ public abstract class AbstractRenderer {
     assert ys != null;
     assert xs.length == ys.length;
 
-    final Poly polygon = filled ? new Poly() : null;
+    final Poly polygon = new Poly();
 
     if (type == CurvePlot2D.BSPLINE) {
       final int m = 50;
@@ -285,15 +285,7 @@ public abstract class AbstractRenderer {
           x = (int) (((a3 * t + a2) * t + a1) * t + a0);
           y = (int) (((b3 * t + b2) * t + b1) * t + b0);
 
-          if (filled) {
-            polygon.addPoint(x, y);
-          } else {
-            if (first) {
-              first = false;
-            } else {
-              drawLine(canvas, x0, y0, x, y);
-            }
-          }
+          polygon.addPoint(x, y);
         }
       }
     } else if (type == CurvePlot2D.BEZIER) {
@@ -307,20 +299,10 @@ public abstract class AbstractRenderer {
         final int y0 = y;
         x = (int) p.getX();
         y = (int) p.getY();
-        if (filled) {
-          polygon.addPoint(x, y);
-        } else {
-          if (first) {
-            first = false;
-          } else {
-            drawLine(canvas, x0, y0, x, y);
-          }
-        }
+        polygon.addPoint(x, y);
       }
 
-      if (filled) {
-        polygon.addPoint(xs[xs.length - 1], ys[ys.length - 1]);
-      }
+      polygon.addPoint(xs[xs.length - 1], ys[ys.length - 1]);
     } else if (type == CurvePlot2D.CUBIC_BEZIER) {
       int x = 0;
       int y = 0;
@@ -370,21 +352,14 @@ public abstract class AbstractRenderer {
           final Point2D p = cubicBezier(pi, p1, p2, pip1, j / (double) m2);
           x = (int) p.getX();
           y = (int) p.getY();
-          if (filled) {
-            // get the next bezier point
-            polygon.addPoint(x, y);
-          } else {
-            if (first) {
-              first = false;
-            } else {
-              drawLine(canvas, x0, y0, x, y);
-            }
-          }
+          polygon.addPoint(x, y);
         }
       }
     }
     if (filled) {
       fillPolygon(canvas, polygon.getXs(), polygon.getYs());
+    } else {
+      drawPolyline(canvas, polygon.getXs(), polygon.getYs());
     }
   }
 
@@ -945,9 +920,16 @@ public abstract class AbstractRenderer {
   // our own special polygon class
   protected static class Poly {
     final ArrayList<Point2D> mPoints = new ArrayList<Point2D>();
+    int mLastX = 0;
+    int mLastY = 0;
 
     public void addPoint(int x, int y) {
+      if (mPoints.size() > 0 && mLastX == x && mLastY == y) { // Don't add redundant points.
+        return;
+      }
       mPoints.add(new Point2D(x, y));
+      mLastX = x;
+      mLastY = y;
     }
 
     public int[] getXs() {
