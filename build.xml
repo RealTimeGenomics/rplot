@@ -22,8 +22,8 @@
 
   <property name="vcs.info.cmd" value="git"/>
   <property name="vcs.info.args" value="rev-list --abbrev-commit -n 1 HEAD"/>
-  <property name="ant.build.javac.source" value="1.6" />
-  <property name="ant.build.javac.target" value="1.6" />
+  <property name="ant.build.javac.source" value="1.7" />
+  <property name="ant.build.javac.target" value="1.7" />
   <defaultexcludes add="**/.hg"/>
   <defaultexcludes add="**/.hg/**"/>
 
@@ -189,7 +189,7 @@
   </target>
 
   <target name="javadoc" depends="compile-src" description="Build javadocs">
-    <javadoc sourcepath="${src.dir}" destdir="${build.dir}/javadocs" source="1.6"
+    <javadoc sourcepath="${src.dir}" destdir="${build.dir}/javadocs" source="1.7"
              Author="true" Version="true" Package="true" useexternalfile="true" additionalparam="-quiet">
       <tag name="has" enabled="false"/>
       <tag name="assoc" enabled="false"/>

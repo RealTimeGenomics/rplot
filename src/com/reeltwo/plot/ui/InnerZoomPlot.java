@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
+import java.util.Stack;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -16,6 +17,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 import com.reeltwo.plot.Axis;
+import com.reeltwo.plot.Box2D;
 import com.reeltwo.plot.Edge;
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
@@ -45,14 +47,53 @@ public class InnerZoomPlot extends PlotPanel {
   private int mPNPHeight;
 
   private boolean mPicNPic = false;
-private Graph2D mWholeGraph;
+
+  private Graph2D mWholeGraph;
 
   private final GraphicsRenderer mGraphicsRenderer;
+  private final AbstractAction mDefaultZoomAction;
+  private final AbstractAction mUndoZoomAction;
 
-  private final float[] mXLo = new float[2];
-  private final float[] mXHi = new float[2];
-  private final float[] mYLo = new float[2];
-  private final float[] mYHi = new float[2];
+  // Wraps up a set of upper and lower bounds for main and alternate axes
+  private static class ZoomBounds {
+    final Box2D[] mAxesBounds = new Box2D[2];
+    public ZoomBounds() {
+      mAxesBounds[0] = new Box2D(0, 0, 0, 0);
+      mAxesBounds[1] = new Box2D(0, 0, 0, 0);
+    }
+    public void fromGraph(Graph2D graph) {
+      for (int i = 0; i < 2; i++) {
+        final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
+        mAxesBounds[i].setXRange(graph.getLo(Axis.X, a), graph.getHi(Axis.X, a));
+        mAxesBounds[i].setYRange(graph.getLo(Axis.Y, a), graph.getHi(Axis.Y, a));
+      }
+    }
+    public void toGraph(Graph2D graph) {
+      for (int i = 0; i < 2; i++) {
+        final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
+        graph.setRange(Axis.X, a, mAxesBounds[i].getXLo(), mAxesBounds[i].getXHi());
+        graph.setRange(Axis.Y, a, mAxesBounds[i].getYLo(), mAxesBounds[i].getYHi());
+      }
+    }
+    public boolean hasSameBounds(Graph2D graph) {
+      for (int i = 0; i < 2; i++) {
+        final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
+        if (graph.getLo(Axis.X, a) != mAxesBounds[i].getXLo()
+          || graph.getHi(Axis.X, a) != mAxesBounds[i].getXHi()
+          || graph.getLo(Axis.Y, a) != mAxesBounds[i].getYLo()
+          || graph.getHi(Axis.Y, a) != mAxesBounds[i].getYHi()) {
+          return false;
+        }
+      }
+      return true;
+    }
+    public String toString() {
+      return mAxesBounds[0].toString() + " (main), " + mAxesBounds[1].toString() + " (alt)";
+    }
+  }
+
+  private final ZoomBounds mDefaultZoom = new ZoomBounds();
+  private Stack<ZoomBounds> mZoomStack = new Stack<>();
 
   private boolean mOriginIsMin = false;
 
@@ -110,6 +151,32 @@ private Graph2D mWholeGraph;
     addMouseListener(listener);
     addMouseMotionListener(listener);
     mGraphicsRenderer = new GraphicsRenderer();
+    mUndoZoomAction = new AbstractAction("Undo Zoom", null) {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        final Graph2D graph = InnerZoomPlot.super.getGraph();
+        if (graph != null && !mZoomStack.isEmpty()) {
+          mZoomStack.pop(); // Discard current zoom level
+          ZoomBounds bounds = mZoomStack.isEmpty() ? mDefaultZoom : mZoomStack.peek();
+          bounds.toGraph(graph);
+          InnerZoomPlot.super.setGraph(graph);
+          setEnabled(!mZoomStack.isEmpty());
+        }
+      }
+    };
+    setEnabled(!mZoomStack.isEmpty());
+    mDefaultZoomAction = new AbstractAction("Default Zoom", null) {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        final Graph2D graph = InnerZoomPlot.super.getGraph();
+        if (graph != null) {
+          mDefaultZoom.toGraph(graph);
+          InnerZoomPlot.super.setGraph(graph);
+          mZoomStack.clear();
+          mUndoZoomAction.setEnabled(!mZoomStack.isEmpty());
+        }
+      }
+    };
   }
   
   /**
@@ -125,25 +192,17 @@ private Graph2D mWholeGraph;
    *
    * @return an <code>Action</code>
    */
-  public Action getZoomOutAction() {
-    return new AbstractAction("Zoom Out", null) {
-      /** an id */
-      private static final long serialVersionUID = 343566108639393382L;
+  public Action getDefaultZoomAction() {
+    return mDefaultZoomAction;
+  }
 
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        final Graph2D graph = InnerZoomPlot.super.getGraph();
-        if (graph != null) {
-          for (int i = 0; i < 2; i++) {
-            final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
-            graph.setRange(Axis.X, a, mXLo[i], mXHi[i]);
-            graph.setRange(Axis.Y, a, mYLo[i], mYHi[i]);
-          }
-
-          InnerZoomPlot.super.setGraph(graph);
-        }
-      }
-    };
+  /**
+   * Returns an action that returns the zooms to the previous level.
+   *
+   * @return an <code>Action</code>
+   */
+  public Action getUndoZoomAction() {
+    return mUndoZoomAction;
   }
 
   /**
@@ -152,15 +211,7 @@ private Graph2D mWholeGraph;
   public boolean isZoomed() {
     final Graph2D graph = InnerZoomPlot.super.getGraph();
     if (graph != null) {
-      for (int i = 0; i < 2; i++) {
-        final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
-        if (graph.getLo(Axis.X, a) != mXLo[i]
-          || graph.getHi(Axis.X, a) != mXHi[i]
-          || graph.getLo(Axis.Y, a) != mYLo[i]
-          || graph.getHi(Axis.Y, a) != mYHi[i]) {
-          return true;
-        }
-      }
+      return !mDefaultZoom.hasSameBounds(graph);
     }
     return false;
   }
@@ -276,12 +327,10 @@ private Graph2D mWholeGraph;
   }
 
   protected void zoomIn() {
-    //System.err.println("Zooming ...");
-
     final Mapping[] mapping = this.getMapping();
-
     if (mapping != null && mWholeGraph != null) {
       if (mPtOne != null && mPtTwo != null && mPtOne.x != mPtTwo.x && mPtOne.y != mPtTwo.y) {
+        //System.err.println("Zooming ...");
 
         final Point ptOne = ppPoint(mPtOne);
         final Point ptTwo = ppPoint(mPtTwo);
@@ -291,12 +340,21 @@ private Graph2D mWholeGraph;
         if (!mPicNPic) {
           final Graph2D graph = super.getGraph();
           graphMap(mapping, ptOne, ptTwo, graph);
+          addZoomLevel(graph);
           super.setGraph(graph);
         }
       }
     }
     mPtOne = mPtTwo = null;
     mPtPNP1 = mPtPNP2 = null;
+  }
+
+  protected void addZoomLevel(Graph2D graph) {
+    ZoomBounds zoom = new ZoomBounds();
+    zoom.fromGraph(graph);
+    mZoomStack.push(zoom);
+    mUndoZoomAction.setEnabled(!mZoomStack.isEmpty());
+    //System.err.println("Zoom stack has " + mZoomStack.size() + " levels");
   }
 
   private void graphMap(Mapping[] mapping, Point ptOne, Point ptTwo, Graph2D graph) {
@@ -359,13 +417,8 @@ private Graph2D mWholeGraph;
         System.err.println(cnse.getMessage());
         //cnse.printStackTrace();
       }
-      for (int i = 0; i < 2; i++) {
-        final Edge a = i == 0 ? Edge.MAIN : Edge.ALTERNATE;
-        mXLo[i] = graph.getLo(Axis.X, a);
-        mXHi[i] = graph.getHi(Axis.X, a);
-        mYLo[i] = graph.getLo(Axis.Y, a);
-        mYHi[i] = graph.getHi(Axis.Y, a);
-      }
+      mDefaultZoom.fromGraph(graph);
+      //System.err.println("Updating Axes bounds with retention " + retainZoom + " (zoom stack has " + mZoomStack.size() + " levels). Default Zoom: " + mBounds);
       final Graph2D oldGraph = super.getGraph();
       if (retainZoom && oldGraph != null) {
         for (Axis axis : Axis.values()) {
