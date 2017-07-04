@@ -421,6 +421,7 @@ public class GraphicsRenderer extends AbstractRenderer {
     Mapping[] mapping = null;
     setMappings(null);
     if (graph != null) {
+      setupAntialiasing(g);
       int sxlo = offsetX;
       int sxhi = offsetX + screenWidth - 1;
       int sylo = offsetY + screenHeight - 1;
@@ -501,7 +502,6 @@ public class GraphicsRenderer extends AbstractRenderer {
 
         mapping = createMappings(graph, sxlo, sylo, sxhi, syhi);
         drawGraphArea(g, sxlo, sylo, sxhi, syhi);
-        setupAntialiasing(g);
         drawYTics(graph, g, Edge.MAIN, yTicInfo, mapping[1], s);
         drawYTics(graph, g, Edge.ALTERNATE, y2TicInfo, mapping[3], s);
         drawXTics(graph, g, Edge.MAIN, xTicInfo, mapping[0], s);
@@ -545,16 +545,13 @@ public class GraphicsRenderer extends AbstractRenderer {
   private void setupAntialiasing(Graphics g) {
     final Graphics2D g2 = (Graphics2D) g;
     if (mTextAntialiasing) {
-      g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-          RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-      g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-          RenderingHints.VALUE_RENDER_QUALITY);
+      g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
     }
     if (mAllAntialiasing) {
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-          RenderingHints.VALUE_ANTIALIAS_ON);
-      g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-          RenderingHints.VALUE_RENDER_QUALITY);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+      g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
     }
   }
 
