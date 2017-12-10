@@ -92,8 +92,13 @@ public class InnerZoomPlot extends PlotPanel {
     }
   }
 
-  private final ZoomBounds mDefaultZoom = new ZoomBounds();
-  private Stack<ZoomBounds> mZoomStack = new Stack<>();
+  // Allow external users to save/restore zoom configuration
+  public static class ZoomConfiguration {
+    private final ZoomBounds mDefault = new ZoomBounds();
+    private Stack<ZoomBounds> mStack = new Stack<>();
+  }
+
+  private ZoomConfiguration mZoom = new ZoomConfiguration();
 
   private boolean mOriginIsMin = false;
 
@@ -155,25 +160,25 @@ public class InnerZoomPlot extends PlotPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         final Graph2D graph = InnerZoomPlot.super.getGraph();
-        if (graph != null && !mZoomStack.isEmpty()) {
-          mZoomStack.pop(); // Discard current zoom level
-          ZoomBounds bounds = mZoomStack.isEmpty() ? mDefaultZoom : mZoomStack.peek();
+        if (graph != null && !mZoom.mStack.isEmpty()) {
+          mZoom.mStack.pop(); // Discard current zoom level
+          ZoomBounds bounds = mZoom.mStack.isEmpty() ? mZoom.mDefault : mZoom.mStack.peek();
           bounds.toGraph(graph);
           InnerZoomPlot.super.setGraph(graph);
-          setEnabled(!mZoomStack.isEmpty());
+          setEnabled(!mZoom.mStack.isEmpty());
         }
       }
     };
-    setEnabled(!mZoomStack.isEmpty());
+    setEnabled(!mZoom.mStack.isEmpty());
     mDefaultZoomAction = new AbstractAction("Default Zoom", null) {
       @Override
       public void actionPerformed(ActionEvent e) {
         final Graph2D graph = InnerZoomPlot.super.getGraph();
         if (graph != null) {
-          mDefaultZoom.toGraph(graph);
+          mZoom.mDefault.toGraph(graph);
           InnerZoomPlot.super.setGraph(graph);
-          mZoomStack.clear();
-          mUndoZoomAction.setEnabled(!mZoomStack.isEmpty());
+          mZoom.mStack.clear();
+          mUndoZoomAction.setEnabled(!mZoom.mStack.isEmpty());
         }
       }
     };
@@ -211,9 +216,23 @@ public class InnerZoomPlot extends PlotPanel {
   public boolean isZoomed() {
     final Graph2D graph = InnerZoomPlot.super.getGraph();
     if (graph != null) {
-      return !mDefaultZoom.hasSameBounds(graph);
+      return !mZoom.mDefault.hasSameBounds(graph);
     }
     return false;
+  }
+
+  public ZoomConfiguration getZoomConfiguration() {
+    return mZoom;
+  }
+  public void setZoomConfiguration(ZoomConfiguration config) {
+    mZoom = config;
+    ZoomBounds bounds = mZoom.mStack.isEmpty() ? mZoom.mDefault : mZoom.mStack.peek();
+    getUndoZoomAction().setEnabled(!mZoom.mStack.isEmpty());
+    final Graph2D graph = InnerZoomPlot.super.getGraph();
+    if (graph != null) {
+      bounds.toGraph(graph);
+      InnerZoomPlot.super.setGraph(graph);
+    }
   }
 
   /**
@@ -352,9 +371,9 @@ public class InnerZoomPlot extends PlotPanel {
   protected void addZoomLevel(Graph2D graph) {
     ZoomBounds zoom = new ZoomBounds();
     zoom.fromGraph(graph);
-    mZoomStack.push(zoom);
-    mUndoZoomAction.setEnabled(!mZoomStack.isEmpty());
-    //System.err.println("Zoom stack has " + mZoomStack.size() + " levels");
+    mZoom.mStack.push(zoom);
+    mUndoZoomAction.setEnabled(!mZoom.mStack.isEmpty());
+    //System.err.println("Zoom stack has " + mZoom.mStack.size() + " levels");
   }
 
   private void graphMap(Mapping[] mapping, Point ptOne, Point ptTwo, Graph2D graph) {
@@ -417,8 +436,8 @@ public class InnerZoomPlot extends PlotPanel {
         System.err.println(cnse.getMessage());
         //cnse.printStackTrace();
       }
-      mDefaultZoom.fromGraph(graph);
-      //System.err.println("Updating Axes bounds with retention " + retainZoom + " (zoom stack has " + mZoomStack.size() + " levels). Default Zoom: " + mBounds);
+      mZoom.mDefault.fromGraph(graph);
+      //System.err.println("Updating Axes bounds with retention " + retainZoom + " (zoom stack has " + mZoom.mStack.size() + " levels). Default Zoom: " + mZoom.mDefault);
       final Graph2D oldGraph = super.getGraph();
       if (retainZoom && oldGraph != null) {
         for (Axis axis : Axis.values()) {
