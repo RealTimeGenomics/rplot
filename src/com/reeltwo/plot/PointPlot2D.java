@@ -1,7 +1,7 @@
 package com.reeltwo.plot;
 
 /**
- * Structure to hold attributes of a single line on a 2D graph.
+ * Structure to hold attributes of a single plot on a 2D graph.
  *
  * @author Richard Littin
  */
@@ -11,7 +11,8 @@ public class PointPlot2D extends FillablePlot2D {
   private boolean mPoints = true;
   /** whether to draw lines */
   private boolean mLines = false;
-
+  /** whether to draw dots */
+  private boolean mDots = false;
 
   /**
    * Default constructor setting the default axes used to the bottom
@@ -34,7 +35,28 @@ public class PointPlot2D extends FillablePlot2D {
 
 
   /**
-   * Sets whether or not so show points on line. Default is to show
+   * Sets whether or not to draw dots (single pixel points). Default is not to
+   * draw dots.
+   *
+   * @param flag whether to draw dots.
+   */
+  public void setDots(boolean flag) {
+    mDots = flag;
+  }
+
+
+  /**
+   * Returns whether or not to draw single pixel dots.
+   *
+   * @return whether to draw dots.
+   */
+  public boolean isDots() {
+    return mDots;
+  }
+
+
+  /**
+   * Sets whether or not so show points on plot. Default is to show
    * points.
    *
    * @param flag whether to show points.
@@ -45,7 +67,7 @@ public class PointPlot2D extends FillablePlot2D {
 
 
   /**
-   * Returns whether or not so show points on line.
+   * Returns whether or not so show points on plot.
    *
    * @return whether to show points.
    */

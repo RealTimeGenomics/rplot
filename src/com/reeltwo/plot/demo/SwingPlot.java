@@ -261,6 +261,7 @@ public class SwingPlot {
 
     lplot = new PointPlot2D();
     lplot.setData(xys4);
+    lplot.setDots(true);
     lplot.setPoints(false);
     lplot.setTitle("dots");
 

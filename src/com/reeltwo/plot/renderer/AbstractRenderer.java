@@ -528,6 +528,7 @@ public abstract class AbstractRenderer {
   protected void drawPointPlot(Object canvas, PointPlot2D lplot, Mapping convertX, Mapping convertY) {
     final Datum2D[] points = lplot.getData();
     if (points != null && points.length != 0) {
+      final boolean doDots = lplot.isDots();
       final boolean doPoints = lplot.isPoints();
       final boolean doLines = lplot.isLines();
       final FillStyle doFill = lplot.getFill();
@@ -567,7 +568,8 @@ public abstract class AbstractRenderer {
         for (int i = 0; i < xs.length; i++) {
           if (doPoints) {
             drawPoint(canvas, xs[i], ys[i]);
-          } else if (!doLines) {
+          }
+          if (doDots) {
             drawLine(canvas, xs[i], ys[i], xs[i], ys[i]);
           }
         }
