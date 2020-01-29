@@ -102,6 +102,16 @@ public class PlotDialog extends JDialog {
   }
 
   /**
+   * Sets the renderer configuration to match that of the provided panel. This
+   * includes settings such as patterns, colors, but not graph data.
+   *
+   * @param plotPanel the model panel
+   */
+  public void setRendererConfig(PlotPanel plotPanel) {
+    mPlotPanel.setRendererConfig(plotPanel);
+  }
+
+  /**
    * A class required to listen for right-clicks
    */
   private class PopupListener extends MouseAdapter {

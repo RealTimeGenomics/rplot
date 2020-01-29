@@ -50,7 +50,7 @@ public class InnerZoomPlot extends PlotPanel {
 
   private Graph2D mWholeGraph;
 
-  private final GraphicsRenderer mGraphicsRenderer;
+  private final GraphicsRenderer mPnPGraphicsRenderer;
   private final AbstractAction mDefaultZoomAction;
   private final AbstractAction mUndoZoomAction;
 
@@ -155,7 +155,7 @@ public class InnerZoomPlot extends PlotPanel {
     final MouseInputAdapter listener = new ZoomListener();
     addMouseListener(listener);
     addMouseMotionListener(listener);
-    mGraphicsRenderer = new GraphicsRenderer();
+    mPnPGraphicsRenderer = new GraphicsRenderer();
     mUndoZoomAction = new AbstractAction("Undo Zoom", null) {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -249,6 +249,7 @@ public class InnerZoomPlot extends PlotPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         mPicNPic = !mPicNPic;
+        mPnPGraphicsRenderer.setRendererConfig(mGraphicsRenderer); // No live updates
         putValue("Name", "Pic In Pic " + (mPicNPic ? "Off" : "On"));
         InnerZoomPlot.this.repaint();
       }
@@ -320,7 +321,7 @@ public class InnerZoomPlot extends PlotPanel {
         g.setColor(Color.BLACK);
         g.drawRect(pnpX, pnpY, mPNPWidth, mPNPHeight);
         final Graphics g2 = g.create(pnpX, pnpY, mPNPWidth, mPNPHeight);
-        mGraphicsRenderer.drawGraph(mWholeGraph, g2, mPNPWidth, mPNPHeight);
+        mPnPGraphicsRenderer.drawGraph(mWholeGraph, g2, mPNPWidth, mPNPHeight);
       }
     }
   }

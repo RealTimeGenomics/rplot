@@ -31,7 +31,7 @@ public class PlotPanel extends JPanel {
   private Graph2D mGraph = null;
   private Mapping[] mMapping = null;
 
-  private final GraphicsRenderer mGraphicsRenderer;
+  protected final GraphicsRenderer mGraphicsRenderer;
 
   private boolean mBufferGraphs = false;
   private BufferedImage mBI = null;
@@ -161,6 +161,7 @@ public class PlotPanel extends JPanel {
         try {
           final PlotDialog pd = new PlotDialog();
           pd.setLocationRelativeTo(PlotPanel.this);
+          pd.setRendererConfig(PlotPanel.this);
           pd.setTitle("Snap Shot");
           pd.setGraph((Graph2D) mGraph.clone());
           pd.setVisible(true);
@@ -169,6 +170,17 @@ public class PlotPanel extends JPanel {
         }
       }
     };
+  }
+
+
+  /**
+   * Sets the renderer configuration to match that of the provided panel. This
+   * includes settings such as patterns, colors, but not graph data.
+   *
+   * @param plotPanel the model panel
+   */
+  public void setRendererConfig(PlotPanel plotPanel) {
+    mGraphicsRenderer.setRendererConfig(plotPanel.mGraphicsRenderer);
   }
 
   /**

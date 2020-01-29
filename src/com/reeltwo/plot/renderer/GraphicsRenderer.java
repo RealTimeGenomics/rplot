@@ -110,6 +110,25 @@ public class GraphicsRenderer extends AbstractRenderer {
   }
 
   /**
+   * Sets the renderer configuration to match that of the provided graphics renderer. This
+   * includes settings such as patterns, colors, but not graph data.
+   *
+   * @param graphicsRenderer the model renderer
+   */
+  public void setRendererConfig(GraphicsRenderer graphicsRenderer) {
+    setColors(graphicsRenderer.mColors.clone());
+    setPatterns(graphicsRenderer.mPatterns.clone());
+    setBackground(graphicsRenderer.mBackgroundColor);
+    setForeground(graphicsRenderer.mForegroundColor);
+    setGridColor(graphicsRenderer.mGridColor);
+    setAntialiasing(graphicsRenderer.mAllAntialiasing);
+    setTextAntialiasing(graphicsRenderer.mTextAntialiasing);
+    setGraphShadowWidth(graphicsRenderer.mGraphShadowWidth);
+    System.err.println("Set renderer config. all=" + mAllAntialiasing + " text=" + mTextAntialiasing);
+  }
+
+
+  /**
    * Sets the <code>colors</code> to use.
    *
    * @param colors an array of <code>Color</code>s
