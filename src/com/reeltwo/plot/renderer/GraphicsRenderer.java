@@ -120,11 +120,11 @@ public class GraphicsRenderer extends AbstractRenderer {
     setPatterns(graphicsRenderer.mPatterns.clone());
     setBackground(graphicsRenderer.mBackgroundColor);
     setForeground(graphicsRenderer.mForegroundColor);
+    setGraphBGColor(graphicsRenderer.mGraphTopColor, graphicsRenderer.mGraphBottomColor);
     setGridColor(graphicsRenderer.mGridColor);
     setAntialiasing(graphicsRenderer.mAllAntialiasing);
     setTextAntialiasing(graphicsRenderer.mTextAntialiasing);
     setGraphShadowWidth(graphicsRenderer.mGraphShadowWidth);
-    System.err.println("Set renderer config. all=" + mAllAntialiasing + " text=" + mTextAntialiasing);
   }
 
 

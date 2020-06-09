@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.patterns.DefaultColorGroup;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
 
 /**
@@ -40,7 +39,7 @@ public class GraphSaver {
     mChooser.addChoosableFileFilter(pff);
     mChooser.addChoosableFileFilter(svg);
     mChooser.setFileFilter(pff);
-    mGraphicsRenderer = new GraphicsRenderer((Color[]) new DefaultColorGroup().getPatterns(), null);
+    mGraphicsRenderer = new GraphicsRenderer();
     mImageWriter = new ImageWriter(mGraphicsRenderer);
   }
 
@@ -60,6 +59,16 @@ public class GraphSaver {
    */
   public int getFontSize() {
     return mFontSize;
+  }
+
+  /** @return the ImageWriter */
+  public ImageWriter getImageWriter() {
+    return mImageWriter;
+  }
+
+  /** @return the GraphicsRenderer */
+  public GraphicsRenderer getGraphicsRenderer() {
+    return mGraphicsRenderer;
   }
 
   /**

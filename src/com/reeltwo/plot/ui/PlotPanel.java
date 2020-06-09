@@ -38,6 +38,10 @@ public class PlotPanel extends JPanel {
 
   private ToolTipProvider mToolTipProvider = null;
 
+  protected GraphPrinter mGraphPrinter = new GraphPrinter();
+  protected GraphSaver mGraphSaver = new GraphSaver();
+  protected boolean mPlainSave = true;
+
   /** Default constructor. */
   public PlotPanel() {
     this(false);
@@ -104,9 +108,6 @@ public class PlotPanel extends JPanel {
     setToolTipText(mToolTipProvider == null ? null : "");
   }
 
-  private GraphPrinter mGraphPrinter = null;
-  private GraphSaver mGraphSaver = null;
-
   /**
    * Returns an action allowing the graph to be printed.
    *
@@ -117,11 +118,12 @@ public class PlotPanel extends JPanel {
       private static final long serialVersionUID = 3366443762504745619L;
 
       public void actionPerformed(ActionEvent e) {
-        if (mGraphPrinter == null) {
-          mGraphPrinter = new GraphPrinter();
+        mGraphPrinter.getGraphicsRenderer().setRendererConfig(mGraphicsRenderer);
+        if (mPlainSave) {
+          // Explicitly remove the background gradient / shadow to save "plain" images.
+          mGraphPrinter.getGraphicsRenderer().setGraphBGColor(null, null);
+          mGraphPrinter.getGraphicsRenderer().setGraphShadowWidth(0);
         }
-        mGraphPrinter.setColors(getColors());
-        mGraphPrinter.setPatterns(getPatterns());
         mGraphPrinter.printGraph(getGraph());
       }
     };
@@ -137,11 +139,12 @@ public class PlotPanel extends JPanel {
       private static final long serialVersionUID = 1943785041287184839L;
 
       public void actionPerformed(ActionEvent e) {
-        if (mGraphSaver == null) {
-          mGraphSaver = new GraphSaver();
+        mGraphSaver.getGraphicsRenderer().setRendererConfig(mGraphicsRenderer);
+        if (mPlainSave) {
+          // Explicitly remove the background gradient / shadow to save "plain" images.
+          mGraphSaver.getGraphicsRenderer().setGraphBGColor(null, null);
+          mGraphSaver.getGraphicsRenderer().setGraphShadowWidth(0);
         }
-        mGraphSaver.setColors(getColors());
-        mGraphSaver.setPatterns(getPatterns());
         mGraphSaver.saveGraph(getGraph());
       }
     };
@@ -163,6 +166,7 @@ public class PlotPanel extends JPanel {
           pd.setLocationRelativeTo(PlotPanel.this);
           pd.setRendererConfig(PlotPanel.this);
           pd.setTitle("Snap Shot");
+          pd.getPlotPanel().setPlainSave(mPlainSave);
           pd.setGraph((Graph2D) mGraph.clone());
           pd.setVisible(true);
         } catch (final CloneNotSupportedException cnse) {
@@ -219,6 +223,12 @@ public class PlotPanel extends JPanel {
     return mGraphicsRenderer.getPatterns();
   }
 
+  /**
+   * @param plain if set, saved and printed images will be "plain"
+   */
+  public void setPlainSave(boolean plain) {
+    mPlainSave = plain;
+  }
 
   /**
    * Sets the graphs background colors.  The color is blended from

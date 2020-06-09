@@ -1,8 +1,5 @@
 package com.reeltwo.plot.ui;
 
-import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.patterns.DefaultColorGroup;
-import com.reeltwo.plot.renderer.GraphicsRenderer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -12,6 +9,9 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.renderer.GraphicsRenderer;
+
 
 /**
  * Handy utility class for sending graphs to the printer.
@@ -20,8 +20,7 @@ import java.awt.print.PrinterJob;
  */
 public class GraphPrinter implements Printable {
 
-  private Color[] mColors = (Color[]) new DefaultColorGroup().getPatterns();
-  private Paint[] mPatterns = null;
+  final GraphicsRenderer mGraphicsRenderer = new GraphicsRenderer();
   private Graph2D mGraph = null;
 
   private int mFontSize = 0; // use default font size
@@ -54,16 +53,18 @@ public class GraphPrinter implements Printable {
     return mFontSize;
   }
 
+  /** @return the GraphicsRenderer */
+  public GraphicsRenderer getGraphicsRenderer() {
+    return mGraphicsRenderer;
+  }
+
   /**
    * Sets the colors to render plots with.
    *
    * @param colors an array of colors
    */
   public void setColors(Color[] colors) {
-    if (colors == null) {
-      throw new NullPointerException("no colors given");
-    }
-    mColors = colors;
+    mGraphicsRenderer.setColors(colors);
   }
 
   /**
@@ -72,7 +73,7 @@ public class GraphPrinter implements Printable {
    * @param patterns an array of patterns
    */
   public void setPatterns(Paint[] patterns) {
-    mPatterns = patterns;
+    mGraphicsRenderer.setPatterns(patterns);
   }
 
   /**
@@ -115,10 +116,9 @@ public class GraphPrinter implements Printable {
     }
 
     pf.setOrientation(PageFormat.LANDSCAPE);
-    final GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
     final Graphics g2 = g.create((int) pf.getImageableX(), (int) pf.getImageableY(),
         (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
-    gr.drawGraph(mGraph, g2, (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
+    mGraphicsRenderer.drawGraph(mGraph, g2, (int) pf.getImageableWidth(), (int) pf.getImageableHeight());
     return Printable.PAGE_EXISTS;
   }
 
