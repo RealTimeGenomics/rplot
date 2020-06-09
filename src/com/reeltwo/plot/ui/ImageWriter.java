@@ -5,11 +5,27 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
+import javax.imageio.stream.ImageOutputStream;
+
+import org.w3c.dom.Node;
 
 import com.reeltwo.plot.Graph2D;
 import com.reeltwo.plot.renderer.GraphicsRenderer;
@@ -26,23 +42,49 @@ import de.erichseifert.vectorgraphics2d.util.PageSize;
  * @author Richard Littin
  */
 public class ImageWriter {
+
+  // Java ImageWriter format name for PNG
+  private static final String IW_NAME_PNG = "png";
+
+  // Constants used in image metadata text insertion
+  private static final String META_FORMAT_NAME = "javax_imageio_png_1.0";
+  private static final String META_TEXT = "tEXt";
+  private static final String META_TEXTENTRY = "tEXtEntry";
+  private static final String META_KEYWORD = "keyword";
+  private static final String META_VALUE = "value";
+
   /** the thing that does the graph rendering */
   private final GraphicsRenderer mGraphicsRenderer;
 
-  /** PNG image type. */
-  public static final int PNG_IMAGE = 0;
-
-  //public static final int GIF_IMAGE = 1;
+  private final Map<String, String> mMetaData = new TreeMap<>();
 
   /**
-   * Private to prevent instantiation.
+   * Supported image formats.
+   */
+  public enum ImageFormat {
+    /** SVG file type Scalable vector graphics */
+    SVG,
+    /** Portable network graphics */
+    PNG
+  }
+
+  /**
+   * Constructor
    *
-   * @param gr TODO Description.
+   * @param gr The graphics renderer.
    */
   public ImageWriter(GraphicsRenderer gr) {
     mGraphicsRenderer = gr;
   }
 
+  /**
+   * Set an item of metadata to be added to output files (where supported)
+   * @param key the keyword
+   * @param value the value
+   */
+  public void setMetaData(String key, String value) {
+    mMetaData.put(key, value);
+  }
 
   /**
    * Writes the given graph out to a formatted file of the specified
@@ -59,16 +101,13 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toImage(int type, File file, Graph2D graph, int width, int height, Font font) throws IOException {
+  public Mapping[] toImage(ImageFormat type, File file, Graph2D graph, int width, int height, Font font) throws IOException {
     if (file == null) {
       throw new NullPointerException("null file given.");
     }
 
-    final FileOutputStream fos = new FileOutputStream(file);
-    try {
+    try (FileOutputStream fos = new FileOutputStream(file)) {
       return toImage(type, fos, graph, width, height, font);
-    } finally {
-      fos.close();
     }
   }
 
@@ -88,42 +127,14 @@ public class ImageWriter {
    * @return an array of world to screen mappings.
    * @exception IOException if a file writing error occurs.
    */
-  public Mapping[] toImage(int type, OutputStream os, Graph2D graph, int width, int height, Font font) throws IOException {
+  public Mapping[] toImage(ImageFormat type, OutputStream os, Graph2D graph, int width, int height, Font font) throws IOException {
     switch (type) {
-    //case GIF_IMAGE:
-    //return toGIF(os, graph, width, height, font);
-    case PNG_IMAGE:
-      return toPNG(os, graph, width, height, font);
-    default:
-      throw new IllegalArgumentException("Illegal image type '" + type + "' given.");
-    }
-  }
-
-
-  /**
-   * Writes the given graph out to a PNG formatted file. The width and
-   * height parameters determine the dimension of the image (in
-   * pixels). The mappings from world to screen data points for each
-   * axis pair is returned.
-   *
-   * @param file File to save graph to.
-   * @param graph graph to save.
-   * @param width width of image.
-   * @param height height of image.
-   * @param font font to use in graph.
-   * @return an array of world to screen mappings.
-   * @exception IOException if a file writing error occurs.
-   */
-  public Mapping[] toPNG(File file, Graph2D graph, int width, int height, Font font) throws IOException {
-    if (file == null) {
-      throw new NullPointerException("null file given.");
-    }
-
-    final FileOutputStream fos = new FileOutputStream(file);
-    try {
-      return toPNG(fos, graph, width, height, font);
-    } finally {
-      fos.close();
+      case PNG:
+        return toPNG(os, graph, width, height, font);
+      case SVG:
+        return toSVG(os, graph, width, height, font);
+      default:
+        throw new IllegalArgumentException("Illegal image type '" + type + "' given.");
     }
   }
 
@@ -163,35 +174,28 @@ public class ImageWriter {
 
     mGraphicsRenderer.drawGraph(graph, g, 5, 5, width - 10, height - 10);
     final Mapping[] mapping = mGraphicsRenderer.getMappings();
-    ImageIO.write(bi, "png", os);
 
+    final javax.imageio.ImageWriter writer = ImageIO.getImageWritersByFormatName(IW_NAME_PNG).next();
+    final ImageWriteParam writeParam = writer.getDefaultWriteParam();
+    final ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
+    final IIOMetadata metadata = writer.getDefaultImageMetadata(typeSpecifier, writeParam);
+
+    for (Map.Entry<String, String> e : mMetaData.entrySet()) {
+      final IIOMetadataNode root = new IIOMetadataNode(META_FORMAT_NAME);
+      final IIOMetadataNode text = new IIOMetadataNode(META_TEXT);
+      final IIOMetadataNode textEntry = new IIOMetadataNode(META_TEXTENTRY);
+      textEntry.setAttribute(META_KEYWORD, e.getKey());
+      textEntry.setAttribute(META_VALUE, e.getValue());
+      text.appendChild(textEntry);
+      root.appendChild(text);
+      metadata.mergeTree(META_FORMAT_NAME, root);
+    }
+
+    try (ImageOutputStream stream = ImageIO.createImageOutputStream(os)) {
+      writer.setOutput(stream);
+      writer.write(metadata, new IIOImage(bi, null, metadata), writeParam);
+    }
     return mapping;
-  }
-  /**
-   * Writes the given graph out to a PNG formatted file. The width and
-   * height parameters determine the dimension of the image (in
-   * pixels). The mappings from world to screen data points for each
-   * axis pair is returned.
-   *
-   * @param file File to save graph to.
-   * @param graph graph to save.
-   * @param width width of image.
-   * @param height height of image.
-   * @param font font to use in graph.
-   * @return an array of world to screen mappings.
-   * @exception IOException if a file writing error occurs.
-   */
-  public Mapping[] toSVG(File file, Graph2D graph, int width, int height, Font font) throws IOException {
-    if (file == null) {
-      throw new NullPointerException("null file given.");
-    }
-
-    final FileOutputStream fos = new FileOutputStream(file);
-    try {
-      return toSVG(fos, graph, width, height, font);
-    } finally {
-      fos.close();
-    }
   }
 
   /**
@@ -227,7 +231,7 @@ public class ImageWriter {
     }
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, width, height);
-    int inset = 5;
+    final int inset = 5;
     mGraphicsRenderer.drawGraph(graph, g, inset, inset, width - 2 * inset, height - 2 * inset);
     final Mapping[] mapping = mGraphicsRenderer.getMappings();
     final SVGProcessor proc = new SVGProcessor();
@@ -236,4 +240,50 @@ public class ImageWriter {
     return mapping;
   }
 
+  private static List<Node> findNodesWithName(String name, Node root) {
+    final List<Node> found = new ArrayList<>();
+    Node n = root.getFirstChild();
+    while (n != null) {
+      if (n.getNodeName().equals(name)) {
+        found.add(n);
+      }
+      found.addAll(findNodesWithName(name, n));
+      n = n.getNextSibling();
+    }
+    return found;
+  }
+
+  /**
+   * Return text metadata contained in the supplied image file
+   * @param imageFile the image file
+   * @return a map of text metadata in the image
+   * @throws IOException if there is a problem reading the image file as PNG
+   */
+  public static Map<String, String> getPngTextMetaData(File imageFile) throws IOException {
+    try (final InputStream is = new FileInputStream(imageFile)) {
+      final ImageReader imageReader = ImageIO.getImageReadersByFormatName(IW_NAME_PNG).next();
+      imageReader.setInput(ImageIO.createImageInputStream(is), true);
+      final IIOMetadata metadata = imageReader.getImageMetadata(0);
+      final List<Node> tEXtNodes = findNodesWithName(META_TEXTENTRY, metadata.getAsTree(metadata.getNativeMetadataFormatName()));
+      final Map<String, String> textmeta = new TreeMap<>();
+      for (final Node n : tEXtNodes) {
+        textmeta.put(n.getAttributes().getNamedItem(META_KEYWORD).getNodeValue(),
+          n.getAttributes().getNamedItem(META_VALUE).getNodeValue());
+      }
+      return textmeta;
+    }
+  }
+
+
+  /**
+   * Test metadata reading from command line
+   * @param args command line arguments
+   * @throws IOException if bad things
+   */
+  public static void main(String[] args) throws IOException {
+    final Map<String, String> meta = getPngTextMetaData(new File(args[0]));
+    for (Entry<String, String> e : meta.entrySet()) {
+      System.out.println("keyword: " + e.getKey() + "; value: " + e.getValue());
+    }
+  }
 }

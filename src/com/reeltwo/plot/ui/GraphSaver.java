@@ -1,16 +1,17 @@
 package com.reeltwo.plot.ui;
 
-import com.reeltwo.plot.Graph2D;
-import com.reeltwo.plot.patterns.DefaultColorGroup;
-import com.reeltwo.plot.renderer.GraphicsRenderer;
-
 import java.awt.Color;
 import java.awt.Paint;
 import java.io.File;
 import java.util.Locale;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
+
+import com.reeltwo.plot.Graph2D;
+import com.reeltwo.plot.patterns.DefaultColorGroup;
+import com.reeltwo.plot.renderer.GraphicsRenderer;
 
 /**
  * Handy utility class for saving graphs as images.
@@ -20,14 +21,14 @@ import javax.swing.filechooser.FileFilter;
 public class GraphSaver {
   private static final String PNG = "png";
   private static final String SVG = "svg";
-  private Color[] mColors = (Color[]) new DefaultColorGroup().getPatterns();
-  private Paint[] mPatterns = null;
 
   private int mFontSize = -1; // use default font size
   private int mWidth = 800;
   private int mHeight = 600;
 
   private final JFileChooser mChooser;
+  private GraphicsRenderer mGraphicsRenderer;
+  private ImageWriter mImageWriter;
 
   /**
    * Creates a new <code>GraphSaver</code>.
@@ -39,6 +40,8 @@ public class GraphSaver {
     mChooser.addChoosableFileFilter(pff);
     mChooser.addChoosableFileFilter(svg);
     mChooser.setFileFilter(pff);
+    mGraphicsRenderer = new GraphicsRenderer((Color[]) new DefaultColorGroup().getPatterns(), null);
+    mImageWriter = new ImageWriter(mGraphicsRenderer);
   }
 
   /**
@@ -79,10 +82,7 @@ public class GraphSaver {
    * @param colors an array of colors
    */
   public void setColors(Color[] colors) {
-    if (colors == null) {
-      throw new NullPointerException("no colors given");
-    }
-    mColors = colors;
+    mGraphicsRenderer.setColors(colors);
   }
 
   /**
@@ -91,7 +91,7 @@ public class GraphSaver {
    * @param patterns an array of patterns
    */
   public void setPatterns(Paint[] patterns) {
-    mPatterns = patterns;
+    mGraphicsRenderer.setPatterns(patterns);
   }
 
   private File adjustFileName(File file, FileFilter filter, FileFilter[] possibleFilters) {
@@ -149,20 +149,13 @@ public class GraphSaver {
 
   private void writeImage(File file, Graph2D graph, String extension) {
     try {
-      final GraphicsRenderer gr = new GraphicsRenderer(mColors, mPatterns);
-      final ImageWriter iw = new ImageWriter(gr);
-      if (extension.equals(SVG)) {
-        iw.toSVG(file, graph, mWidth, mHeight, null);
-      } else {
-          iw.toPNG(file, graph, mWidth, mHeight, null);
-      }
+      mImageWriter.toImage(extension.equals(SVG) ? ImageWriter.ImageFormat.SVG : ImageWriter.ImageFormat.PNG, file, graph, mWidth, mHeight, null);
     } catch (final Exception ioe) {
       System.err.println("Failed to write file " + ioe.getMessage());
     }
-
   }
 
-  private static class FileExtensionFilter extends FileFilter {
+  private static final class FileExtensionFilter extends FileFilter {
     private final String mExtension;
 
     private FileExtensionFilter(String extension) {
