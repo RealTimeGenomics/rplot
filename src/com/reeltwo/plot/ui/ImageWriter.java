@@ -3,6 +3,7 @@ package com.reeltwo.plot.ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -238,6 +239,24 @@ public class ImageWriter {
     final Document document = proc.getDocument(g.getCommands(), new PageSize(width, height));
     document.writeTo(os);
     return mapping;
+  }
+
+  /**
+   * Detect whether the current graphics environment can generate images including fonts.
+   * @return null if image writing has enough supporting graphics environment to function, otherwise an error message.
+   */
+  public static String isImageWritingEnabled() {
+    try {
+      if (GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames().length == 0) {
+        return "No fonts available";
+      }
+      if (new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB).createGraphics().getFontMetrics() == null) {
+        return "No fonts available";
+      }
+    } catch (java.lang.Error e) {
+      return e.getMessage();
+    }
+    return null;
   }
 
   private static List<Node> findNodesWithName(String name, Node root) {
