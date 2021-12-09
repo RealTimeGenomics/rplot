@@ -902,10 +902,10 @@ public class GraphicsRenderer extends AbstractRenderer {
       for (int c = 0; c < cols; c++) {
         int r = (c == 0) ? ((keyTitle != null && keyTitle.length() != 0) ? 1 : 0) : 0;
         for (; r < rows && j < plots.length; r++) {
-          setPointIndex(j);
           String dtitle = null;
           Plot2D plot = null;
           while (j < plots.length && dtitle == null) {
+            setPointIndex(j);
             plot = plots[j++];
             dtitle = plot.getTitle();
             if (dtitle == null || dtitle.length() == 0 || plot.getData() == null || plot.getData().length == 0) {
