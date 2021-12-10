@@ -258,8 +258,6 @@ public abstract class AbstractRenderer {
     if (type == CurvePlot2D.BSPLINE) {
       final int m = 50;
       int x = 0, y = 0;
-      boolean first = true;
-
       for (int i = 1; i < xs.length - 2; i++) {
         final float xA = xs[i - 1];
         final float xB = xs[i];
@@ -279,8 +277,6 @@ public abstract class AbstractRenderer {
         final float b0 = (yA + 4 * yB + yC) / 6;
 
         for (int j = 0; j <= m; j++) {
-          final int x0 = x;
-          final int y0 = y;
           final float t = (float) j / (float) m;
           x = (int) (((a3 * t + a2) * t + a1) * t + a0);
           y = (int) (((b3 * t + b2) * t + b1) * t + b0);
@@ -292,11 +288,8 @@ public abstract class AbstractRenderer {
       final int m = 50;
       int x = 0;
       int y = 0;
-      boolean first = true;
       for (int j = 0; j < m; j++) {
         final Point2D p = bezier(xs, ys, j / (double) m);
-        final int x0 = x;
-        final int y0 = y;
         x = (int) p.getX();
         y = (int) p.getY();
         polygon.addPoint(x, y);
@@ -306,7 +299,6 @@ public abstract class AbstractRenderer {
     } else if (type == CurvePlot2D.CUBIC_BEZIER) {
       int x = 0;
       int y = 0;
-      boolean first = true;
       for (int i = 1; i < xs.length - 2; i++) {
         final int xim1 = xs[i - 1];
         final int xi = xs[i];
@@ -347,8 +339,6 @@ public abstract class AbstractRenderer {
 
         final int m2 = Math.max(10, (int) (distance(p1, p2) / 5.0f));
         for (int j = 0; j <= m2; j++) {
-          final int x0 = x;
-          final int y0 = y;
           final Point2D p = cubicBezier(pi, p1, p2, pip1, j / (double) m2);
           x = (int) p.getX();
           y = (int) p.getY();
